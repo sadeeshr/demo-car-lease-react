@@ -1,0 +1,570 @@
+html{
+     padding: 0;
+     margin: 0;
+     height: 100%;
+}
+ body{
+    background-image: url("../cryptocurrency.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center top;
+    color: #fff;
+
+}
+ a{
+     color: #b8b9ba;
+}
+ .mainContentCon{
+     width: 330px;
+     margin: 3% auto;
+     padding: 0px 0px 60px;
+     min-height: 400px;
+     max-height: 580px;
+     overflow-y: auto;
+     overflow-x: hidden;
+     background: rgba(156, 156, 156, .8);
+     border-radius: 40px;
+     border: 2px solid #4c4e54;
+}
+
+
+/* Let's get this party started */
+::-webkit-scrollbar {
+    width: 0px;
+}
+
+img.addBtn {
+    width: 50px;
+    height: auto;
+    position: relative;
+    bottom: 15px;
+    right: 115px;
+
+}
+
+.btnName{
+    position: relative;
+    top: -52px;
+    text-align: center;
+    padding-left: 15px;
+}
+
+.navCon{
+    background: rgba(255, 255, 255, 1);
+    height: 50px;
+    width: 330px;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    position: fixed;
+
+
+
+}
+
+
+
+.navCon i{
+    color: #b8b9ba;
+    padding-top: 13px;
+    display: inline-block;
+    margin-left: 0;
+}
+
+
+ #header{
+     font-family: Tahoma, Verdana, Segoe, sans-serif;
+     font-weight: normal;
+     display: block;
+     text-align: center;
+     font-size: 40px;
+     padding-top: 60px;
+     padding-left: 0;
+     padding-right: 0;
+     margin-bottom: 10px;
+}
+ #header.cusPadding{
+     padding-top: 20%;
+}
+.contentText{
+    background: rgba(170, 172, 175, .8);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+
+ .contentText p{
+     text-align: left;
+     font-size: 14px;
+}
+ .contentBtn a, .contentBtn button{
+     text-decoration: none;
+     color: #fff;
+     padding: 23px 0;
+     font-size: 25px;
+     background: rgba(170, 172, 175, .8) ;
+     border-radius: 10px;
+     font-weight: 500;
+     width: 100%;
+     outline:0;
+
+
+     border: 3px solid rgba(0, 0, 0, 0);
+
+}
+
+.contentBtn button:hover{
+    border: 3px solid rgba(255, 215, 0, .3);
+}
+
+.contentBtn.bg-none button{
+    background: rgba(0, 0, 0, 0);
+    border: 0;
+}
+
+.contentBtn button{
+    margin-bottom: 10px;
+}
+
+.btnwithAdd{
+    padding: 8px 10px !important;
+    text-align: right;
+    width : 150px;
+    height: 35px;
+}
+ .contentBtn{
+     text-align: center;
+     margin-bottom: 10px;
+}
+
+.contentBtn img{
+    width: 50px;
+    display: block;
+    margin: 10px auto 0
+
+}
+
+ .form-input-containers{
+    width: 100% !important;
+    width: -moz-available !important;
+    width: -webkit-fill-available !important;
+     margin: 0px 0px 10px 0 !important;
+     padding: 0px 0px !important;
+     display: block;
+}
+ .membership-input{
+     width: 100% !important;
+     width: -moz-available !important;
+     width: -webkit-fill-available !important;
+     text-align: center;
+     color: #b8b9ba;
+     border-radius: 5px !important;
+     background: rgba(255, 255, 255, 1) !important;
+     border: 1px solid #ececec !important;
+}
+ .fileInput{
+     border: 1px solid #ececec !important;
+     color: #b8b9ba;
+     padding: 7px 60px !important;
+     background: rgba(255, 255, 255, 1);
+     border-radius: 5px !important;
+     padding: 7px 4em !important;
+     width: 100%;
+     width: -moz-available;
+     width: -webkit-fill-available;
+     display: none;
+     margin: 0 0 0 0 !important;
+}
+ .textbtn{
+     margin: 0;
+     color: #b8b9ba;
+     display: inline-block;
+     background-color: #ffffff;
+     padding: 8px 30px;
+     border-radius: 5px !important;
+     margin-bottom: 10px;
+     font-size: 14px;
+     text-align: center;
+}
+ .textbtn, .textbtn.profile{
+     float: none;
+     width: 100%;
+     width: -moz-available;
+     width: -webkit-fill-available;
+     margin-bottom: 10px;
+     margin-left: 0;
+}
+
+ .imgPreview{
+     background: rgba(255, 255, 255, 1);
+     display: inline-block;
+     border-radius: 5px !important;
+     color: #b8b9ba;
+     padding: 10px 15px;
+     height: 150px !important;
+     width: 100% !important;
+     width: -moz-available !important;
+     width: -webkit-fill-available !important;
+     margin: 0px 0 0 0px !important;
+     margin: 0 !important;
+     border: 1px solid #ececec !important;
+    /* float: right;
+     */
+}
+
+#car-logo img{
+
+    width: 120px;
+    height: auto;
+    }
+ .imgPreview img{
+     width: 130px;
+     height: auto;
+
+}
+
+.contentCon{
+    padding: 0 15px;
+}
+ .form-input-containers label{
+     margin-bottom: 10px !important;
+     display: inline-block;
+     width: 100%;
+     width: -moz-available;
+     width: -webkit-fill-available;
+}
+ .form-row-container{
+     display: block;
+     text-align: center;
+     padding-right: 0 !important;
+     padding-left: 0 !important;
+}
+ .form-row-container.btn{
+     display: block;
+}
+
+.carCon{
+    margin-bottom: 10px ;
+    padding: 20px;
+    border-radius: 25px;
+}
+.carcol{
+    width: 44%;
+    padding: 3%;
+    text-align: left;
+    font-size: 15px;
+    display: inline-block;
+}
+
+
+.carcol.reg{
+    width: 100%;
+}
+
+.carcol.reg.text{
+    margin-bottom: 20px;
+}
+
+.carcol.reg img{
+    border-radius: 20px;
+}
+.carEth{
+    font-weight: bold;
+}
+ .tableCon th{
+     color: #ffffff;
+     background-color: rgba(0, 0, 0, 0);
+     font-size: 15px;
+     padding: 0;
+     text-align: left;
+     font-weight: 400;
+}
+ .tableCon td{
+     text-align: left;
+}
+ .tableCon tbody tr{
+     background: rgba(255, 255, 255, 0.3);
+  
+     color: #fff;
+     
+}
+
+.tableCon thead th:nth-last-child(2){
+    padding: 0 10px;
+    width: 135px;
+}
+
+.tableCon thead th:last-child{
+    text-align: center;
+    width: 82px;
+}
+
+.tableCon thead th:first-child{
+    width: 71px;
+}
+
+.tableCon p{
+    font-size: 13px;
+    margin: 0;
+}
+.tableCon tbody td:first-child{
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    text-align: right;
+
+}
+.tableCon tbody td:last-child{
+    border-bottom-right-radius: 30px;
+    border-top-right-radius: 30px;
+    text-align: right;
+
+}
+
+ .login.contentBtn{
+     margin-top: 20px;
+}
+ a{
+     color: #fff;
+}
+ .content-wrapper{
+     margin: 0 !important;
+}
+
+.float-right{
+  float:right;
+  margin: 0px 25px;
+}
+
+.tableCon td img{
+    width: 60px;
+    height: auto;
+} 
+
+table{
+    margin: 0 0px;
+}
+
+table tr td {
+    padding: 15px 5px;
+}
+
+.memberSelect{
+    width: 80%;
+}
+
+.memberMesCon{
+    text-align: center;
+    font-size: 14px;
+}
+.membersBtn{
+    display: inline-block;
+    width: 30%;
+}
+
+.membersBtn a{
+    text-decoration: none;
+    display: inline-block;
+}
+
+.membersBtn p{
+    line-height: 20px;
+    font-size: 14px;
+   
+    float: right;
+    text-align: left;
+}
+
+.memberMesBtns{
+    text-align: center;
+}
+
+.membersBtn img{
+    float: left;
+    padding-right: 5px;
+    width: 20px !important;
+}
+
+.tableCon.members tr{
+    border: 3px solid rgba(255, 215, 0, .3);
+}
+
+.searchBtn{
+    background: rgba(170, 172, 175, .8);
+    border-radius: 30px;
+    padding: 10px 0;
+    font-size: 17px;
+    margin-top: 20px;
+    text-align: center;
+    color: #fff;
+    width: 100%;
+    border: 3px solid rgba(255, 215, 0, .0);
+
+}
+
+.carCon.active{
+    border: 3px solid rgba(255, 215, 0, .3);
+    background: rgba(170, 172, 175, .8);
+}
+
+
+.searchBtn:focus, .searchBtn:active, .searchBtn:hover{
+    outline: none;
+    border: 3px solid rgba(255, 215, 0, .3);
+}
+
+.searchBtn::placeholder {
+    color: #fff;
+}
+.flagMargin{
+    margin-bottom: 10px;
+}
+
+.mtableCon{
+    display: block;
+    width: 100%;
+}
+
+.mtableTitle{
+    display: inline-block;
+    width: 100%;
+    padding: 5px 0;
+}
+.mtableTokens{
+    width: 60px;
+    float: left;
+    padding-right: 10px;
+    text-align: right;
+}
+
+.mtableUser{
+    width: 145px;
+    float: left;
+    padding: 0 10px;
+}
+
+.mtableCar{
+    float: left;
+    text-align: center;
+    width: 60px;
+
+}
+
+.mtableCar img{
+    width: 60px;
+    height: auto;
+}
+
+.mtableTokens p{
+    font-size: 13px;
+    margin: 0;
+
+}
+
+.mtableLink{
+display: flex;
+width: 100%;
+padding: 15px 0;
+background: rgba(170, 172, 175, .6);
+margin-bottom: 10px;
+border-radius: 30px;
+border: 3px solid rgba(255, 215, 0, 0);
+}
+
+.mtableLink:hover, .mtableLink:visited, .mtableLink:active, .mtableLink:focus{
+    border: 3px solid rgba(255, 215, 0, .3);
+}
+
+
+.mtableInvoices p{
+    margin: 0;
+    font-weight: 500;
+    line-height: 20px;
+}
+
+.mtableInvoices{
+    width: 77%;
+    padding-left: 10px;
+
+}
+
+#center-btn-container img{
+    margin: 0 auto;
+}
+
+.mtableInvoicesIcon{
+    width: 15%;
+    text-align: center;
+}
+.mtableInvoicesIcon img{
+    width: 40px;
+    height: auto;
+}
+
+.contentBtn.addMe, .contentBtn.selectCar{
+    background: none;
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+.contentBtn.addMe a, .contentBtn.selectCar a{
+    background: rgba(0, 0, 0, 0);
+    border: 0;
+}
+.contentBtn.addMe img, .contentBtn.selectCar img{
+    display: inline-block;
+    margin: 20px 0 0 0;
+    width: 30px;
+    height: initial;
+}
+
+.contentBtn.addMe p, .contentBtn.selectCar p{
+    margin: 0;
+    font-size: 18px;
+}
+
+.contentBtn.selectCar{
+    margin-bottom: 20px;
+}
+
+.inputAddbtn div{
+    float: left;
+    width: 80px !important;
+    text-align: right;
+
+}
+
+.inputAddbtn label{
+    float: left;
+    width: 110px;
+    margin-bottom: 0 !important;
+    line-height: 45px;
+}
+
+.form-input-containers.inputAddbtn{
+    display: inline-block;
+}
+
+.inputAddbtn div img{
+    width: 45px;
+    height: auto;
+}
+
+.inputAddbtn img.inputImg{
+    float: left;
+    width: 75px;
+    border-radius: 10px;
+    max-height: 50px;
+    overflow: hidden;
+}
+
+.image-upload > input
+{
+    display: none;
+}
+
+.image-upload img
+{
+    width: 80px;
+    cursor: pointer;
+}
