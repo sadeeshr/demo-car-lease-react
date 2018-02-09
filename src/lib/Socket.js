@@ -1,6 +1,4 @@
 import io from 'socket.io-client';
-import https from 'https';
-
 
 // let agent = new https.Agent();
 

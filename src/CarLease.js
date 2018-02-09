@@ -43,10 +43,11 @@ class CarLease extends Component {
         }
 
         setTimeout(() => {
-            [1, 2, 3, 4].map(i => {
+            [1, 2].map(i => {
                 this.props.contract.cars(i)
                     .then(car => console.log(`CAR: ${i} => `, car))
             })
+
         }, 2000);
     }
 
@@ -266,19 +267,28 @@ class CarLease extends Component {
                         </span>
 
                         <span className="form-input-containers marginBttm inputAddbtn">
-                            <div style={{ "text-align": "right" }} htmlFor="imageUpload">
-                                <button style={{ "background-color": "Transparent", "outline" : "none", "border" : "none", "padding" : "0" }} onClick={() => { console.log("I m clicked") }}><img src={require('./assets/add.png')} /></button>
+                            <div style={{ "textAlign": "right" }} htmlFor="imageUpload">
+                                <button style={{ "backgroundColor": "Transparent", "outline": "none", "border": "none", "padding": "0" }} onClick={() => { this.setState({ seeCars: true }) }}><img src={require('./assets/add.png')} /></button>
 
 
                             </div>
                             <label>Select Car</label>
-
-                            {this.state.profilePic && <img className="inputImg" src={this.state.profilePic} />}
+                            {(this.state.car && !this.state.seeCars) && <img className="inputImg" src={this.state.car || ""} alt="CarImage" />}
                         </span>
+                        {
+                            this.state.seeCars &&
+                            cars.map((car, i) => {
+                                return (
+                                    <div key={i} id="center-btn-container" onClick={() => { this.setState({ carTitle: car.title, seeCars: false, carId: car.id, car: car.image }) }}>
+                                        <img src={car.image || ""} style={img} alt={car.title} />
+                                    </div>
+                                )
+                            })
+                        }
 
                         <span className="form-input-containers marginBttm inputAddbtn">
                             <div className="image-upload" htmlFor="imageUpload">
-                                <label style={{ "text-align": "center",  }} htmlFor="prPicIn">
+                                <label style={{ "textAlign": "center", }} htmlFor="prPicIn">
                                     <img src={require('./assets/add.png')} />
                                 </label>
                                 <input type="file" id="prPicIn" onChange={(e) => { this.fileUploadHandler(e.target.files[0], "profilePic") }} />
@@ -290,7 +300,7 @@ class CarLease extends Component {
 
                         <span className="form-input-containers marginBttm inputAddbtn">
                             <div className="image-upload" htmlFor="imageUpload">
-                                <label style={{ "text-align": "center" }} htmlFor="prID">
+                                <label style={{ "textAlign": "center" }} htmlFor="prID">
                                     <img src={require('./assets/add.png')} />
                                 </label>
                                 <input type="file" id="prID" onChange={(e) => { this.fileUploadHandler(e.target.files[0], "profileID") }} />
@@ -307,29 +317,20 @@ class CarLease extends Component {
                                     <img className="addBtn" src={require('./assets/add.png')} alt="test" />
                                     <div className="btnName">{this.state.carTitle || "Select Car"}</div>
                                 </button>
-                            </div> */}
-
-                        <div className="contentBtn selectCar" >
-                            <a href="#" onClick={() => { this.setState({ seeCars: true }) }}>
+                            </div> <div className="contentBtn selectCar" >
+                            <a href="#" onClick={() => {  }}>
                                 <img src={require('./assets/add.png')} />
                             </a>
                             <p>{this.state.carTitle || "Select Car"}</p>
 
                         </div>
+                        */}
 
 
 
-                        {
-                            this.state.seeCars &&
-                            cars.map((car, i) => {
-                                return (
-                                    <div key={i} id="center-btn-container" onClick={() => { this.setState({ carTitle: car.title, seeCars: false, carId: car.id, car: car.image }) }}>
-                                        <img src={car.image || ""} style={img} alt={car.title} />
-                                    </div>
-                                )
-                            })
-                        }
-                        {(this.state.car && !this.state.seeCars) && <img src={this.state.car || ""} alt="CarImage" />}
+
+
+
 
 
                         <div className="contentBtn">
