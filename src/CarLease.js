@@ -190,12 +190,12 @@ class CarLease extends Component {
                 <div className="rowSelect" key={'invest-' + i}>
                     <div className="memberMesCon">{member.message}</div>
                     <div className="memberMesBtns">
-                        <div className="membersBtn">
+                        {/* <div className="membersBtn">
                             <a href="#" onClick={() => this.setState({ module: "Invest" })}>
 
                                 <p><img src={require('./assets/add.png')} alt="test" /> Vote</p>
                             </a>
-                        </div>
+                        </div> */}
                         <div className="membersBtn">
                             <a href="#" onClick={() => this.setState({ module: "Invest" })}>
 
@@ -221,7 +221,7 @@ class CarLease extends Component {
         return (
             <div>
                 <div>
-                    <h1 id="header">become member</h1>
+                    <h1 id="header">Become Member</h1>
                     <div className="form-row-container">
                         <span className="form-input-containers">
                             <input className="membership-input" maxLength="20" onChange={(e) => this.setState({ username: e.target.value })} type="text" id="username" name="username" placeholder="Username *" />
@@ -244,8 +244,8 @@ class CarLease extends Component {
                         </span>
 
                         <span className="form-input-containers marginBttm inputAddbtn">
-                            <div htmlFor="imageUpload">
-                                <button style={{ "background-color": "Transparent", "outline" : "none", "border" : "none" }} onClick={() => { console.log("I m clicked") }}><img src={require('./assets/add.png')} /></button>
+                            <div style={{ "text-align": "right" }} htmlFor="imageUpload">
+                                <button style={{ "background-color": "Transparent", "outline" : "none", "border" : "none", "padding" : "0" }} onClick={() => { console.log("I m clicked") }}><img src={require('./assets/add.png')} /></button>
 
 
                             </div>
@@ -256,7 +256,7 @@ class CarLease extends Component {
 
                         <span className="form-input-containers marginBttm inputAddbtn">
                             <div className="image-upload" htmlFor="imageUpload">
-                                <label styel={{ "top": "0", "left": "100%" }} htmlFor="prPicIn">
+                                <label style={{ "text-align": "center",  }} htmlFor="prPicIn">
                                     <img src={require('./assets/add.png')} />
                                 </label>
                                 <input type="file" id="prPicIn" onChange={(e) => { this.fileUploadHandler(e.target.files[0], "profilePic") }} />
@@ -268,7 +268,7 @@ class CarLease extends Component {
 
                         <span className="form-input-containers marginBttm inputAddbtn">
                             <div className="image-upload" htmlFor="imageUpload">
-                                <label styel={{ "top": "0", "left": "100%" }} htmlFor="prID">
+                                <label style={{ "text-align": "center" }} htmlFor="prID">
                                     <img src={require('./assets/add.png')} />
                                 </label>
                                 <input type="file" id="prID" onChange={(e) => { this.fileUploadHandler(e.target.files[0], "profileID") }} />
