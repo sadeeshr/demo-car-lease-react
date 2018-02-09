@@ -4,11 +4,7 @@ html{
      height: 100%;
 }
  body{
-<<<<<<< HEAD
     background-image: url("../cryptocurrency.jpg");
-=======
-    background-image: url(https://securecdn.pymnts.com/wp-content/uploads/2017/01/blockchain-data-digest-consortia-fx-patent-intellectual-property-investment.jpg);
->>>>>>> e27c0c698c40223e99b802e4ae4e6a71213b7d3a
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -17,7 +13,6 @@ html{
 
 }
  a{
-<<<<<<< HEAD
      color: #b8b9ba;
 }
  .mainContentCon{
@@ -31,26 +26,6 @@ html{
      background: rgba(156, 156, 156, .8);
      border-radius: 40px;
      border: 2px solid #4c4e54;
-=======
-     color: #67b0ff;
-}
- .mainContentCon{
-     width: 300px;
-     margin: 3% auto;
-     padding: 0px 0px 60px;
-     min-height: 400px;
-     max-height: 550px;
-     overflow-y: auto;
-     overflow-x: hidden;
-     background: #67b0ff;
-     background: -moz-linear-gradient(top, #67b0ff 0%, rgba(255, 255, 255, 0.6) 100%);
-     background: -webkit-linear-gradient(top, #67b0ff 0%, rgba(255, 255, 255, 0.6) 100%);
-     background: linear-gradient(to bottom, rgba(103, 176, 255, 0.9) 0%,rgba(255, 255, 255, 0.6) 100%);
-     background-repeat: no-repeat;
-     background-size: cover;
-     border-radius: 35px;
-     border: 5px solid #9a9a9a;
->>>>>>> e27c0c698c40223e99b802e4ae4e6a71213b7d3a
 }
 
 
@@ -78,15 +53,9 @@ img.addBtn {
 .navCon{
     background: rgba(255, 255, 255, 1);
     height: 50px;
-<<<<<<< HEAD
     width: 330px;
     border-top-left-radius: 40px;
     border-top-right-radius: 40px;
-=======
-    width: 300px;
-    border-top-left-radius: 29px;
-    border-top-right-radius: 29px;
->>>>>>> e27c0c698c40223e99b802e4ae4e6a71213b7d3a
     position: fixed;
 
 
@@ -96,11 +65,7 @@ img.addBtn {
 
 
 .navCon i{
-<<<<<<< HEAD
     color: #b8b9ba;
-=======
-    color: #67b0ff;
->>>>>>> e27c0c698c40223e99b802e4ae4e6a71213b7d3a
     padding-top: 13px;
     display: inline-block;
     margin-left: 0;
@@ -116,15 +81,11 @@ img.addBtn {
      padding-top: 60px;
      padding-left: 0;
      padding-right: 0;
-<<<<<<< HEAD
      margin-bottom: 10px;
-=======
->>>>>>> e27c0c698c40223e99b802e4ae4e6a71213b7d3a
 }
  #header.cusPadding{
      padding-top: 20%;
 }
-<<<<<<< HEAD
 .contentText{
     background: rgba(170, 172, 175, .8);
     border-radius: 10px;
@@ -164,26 +125,6 @@ img.addBtn {
 
 .contentBtn button{
     margin-bottom: 10px;
-=======
-
- .contentText p{
-     text-align: center;
-     font-size: 16px;
-}
- .contentBtn a, .contentBtn button{
-     text-decoration: none;
-     color: #67b0ff;
-     padding: 8px 30px;
-     font-size: 14px;
-     background: #fff;
-     border-radius: 10px;
-     font-weight: bold;
-     outline:0;
-
-
-     border: 0px solid #ececec !important;
-
->>>>>>> e27c0c698c40223e99b802e4ae4e6a71213b7d3a
 }
 
 .btnwithAdd{
@@ -194,7 +135,6 @@ img.addBtn {
 }
  .contentBtn{
      text-align: center;
-<<<<<<< HEAD
      margin-bottom: 10px;
 }
 
@@ -205,10 +145,6 @@ img.addBtn {
 
 }
 
-=======
-     margin-top: 100px;
-}
->>>>>>> e27c0c698c40223e99b802e4ae4e6a71213b7d3a
  .form-input-containers{
     width: 100% !important;
     width: -moz-available !important;
@@ -222,22 +158,14 @@ img.addBtn {
      width: -moz-available !important;
      width: -webkit-fill-available !important;
      text-align: center;
-<<<<<<< HEAD
      color: #b8b9ba;
-=======
-     color: #67b0ff;
->>>>>>> e27c0c698c40223e99b802e4ae4e6a71213b7d3a
      border-radius: 5px !important;
      background: rgba(255, 255, 255, 1) !important;
      border: 1px solid #ececec !important;
 }
  .fileInput{
      border: 1px solid #ececec !important;
-<<<<<<< HEAD
      color: #b8b9ba;
-=======
-     color: #67b0ff;
->>>>>>> e27c0c698c40223e99b802e4ae4e6a71213b7d3a
      padding: 7px 60px !important;
      background: rgba(255, 255, 255, 1);
      border-radius: 5px !important;
@@ -250,11 +178,7 @@ img.addBtn {
 }
  .textbtn{
      margin: 0;
-<<<<<<< HEAD
      color: #b8b9ba;
-=======
-     color: #67b0ff;
->>>>>>> e27c0c698c40223e99b802e4ae4e6a71213b7d3a
      display: inline-block;
      background-color: #ffffff;
      padding: 8px 30px;
@@ -276,11 +200,7 @@ img.addBtn {
      background: rgba(255, 255, 255, 1);
      display: inline-block;
      border-radius: 5px !important;
-<<<<<<< HEAD
      color: #b8b9ba;
-=======
-     color: #67b0ff;
->>>>>>> e27c0c698c40223e99b802e4ae4e6a71213b7d3a
      padding: 10px 15px;
      height: 150px !important;
      width: 100% !important;
@@ -305,11 +225,7 @@ img.addBtn {
 }
 
 .contentCon{
-<<<<<<< HEAD
     padding: 0 15px;
-=======
-    padding: 0 8px;
->>>>>>> e27c0c698c40223e99b802e4ae4e6a71213b7d3a
 }
  .form-input-containers label{
      margin-bottom: 10px !important;
@@ -332,10 +248,6 @@ img.addBtn {
     margin-bottom: 10px ;
     padding: 20px;
     border-radius: 25px;
-<<<<<<< HEAD
-=======
-    background-color: rgba(255, 255, 255, 0.3)
->>>>>>> e27c0c698c40223e99b802e4ae4e6a71213b7d3a
 }
 .carcol{
     width: 44%;
@@ -363,7 +275,6 @@ img.addBtn {
  .tableCon th{
      color: #ffffff;
      background-color: rgba(0, 0, 0, 0);
-<<<<<<< HEAD
      font-size: 15px;
      padding: 0;
      text-align: left;
@@ -410,20 +321,6 @@ img.addBtn {
 
 }
 
-=======
-     font-size: 18px;
-     padding: 0;
-     text-align: left;
-}
- .tableCon td{
-     text-align: center;
-}
- .tableCon tbody tr{
-     background: rgba(255, 255, 255, 0.3);
-     border-radius: 5px !important;
-     color: #fff;
-}
->>>>>>> e27c0c698c40223e99b802e4ae4e6a71213b7d3a
  .login.contentBtn{
      margin-top: 20px;
 }
@@ -440,7 +337,6 @@ img.addBtn {
 }
 
 .tableCon td img{
-<<<<<<< HEAD
     width: 60px;
     height: auto;
 } 
@@ -672,12 +568,3 @@ border: 3px solid rgba(255, 215, 0, 0);
     width: 80px;
     cursor: pointer;
 }
-=======
-    width: 68px;
-    height: auto;
-}
-
-table{
-    margin: 0 5px;
-}
->>>>>>> e27c0c698c40223e99b802e4ae4e6a71213b7d3a
