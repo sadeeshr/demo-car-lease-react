@@ -401,20 +401,27 @@ class CarLease extends Component {
                 <h1 id="header">Invest</h1>
                 <div className="carIntestCon">
                     <div className="carCon">
+                        
+                        <div className="carcol img">
+                            <img src={require('./assets/tesla-models/model_3--side_profile.png')} alt="cars" />
+                        </div>
                         <div className="carcol">
                             <div className="carTitle">Total raised: {cars[this.state.clicked.id - 1].label}</div>
                             <div className="carEth">{cars[this.state.clicked.id - 1].raised} ETH</div>
                             <div className="carPrice">{cars[this.state.clicked.id - 1].price} &#8364;</div>
                         </div>
-                        <div className="carcol img">
-                            <img src={require('./assets/tesla-models/model_3--side_profile.png')} alt="cars" />
-                        </div>
                     </div>
                     <div className="carCon">
-                        {!this.state.eths && <div className="carTitle">"Click On Device"</div>}
-                        {this.state.eth && <div className="carTitle">{this.state.eth}</div>}
-                        {this.state.ethBal && <div className="carEth">{this.state.ethBal} ETH</div>}
+                        
                         <div className="carcol">
+                            {!this.state.eths && <div className="carTitle">"Click On Device"</div>}
+                            {this.state.eth && <div className="carTitle">{this.state.eth}</div>}
+                            {this.state.ethBal && <div className="carEth">{this.state.ethBal} ETH</div>}
+                            <div className="carPrice">0xdf9...321e</div>
+                            <div className="carPrice">5.320 ETH</div>
+                            <div className="carPrice">1174 EVTokens</div>
+                            <div className="carPrice">0.37 Claim ETH  <img src={require('./assets/add.png')} alt="add" /></div>
+                           
                             {
                                 Array.isArray(this.state.eths) ?
                                     <select onChange={(e) => e.target.value !== "" && this.setState({ eth: this.state.eths[e.target.value].account, ethBal: new BigNumber(this.state.eths[e.target.value].balance, 10).mul(1).round(0, BigNumber.ROUND_DOWN).div(1000000000000000000).toString(10) })}>
@@ -433,17 +440,29 @@ class CarLease extends Component {
                         </div>
                     </div>
                     <div className="carCon active">
+                            
+                        <div className="mtableLink">
+                            <div className="mtableTokens">1250 <p>150</p></div>
+                            <div className="mtableUser">Yerontour, Monster</div>
+                            <div className="mtableCar"><img src={require('./assets/tesla-models/model_3--side_profile.png')} alt="carImage" /></div>
+                        </div>
+
+
+                        <div className="carcol img">
+                            <img onClick={this.sendTransaction.bind(this)} src={require('./assets/add.png')} alt="add" />
+                        </div>
                         <div className="carcol">
                             <div className="carTitle">Invest in ETH:
-                        <input className="membership-input" maxLength="20" onChange={(e) => this.setState({ ethInvest: e.target.value })} type="text" placeholder="ETH" />
+                                <input className="membership-input" maxLength="20" onChange={(e) => this.setState({ ethInvest: e.target.value })} type="text" placeholder="ETH" />
                             </div>
-                            <div className="carEth">Receive Tokens</div>
-                            <div className="carPrice">1000</div>
+                            <div className="carEth">Receive Tokens: <div className="carPrice">1000</div></div>
+                            
                         </div>
-                        <div className="carcol img">
-                            <img onClick={this.sendTransaction.bind(this)} src={require('./assets/ok.png')} alt="ok" />
-                        </div>
+                        
                     </div>
+
+
+
                     {this.state.txId && <div className="carCon">
                         <div className="carcol">
                             <div className="carTitle">Transaction ID:</div>
