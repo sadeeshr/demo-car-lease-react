@@ -12,6 +12,10 @@ html{
     color: #fff;
 
 }
+
+:focus{
+    outline: none;
+}
  a{
      color: #b8b9ba;
 }
@@ -62,6 +66,15 @@ img.addBtn {
 
 }
 
+.rowSelect{
+    width: 80%;
+    background: rgba(255,255,255, .5);
+    border-radius: 10px;
+    padding: 10px;
+    margin: 0 0 10px 15%;
+    display: inline-block;
+    
+}
 
 
 .navCon i{
@@ -354,12 +367,15 @@ table tr td {
 }
 
 .memberMesCon{
-    text-align: center;
+    text-align: left;
     font-size: 14px;
+    width: 70%;
+    float: left
 }
 .membersBtn{
     display: inline-block;
     width: 30%;
+
 }
 
 .membersBtn a{
@@ -370,19 +386,19 @@ table tr td {
 .membersBtn p{
     line-height: 20px;
     font-size: 14px;
-   
     float: right;
-    text-align: left;
+    text-align: center;
+    margin: 0;
 }
 
 .memberMesBtns{
     text-align: center;
+    width: 30%;
+    float: right;
 }
 
 .membersBtn img{
-    float: left;
-    padding-right: 5px;
-    width: 20px !important;
+    width: 30px !important;
 }
 
 .tableCon.members tr{
@@ -552,9 +568,9 @@ border: 3px solid rgba(255, 215, 0, 0);
 
 .inputAddbtn img.inputImg{
     float: left;
-    width: 75px;
+    width: 90px;
     border-radius: 10px;
-    max-height: 50px;
+    height: auto;
     overflow: hidden;
 }
 
@@ -567,4 +583,12 @@ border: 3px solid rgba(255, 215, 0, 0);
 {
     width: 80px;
     cursor: pointer;
+}
+
+
+.image-upload label{
+    text-align: right;
+    line-height: 0;
+    float: none;
+    width: initial;
 }
