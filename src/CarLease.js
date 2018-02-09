@@ -9,6 +9,8 @@ import { bindActionCreators } from 'redux'
 import FileBase64 from 'react-file-base64';
 import FileProcessor from 'react-file-processor';
 
+
+
 class CarLease extends Component {
     constructor(props) {
         super(props)
@@ -28,7 +30,27 @@ class CarLease extends Component {
 
     componentDidMount() {
         this.setState({ module: "Main" })
+
+        const { web3 } = window
+        // Check if Web3 has been injected by the browser:
+        if (typeof web3 !== 'undefined') {
+            // You have a web3 browser! Continue below!
+            this.props._initContract(this.props, web3)
+        } else {
+            // Warn the user that they need to get a web3 browser
+            // Or install MetaMask, maybe with a nice graphic.
+            console.log("NO WEB3");
+        }
+
+        setTimeout(() => {
+            [1, 2, 3, 4].map(i => {
+                this.props.contract.cars(i)
+                    .then(car => console.log(`CAR: ${i} => `, car))
+            })
+        }, 2000);
     }
+
+
 
     fetchContractData(module) {
         this.props._fetchContractData(module)
@@ -217,7 +239,7 @@ class CarLease extends Component {
     AddMember = () => {
         const cars = this.props[this.props.module] ? this.props[this.props.module].cars : []
         const img = { "maxHeight": "95px", "maxWidth": "230px", "display": "block", "width": "auto", "height": "auto" }
-        
+
         return (
             <div>
                 <div>
@@ -245,7 +267,7 @@ class CarLease extends Component {
 
                         <span className="form-input-containers marginBttm inputAddbtn">
                             <div htmlFor="imageUpload">
-                                <button style={{ "background-color": "Transparent", "outline" : "none", "border" : "none" }} onClick={() => { console.log("I m clicked") }}><img src={require('./assets/add.png')} /></button>
+                                <button style={{ "background-color": "Transparent", "outline": "none", "border": "none" }} onClick={() => { console.log("I m clicked") }}><img src={require('./assets/add.png')} /></button>
 
 
                             </div>

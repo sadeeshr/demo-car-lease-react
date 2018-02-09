@@ -13,6 +13,12 @@ const rootReducer = (state = initialState, action) => {
                 socket: true
             }
 
+        case 'INIT_CONTRACT':
+            return {
+                ...state,
+                contract: action.payload
+            }
+
         case 'FETCH_CONTRACT_DATA':
             return {
                 ...state,

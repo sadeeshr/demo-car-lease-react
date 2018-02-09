@@ -4,12 +4,22 @@
 |--------------------------------------------------
 */
 import socApi from './lib/Socket';
+import contract from './lib/Contract';
 
 export const _connectSocket = (props) => {
     return (dispatch) => {
         dispatch({
             type: "CONNECT_SOCKET",
             payload: socApi.connectSocket(props)
+        })
+    }
+}
+
+export const _initContract = (props, web3) => {
+    return (dispatch) => {
+        dispatch({
+            type: "INIT_CONTRACT",
+            payload: contract.initContract(props, web3)
         })
     }
 }
