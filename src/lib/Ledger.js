@@ -85,7 +85,6 @@ class Ledger {
     }
 
     getTransactionCount(bip32, address) {
-        let self = this
         let url = "https://" + this.api + ".etherscan.io/api?module=proxy&action=eth_getTransactionCount&address=" + address + "&tag=latest&apikey=" + this.apikey;
         fetch(url)
             .then(result => result.json())

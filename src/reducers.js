@@ -22,13 +22,15 @@ const rootReducer = (state = initialState, action) => {
         case 'FETCH_CONTRACT_DATA':
             return {
                 ...state,
-                module: action.payload
+                module: action.payload,
+                progress : true
             }
 
         case 'CONTRACT_DATA_RESPONSE':
             return {
                 ...state,
-                ...action.payload
+                ...action.payload,
+                progress : false
             }
 
         default:
