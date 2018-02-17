@@ -1,8 +1,8 @@
 const mongo = require('./lib/Mongo');
 const fs = require('fs')
 var options = {
-    key: fs.readFileSync('./src/certs/key.pem'),   //relative path to package json run script
-    cert: fs.readFileSync('./src/certs/crt.pem'),
+    key: fs.readFileSync('./certs/key.pem'),   //relative path to package json run script
+    cert: fs.readFileSync('./certs/crt.pem'),
     requestCert: false,
     rejectUnauthorized: false
 };
@@ -51,7 +51,7 @@ fetchDBQuery = (socket, data) => {
             "_id": 0,
             [data]: 1
         },
-        (err, result) => socket.emit('data', result));
+        (err, result) => {console.log("RESULT: ", result); socket.emit('data', result)});
 }
 
 updateDBQuery = (socket, data) => {
@@ -62,5 +62,5 @@ updateDBQuery = (socket, data) => {
             update: { $set: data },
             new: true
         },
-        (err, result) => socket.emit('data', result));
+        (err, result) => {console.log("RESULT: ",result); socket.emit('data', result)});
 }

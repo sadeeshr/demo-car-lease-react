@@ -2,14 +2,12 @@ import React, { Component } from 'react'
 import ledgerApi from './lib/Ledger';
 import BigNumber from 'bignumber.js';
 import ReactLoading from 'react-loading';
-import util from 'ethereumjs-util';
+// import util from 'ethereumjs-util';
+import util from 'util';
 import * as Actions from './actions'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import FileBase64 from 'react-file-base64';
-import FileProcessor from 'react-file-processor';
-
-
+import md5 from 'md5';
 
 class CarLease extends Component {
     constructor(props) {
@@ -19,6 +17,9 @@ class CarLease extends Component {
                 fname: ""
             },
             progress: false
+        }
+        this.param = {
+            from: "0xc3699ba87C3E96dF9eD66B3B05bf4e80bd688965" // ethereum from account addr, my metamask from addr for testing
         }
     }
 
@@ -58,42 +59,41 @@ class CarLease extends Component {
         this.setState({ module: "Home" })
     }
 
+    fetchTotalAmountRaised = () => {
+        this.props.contract.totalAmountRaised()
+            .then(result => {
+                console.log(result);
+                console.log(util.inspect(result[0].toNumber(), false, null))
+                this.setState({ totalAmountRaised: result[0].toNumber() })
+            })
+    }
+
+    fetchCrowdSaleClosed = () => {
+        this.props.contract.totalAmountRaised()
+            .then(result => {
+                console.log(result);
+                console.log(util.inspect(result[0].toNumber(), false, null))
+                this.state.totalRaised = result[0].toNumber()
+            })
+    }
+
     fileUploadHandler = (file, name) => {
-        // Make new FileReader
         let reader = new FileReader();
-
-        // Convert the file to base64 text
         reader.readAsDataURL(file);
-
-        // on reader load somthing...
-        reader.onload = () => {
-
-            // Make a fileInfo Object
-            // let fileInfo = {
-            //     name: file.name,
-            //     type: file.type,
-            //     size: Math.round(file.size / 1000) + ' kB',
-            //     base64: reader.result,
-            //     file: file,
-            // };
-
-            // Push it to the state
-            this.setState({ [name]: reader.result })
-        }
+        reader.onload = () => this.setState({ [name]: reader.result })
     }
 
     createAccount = () => {
         const self = this.state
         let newMember = {
-            fname: self.fname || '',
-            lname: self.lname || '',
+            username: self.username || '',
+            fullname: self.fullname || '',
             address: self.address || '',
             city: self.city || '',
-            country: self.country || '',
+            county: self.county || '',
             message: self.message || '',
-            car: self.car || '',
-            carTitle: self.carTitle || '',
-            id: self.carId || '',
+            carID: self.carID || '',
+            carPic: self.carPic || '',
             profileID: self.profileID || '',
             profilePic: self.profilePic || ''
         }
@@ -102,9 +102,17 @@ class CarLease extends Component {
         membersList.push(newMember)
         console.log(membersList);
         this.setState({ module: "Members" })
-        let dbVar = this.props.module + '.' + "members"
+        let dbVar = this.props.module + ".members"
         this.props._updateContractData({ [dbVar]: membersList })
         console.log(self);
+    }
+
+    addNewCar = () => {
+        this.props.contract.AddNewCar(this.state.carID, this.state.carHash, this.state.carDealer, this.state.carDriver, this.state.monRedemption, this.param)
+            .then(result => {
+                console.log("ADD NEW CAR RESULT: ", result)
+                this.setState({ module: "AddMember" })
+            })
     }
 
     Home = () => {
@@ -117,12 +125,9 @@ class CarLease extends Component {
                         <p>You can opt for a (private) lease, full time user or prepaid account.</p>
                         <p>An ICO in which 1000+ cars become financed and money for the first 100 has been picked up. It’s a competition, the potential preparer with the most voting is at the top of the list to use a Tesla.</p>
                         <div className="contentBtn bg-none">
-                            <button onClick={() => this.setState({ module: "Members" })}><img src={require('./assets/add.png')} alt="" /></button>
+                            <button onClick={() => this.setState({ module: "Members" })}><img src={require('./assets/add.png')} alt="addM" /></button>
                         </div>
                     </div>
-                    {/* <div className="contentBtn">
-                        <button onClick={() => this.setState({ module: "Members" })}>Members</button>
-                    </div> */}
                 </div>
 
             </div>
@@ -152,7 +157,7 @@ class CarLease extends Component {
                     <div className="contentBtn ">
                         <button onClick={() => this.fetchContractData("westland")} >Westland</button>
                         <button onClick={() => this.fetchContractData("middendelftland")}>Midden Delftland</button>
-                        <button onClick={() => this.setState({ module: "AddMember" })}>Jouw gemeente hier<img src={require('./assets/add.png')} alt="" /></button>
+                        <button onClick={() => this.setState({ module: "AddMember" })}>Jouw gemeente hier<img src={require('./assets/add.png')} alt="addM" /></button>
                     </div>
                 </div>
             </div>
@@ -160,81 +165,82 @@ class CarLease extends Component {
     }
 
     renderMember = (member, i) => {
+        if (this.state.progress) this.setState({ progress: false })
         const img = { "display": "block" }
-        const selected = this.state.clicked.fname === member.fname ? true : false
+        const selected = this.state.clicked.fullname === member.fullname ? true : false
         let memberRows = [
-            // <tr key={i} onClick={() => this.state.clicked !== member ? this.setState({ clicked: member }) : this.setState({ clicked: { fname: "" } })}>
-            //     <td> {member.tokens} <p>{member.earned && "\n" + member.earned}</p></td>
-            //     <td colspan="2"> {member.fname}, {member.lname}</td>
-            //     <td > <img style={img} src={member.car} alt="carImage" /></td>
-            // </tr>
-
-
-            <div className="mtableLink" key={i} onClick={() => this.state.clicked !== member ? this.setState({ clicked: member }) : this.setState({ clicked: { fname: "" } })}>
-                <div className="mtableTokens">{member.tokens} <p>{member.earned && "\n" + member.earned}</p></div>
-                <div className="mtableUser">{member.fname}, {member.lname}</div>
-                <div className="mtableCar"><img style={img} src={member.car} alt="carImage" /></div>
+            <div className="mtableLink" key={i} onClick={() => this.state.clicked !== member ? this.setState({ clicked: member }) : this.setState({ clicked: { fullname: "" } })}>
+                <div className="mtableTokens">{member.tokens || ""} <p>{member.earned || "" && "\n" + member.earned || ""}</p></div>
+                <div className="mtableUser">{member.fullname || member.fname || ""}, {member.county || member.city || ""}</div>
+                <div className="mtableCar"><img style={img} src={member.carPic || ""} alt="carImage" /></div>
             </div>
-
         ]
-        // carImage
-        // if (member.earned) {
-        //     memberRows.push(
-        //         <tr key={'earnings-' + i}>
-        //             <td>{member.earned}
-        //             </td>
-        //         </tr>
-        //     )
-        // }
 
         if (selected) {
             memberRows.push(
 
-                // <tr className="rowSelect" key={'invest-' + i}>
-                //     <td colspan="3" className="memberMesCon">{member.message}</td>
-
-                //     <td colspan="1">
-                //         <div className="membersBtn">
-                //             <a href="#" onClick={() => this.setState({ module: "Invest" })}>
-
-                //                 <p><img src={require('./assets/add.png')} alt="test" /> Vote</p>
-                //             </a>
-                //         </div>
-                //         <div className="membersBtn">
-                //             <a href="#" onClick={() => this.setState({ module: "Invest" })}>
-
-                //                 <p><img src={require('./assets/add.png')} alt="test" /> Invest</p>
-                //             </a>
-                //         </div>
-                //     </td>
-                // </tr>
-
-
                 <div className="rowSelect" key={'invest-' + i}>
                     <div className="memberMesCon">{member.message}</div>
                     <div className="memberMesBtns">
-                        {/* <div className="membersBtn">
-                            <a href="#" onClick={() => this.setState({ module: "Invest" })}>
-
-                                <p><img src={require('./assets/add.png')} alt="test" /> Vote</p>
-                            </a>
-                        </div> */}
                         <div className="membersBtn">
-                            <a href="#" onClick={() => this.setState({ module: "Invest" })}>
-
+                            <a role="button" onClick={() => this.setState({ module: "Invest" })}>
                                 <p><img src={require('./assets/add.png')} alt="test" /> Invest</p>
                             </a>
                         </div>
                     </div>
                 </div>
-
-
-
-
             )
         }
 
         return memberRows
+    }
+
+    AddCar = () => {
+        const img = { "maxHeight": "95px", "maxWidth": "230px", "display": "block", "width": "auto", "height": "auto" }
+
+        return (
+            <div>
+                <div>
+                    <h1 id="header">Add Car</h1>
+                    <div className="form-row-container">
+                        <span className="form-input-containers">
+                            <input className="membership-input" maxLength="20" onChange={(e) => this.setState({ carID: e.target.value })} type="text" placeholder="Car ID" />
+                        </span>
+                        <span className="form-input-containers">
+                            <input className="membership-input" onChange={(e) => this.setState({ carModel: e.target.value, carHash: '0x' + md5(e.target.value + this.state.carID) })} type="text" placeholder="Car Model" />
+                        </span>
+                        <span className="form-input-containers">
+                            <input className="membership-input" onChange={(e) => this.setState({ carDealer: e.target.value })} type="text" placeholder="Car Dealer Address" />
+                        </span>
+                        <span className="form-input-containers">
+                            <input className="membership-input" onChange={(e) => this.setState({ carDriver: e.target.value })} type="text" placeholder="Car Driver Address" />
+                        </span>
+                        <span className="form-input-containers">
+                            <input className="membership-input" onChange={(e) => this.setState({ monRedemption: e.target.value })} type="text" placeholder="Monthly Redemption" />
+                        </span>
+
+                        <span className="form-input-containers">
+                            <input className="membership-input" readOnly maxLength="32" type="text" value={this.state.carHash || ""} placeholder="Car Hash" />
+                        </span>
+                        <span className="form-input-containers marginBttm inputAddbtn">
+                            <div className="image-upload" htmlFor="imageUpload">
+                                <label style={{ "textAlign": "center", }} htmlFor="crPicIn">
+                                    <img src={require('./assets/add.png')} alt="crPic" />
+                                </label>
+                                <input type="file" id="crPicIn" onChange={(e) => { this.fileUploadHandler(e.target.files[0], "carPic") }} />
+                            </div>
+                            <label >Add Car Pic</label>
+
+                            {this.state.carPic && <img className="inputImg" src={this.state.carPic} alt="intI" />}
+                        </span>
+
+                        <div className="contentBtn">
+                            <button onClick={this.addNewCar.bind(this)}>Add New Car</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
     }
 
     AddMember = () => {
@@ -268,70 +274,35 @@ class CarLease extends Component {
 
                         <span className="form-input-containers marginBttm inputAddbtn">
                             <div style={{ "textAlign": "right" }} htmlFor="imageUpload">
-                                <button style={{ "backgroundColor": "Transparent", "outline": "none", "border": "none", "padding": "0" }} onClick={() => { this.setState({ seeCars: true }) }}><img src={require('./assets/add.png')} /></button>
-
-
+                                <button style={{ "backgroundColor": "Transparent", "outline": "none", "border": "none", "padding": "0" }} onClick={() => { this.setState({ module: "AddCar" }) }}><img src={require('./assets/add.png')} alt="addM" /></button>
                             </div>
-                            <label>Select Car</label>
-                            {(this.state.car && !this.state.seeCars) && <img className="inputImg" src={this.state.car || ""} alt="CarImage" />}
+                            <label>Add Car</label>
+                            {this.state.carPic && <img className="inputImg" src={this.state.carPic} alt="ncintI" />}
                         </span>
-                        {
-                            this.state.seeCars &&
-                            cars.map((car, i) => {
-                                return (
-                                    <div key={i} id="center-btn-container" onClick={() => { this.setState({ carTitle: car.title, seeCars: false, carId: car.id, car: car.image }) }}>
-                                        <img src={car.image || ""} style={img} alt={car.title} />
-                                    </div>
-                                )
-                            })
-                        }
 
                         <span className="form-input-containers marginBttm inputAddbtn">
                             <div className="image-upload" htmlFor="imageUpload">
                                 <label style={{ "textAlign": "center", }} htmlFor="prPicIn">
-                                    <img src={require('./assets/add.png')} />
+                                    <img src={require('./assets/add.png')} alt="prPic" />
                                 </label>
                                 <input type="file" id="prPicIn" onChange={(e) => { this.fileUploadHandler(e.target.files[0], "profilePic") }} />
                             </div>
                             <label >Profile Pic</label>
 
-                            {this.state.profilePic && <img className="inputImg" src={this.state.profilePic} />}
+                            {this.state.profilePic && <img className="inputImg" src={this.state.profilePic} alt="intI" />}
                         </span>
 
                         <span className="form-input-containers marginBttm inputAddbtn">
                             <div className="image-upload" htmlFor="imageUpload">
                                 <label style={{ "textAlign": "center" }} htmlFor="prID">
-                                    <img src={require('./assets/add.png')} />
+                                    <img src={require('./assets/add.png')} alt="intI" />
                                 </label>
                                 <input type="file" id="prID" onChange={(e) => { this.fileUploadHandler(e.target.files[0], "profileID") }} />
                             </div>
                             <label >Profile ID</label>
 
-                            {this.state.profileID && <img className="inputImg" src={this.state.profileID} />}
+                            {this.state.profileID && <img className="inputImg" src={this.state.profileID} alt="inputI" />}
                         </span>
-
-
-
-                        {/* <div id="center-btn-container" className="btn-container-member contentBtn">
-                                <button type="button" className="btnwithAdd" onClick={() => { this.setState({ seeCars: true }) }}>
-                                    <img className="addBtn" src={require('./assets/add.png')} alt="test" />
-                                    <div className="btnName">{this.state.carTitle || "Select Car"}</div>
-                                </button>
-                            </div> <div className="contentBtn selectCar" >
-                            <a href="#" onClick={() => {  }}>
-                                <img src={require('./assets/add.png')} />
-                            </a>
-                            <p>{this.state.carTitle || "Select Car"}</p>
-
-                        </div>
-                        */}
-
-
-
-
-
-
-
 
                         <div className="contentBtn">
                             <button onClick={this.createAccount.bind(this)}>Create Account</button>
@@ -342,7 +313,6 @@ class CarLease extends Component {
         )
     }
     Members = () => {
-
         return (
             <div>
                 <h1 id="header">Members</h1>
@@ -362,57 +332,44 @@ class CarLease extends Component {
                     }) : []
                 }
 
-
-                {/* <table className="tableCon members">
-                    <thead>
-                        <tr>
-                            <th>EVTokens </th><th colspan="2">User Town</th><th>Car</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            (this.props.module && this.props[this.props.module]) ? this.props[this.props.module].members.map((member, i) => {
-                                return this.renderMember(member, i)
-                            }) : []
-                        }
-                    </tbody>
-                </table> */}
                 <div className="contentBtn">
                     <input className="searchBtn" type="" name="" placeholder="Search"></input>
 
                 </div>
                 <div className="contentBtn addMe" >
-                    {/* <button type="button" onClick={() => this.setState({ module: "AddMember" })} className="btnwithAdd">
-                        <img className="addBtn" src={require('./assets/add.png')} alt="test" />
-                        <div className="btnName">Add Me</div>
-                    </button> */}
-
-                    <a href="#" onClick={() => this.setState({ module: "AddMember" })}>
-                        <img src={require('./assets/add.png')} />
+                    <a role="button" onClick={() => this.setState({ module: "AddMember" })}>
+                        <img src={require('./assets/add.png')} alt="addM" />
                         <p>Add Me</p></a>
                 </div>
             </div>)
     }
 
     Invest = () => {
+        [1, 2].map(i => {
+            console.log("CONTRACT: Fetching details of CAR ID: => ", i);
+            return this.props.contract.cars(i)
+                .then(car => console.log(`CONTRACT: Details of CAR ID ${i} => `, car))
+        })
+        if (!this.state.totalAmountRaised) this.fetchTotalAmountRaised()
         const cars = this.props[this.props.module].cars
+
         return (
             <div>
                 <h1 id="header">Invest</h1>
                 <div className="carIntestCon">
                     <div className="carCon">
-                        
+
                         <div className="carcol img">
-                            <img src={require('./assets/tesla-models/model_3--side_profile.png')} alt="cars" />
+                            <img src={require('./assets/TeslaRoadster.png')} alt="cars" />
                         </div>
                         <div className="carcol">
-                            <div className="carTitle">Total raised: {cars[this.state.clicked.id - 1].label}</div>
-                            <div className="carEth">{cars[this.state.clicked.id - 1].raised} ETH</div>
-                            <div className="carPrice">{cars[this.state.clicked.id - 1].price} &#8364;</div>
+                            <div className="carTitle">Total raised: {this.state.totalAmountRaised || "0"}</div>
+                            <div className="carEth">1000 ETH</div>
+                            <div className="carPrice">400 &#8364;</div>
                         </div>
                     </div>
                     <div className="carCon">
-                        
+
                         <div className="carcol">
                             {!this.state.eths && <div className="carTitle">"Click On Device"</div>}
                             {this.state.eth && <div className="carTitle">{this.state.eth}</div>}
@@ -420,8 +377,8 @@ class CarLease extends Component {
                             <div className="carPrice">0xdf9...321e</div>
                             <div className="carPrice">5.320 ETH</div>
                             <div className="carPrice">1174 EVTokens</div>
-                            <div className="carPrice">0.37 Claim ETH  <img src={require('./assets/add.png')} alt="add" /></div>
-                           
+                            <div className="carPrice">0.37 Claim ETH  <img onClick={() => { this.setState({ module: "Invoices" }) }} src={require('./assets/add.png')} alt="add" /></div>
+
                             {
                                 Array.isArray(this.state.eths) ?
                                     <select onChange={(e) => e.target.value !== "" && this.setState({ eth: this.state.eths[e.target.value].account, ethBal: new BigNumber(this.state.eths[e.target.value].balance, 10).mul(1).round(0, BigNumber.ROUND_DOWN).div(1000000000000000000).toString(10) })}>
@@ -440,11 +397,11 @@ class CarLease extends Component {
                         </div>
                     </div>
                     <div className="carCon active">
-                            
+
                         <div className="mtableLink">
-                            <div className="mtableTokens">1250 <p>150</p></div>
-                            <div className="mtableUser">Yerontour, Monster</div>
-                            <div className="mtableCar"><img src={require('./assets/tesla-models/model_3--side_profile.png')} alt="carImage" /></div>
+                            <div className="mtableTokens">{this.state.clicked.tokens || ""} <p>{this.state.clicked.earned || ""}</p></div>
+                            <div className="mtableUser">{this.state.clicked.fullname || this.state.clicked.fname || ""}</div>
+                            <div className="mtableCar"><img src={this.state.clicked.carPic || ""} alt="carImage" /></div>
                         </div>
 
 
@@ -456,9 +413,9 @@ class CarLease extends Component {
                                 <input className="membership-input" maxLength="20" onChange={(e) => this.setState({ ethInvest: e.target.value })} type="text" placeholder="ETH" />
                             </div>
                             <div className="carEth">Receive Tokens: <div className="carPrice">1000</div></div>
-                            
+
                         </div>
-                        
+
                     </div>
 
 
@@ -481,49 +438,81 @@ class CarLease extends Component {
         return (
             <div>
                 <h1 id="header">Invoices</h1>
-                <div class="mtableLink">
-                    <div class="mtableInvoices">
+                <div className="mtableLink">
+                    <div className="mtableInvoices">
                         <p>2017 Oktober</p>
                         <p>2500 km stand 550 Euro</p>
                     </div>
-                    <div class="mtableInvoicesIcon">
+                    <div className="mtableInvoicesIcon">
                         <img src={require('./assets/Payed.png')} alt="Payed" />
                     </div>
+                    <div className="carCon active">
+
+                        <div className="mtableLink">
+                            <div className="mtableTokens">1250 <p>150</p></div>
+                            <div className="mtableUser">Yerontour, Monster</div>
+                            <div className="mtableCar"><img src={require('./assets/tesla-models/model_3--side_profile.png')} alt="carImage" /></div>
+                        </div>
+
+
+                        <div className="carcol img">
+                            <img onClick={this.sendTransaction.bind(this)} src={require('./assets/add.png')} alt="add" />
+                        </div>
+                        <div className="carcol">
+                            <div className="carTitle">Invest in ETH:
+                                <input className="membership-input" maxLength="20" onChange={(e) => this.setState({ ethInvest: e.target.value })} type="text" placeholder="ETH" />
+                            </div>
+                            <div className="carEth">Receive Tokens: <div className="carPrice">1000</div></div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    {this.state.txId && <div className="carCon">
+                        <div className="carcol">
+                            <div className="carTitle">Transaction ID:</div>
+                            <div className="carEth">{this.state.txId}</div>
+                            <div className="carPrice"><a target="_blank" href={"https://ropsten.etherscan.io/tx/" + this.state.txId}>Check Transaction </a></div>
+                        </div>
+                    </div>}
+
                 </div>
-                <div class="mtableLink">
-                    <div class="mtableInvoices">
+                <div className="mtableLink">
+                    <div className="mtableInvoices">
                         <p>2017 November</p>
                         <p>5000 km stand 550 Euro</p>
                     </div>
-                    <div class="mtableInvoicesIcon">
+                    <div className="mtableInvoicesIcon">
                         <img src={require('./assets/Payed.png')} alt="Payed" />
                     </div>
                 </div>
 
-                <div class="mtableLink">
-                    <div class="mtableInvoices">
+                <div className="mtableLink">
+                    <div className="mtableInvoices">
                         <p>2017 December</p>
                         <p>7501 km stand 550.10 Euro</p>
                     </div>
-                    <div class="mtableInvoicesIcon">
+                    <div className="mtableInvoicesIcon">
                         <img src={require('./assets/Ether.png')} alt="Ether" />
                     </div>
                 </div>
-                <div class="mtableLink">
-                    <div class="mtableInvoices">
+                <div className="mtableLink">
+                    <div className="mtableInvoices">
                         <p>2018 January</p>
                         <p>7501 km stand 380 Euro</p>
                     </div>
-                    <div class="mtableInvoicesIcon">
+                    <div className="mtableInvoicesIcon">
                         <img src={require('./assets/Ether.png')} alt="Ether" />
                     </div>
                 </div>
-                <div class="mtableLink">
-                    <div class="mtableInvoices">
+                <div className="mtableLink">
+                    <div className="mtableInvoices">
                         <p>2018 February</p>
                         <p>8301 km stand 300 Euro</p>
                     </div>
-                    <div class="mtableInvoicesIcon">
+                    <div className="mtableInvoicesIcon">
                         <img src={require('./assets/Ether.png')} alt="Ether" />
                     </div>
                 </div>
@@ -567,6 +556,9 @@ class CarLease extends Component {
             case "Members":
                 return this.Members()
 
+            case "AddCar":
+                return this.AddCar()
+
             case "AddMember":
                 return this.AddMember()
 
@@ -590,8 +582,10 @@ class CarLease extends Component {
                     <div className="mainContentCon">
                         <div className="navCon">
                             {(["AddMember", "Invest"].indexOf(this.state.module) !== -1) && <i className="flaticon-left-arrow" onClick={() => this.setState({ module: "Members" })}></i>}
+                            {(["AddCar"].indexOf(this.state.module) !== -1) && <i className="flaticon-left-arrow" onClick={() => this.setState({ module: "AddMember" })}></i>}
+                            {(["Invoices"].indexOf(this.state.module) !== -1) && <i className="flaticon-left-arrow" onClick={() => this.setState({ module: "Invest" })}></i>}
                             <div className="float-right">
-                                {this.state.progress && <ReactLoading type="bubbles" color="#444" />}
+                                {(this.state.progress || this.props.progress) && <ReactLoading type="bubbles" color="#444" />}
                                 <i onClick={() => this.setState({ module: "Main" })} className="flaticon-user"></i>
                             </div>
                         </div>
@@ -608,19 +602,3 @@ class CarLease extends Component {
 const mapStateToProps = (state) => state
 const mapActionsToProps = (dispatch) => { return bindActionCreators(Actions, dispatch) }
 export default connect(mapStateToProps, mapActionsToProps)(CarLease)
-
-
-//     <span className = "form-input-containers marginBttm" >
-//         <label className="textbtn" htmlFor="imageUpload">{"Profile Pic"}</label>
-//         <FileBase64 multiple={false} onDone={(file) => this.setState({ profilePic: file.base64 })} />
-//     </span >
-//     <span className="form-input-containers marginBttm">
-//         {this.state.profilePic && <img style={img} src={this.state.profilePic} alt="prPic" />}
-//     </span>
-//     <span className="form-input-containers marginBttm">
-//         <label className="textbtn" htmlFor="imageUpload2">{"Upload ID"}</label>
-//         <FileBase64 multiple={false} onDone={(file) => this.setState({ profileID: file.base64 })} />
-//     </span>
-//     <span className="form-input-containers marginBttm">
-//         {this.state.profileID && <img style={img} src={this.state.profileID} alt="prId" />}
-//     </span>
