@@ -43,13 +43,6 @@ class CarLease extends Component {
             console.log("NO WEB3");
         }
 
-        setTimeout(() => {
-            [1, 2].map(i => {
-                this.props.contract.cars(i)
-                    .then(car => console.log(`CAR: ${i} => `, car))
-            })
-
-        }, 2000);
     }
 
 
