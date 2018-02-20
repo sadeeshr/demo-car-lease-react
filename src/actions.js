@@ -50,3 +50,30 @@ export const _contractDataResponse = (response) => {
         })
     }
 }
+
+export const _getAccount = () => {
+    return (dispatch) => {
+        dispatch({
+            type: "BASE_ACCOUNT",
+            payload: contract.getAccount()
+        })
+    }
+}
+
+export const _getBalance = (address) => {
+    return (dispatch) => {
+        dispatch({
+            type: "GET_ACCOUNT_BALANCE",
+            payload: contract.getBalance(address)
+        })
+    }
+}
+
+export const _setBalance = (data) => {
+    return (dispatch) => {
+        dispatch({
+            type: "SET_ACCOUNT_BALANCE",
+            payload: data
+        })
+    }
+}

@@ -23,14 +23,26 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 module: action.payload,
-                progress : true
+                progress: true
             }
 
         case 'CONTRACT_DATA_RESPONSE':
             return {
                 ...state,
                 ...action.payload,
-                progress : false
+                progress: false
+            }
+
+        case 'BASE_ACCOUNT':
+            return {
+                ...state,
+                account: action.payload
+            }
+
+        case 'SET_ACCOUNT_BALANCE':
+            return {
+                ...state,
+                ...action.payload
             }
 
         default:

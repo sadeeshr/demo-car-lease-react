@@ -8,6 +8,7 @@ import * as Actions from './actions'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import md5 from 'md5';
+import EthJs from 'ethjs-query';
 
 class CarLease extends Component {
     constructor(props) {
@@ -17,9 +18,6 @@ class CarLease extends Component {
                 fname: ""
             },
             progress: false
-        }
-        this.param = {
-            from: "0xc3699ba87C3E96dF9eD66B3B05bf4e80bd688965" // ethereum from account addr, my metamask from addr for testing
         }
     }
 
@@ -35,8 +33,9 @@ class CarLease extends Component {
         const { web3 } = window
         // Check if Web3 has been injected by the browser:
         if (typeof web3 !== 'undefined') {
-            // You have a web3 browser! Continue below!
+            // You have a web3 browser! Initiate Contract Object!
             this.props._initContract(this.props, web3)
+
         } else {
             // Warn the user that they need to get a web3 browser
             // Or install MetaMask, maybe with a nice graphic.
@@ -66,7 +65,7 @@ class CarLease extends Component {
             .then(result => {
                 console.log(result);
                 console.log(util.inspect(result[0].toNumber(), false, null))
-                this.state.totalRaised = result[0].toNumber()
+                this.setState({ totalRaised: result[0].toNumber() })
             })
     }
 
@@ -78,6 +77,17 @@ class CarLease extends Component {
 
     createAccount = () => {
         const self = this.state
+        const module = this.props[this.props.module]
+        let membersList = module.members
+
+        //get Max Car ID from members list
+        let itemArray = membersList ? membersList.map(item => item["carID"]) : []
+        let max = itemArray.length > 0 ? Math.max(...itemArray) : 0
+        let incValue = max + 1
+        console.log("Car ID: Incremented Value: ", incValue)
+        const carID = incValue
+        const carHash = '0x' + md5(this.state.carModel + carID)
+
         let newMember = {
             username: self.username || '',
             fullname: self.fullname || '',
@@ -85,27 +95,30 @@ class CarLease extends Component {
             city: self.city || '',
             county: self.county || '',
             message: self.message || '',
-            carID: self.carID || '',
+            carID: carID || '',
             carPic: self.carPic || '',
             profileID: self.profileID || '',
             profilePic: self.profilePic || ''
         }
-        let membersList = this.props[this.props.module].members
-        console.log(membersList)
         membersList.push(newMember)
         console.log(membersList);
         this.setState({ module: "Members" })
         let dbVar = this.props.module + ".members"
         this.props._updateContractData({ [dbVar]: membersList })
-        console.log(self);
+        this.addNewCar(carID, carHash) // push to blockchain
     }
 
-    addNewCar = () => {
-        this.props.contract.AddNewCar(this.state.carID, this.state.carHash, this.state.carDealer, this.state.carDriver, this.state.monRedemption, this.param)
+    addNewCar = (carID, carHash) => {
+        this.props.contract.AddNewCar(carID, carHash, this.state.carDealer, this.state.carDriver, this.state.monRedemption, { from: this.props.account })
             .then(result => {
                 console.log("ADD NEW CAR RESULT: ", result)
-                this.setState({ module: "AddMember" })
+                // this.setState({ module: "AddMember" })
             })
+    }
+
+    claimRedemption = (carID) => {
+        this.props.contract.claimInterestAndRedemption(carID, { from: this.props.account })
+            .then(result => console.log("CLAIM REDEMPTION RESULT: ", result))
     }
 
     Home = () => {
@@ -163,7 +176,7 @@ class CarLease extends Component {
         const selected = this.state.clicked.fullname === member.fullname ? true : false
         let memberRows = [
             <div className="mtableLink" key={i} onClick={() => this.state.clicked !== member ? this.setState({ clicked: member }) : this.setState({ clicked: { fullname: "" } })}>
-                <div className="mtableTokens">{member.tokens || ""} <p>{member.earned || "" && "\n" + member.earned || ""}</p></div>
+                <div className="mtableTokens">{member.tokens || ""} <p>{(member.earned || "") && ("\n" + (member.earned || ""))}</p></div>
                 <div className="mtableUser">{member.fullname || member.fname || ""}, {member.county || member.city || ""}</div>
                 <div className="mtableCar"><img style={img} src={member.carPic || ""} alt="carImage" /></div>
             </div>
@@ -197,23 +210,23 @@ class CarLease extends Component {
                     <h1 id="header">Add Car</h1>
                     <div className="form-row-container">
                         <span className="form-input-containers">
-                            <input className="membership-input" maxLength="20" onChange={(e) => this.setState({ carID: e.target.value })} type="text" placeholder="Car ID" />
+                            <input className="membership-input" maxLength="20" id="carID" value={this.state.carID || ""} onChange={(e) => this.setState({ carID: e.target.value })} type="text" placeholder="Car ID" />
                         </span>
                         <span className="form-input-containers">
-                            <input className="membership-input" onChange={(e) => this.setState({ carModel: e.target.value, carHash: '0x' + md5(e.target.value + this.state.carID) })} type="text" placeholder="Car Model" />
+                            <input className="membership-input" id="carModel" value={this.state.carModel || ""} onChange={(e) => this.setState({ carModel: e.target.value, carHash: '0x' + md5(e.target.value + this.state.carID) })} type="text" placeholder="Car Model" />
                         </span>
                         <span className="form-input-containers">
-                            <input className="membership-input" onChange={(e) => this.setState({ carDealer: e.target.value })} type="text" placeholder="Car Dealer Address" />
+                            <input className="membership-input" id="carDealer" value={this.state.carDealer || ""} onChange={(e) => this.setState({ carDealer: e.target.value })} type="text" placeholder="Car Dealer Address" />
                         </span>
                         <span className="form-input-containers">
-                            <input className="membership-input" onChange={(e) => this.setState({ carDriver: e.target.value })} type="text" placeholder="Car Driver Address" />
+                            <input className="membership-input" id="carDriver" value={this.state.carDriver || ""} onChange={(e) => this.setState({ carDriver: e.target.value })} type="text" placeholder="Car Driver Address" />
                         </span>
                         <span className="form-input-containers">
-                            <input className="membership-input" onChange={(e) => this.setState({ monRedemption: e.target.value })} type="text" placeholder="Monthly Redemption" />
+                            <input className="membership-input" id="monCons" value={this.state.monRedemption || ""} onChange={(e) => this.setState({ monRedemption: e.target.value })} type="text" placeholder="Monthly Redemption" />
                         </span>
 
                         <span className="form-input-containers">
-                            <input className="membership-input" readOnly maxLength="32" type="text" value={this.state.carHash || ""} placeholder="Car Hash" />
+                            <input className="membership-input" readOnly id="carHash" maxLength="32" type="text" value={this.state.carHash || ""} placeholder="Car Hash" />
                         </span>
                         <span className="form-input-containers marginBttm inputAddbtn">
                             <div className="image-upload" htmlFor="imageUpload">
@@ -246,33 +259,63 @@ class CarLease extends Component {
                     <h1 id="header">Become Member</h1>
                     <div className="form-row-container">
                         <span className="form-input-containers">
-                            <input className="membership-input" maxLength="20" onChange={(e) => this.setState({ username: e.target.value })} type="text" id="username" name="username" placeholder="Username *" />
+                            <input className="membership-input" maxLength="20" value={this.state.username || ""} onChange={(e) => this.setState({ username: e.target.value })} type="text" id="username" name="username" placeholder="Username *" />
                         </span>
                         <span className="form-input-containers">
-                            <input className="membership-input" maxLength="20" onChange={(e) => this.setState({ fullname: e.target.value })} type="text" id="fullname" name="fullname" placeholder="Full Name" />
+                            <input className="membership-input" maxLength="20" value={this.state.fullname || ""} onChange={(e) => this.setState({ fullname: e.target.value })} type="text" id="fullname" name="fullname" placeholder="Full Name" />
                         </span>
                         <span className="form-input-containers">
-                            <input className="membership-input" maxLength="20" onChange={(e) => this.setState({ address: e.target.value })} type="text" id="address" name="address" placeholder="Address" />
+                            <input className="membership-input" maxLength="20" value={this.state.address || ""} onChange={(e) => this.setState({ address: e.target.value })} type="text" id="address" name="address" placeholder="Address" />
                         </span>
                         <span className="form-input-containers">
-                            <input maxLength="30" className="membership-input" onChange={(e) => this.setState({ state: e.target.value })} type="text" id="state" name="state" placeholder="State" />
+                            <input maxLength="30" className="membership-input" value={this.state.state || ""} onChange={(e) => this.setState({ state: e.target.value })} type="text" id="state" name="state" placeholder="State" />
                         </span>
                         <span className="form-input-containers">
-                            <input maxLength="30" className="membership-input" onChange={(e) => this.setState({ county: e.target.value })} type="text" placeholder="County" />
+                            <input maxLength="30" className="membership-input" value={this.state.county || ""} onChange={(e) => this.setState({ county: e.target.value })} type="text" placeholder="County" />
                         </span>
 
                         <span className="form-input-containers">
-                            <textarea className="membership-input" rows="5" onChange={(e) => this.setState({ message: e.target.value })} name="message" placeholder="Your message"></textarea>
+                            <textarea className="membership-input" rows="5" value={this.state.message || ""} onChange={(e) => this.setState({ message: e.target.value })} name="message" placeholder="Your message"></textarea>
                         </span>
 
                         <span className="form-input-containers marginBttm inputAddbtn">
                             <div style={{ "textAlign": "right" }} htmlFor="imageUpload">
-                                <button style={{ "backgroundColor": "Transparent", "outline": "none", "border": "none", "padding": "0" }} onClick={() => { this.setState({ module: "AddCar" }) }}><img src={require('./assets/add.png')} alt="addM" /></button>
+
+                                {/*   <button style={{ "backgroundColor": "Transparent", "outline": "none", "border": "none", "padding": "0" }} onClick={() => { this.setState({ module: "AddCar" }) }}><img src={require('./assets/add.png')} alt="addM" /></button>
                             </div>
                             <label>Add Car</label>
                             {this.state.carPic && <img className="inputImg" src={this.state.carPic} alt="ncintI" />}
-                        </span>
+                        </span>*/}
 
+                                <button style={{ "backgroundColor": "Transparent", "outline": "none", "border": "none", "padding": "0" }}
+                                    onClick={() => { this.setState({ seeCars: true }) }}>
+                                    <img src={require('./assets/add.png')} alt="addM" />
+                                </button>
+                            </div>
+                            <label>Select Car</label>
+                            {(this.state.carPic && !this.state.seeCars) && <img className="inputImg" src={this.state.carPic || ""} alt="CarImage" />}
+                        </span>
+                        {
+                            (this.state.carPic && !this.state.seeCars) &&
+                            <div>
+                                <span className="form-input-containers">
+                                    <input className="membership-input" id="carDriver" value={this.state.carDriver || ""} onChange={(e) => this.setState({ carDriver: e.target.value })} type="text" placeholder="Car Driver Address" />
+                                </span>
+                                <span className="form-input-containers">
+                                    <input className="membership-input" id="monCons" value={this.state.monRedemption || ""} onChange={(e) => this.setState({ monRedemption: e.target.value })} type="text" placeholder="Monthly Redemption" />
+                                </span>
+                            </div>
+                        }
+                        {
+                            this.state.seeCars &&
+                            cars.map((car, i) => {
+                                return (
+                                    <div key={i} id="center-btn-container" onClick={() => { this.setState({ carModel: car.model, seeCars: false, carPic: car.image, carDealer: car.dealer }) }}>
+                                        <img src={car.image || ""} style={img} alt={car.model} />
+                                    </div>
+                                )
+                            })
+                        }
                         <span className="form-input-containers marginBttm inputAddbtn">
                             <div className="image-upload" htmlFor="imageUpload">
                                 <label style={{ "textAlign": "center", }} htmlFor="prPicIn">
@@ -297,15 +340,18 @@ class CarLease extends Component {
                             {this.state.profileID && <img className="inputImg" src={this.state.profileID} alt="inputI" />}
                         </span>
 
-                        <div className="contentBtn">
-                            <button onClick={this.createAccount.bind(this)}>Create Account</button>
-                        </div>
+                        {!this.props.account ? <div className="carTitle">Please Unlock Your Metamask Account.</div> :
+                            <div className="contentBtn">
+                                <button onClick={this.createAccount.bind(this)}>Create Account</button>
+                            </div>}
                     </div>
                 </div>
-            </div>
+            </div >
         )
     }
     Members = () => {
+        if (!this.props.account) this.props._getAccount();
+
         return (
             <div>
                 <h1 id="header">Members</h1>
@@ -338,11 +384,25 @@ class CarLease extends Component {
     }
 
     Invest = () => {
-        [1, 2].map(i => {
-            console.log("CONTRACT: Fetching details of CAR ID: => ", i);
-            return this.props.contract.cars(i)
-                .then(car => console.log(`CONTRACT: Details of CAR ID ${i} => `, car))
-        })
+        if (this.props.account && !this.props[this.props.account]) this.props._getBalance(this.props.account);
+        // [1, 2, 3].map(i => {
+        //     console.log("CONTRACT: Fetching details of CAR ID: => ", i);
+        //     return this.props.contract.cars(i)
+        //         .then(car => {
+        //             console.log("CAR EXISTS ? ", util.inspect(car[0], false, null))
+        //             console.log(`CONTRACT: Details of CAR ID ${i} => `, car)
+        //         })
+        // })
+        const carID = this.state.clicked.carID
+        if (!this.state.unClaimedRedemption)
+            this.props.contract.cars(carID)
+                .then(car => {
+                    console.log("CAR EXISTS ? ", util.inspect(car[0], false, null))
+                    console.log(`CONTRACT: Details of CAR ID ${carID} => `, car)
+                    this.setState({ unClaimedRedemption: car.unclaimedRedemption.toString() })
+                })
+
+        console.log("Unclaimed Redemption", this.state.unClaimedRedemption);
         if (!this.state.totalAmountRaised) this.fetchTotalAmountRaised()
         const cars = this.props[this.props.module].cars
 
@@ -364,13 +424,18 @@ class CarLease extends Component {
                     <div className="carCon">
 
                         <div className="carcol">
-                            {!this.state.eths && <div className="carTitle">"Click On Device"</div>}
+                            {/*!this.state.eths && <div className="carTitle">"Click On Device"</div>*/}
+                            {!this.props.account && <div className="carTitle">Please Unlock Your Metamask Account.</div>}
                             {this.state.eth && <div className="carTitle">{this.state.eth}</div>}
                             {this.state.ethBal && <div className="carEth">{this.state.ethBal} ETH</div>}
-                            <div className="carPrice">0xdf9...321e</div>
-                            <div className="carPrice">5.320 ETH</div>
-                            <div className="carPrice">1174 EVTokens</div>
-                            <div className="carPrice">0.37 Claim ETH  <img onClick={() => { this.setState({ module: "Invoices" }) }} src={require('./assets/add.png')} alt="add" /></div>
+                            {this.props.account &&
+                                <div>
+                                    <div className="carPrice">{this.props.account || ""}</div>
+                                    <div className="carPrice">{this.props[this.props.account] || ""} ETH</div>
+                                    <div className="carPrice">1174 EVTokens</div>
+                                    <div className="carPrice">{this.state.unClaimedRedemption || ""} Claim ETH  <img onClick={() => { this.claimRedemption(this.state.clicked.carID) }} src={require('./assets/add.png')} alt="add" /></div>
+                                </div>
+                            }
 
                             {
                                 Array.isArray(this.state.eths) ?
@@ -386,7 +451,7 @@ class CarLease extends Component {
                             }
                         </div>
                         <div className="carcol img">
-                            <img hidden={Array.isArray(this.state.eths) ? true : false} onClick={this.connectLedger.bind(this)} src={require('./assets/ledgernanos.png')} alt="ledger" />
+                            <img hidden={Array.isArray(this.state.eths) ? true : false} onClick={() => {/*this.connectLedger.bind(this)*/ }} src={require('./assets/ledgernanos.png')} alt="ledger" />
                         </div>
                     </div>
                     <div className="carCon active">
@@ -569,6 +634,16 @@ class CarLease extends Component {
     render() {
         console.log("Render State: ", this.state)
         console.log("Render Props: ", this.props)
+        console.log("Render Account: ", this.props.account)
+        let accountCheckTimer;
+        if (!this.props.account && ["AddMember", "Invest"].indexOf(this.state.module) !== -1) {
+            // Check if metamask is unlocked or try again every 2 secs.
+            accountCheckTimer = setInterval(() => {
+                !this.props.account ? this.props._getAccount() : clearInterval(accountCheckTimer)
+            }, 1000);
+        } else
+            clearInterval(accountCheckTimer)
+
         return (
             <div className="main-body">
                 <div className="content-wrapper">
