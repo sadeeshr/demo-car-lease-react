@@ -33,6 +33,18 @@ const rootReducer = (state = initialState, action) => {
                 progress: false
             }
 
+        case 'SELECT_MEMBER':
+            return {
+                ...state,
+                member: action.payload
+            }
+
+        case 'RESET_MEMBER':
+            return {
+                ...state,
+                member: null
+            }
+
         case 'BASE_ACCOUNT':
             return {
                 ...state,

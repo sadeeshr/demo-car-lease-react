@@ -3,8 +3,8 @@
 | Redux Actions
 |--------------------------------------------------
 */
-import socApi from './lib/Socket';
-import contract from './lib/Contract';
+import socApi from '../lib/Socket';
+import contract from '../lib/Contract';
 
 export const _connectSocket = (props) => {
     return (dispatch) => {
@@ -51,11 +51,37 @@ export const _contractDataResponse = (response) => {
     }
 }
 
+export const _memberSelected = (member) => {
+    return (dispatch) => {
+        dispatch({
+            type: "SELECT_MEMBER",
+            payload: member
+        })
+    }
+}
+
+export const _resetMemberSelection = () => {
+    return (dispatch) => {
+        dispatch({
+            type: "RESET_MEMBER"
+        })
+    }
+}
+
 export const _getAccount = () => {
     return (dispatch) => {
         dispatch({
             type: "BASE_ACCOUNT",
             payload: contract.getAccount()
+        })
+    }
+}
+
+export const _setAccount = (account) => {
+    return (dispatch) => {
+        dispatch({
+            type: "BASE_ACCOUNT",
+            payload: account
         })
     }
 }

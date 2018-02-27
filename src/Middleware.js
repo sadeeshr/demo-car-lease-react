@@ -1,8 +1,10 @@
 const mongo = require('./lib/Mongo');
 const fs = require('fs')
 var options = {
-    key: fs.readFileSync('./certs/key.pem'),   //relative path to package json run script
-    cert: fs.readFileSync('./certs/crt.pem'),
+    key: fs.readFileSync('./certs/blockchain.techiearea.com/key.pem'),   //relative path to package json run script
+    cert: fs.readFileSync('./certs/blockchain.techiearea.com/cert.pem'),
+    // key: fs.readFileSync('./certs/smartjuice.apayaa.com/key.pem'),  
+    // cert: fs.readFileSync('./certs/smartjuice.apayaa.com/cert.pem'),
     requestCert: false,
     rejectUnauthorized: false
 };
