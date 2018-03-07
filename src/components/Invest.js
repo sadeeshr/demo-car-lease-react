@@ -147,9 +147,9 @@ class Invest extends Component {
     // Till Here
 
     eventHandler = () => {
-        const euroTokenTransferEvent = this.props.euroToken.Transfer().new((error, result) => {
-            console.log("WATCH result: ", error, result, euroTokenTransferEvent);
-        });
+        // const euroTokenTransferEvent = this.props.euroToken.Transfer().new((error, result) => {
+        //     console.log("WATCH result: ", error, result, euroTokenTransferEvent);
+        // });
 
 
         // const euroTokenApprovalEvent = this.props.euroToken.Approval().new((error, result) => { });

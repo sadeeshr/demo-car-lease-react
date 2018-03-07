@@ -15,6 +15,7 @@ const mapStateToProps = (state) => {
         cars: state.cars,
         members: state.members,
         members_new: state.members_new,
+        progress: state.progress ? state.progress : false,
         [state.module]: state[state.module]
     }
 }

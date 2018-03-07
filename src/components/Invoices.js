@@ -5,6 +5,7 @@ class Invoices extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            filter: '',
             mileage: 0,
             progress: false
         }

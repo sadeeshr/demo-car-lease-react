@@ -5,7 +5,7 @@
 */
 import socApi from '../lib/Socket';
 import contract from '../lib/Contract';
-import { push } from 'react-router-redux'
+import { goBack } from 'react-router-redux'
 
 export const _connectSocket = (props) => {
     return (dispatch) => {
@@ -179,3 +179,17 @@ export const _euroBalanceOf = (account) => {
 }
 
 
+export const _lcAddNewCar = (carID, carHash, carDealer, carDriver, monRed, account) => {
+    return (dispatch) => {
+        return contract.lcAddNewCar(carID, carHash, carDealer, carDriver, monRed, account)
+            .then(result => {
+                dispatch(goBack())
+                return dispatch(
+                    {
+                        type: "ADD_NEW_CAR_RESULT",
+                        payload: result
+                    }
+                )
+            })
+    }
+}

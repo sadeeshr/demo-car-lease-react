@@ -6,9 +6,9 @@ class AddMember extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            progress : false
+            progress: false
         }
-        
+
     }
 
 
@@ -47,7 +47,7 @@ class AddMember extends Component {
     }
 
     createAccount = () => {
-        this.setState({progress: true})
+        this.setState({ progress: true })
         const self = this.state
         let membersList = this.props.members
 
@@ -83,18 +83,19 @@ class AddMember extends Component {
         }
         this.props._newContractData(data)
         // this.props._updateContractData({ [dbVar]: membersList })
-        this.AddNewCar(carID, carHash) // push to blockchain
+        // this.AddNewCar(carID, carHash) // push to blockchain
+        this.props._lcAddNewCar(carID, carHash, this.state.carDealer, this.state.carDriver, this.state.monRedemption, this.props.account)
     }
 
-    AddNewCar = (carID, carHash) => {
-        this.props.LeaseContract.AddNewCar(carID, carHash, this.state.carDealer, this.state.carDriver, this.state.monRedemption, { from: this.props.account })
-            .then(result => {
-                console.log("ADD NEW CAR RESULT: ", result)
-                this.setState({progress : false})
-                // this.props.history.replace("/members", { AddNewCarTxID: result })
-                this.props.history.goBack()
-            })
-    }
+    // AddNewCar = (carID, carHash) => {
+    //     this.props.LeaseContract.AddNewCar(carID, carHash, this.state.carDealer, this.state.carDriver, this.state.monRedemption, { from: this.props.account })
+    //         .then(result => {
+    //             console.log("ADD NEW CAR RESULT: ", result)
+    //             this.setState({ progress: false })
+    //             // this.props.history.replace("/members", { AddNewCarTxID: result })
+    //             this.props.history.goBack()
+    //         })
+    // }
 
     render() {
         // if (this.props.members_new) this.props.history.goBack()

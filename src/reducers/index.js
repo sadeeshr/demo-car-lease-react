@@ -66,6 +66,7 @@ const rootReducer = (state = initialState, action) => {
         case 'SET_ACCOUNT_BALANCE':
         case 'EV_BALANCE':
         case 'EURO_BALANCE':
+        case 'ADD_NEW_CAR_RESULT':
             return {
                 ...state,
                 ...action.payload

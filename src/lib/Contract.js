@@ -33,6 +33,7 @@ class Contract {
         this.evToken = null
         this.euroToken = null
         this.LeaseContract = null
+        this.crowdsaleClosed = 0
     }
 
     getAccount = () => {
@@ -107,6 +108,9 @@ class Contract {
             })
     }
 
+    /**
+     * Euro Token Methods
+     */
     euroBalanceOf = (account) => {
         console.log(`Fetching EURO Tokens Balance for: ${account}`);
         return this.euroToken.balanceOf(account)
@@ -115,7 +119,75 @@ class Contract {
                 return { euroTokenBalance: result[0].toString() }
             })
     }
-    
+
+    /**
+     * Lease Contract Methods
+     */
+    lcAddNewCar = (carID, carHash, carDealer, carDriver, monRed, account) => {
+        console.log(`Adding New Car for: ${account}`);
+        return this.LeaseContract.AddNewCar(carID, carHash, carDealer, carDriver, monRed, { from: account })
+            .then(result => {
+                console.log(`ADD NEW CAR RESULT: ${result}`);
+                return { addNewCarTxID: result, progress: false }
+            })
+    }
+
+    lcTotalAmountRaised = () => {
+        console.log(`Fetching Total Amount Raised.`);
+        return this.LeaseContract.totalAmountRaised()
+            .then(result => {
+                console.log(`totalAmountRaised RESULT: ${result[0].toNumber()}`);
+                return { totalAmountRaised: result[0].toNumber(), progress: false }
+            })
+    }
+
+    lcCars = (carID) => {
+        console.log(`Fetch Car Details for ID: ${carID}`);
+        return this.LeaseContract.cars(carID)
+            .then(result => {
+                console.log(`Details of CAR ID ${carID} => `, result);
+                if (result.crowdsaleClosed)
+                    this.crowdsaleClosed = this.crowdsaleClosed + 1
+                return { crowdsaleClosed: this.crowdsaleClosed, progress: false }
+            })
+    }
+
+    lcRaiseFundsForCar = (carID, amount, account) => {
+        console.log(`Calling Raise Funds For Car ID: ${carID}`);
+        return this.LeaseContract.raiseFundsForCar(carID, amount || "0", { from: account })
+            .then(result => {
+                console.log(`raiseFundsForCar RESULT: ${result}`);
+                return { raiseFundsForCarTxID: result, progress: false }
+            })
+    }
+
+    lcPayInterestAndRedemption = (carID, month, milege) => {
+        console.log(`Calling Pay Interest And Redemption.`);
+        return this.LeaseContract.payInterestAndRedemption(carID, month || "0", milege || "0")
+            .then(result => {
+                console.log(`payInterestAndRedemption RESULT: ${result}`);
+                return { payInterestAndRedemptionTxID: result, progress: false }
+            })
+    }
+
+    lcReadInvestorToClaim = (carID, account) => {
+        console.log(`Calling Read Investor To Claim.`);
+        return this.LeaseContract.readInvestorToClaim(account, carID)
+            .then(result => {
+                console.log(`readInvestorToClaim RESULT: ${result[0].toString()}`);
+                return { unClaimedRedemption: result[0].toString(), progress: false }
+            })
+    }
+
+    lcClaimInterestAndRedemption = (carID, account) => {
+        console.log(`Calling Claim Interest And Redemption.`);
+        return this.LeaseContract.claimInterestAndRedemption(carID, { from: account })
+            .then(result => {
+                console.log(`claimInterestAndRedemption RESULT: ${result}`);
+                return { claimInterestAndRedemptionTxID: result, progress: false }
+            })
+    }
 }
+
 const contract = new Contract()
 export default contract
