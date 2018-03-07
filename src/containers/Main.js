@@ -9,7 +9,7 @@ import Main from '../components/Main';
 const mapStateToProps = (state) => {
     console.log("State: ", state)
     return {
-        //isAuthenticated: state.auth.isAuthenticated
+        account : state.account
     }
 }
 const mapActionsToProps = (dispatch) => { return bindActionCreators(Actions, dispatch) }

@@ -9,21 +9,32 @@ const rootReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'CONNECT_SOCKET':
             return {
+                ...state
+            }
+
+        case 'SOCKET_STATUS':
+            return {
                 ...state,
-                socket: true
+                socket: action.payload
             }
 
         case 'INIT_CONTRACT':
             return {
                 ...state,
-                contract: action.payload
+                ...action.payload
+            }
+
+        case 'NEW_CONTRACT_DATA':
+            return {
+                ...state,
+                progress: true
             }
 
         case 'FETCH_CONTRACT_DATA':
             return {
                 ...state,
-                module: action.payload,
-                progress: true
+                progress: true,
+                module: action.payload
             }
 
         case 'CONTRACT_DATA_RESPONSE':
@@ -36,7 +47,13 @@ const rootReducer = (state = initialState, action) => {
         case 'SELECT_MEMBER':
             return {
                 ...state,
-                member: action.payload
+                member: state.member !== action.payload ? action.payload : null
+            }
+
+        case 'SELECT_CAR':
+            return {
+                ...state,
+                car: action.payload
             }
 
         case 'RESET_MEMBER':
@@ -45,16 +62,23 @@ const rootReducer = (state = initialState, action) => {
                 member: null
             }
 
-        case 'BASE_ACCOUNT':
-            return {
-                ...state,
-                account: action.payload
-            }
-
+        case 'SET_BASE_ACCOUNT':
         case 'SET_ACCOUNT_BALANCE':
+        case 'EV_BALANCE':
+        case 'EURO_BALANCE':
             return {
                 ...state,
                 ...action.payload
+            }
+
+        case 'EV_MYTOKENS':
+            return {
+                ...state,
+                evTokens: {
+                    ...state.evTokens,
+                    ...action.payload
+                }
+
             }
 
         default:

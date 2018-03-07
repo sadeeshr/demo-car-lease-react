@@ -12,24 +12,46 @@ import util from 'util';
 
 class Contract {
     constructor() {
-        this.address = "0x2d8F5c6ca4f54b6affcc0cB7Dee7246374BAC2c1"   // SMART CONTRACT ADDRESS
+        this.contracts = {
+            euroToken: {
+                address: "0x84F71cCa581872a4a9b1F33547674B4e8765E581",
+                abi: [{ "constant": false, "inputs": [{ "name": "spender", "type": "address" }, { "name": "value", "type": "uint256" }], "name": "approve", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [{ "name": "", "type": "uint256", "value": "1000000" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "transferFrom", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }, { "name": "", "type": "address" }], "name": "_approvals", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "tokenOwner", "type": "address" }], "name": "balanceOf", "outputs": [{ "name": "balance", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "transfer", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "from", "type": "address" }, { "indexed": true, "name": "to", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Transfer", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "owner", "type": "address" }, { "indexed": true, "name": "spender", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Approval", "type": "event" }]
+            },
+            evToken: {
+                address: "0x23FA54b5114dc5F038f754e8c79C6A3E46aCBe8C",
+                abi: [{ "constant": false, "inputs": [{ "name": "_to", "type": "address" }, { "name": "_tokenId", "type": "uint256" }, { "name": "_value", "type": "uint256" }], "name": "transfer", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_to", "type": "address" }, { "name": "_tokenId", "type": "uint256" }, { "name": "_value", "type": "uint256" }], "name": "mintToken", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }], "name": "balanceOf", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "myAddress", "type": "address" }, { "name": "TokenId", "type": "uint256" }], "name": "myTokens", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "inputs": [], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "_from", "type": "address" }, { "indexed": true, "name": "_to", "type": "address" }, { "indexed": false, "name": "_tokenId", "type": "uint256" }, { "indexed": false, "name": "_value", "type": "uint256" }], "name": "Transfer", "type": "event" }]
+            },
+            LeaseContract: {
+                address: "0x2d8F5c6ca4f54b6affcc0cB7Dee7246374BAC2c1",
+                abi: [{ "constant": false, "inputs": [{ "name": "carID", "type": "uint256" }, { "name": "amount", "type": "uint256" }], "name": "raiseFundsForCar", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "totalAmountRaised", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "carID", "type": "uint256" }], "name": "claimInterestAndRedemption", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "euroToken2", "outputs": [{ "name": "", "type": "address", "value": "0x84f71cca581872a4a9b1f33547674b4e8765e581" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }], "name": "balanceOf", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "carID", "type": "uint256" }, { "name": "month", "type": "uint256" }, { "name": "milages", "type": "uint256" }], "name": "payInterestAndRedemption", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "ownershipToken", "outputs": [{ "name": "", "type": "address", "value": "0x23fa54b5114dc5f038f754e8c79c6a3e46acbe8c" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "investorAddress", "type": "address" }, { "name": "carID", "type": "uint256" }], "name": "readInvestorToClaim", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "carID", "type": "uint256" }, { "name": "_carHash", "type": "bytes32" }, { "name": "_carDealer", "type": "address" }, { "name": "_carDriver", "type": "address" }, { "name": "_monthlyRedemption", "type": "uint256" }], "name": "AddNewCar", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "carID", "type": "uint256" }], "name": "buyCarWhenFundsRaised", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "uint256" }], "name": "cars", "outputs": [{ "name": "exist", "type": "bool", "value": false }, { "name": "crowdsaleClosed", "type": "bool", "value": false }, { "name": "carDealerAddress", "type": "address", "value": "0x0000000000000000000000000000000000000000" }, { "name": "carDriver", "type": "address", "value": "0x0000000000000000000000000000000000000000" }, { "name": "carContractHash", "type": "bytes32", "value": "0x0000000000000000000000000000000000000000000000000000000000000000" }, { "name": "carRaised", "type": "uint256", "value": "0" }, { "name": "carMilages", "type": "uint256", "value": "0" }, { "name": "payMonthNr", "type": "uint256", "value": "0" }, { "name": "monthlyRedemption", "type": "uint256", "value": "0" }, { "name": "totalRedemption", "type": "uint256", "value": "0" }, { "name": "unclaimedRedemption", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "inputs": [{ "name": "addressOfEvToken", "type": "address", "index": 0, "typeShort": "address", "bits": "", "displayName": "address Of Ev Token", "template": "elements_input_address", "value": "0x23FA54b5114dc5F038f754e8c79C6A3E46aCBe8C" }, { "name": "addressOfEuroToken", "type": "address", "index": 1, "typeShort": "address", "bits": "", "displayName": "address Of Euro Token", "template": "elements_input_address", "value": "0x84F71cCa581872a4a9b1F33547674B4e8765E581" }], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "_to", "type": "address" }, { "indexed": false, "name": "_value", "type": "uint256" }, { "indexed": false, "name": "isContribution", "type": "bool" }], "name": "FundTransfer", "type": "event" }]
+            }
+        }
         this.account = null
         this.balance = null
         this.eth = null
         this.props = null
-        // ABI interface
-        this.abi = [ { "constant": false, "inputs": [ { "name": "carID", "type": "uint256" }, { "name": "amount", "type": "uint256" } ], "name": "raiseFundsForCar", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "totalAmountRaised", "outputs": [ { "name": "", "type": "uint256", "value": "0" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "carID", "type": "uint256" } ], "name": "claimInterestAndRedemption", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "euroToken2", "outputs": [ { "name": "", "type": "address", "value": "0x84f71cca581872a4a9b1f33547674b4e8765e581" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" } ], "name": "balanceOf", "outputs": [ { "name": "", "type": "uint256", "value": "0" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "carID", "type": "uint256" }, { "name": "month", "type": "uint256" }, { "name": "milages", "type": "uint256" } ], "name": "payInterestAndRedemption", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "ownershipToken", "outputs": [ { "name": "", "type": "address", "value": "0x23fa54b5114dc5f038f754e8c79c6a3e46acbe8c" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [ { "name": "investorAddress", "type": "address" }, { "name": "carID", "type": "uint256" } ], "name": "readInvestorToClaim", "outputs": [ { "name": "", "type": "uint256", "value": "0" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "carID", "type": "uint256" }, { "name": "_carHash", "type": "bytes32" }, { "name": "_carDealer", "type": "address" }, { "name": "_carDriver", "type": "address" }, { "name": "_monthlyRedemption", "type": "uint256" } ], "name": "AddNewCar", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [ { "name": "carID", "type": "uint256" } ], "name": "buyCarWhenFundsRaised", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "uint256" } ], "name": "cars", "outputs": [ { "name": "exist", "type": "bool", "value": false }, { "name": "crowdsaleClosed", "type": "bool", "value": false }, { "name": "carDealerAddress", "type": "address", "value": "0x0000000000000000000000000000000000000000" }, { "name": "carDriver", "type": "address", "value": "0x0000000000000000000000000000000000000000" }, { "name": "carContractHash", "type": "bytes32", "value": "0x0000000000000000000000000000000000000000000000000000000000000000" }, { "name": "carRaised", "type": "uint256", "value": "0" }, { "name": "carMilages", "type": "uint256", "value": "0" }, { "name": "payMonthNr", "type": "uint256", "value": "0" }, { "name": "monthlyRedemption", "type": "uint256", "value": "0" }, { "name": "totalRedemption", "type": "uint256", "value": "0" }, { "name": "unclaimedRedemption", "type": "uint256", "value": "0" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "inputs": [ { "name": "addressOfEvToken", "type": "address", "index": 0, "typeShort": "address", "bits": "", "displayName": "address Of Ev Token", "template": "elements_input_address", "value": "0x23FA54b5114dc5F038f754e8c79C6A3E46aCBe8C" }, { "name": "addressOfEuroToken", "type": "address", "index": 1, "typeShort": "address", "bits": "", "displayName": "address Of Euro Token", "template": "elements_input_address", "value": "0x84F71cCa581872a4a9b1F33547674B4e8765E581" } ], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [ { "indexed": false, "name": "_to", "type": "address" }, { "indexed": false, "name": "_value", "type": "uint256" }, { "indexed": false, "name": "isContribution", "type": "bool" } ], "name": "FundTransfer", "type": "event" } ]
+        this.evToken = null
+        this.euroToken = null
+        this.LeaseContract = null
     }
 
     getAccount = () => {
-        if (!this.account) {
-            this.eth.coinbase().then(account => { 
-                console.log("ACCOUNT: ", account); 
-                this.account = account; 
-                return account 
-            })
-        } else
-            return this.account
+        // const self = this
+        let accountTimer = setInterval(() => {
+            // console.log("Checking Metamask Account");
+            if (!this.account) {
+                this.eth.coinbase().then(account => {
+                    if (account) {
+                        console.log("ACCOUNT: ", account);
+                        this.account = account;
+                        this.props._setAccount({ account })
+                        clearInterval(accountTimer)
+                    }
+                })
+            } else
+                clearInterval(accountTimer)
+        }, 1000)
+
     }
 
     getBalance = (address) => {
@@ -51,12 +73,49 @@ class Contract {
         this.getAccount()
         // console.log("ACC: ", account);
         const contract = new EthJsContract(eth)
-        const LeaseContract = contract(this.abi)
-        const leaseContract = LeaseContract.at(this.address)
-        console.log("LEASE CONTRACT: ", leaseContract);
-        return leaseContract
+        // const LeaseContract = 
+        this.euroToken = contract(this.contracts.euroToken.abi).at(this.contracts.euroToken.address)
+        this.evToken = contract(this.contracts.evToken.abi).at(this.contracts.evToken.address)
+        this.LeaseContract = contract(this.contracts.LeaseContract.abi).at(this.contracts.LeaseContract.address)
+
+        return {
+            euroToken: this.euroToken,
+            evToken: this.evToken,
+            LeaseContract: this.LeaseContract
+        }
     }
 
+    /**
+     * EV Token Methods
+     */
+    evMyTokens = (account, carID) => {
+        console.log(`Fetching EV Tokens for: ${account}, carID: ${carID}`);
+        return this.evToken.myTokens(account, carID)
+            .then(result => {
+                console.log(`EV TOKENS: ${result[0].toString()}`);
+                // this.setState({ ["evToken_" + carID]: result[0].toString() })
+                return { [carID]: result[0].toString() }
+            })
+    }
+
+    evBalanceOf = (account) => {
+        console.log(`Fetching EV Tokens Balance for: ${account}`);
+        return this.evToken.balanceOf(account)
+            .then(result => {
+                console.log(`EV TOKENS BALANCE: ${result[0].toString()}`);
+                return { evTokenBalance: result[0].toString() }
+            })
+    }
+
+    euroBalanceOf = (account) => {
+        console.log(`Fetching EURO Tokens Balance for: ${account}`);
+        return this.euroToken.balanceOf(account)
+            .then(result => {
+                console.log(`EURO TOKENS BALANCE: ${result[0].toString()}`);
+                return { euroTokenBalance: result[0].toString() }
+            })
+    }
+    
 }
 const contract = new Contract()
 export default contract

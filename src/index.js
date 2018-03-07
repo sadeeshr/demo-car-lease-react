@@ -42,17 +42,7 @@ const App = () => {
             <ConnectedRouter history={history}>
                 <div className="main-body">
                     <div className="content-wrapper">
-                        <div className="mainContentCon">
-                            <div className="navCon">
-                                <i className="flaticon-left-arrow" onClick={() => history.goBack()}></i>
-                                <div className="float-right">
-                                    <i onClick={() => history.push("/")} className="flaticon-user"></i>
-                                </div>
-                            </div>
-                            <div className="contentCon">
-                                {routes}
-                            </div>
-                        </div>
+                        {routes}
                     </div>
                 </div>
 

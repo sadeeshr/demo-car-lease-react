@@ -2,8 +2,8 @@ import io from 'socket.io-client';
 
 // let agent = new https.Agent();
 
-const SOCKET_URL = "https://blockchain.techiearea.com:3456";
-//const SOCKET_URL = "https://smartjuice.apayaa.com:3456";
+// const SOCKET_URL = "https://blockchain.techiearea.com:3456";
+const SOCKET_URL = "https://smartjuice.apayaa.com:3456";
 const SOCKET_OPTIONS = {
     // secure: true,
     // rejectUnauthorized: false
@@ -24,22 +24,28 @@ class Socket {
         this.bindSocket(this.socket)
     }
 
-    fetchData = (module) => {
-        this.socket.emit("fetch", module)
-        return module
+    newData = (data) => {
+        this.socket.emit("new", data)
+        return data
+    }
+
+    fetchData = (data) => {
+        this.socket.emit("fetch", data)
+        return data.query.module
     }
 
     updateData = (data) => {
         this.socket.emit("update", data)
-        return module
+        return data
     }
 
     bindSocket = (socket) => {
         this.socket.on('response', (data) => console.log(data))
-        this.socket.on('connect', () => { console.log("Online now, Socket ID: ", socket.id); })
-        this.socket.on('disconnect', () => console.log("Offline now"))
+        this.socket.on('connect', () => { console.log("Online now, Socket ID: ", socket.id); this.props._socketStatus(true) })
+        this.socket.on('disconnect', () => { console.log("Offline now"); this.props._socketStatus(true) })
         this.socket.on('data', data => {
-            this.props._contractDataResponse(data);
+            console.log("DATA: ", data);
+            this.props._contractDataResponse({ [data.module]: data.result });
         })
     }
 

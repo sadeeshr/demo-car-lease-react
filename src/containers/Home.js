@@ -9,7 +9,7 @@ import Home from '../components/Home';
 const mapStateToProps = (state) => {
     console.log("State: ", state)
     return {
-        //isAuthenticated: state.auth.isAuthenticated
+        socketConnection : state.socket
     }
 }
 const mapActionsToProps = (dispatch) => { return bindActionCreators(Actions, dispatch) }

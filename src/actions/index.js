@@ -5,12 +5,22 @@
 */
 import socApi from '../lib/Socket';
 import contract from '../lib/Contract';
+import { push } from 'react-router-redux'
 
 export const _connectSocket = (props) => {
     return (dispatch) => {
         dispatch({
             type: "CONNECT_SOCKET",
             payload: socApi.connectSocket(props)
+        })
+    }
+}
+
+export const _socketStatus = (status) => {
+    return (dispatch) => {
+        dispatch({
+            type: "SOCKET_STATUS",
+            payload: status
         })
     }
 }
@@ -24,11 +34,20 @@ export const _initContract = (props, web3) => {
     }
 }
 
-export const _fetchContractData = (module) => {
+export const _fetchContractData = (data) => {
     return (dispatch) => {
         dispatch({
             type: "FETCH_CONTRACT_DATA",
-            payload: socApi.fetchData(module)
+            payload: socApi.fetchData(data)
+        })
+    }
+}
+
+export const _newContractData = (data) => {
+    return (dispatch) => {
+        dispatch({
+            type: "NEW_CONTRACT_DATA",
+            payload: socApi.newData(data)
         })
     }
 }
@@ -60,6 +79,15 @@ export const _memberSelected = (member) => {
     }
 }
 
+export const _carSelected = (car) => {
+    return (dispatch) => {
+        dispatch({
+            type: "SELECT_CAR",
+            payload: car
+        })
+    }
+}
+
 export const _resetMemberSelection = () => {
     return (dispatch) => {
         dispatch({
@@ -68,19 +96,19 @@ export const _resetMemberSelection = () => {
     }
 }
 
-export const _getAccount = () => {
-    return (dispatch) => {
-        dispatch({
-            type: "BASE_ACCOUNT",
-            payload: contract.getAccount()
-        })
-    }
-}
+// export const _getAccount = () => {
+//     return (dispatch) => {
+//         dispatch({
+//             type: "BASE_ACCOUNT",
+//             payload: contract.getAccount()
+//         })
+//     }
+// }
 
 export const _setAccount = (account) => {
     return (dispatch) => {
         dispatch({
-            type: "BASE_ACCOUNT",
+            type: "SET_BASE_ACCOUNT",
             payload: account
         })
     }
@@ -103,3 +131,51 @@ export const _setBalance = (data) => {
         })
     }
 }
+
+/**
+ * EV Token Actions
+ */
+
+export const _evMyTokens = (account, carID) => {
+    return (dispatch) => {
+        return contract.evMyTokens(account, carID)
+            .then(result =>
+                dispatch(
+                    {
+                        type: "EV_MYTOKENS",
+                        payload: result
+                    }
+                )
+            )
+    }
+}
+
+export const _evBalanceOf = (account) => {
+    return (dispatch) => {
+        return contract.evBalanceOf(account)
+            .then(result =>
+                dispatch(
+                    {
+                        type: "EV_BALANCE",
+                        payload: result
+                    }
+                )
+            )
+    }
+}
+
+export const _euroBalanceOf = (account) => {
+    return (dispatch) => {
+        return contract.euroBalanceOf(account)
+            .then(result =>
+                dispatch(
+                    {
+                        type: "EURO_BALANCE",
+                        payload: result
+                    }
+                )
+            )
+    }
+}
+
+

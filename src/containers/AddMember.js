@@ -9,9 +9,12 @@ import AddMember from '../components/AddMember';
 const mapStateToProps = (state) => {
     console.log("State: ", state)
     return {
-        contract: state.contract,
+        LeaseContract: state.LeaseContract,
         account: state.account,
         module: state.module,
+        cars: state.cars,
+        members: state.members,
+        members_new: state.members_new,
         [state.module]: state[state.module]
     }
 }

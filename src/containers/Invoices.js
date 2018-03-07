@@ -9,7 +9,10 @@ import Invoices from '../components/Invoices';
 const mapStateToProps = (state) => {
     console.log("State: ", state)
     return {
-        //isAuthenticated: state.auth.isAuthenticated
+        LeaseContract: state.LeaseContract,
+        account: state.account,
+        car : state.car,
+        member: state.member
     }
 }
 const mapActionsToProps = (dispatch) => { return bindActionCreators(Actions, dispatch) }

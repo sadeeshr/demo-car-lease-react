@@ -8,11 +8,14 @@ import Members from '../components/Members';
  */
 const mapStateToProps = (state) => {
     console.log("State: ", state)
+
     return {
+        evToken: state.evToken,
+        evTokens: state.evTokens,
         progress: state.progress,
-        contract: state.contract,
         account: state.account,
         member: state.member,
+        members: state.members,
         [state.module]: state[state.module]
     }
 }
