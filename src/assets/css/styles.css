@@ -24,7 +24,7 @@ html{
      margin: 3% auto;
      padding: 0px 0px 60px;
      min-height: 400px;
-     max-height: 580px;
+     max-height: 550px;    /* changing this from 580px to avoid div overflow problem on laptop screens */
      overflow-y: auto;
      overflow-x: hidden;
      background: rgba(156, 156, 156, .8);
@@ -161,15 +161,15 @@ img.addBtn {
  .form-input-containers{
     width: 100% !important;
     width: -moz-available !important;
-    width: -webkit-fill-available !important;
+    width: -webkit-stretch !important;
      margin: 0px 0px 10px 0 !important;
      padding: 0px 0px !important;
      display: block;
 }
  .membership-input{
-     width: 100% !important;
+     width: 90% !important;
      width: -moz-available !important;
-     width: -webkit-fill-available !important;
+     width: -webkit-stretch !important;
      text-align: center;
      color: #b8b9ba;
      border-radius: 5px !important;
@@ -185,7 +185,7 @@ img.addBtn {
      padding: 7px 4em !important;
      width: 100%;
      width: -moz-available;
-     width: -webkit-fill-available;
+     width: -webkit-stretch;
      display: none;
      margin: 0 0 0 0 !important;
 }
@@ -204,7 +204,7 @@ img.addBtn {
      float: none;
      width: 100%;
      width: -moz-available;
-     width: -webkit-fill-available;
+     width: -webkit-stretch;
      margin-bottom: 10px;
      margin-left: 0;
 }
@@ -218,7 +218,7 @@ img.addBtn {
      height: 150px !important;
      width: 100% !important;
      width: -moz-available !important;
-     width: -webkit-fill-available !important;
+     width: -webkit-stretch !important;
      margin: 0px 0 0 0px !important;
      margin: 0 !important;
      border: 1px solid #ececec !important;
@@ -245,7 +245,7 @@ img.addBtn {
      display: inline-block;
      width: 100%;
      width: -moz-available;
-     width: -webkit-fill-available;
+     width: -webkit-stretch;
 }
  .form-row-container{
      display: block;
@@ -495,12 +495,14 @@ table tr td {
     float: left;
     padding-right: 10px;
     text-align: right;
+    cursor: default;
 }
 
 .mtableUser{
     width: 145px;
     float: left;
     padding: 0 10px;
+    cursor: default;
 }
 
 .mtableCar{
@@ -549,7 +551,8 @@ border: 3px solid rgba(255, 215, 0, 0);
 }
 
 #center-btn-container img{
-    margin: 0 auto;
+    float: left;
+    /*margin: 0 auto;*/
 }
 
 .mtableInvoicesIcon{
