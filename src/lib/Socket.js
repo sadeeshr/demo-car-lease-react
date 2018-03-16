@@ -16,6 +16,7 @@ class Socket {
     constructor() {
         this.socket = null;
         this.props = null;
+        this.account = null;
     }
 
     connectSocket = (props) => {
@@ -29,7 +30,8 @@ class Socket {
         return data
     }
 
-    fetchData = (data) => {
+    fetchData = (account, data) => {
+        this.account = account
         this.socket.emit("fetch", data)
         return data.query.module
     }
@@ -44,8 +46,8 @@ class Socket {
         this.socket.on('connect', () => { console.log("Online now, Socket ID: ", socket.id); this.props._socketStatus(true) })
         this.socket.on('disconnect', () => { console.log("Offline now"); this.props._socketStatus(true) })
         this.socket.on('data', data => {
-            console.log("DATA: ", data);
-            this.props._contractDataResponse({ [data.module]: data.result });
+            console.log("DATA: ", data, this.account);
+            this.props._contractDataResponse(this.account, { [data.module]: data.result });
         })
     }
 

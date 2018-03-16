@@ -13,12 +13,13 @@ class Members extends Component {
 
     componentWillMount() {
         console.log("Members Props", this.props);
+        if (this.props.reloadTokens) this.fetchMembers()
     }
 
     componentDidMount() {
         if (!this.props.members) {
             this.fetchMembers()
-        } else this.setState({ members: this.props.members })
+        }
     }
 
     fetchMembers = () => {
@@ -37,12 +38,31 @@ class Members extends Component {
                 module: 1
             }
         }
-        this.props._fetchContractData(data)
+        this.props._fetchContractData(this.props.account, data)
     }
 
     componentWillReceiveProps(nextProps) {
+        this.props = nextProps
         console.log("Members Update Props", nextProps);
-        if (nextProps.members) this.setState({ members: nextProps.members })
+        // if (this.props.members && ) this.props._reloadTokens()
+        if (this.props.reloadTokens) this.fetchMembers()
+        if (this.props.members) {
+            console.log("######## SORTED MEMBERS ###########", this.sortMembers());
+            // if (!this.props.lcCars)
+            // for (let i = 1; i <= this.props.members.length; i++) {
+            //     // this.fetchCar(i)
+            //     this.props._lcCars(i)
+            //     this.props._evMyTokens(this.props.account, i)
+            // }
+            // this.props.members.map(member => {
+            //     if (!member.car) this.props._lcCars(member.carID)
+            //     if (!member.evTokens) this.props._evMyTokens(this.props.account, member.carID)
+
+            // })
+            // if (!this.props.evTokens) this.props._reloadTokens()
+        }
+
+        // if (this.props.addNewCarTxID || this.props.raiseFundsForCarTxID) this.fetchMembers()
     }
 
     // evTokenMyTokens = (carID) => {
@@ -52,17 +72,23 @@ class Members extends Component {
     //         })
     // }
 
+    fetchEvTokens = () => {
+        for (let i = 1; i <= this.props.members.length; i++) {
+            this.props._evMyTokens(this.props.account, i)
+        }
+    }
+
     renderMember = (member, i) => {
         const img = { "display": "block" }
         // if (this.props.account)
-        if (!(this.props.evTokens && this.props.evTokens[member.carID])) this.props._evMyTokens(this.props.account, member.carID)
+        // if (!(this.props.evTokens && this.props.evTokens[member.carID]) || this.props.addNewCarTxID || this.props.raiseFundsForCarTxID) this.props._evMyTokens(this.props.account, member.carID)
         // this.evTokenMyTokens(member.carID)
         const selected = this.props.member ? (this.props.member.username === member.username ? true : false) : false
         let memberRows = [
             <div className="mtableLink" key={i} onClick={() => this.props._memberSelected(member)}>
-                <div className="mtableTokens">{member.carID || ""} <p>{this.props.evTokens ? this.props.evTokens[member.carID] || "" : ""}</p></div>
+                <div className="mtableTokens">{member.carID || ""} <p>{member.evTokens}</p></div>
                 <div className="mtableUser">{member.username || ""}, {member.state || ""}</div>
-                <div className="mtableCar"><img style={img} src={member.carPic || ""} alt="carImage" /></div>
+                <div className="mtableCar"><span title="Car Raised" style={{ fontSize: "12px" }}>{member.car ? member.car.carRaised.toNumber() : "0"}</span><img style={img} src={member.carPic || ""} alt="carImage" /></div>
             </div>
         ]
 
@@ -73,7 +99,7 @@ class Members extends Component {
                     <div className="memberMesCon">{member.message}</div>
                     <div className="memberMesBtns">
                         <div className="membersBtn">
-                            <a role="button" onClick={() => this.props.history.push("/invest")}>
+                            <a role="button" onClick={() => { this.props.history.push("/", { module: this.props.module, path: "invest" }) }}>
                                 <p><img src={require('../assets/add.png')} alt="test" /> Invest</p>
                             </a>
                         </div>
@@ -85,10 +111,25 @@ class Members extends Component {
         return memberRows
     }
 
-    render() {
-        // if (this.props.members_new) this.fetchMembers()
+    sortMembers = () => {
+        if (this.props.members) {
+            const members = this.props.members.sort((a, b) => {
+                if (a.car && a.car.crowdsaleClosed)
+                    return 0
+                else if ((a.car && a.car.carRaised) && (b.car && b.car.carRaised)) {
+                    console.log(`Car Raised-${b.carID}=> ${b.car.carRaised.toNumber()} - Car Raised-${a.carID}=> ${a.car.carRaised.toNumber()}`);
+                    return b.car.carRaised.toNumber() - a.car.carRaised.toNumber()
+                } else
+                    return 0
+            })
+            console.log("$$$$$$$$$ sorted members: $$$$$$$$$$$$$", members);
+            return members
+        } else
+            return []
+    }
 
-        const members = this.props.members ? this.props.members.filter(member => (member.username.startsWith(this.state.filter) || member.carID === parseInt(this.state.filter))) : []
+    render() {
+        const members = this.props.members ? this.props.members.filter(member => (member.username.startsWith(this.state.filter) || member.carID === parseInt(this.state.filter, 10))) : []
         return (
             <div className="mainContentCon">
                 <div className="navCon">
@@ -131,7 +172,7 @@ class Members extends Component {
 
                         </div>
                         <div className="contentBtn addMe" >
-                            <a role="button" onClick={() => this.props.history.push("/addMember", { module: this.props.module })}>
+                            <a role="button" onClick={() => this.props.history.push("/", { module: this.props.module, path: "addmember" })}>
                                 <img src={require('../assets/add.png')} alt="addM" />
                                 <p>Add Me</p></a>
                         </div>

@@ -7,19 +7,23 @@ import Invest from '../components/Invest';
  * map state, actions to props
  */
 const mapStateToProps = (state) => {
-    console.log("State: ", state)
+    // console.log("State: ", state)
     return {
-        LeaseContract: state.LeaseContract,
-        euroToken: state.euroToken,
+        lcCars: state.lcCars,
         evTokenBalance: state.evTokenBalance,
         euroTokenBalance: state.euroTokenBalance,
-        evToken: state.evToken,
         evTokens: state.evTokens,
         account: state.account,
         module: state.module,
         member: state.member,
         cars: state.cars,
+        car: state.car,
         members: state.members,
+        totalAmountRaised: state.totalAmountRaised,
+        unClaimedRedemption: state.unClaimedRedemption,
+        crowdsaleClosed: state.crowdsaleClosed,
+        payInterestAndRedemptionTxID: state.payInterestAndRedemptionTxID,
+        progress: state.progress ? state.progress : false,
         [state.module]: state[state.module],
         [state.account]: state[state.account]
     }

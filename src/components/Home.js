@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import ReactLoading from 'react-loading';
 
 class Home extends Component {
 
@@ -27,7 +26,7 @@ class Home extends Component {
                         <p>You can opt for a (private) lease, full time user or prepaid account.</p>
                         <p>An ICO in which 1000+ cars become financed and money for the first 100 has been picked up. It’s a competition, the potential preparer with the most voting is at the top of the list to use a Tesla.</p>
                         <div className="contentBtn bg-none">
-                            <button onClick={() => this.props.history.push("/members", { module: this.props.location.state.module })}><img src={require('../assets/add.png')} alt="addM" /></button>
+                            <button onClick={() => this.props.history.push("/", { module: this.props.location.state.module, path: "members" })}><img src={require('../assets/add.png')} alt="addM" /></button>
                         </div>
                     </div>
                 </div>

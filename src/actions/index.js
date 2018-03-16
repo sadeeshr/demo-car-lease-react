@@ -5,7 +5,7 @@
 */
 import socApi from '../lib/Socket';
 import contract from '../lib/Contract';
-import { goBack } from 'react-router-redux'
+import { goBack, push } from 'react-router-redux'
 
 export const _connectSocket = (props) => {
     return (dispatch) => {
@@ -34,11 +34,19 @@ export const _initContract = (props, web3) => {
     }
 }
 
-export const _fetchContractData = (data) => {
+export const _fetchContractData = (account, data) => {
     return (dispatch) => {
         dispatch({
             type: "FETCH_CONTRACT_DATA",
-            payload: socApi.fetchData(data)
+            payload: socApi.fetchData(account, data)
+        })
+    }
+}
+
+export const _reloadTokens = () => {
+    return (dispatch) => {
+        dispatch({
+            type: "RELOAD_TOKENS"
         })
     }
 }
@@ -61,9 +69,16 @@ export const _updateContractData = (data) => {
     }
 }
 
-export const _contractDataResponse = (response) => {
+export const _contractDataResponse = (account, response) => {
     return (dispatch) => {
-        dispatch({
+        if (response.members)
+            response.members.map(member => {
+                dispatch(_lcCars(member.carID))
+                dispatch(_evMyTokens(account, member.carID))
+                return 1
+            })
+
+        return dispatch({
             type: "CONTRACT_DATA_RESPONSE",
             payload: response
         })
@@ -112,6 +127,10 @@ export const _setAccount = (account) => {
             payload: account
         })
     }
+}
+
+export const _logOff = () => {
+    return (dispatch) => dispatch(push("/"))
 }
 
 export const _getBalance = (address) => {
@@ -178,6 +197,19 @@ export const _euroBalanceOf = (account) => {
     }
 }
 
+export const _lcCars = (carID) => {
+    return (dispatch) => {
+        return contract.lcCars(carID)
+            .then(result => {
+                return dispatch(
+                    {
+                        type: "CAR_RESULT",
+                        payload: result
+                    }
+                )
+            })
+    }
+}
 
 export const _lcAddNewCar = (carID, carHash, carDealer, carDriver, monRed, account) => {
     return (dispatch) => {
@@ -187,6 +219,78 @@ export const _lcAddNewCar = (carID, carHash, carDealer, carDriver, monRed, accou
                 return dispatch(
                     {
                         type: "ADD_NEW_CAR_RESULT",
+                        payload: result
+                    }
+                )
+            })
+    }
+}
+
+export const _lcTotalAmountRaised = () => {
+    return (dispatch) => {
+        return contract.lcTotalAmountRaised()
+            .then(result => {
+                return dispatch(
+                    {
+                        type: "TOTAL_AMOUNT_RAISED_RESULT",
+                        payload: result
+                    }
+                )
+            })
+    }
+}
+
+export const _lcRaiseFundsForCar = (carID, amount, account) => {
+    return (dispatch) => {
+        return contract.lcRaiseFundsForCar(carID, amount, account)
+            .then(result => {
+                dispatch(goBack())
+                return dispatch(
+                    {
+                        type: "RAISE_FUNDS_FOR_CAR_RESULT",
+                        payload: result
+                    }
+                )
+            })
+    }
+}
+
+export const _lcPayInterestAndRedemption = (carID, month, milege, account) => {
+    return (dispatch) => {
+        return contract.lcPayInterestAndRedemption(carID, month, milege, account)
+            .then(result => {
+                dispatch(goBack())
+                return dispatch(
+                    {
+                        type: "PAY_INTEREST_AND_REDEMPTION_RESULT",
+                        payload: result
+                    }
+                )
+            })
+    }
+}
+
+export const _lcReadInvestorToClaim = (carID, account) => {
+    return (dispatch) => {
+        return contract.lcReadInvestorToClaim(carID, account)
+            .then(result => {
+                return dispatch(
+                    {
+                        type: "READ_INVESTOR_TO_CLAIM_RESULT",
+                        payload: result
+                    }
+                )
+            })
+    }
+}
+
+export const _lcClaimInterestAndRedemption = (carID, account) => {
+    return (dispatch) => {
+        return contract.lcClaimInterestAndRedemption(carID, account)
+            .then(result => {
+                return dispatch(
+                    {
+                        type: "CLAIM_INTEREST_AND_REDEMPTION_RESULT",
                         payload: result
                     }
                 )

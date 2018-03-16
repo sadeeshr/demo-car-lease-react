@@ -7,15 +7,18 @@ import Members from '../components/Members';
  * map state, actions to props
  */
 const mapStateToProps = (state) => {
-    console.log("State: ", state)
+    // console.log("State: ", state)
 
     return {
-        evToken: state.evToken,
+        lcCars: state.lcCars,
         evTokens: state.evTokens,
-        progress: state.progress,
+        reloadTokens: state.reloadTokens,
         account: state.account,
         member: state.member,
         members: state.members,
+        addNewCarTxID: state.addNewCarTxID,
+        raiseFundsForCarTxID: state.raiseFundsForCarTxID,
+        progress: state.progress ? state.progress : false,
         [state.module]: state[state.module]
     }
 }

@@ -7,7 +7,7 @@ import Main from '../components/Main';
  * map state, actions to props
  */
 const mapStateToProps = (state) => {
-    console.log("State: ", state)
+    // console.log("State: ", state)
     return {
         account : state.account
     }

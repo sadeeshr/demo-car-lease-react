@@ -7,12 +7,13 @@ import Invoices from '../components/Invoices';
  * map state, actions to props
  */
 const mapStateToProps = (state) => {
-    console.log("State: ", state)
+    // console.log("State: ", state)
     return {
-        LeaseContract: state.LeaseContract,
         account: state.account,
-        car : state.car,
-        member: state.member
+        member: state.member,
+        progress: state.progress ? state.progress : false,
+        invoices: state.invoices,
+        invoices_new: state.invoices_new
     }
 }
 const mapActionsToProps = (dispatch) => { return bindActionCreators(Actions, dispatch) }

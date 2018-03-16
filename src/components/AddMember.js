@@ -6,7 +6,8 @@ class AddMember extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            progress: false
+            progress: false,
+            carDriver: this.props.account || ""
         }
 
     }
@@ -23,7 +24,7 @@ class AddMember extends Component {
                 _id: 0
             }
         }
-        if (!this.props.cars) this.props._fetchContractData(data)
+        if (!this.props.cars && this.props.socket) this.props._fetchContractData(this.props.account, data)
     }
 
     fileUploadHandler = (file, name) => {
@@ -101,7 +102,7 @@ class AddMember extends Component {
         // if (this.props.members_new) this.props.history.goBack()
         const cars = this.props.cars || []
         console.log("CARS: ", cars);
-        const img = { "maxHeight": "95px", "maxWidth": "230px", "display": "block", "width": "auto", "height": "auto" }
+        const img = { "maxHeight": "50px", "maxWidth": "118px", "display": "block", "width": "auto", "height": "auto" }
         console.log("Add Member State: ", this.state);
         return (
             <div className="mainContentCon">
@@ -112,8 +113,7 @@ class AddMember extends Component {
                     </div>
                 </div>
                 <div className="contentCon">
-                    <BlockUi tag="div" blocking={this.state.progress}>
-
+                    <BlockUi tag="div" blocking={this.props.progress}>
                         <h1 id="header">Become Member</h1>
                         <div className="form-row-container">
                             <span className="form-input-containers">
@@ -166,13 +166,20 @@ class AddMember extends Component {
                             }
                             {
                                 this.state.seeCars &&
-                                cars.map((car, i) => {
-                                    return (
-                                        <div key={i} id="center-btn-container" onClick={() => { this.setState({ carModel: car.model, seeCars: false, carPic: car.image, carDealer: car.dealer }) }}>
-                                            <img src={car.image || ""} style={img} alt={car.model} />
-                                        </div>
-                                    )
-                                })
+                                <table style={{ borderSpacing: "0px", borderCollapse: "collapse" }}>
+                                    <tbody>
+                                        {
+                                            cars.map((car, i) => {
+                                                return (
+                                                    <tr style={{ padding: "0px 0px" }} key={i} id="center-btn-container" onClick={() => { this.setState({ carModel: car.model, seeCars: false, carPic: car.image, carDealer: car.dealer }) }}>
+                                                        <td style={{ padding: "10px 5px" }}><img src={car.image || ""} style={img} alt={car.model} /></td>
+                                                        <td><span title="Price">{car.price || ""} €</span></td>
+                                                    </tr>
+                                                )
+                                            })
+                                        }
+                                    </tbody>
+                                </table>
                             }
                             <span className="form-input-containers marginBttm inputAddbtn">
                                 <div className="image-upload" htmlFor="imageUpload">

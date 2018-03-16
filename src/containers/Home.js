@@ -7,7 +7,7 @@ import Home from '../components/Home';
  * map state, actions to props
  */
 const mapStateToProps = (state) => {
-    console.log("State: ", state)
+    // console.log("State: ", state)
     return {
         socketConnection : state.socket
     }
