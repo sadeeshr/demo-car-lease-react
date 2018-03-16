@@ -22,21 +22,34 @@ html{
  .mainContentCon{
      width: 330px;
      margin: 3% auto;
-     padding: 0px 0px 60px;
-     min-height: 400px;
-     max-height: 550px;    /* changing this from 580px to avoid div overflow problem on laptop screens */
-     overflow-y: auto;
-     overflow-x: hidden;
+     /* padding: 0px 0px 60px; */
+     /* min-height: 400px; */
+     /*max-height: 550px;*/    /* changing this from 580px to avoid div overflow problem on laptop screens */
+     height: 580px;
+     /* overflow-y: auto; */
+     /* overflow-x: hidden; */
      background: rgba(156, 156, 156, .8);
      border-radius: 40px;
      border: 2px solid #4c4e54;
+     display: block;
 }
 
 
 /* Let's get this party started */
 ::-webkit-scrollbar {
-    width: 0px;
+    width: 1px;
+    height: 1px;
 }
+::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0); 
+}
+::-webkit-scrollbar-thumb {
+    background: #aaacafcc; 
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #fff; 
+}
+
 
 img.addBtn {
     width: 50px;
@@ -60,14 +73,14 @@ img.addBtn {
     width: 330px;
     border-top-left-radius: 40px;
     border-top-right-radius: 40px;
-    position: fixed;
+    position: relative;
 
 
 
 }
 
 .rowSelect{
-    width: 80%;
+    width: 75%;
     background: rgba(255,255,255, .5);
     border-radius: 10px;
     padding: 10px;
@@ -90,8 +103,8 @@ img.addBtn {
      font-weight: normal;
      display: block;
      text-align: center;
-     font-size: 40px;
-     padding-top: 60px;
+     font-size: 35px;
+     /* padding-top: 40px; */
      padding-left: 0;
      padding-right: 0;
      margin-bottom: 10px;
@@ -114,8 +127,8 @@ img.addBtn {
  .contentBtn a, .contentBtn button{
      text-decoration: none;
      color: #fff;
-     padding: 23px 0;
-     font-size: 25px;
+     padding: 20px 0;
+     font-size: 20px;
      background: rgba(170, 172, 175, .8) ;
      border-radius: 10px;
      font-weight: 500;
@@ -148,7 +161,8 @@ img.addBtn {
 }
  .contentBtn{
      text-align: center;
-     margin-bottom: 10px;
+     width: 94%;
+     margin: 0 auto 10px;
 }
 
 .contentBtn img{
@@ -159,10 +173,10 @@ img.addBtn {
 }
 
  .form-input-containers{
-    width: 100% !important;
+    width: 94% !important;
     width: -moz-available !important;
     width: -webkit-stretch !important;
-     margin: 0px 0px 10px 0 !important;
+    margin: 0 auto 10px !important;
      padding: 0px 0px !important;
      display: block;
 }
@@ -226,6 +240,11 @@ img.addBtn {
      */
 }
 
+
+.nvoicesCon{
+    height: 360px;
+}
+
 #car-logo img{
 
     width: 120px;
@@ -258,7 +277,7 @@ img.addBtn {
 }
 
 .carCon{
-    margin-bottom: 10px ;
+    /* margin-bottom: 10px ; */
     padding: 10px 0;
     border-radius: 25px;
     display: inline-block;
@@ -444,6 +463,17 @@ table tr td {
     width: 30px !important;
 }
 
+.membersCon{
+    height: 250px;
+}
+.bmemberCon{
+    height: 420px;
+}
+
+.overflow{
+    /* overflow: hidden; */
+    overflow-y: scroll;
+}
 .tableCon.members tr{
     border: 3px solid rgba(255, 215, 0, .3);
 }
@@ -525,10 +555,10 @@ table tr td {
 
 .mtableLink{
 display: flex;
-width: 100%;
+width: 94%;
 padding: 15px 0;
 background: rgba(170, 172, 175, .6);
-margin-bottom: 10px;
+margin: 0 auto 10px;
 border-radius: 30px;
 border: 3px solid rgba(255, 215, 0, 0);
 }
@@ -567,7 +597,7 @@ border: 3px solid rgba(255, 215, 0, 0);
 .contentBtn.addMe, .contentBtn.selectCar{
     background: none;
     border: 0;
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
 }
 .contentBtn.addMe a, .contentBtn.selectCar a{

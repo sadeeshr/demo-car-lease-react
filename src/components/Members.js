@@ -11,6 +11,8 @@ class Members extends Component {
         }
     }
 
+
+
     componentWillMount() {
         console.log("Members Props", this.props);
         if (this.props.reloadTokens) this.fetchMembers()
@@ -19,7 +21,7 @@ class Members extends Component {
     componentDidMount() {
         if (!this.props.members) {
             this.fetchMembers()
-        }
+        }      
     }
 
     fetchMembers = () => {
@@ -79,6 +81,7 @@ class Members extends Component {
     }
 
     renderMember = (member, i) => {
+
         const img = { "display": "block" }
         // if (this.props.account)
         // if (!(this.props.evTokens && this.props.evTokens[member.carID]) || this.props.addNewCarTxID || this.props.raiseFundsForCarTxID) this.props._evMyTokens(this.props.account, member.carID)
@@ -129,6 +132,12 @@ class Members extends Component {
     }
 
     render() {
+        
+        window.onload = function() {
+            var el = document.getElementById('mtableLink:nth-child(4)');
+            el.scrollIntoView(true);
+        }
+        
         const members = this.props.members ? this.props.members.filter(member => (member.username.startsWith(this.state.filter) || member.carID === parseInt(this.state.filter, 10))) : []
         return (
             <div className="mainContentCon">
@@ -160,13 +169,13 @@ class Members extends Component {
                                 <div className="mtableCar">Car</div>
                             </div>
                         </div>
-
+                        <div className="membersCon overflow">
                         {
                             members && members.map((member, i) => {
                                 return this.renderMember(member, i)
                             })
                         }
-
+                        </div>
                         <div className="contentBtn">
                             <input className="searchBtn" type="text" name="filterMembers" value={this.state.filter || ""} placeholder="Search" onChange={(e) => { console.log("SEARCH: ", e.target.value); this.setState({ filter: e.target.value }) }} />
 

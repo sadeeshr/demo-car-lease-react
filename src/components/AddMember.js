@@ -115,7 +115,7 @@ class AddMember extends Component {
                 <div className="contentCon">
                     <BlockUi tag="div" blocking={this.props.progress}>
                         <h1 id="header">Become Member</h1>
-                        <div className="form-row-container">
+                        <div className="form-row-container bmemberCon overflow">
                             <span className="form-input-containers">
                                 <input className="membership-input" maxLength="20" value={this.state.username || ""} onChange={(e) => this.setState({ username: e.target.value })} type="text" id="username" name="username" placeholder="Username *" />
                             </span>

@@ -108,6 +108,7 @@ class Invoices extends Component {
                 <div className="contentCon">
                     <BlockUi tag="div" blocking={this.props.progress}>
                         <h1 id="header">Invoices</h1>
+                        <div className="nvoicesCon overflow">
                         {
                             invoices && invoices.map((invoice, i) => {
                                 return <div key={i} className="mtableLink">
@@ -129,6 +130,7 @@ class Invoices extends Component {
                                 </div>
                             })
                         }
+                        </div>
                         {/*
                             <div className="mtableInvoices">
                                 <p>2017 Oktober</p>
