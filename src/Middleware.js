@@ -1,6 +1,6 @@
 const mongo = require('./lib/Mongo')
 const fs = require('fs')
-const sharp = require('sharp')
+// const sharp = require('sharp')
 
 var options = {
     key: fs.readFileSync('./certs/blockchain.techiearea.com/key.pem'),   //relative path to package json run script
