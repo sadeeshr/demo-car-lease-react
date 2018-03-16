@@ -27,7 +27,7 @@
     "uglifyjs-webpack-plugin": "^1.1.8"
   },
   "scripts": {
-    "start": "export HTTPS=true && react-scripts start",
+    "start": "react-scripts start",
     "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
