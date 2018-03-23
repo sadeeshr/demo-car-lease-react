@@ -16,6 +16,7 @@ class Members extends Component {
 
     componentWillMount() {
         console.log("Members Props", this.props);
+        this.setState({ eventAddNewObject: this.props.eventAddNewObject === "pending" ? this.props.eventAddNewObject : null })
         if (this.props.reloadTokens) this.fetchMembers()
     }
 
@@ -50,6 +51,14 @@ class Members extends Component {
         console.log("Members Update Props", nextProps);
         // if (this.props.members && ) this.props._reloadTokens()
         if (this.props.reloadTokens) this.fetchMembers()
+        if (this.props.eventAddNewObject && this.props.objectID && this.props.newObject) {
+            let objectID = this.props.objectID
+            let newObject = this.props.newObject
+            newObject.data["carID"] = objectID
+            this.props._writeNewContractData(newObject)
+        }
+        if (this.props.eventAddNewObject && !this.state.eventAddNewObject) this.setState({ eventAddNewObject: this.props.eventAddNewObject })
+
         if (this.props.members) {
             let members = this.sortMembers()
             console.log("######## SORTED MEMBERS ###########", members);
@@ -192,23 +201,19 @@ class Members extends Component {
                                     </div>
                                 */
                             }
-                            <div className="membersCon">
-                                {
-                                    members && members.map((member, i) => {
-                                        return this.renderMember(member, i)
-                                    })
-                                }
-                            </div>
-   
-
-                        </BlockUi>
-
-                    </div>
-                    <div className="footCon">
-                        <div>
+                         <div className="membersCon overflow">
+                            {
+                                members && members.map((member, i) => {
+                                    return this.renderMember(member, i)
+                                })
+                            }
+                        </div>
+                        <div className="contentBtn">
+                            {this.props.addNewObjectTxID && (!this.state.eventAddNewObject ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>)}
                             <input className="searchBtn" type="text" name="filterMembers" value={this.state.filter || ""} placeholder="Search" onChange={(e) => { console.log("SEARCH: ", e.target.value); this.setState({ filter: e.target.value }) }} />
                         </div>
-                    </div>
+
+                    </BlockUi>
 
                 </div>
             </div>

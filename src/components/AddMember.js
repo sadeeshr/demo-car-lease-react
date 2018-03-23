@@ -18,7 +18,7 @@ class AddMember extends Component {
         let data = {
             module: "cars",
             query: {
-                module: this.props.module
+                module: this.props.location.state.module
             },
             filter: {
                 _id: 0
@@ -67,15 +67,15 @@ class AddMember extends Component {
             carPrice: self.carPrice || '',
             carMonRedemption: self.carMonRedemption || '',
             carMonths: self.carMonths || '',
-            module: this.props.module
+            module: this.props.location.state.module
         }
 
         let data = {
             module: "members",
             data: newMember
         }
-        this.props._newContractData(data)
-        this.props._lcAddNewObject(self.carPrice, carHash, this.carType, self.carDealer, self.carMonRedemption, this.props.account)
+        this.props._setNewContractData(data)
+        this.props._lcAddNewObject(self.carPrice, carHash, this.carType, self.carDealer, self.carMonRedemption, this.props.account, this.props.location.state.module)
     }
 
 

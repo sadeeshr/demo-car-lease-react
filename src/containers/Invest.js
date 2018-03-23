@@ -24,6 +24,11 @@ const mapStateToProps = (state) => {
         crowdsaleClosed: state.crowdsaleClosed,
         paySubscriptionTxID: state.paySubscriptionTxID,
         progress: state.progress ? state.progress : false,
+        investInObjectTxID: state.investInObjectTxID,
+        eventTransfer: state.eventTransfer,
+        claimDividendTxID: state.claimDividendTxID,
+        eventClaim: state.eventClaim,
+        allowance: state.allowance,
         [state.module]: state[state.module],
         [state.account]: state[state.account]
     }

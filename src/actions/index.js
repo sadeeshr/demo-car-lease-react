@@ -51,10 +51,19 @@ export const _reloadTokens = () => {
     }
 }
 
-export const _newContractData = (data) => {
+export const _setNewContractData = (data) => {
     return (dispatch) => {
         dispatch({
-            type: "NEW_CONTRACT_DATA",
+            type: "SET_NEW_CONTRACT_DATA",
+            payload: data
+        })
+    }
+}
+
+export const _writeNewContractData = (data) => {
+    return (dispatch) => {
+        dispatch({
+            type: "WRITE_NEW_CONTRACT_DATA",
             payload: socApi.newData(data)
         })
     }
@@ -73,8 +82,8 @@ export const _contractDataResponse = (account, response) => {
     return (dispatch) => {
         if (response.members)
             response.members.map(member => {
-                dispatch(_lcLeaseObjects(1))
-                dispatch(_evMyTokens(account, 1))
+                dispatch(_lcLeaseObjects(member.carID))
+                dispatch(_evMyTokens(account, member.carID))
                 return 1
             })
 
@@ -265,11 +274,11 @@ export const _lcAmountObjects = () => {
     }
 }
 
-export const _lcAddNewObject = (objectPrice, objectHash, objectType, objectDealer, objectFee, account) => {
+export const _lcAddNewObject = (objectPrice, objectHash, objectType, objectDealer, objectFee, account, module) => {
     return (dispatch) => {
         return contract.lcaddNewobject(objectPrice, objectHash, objectType, objectDealer, objectFee, account)
             .then(result => {
-                // dispatch(goBack())
+                dispatch(push("/", { module: module, path: "members" }))
                 return dispatch(
                     {
                         type: "ADD_NEW_OBJECT_RESULT",
@@ -298,7 +307,7 @@ export const _lcInvestInObject = (objectID, amount, account) => {
     return (dispatch) => {
         return contract.lcInvestInObject(objectID, amount, account)
             .then(result => {
-                dispatch(goBack())
+                // dispatch(goBack())
                 return dispatch(
                     {
                         type: "INVEST_IN_OBJECT_RESULT",
