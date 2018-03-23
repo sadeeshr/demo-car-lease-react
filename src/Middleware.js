@@ -72,13 +72,12 @@ handleNew = (socket, request) => {
 }
 
 handleUpdate = (socket, data) => {
-
-    // console.log("DATA: ", data);
-    mongo.db["contractdata"].findAndModify(
+    data.query["_id"] = mongo.obj.ObjectId(data.query["_id"]);
+    mongo.db[data.module].findAndModify(
         {
-            query: {},
-            update: { $set: data },
+            query: data.query || {},
+            update: { $set: data.data },
             new: true
         },
-        (err, result) => { console.log("RESULT: ", result); socket.emit('data', result) });
+        (err, result) => { console.log("RESULT: ", result); socket.emit('data', { module: request.module + "_edit", result: true }) });
 }

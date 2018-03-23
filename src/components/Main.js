@@ -34,6 +34,8 @@ class Main extends Component {
 
     componentWillMount() {
         console.log("MAIN: ", this.props);
+        // if (this.props.initRoute)
+        //     this.props.history.replace("/", {})
     }
 
     componentDidMount() {
@@ -52,14 +54,33 @@ class Main extends Component {
             this.setState({ alert: "Please Install Metamask plugin", url: "https://metamask.io/" })
         }
 
+        // window.addEventListener("beforeunload", this.onUnload.bind(this))
+
         // add viewer to DOM
         let container = document.getElementById('metamask-logo')
         if (container) container.appendChild(this.viewer.container)
     }
 
+    onUnload(event) { // the method that will be used for both add and remove event
+        console.log("hellooww")
+        event.returnValue = "Hellooww"
+        return event
+    }
+
     componentWillReceiveProps(nextProps) {
         this.props = nextProps
         if (nextProps.location.state) this.renderComponent()
+    }
+
+    componentWillUnmount() {
+        // window.removeEventListener("beforeunload", this.onUnload.bind(this))
+
+        // window.onbeforeunload = (e) => {
+        //     console.log("################AM I HERE######################");
+        //     console.log(e);
+        //     alert("No!!")
+        //     return 'Stop this event';
+        // };
     }
 
     renderMain = () => {
@@ -72,7 +93,7 @@ class Main extends Component {
             <div className="navCon">
             </div>
             <div className="contentCon">
-                <h1 id="header">Car Lease</h1>
+                <h1 id="header">ENERGY NEUTRAL 2030</h1>
 
                 <table>
                     <tbody>
@@ -89,7 +110,7 @@ class Main extends Component {
                     <div hidden={!disabled} id="metamask-logo" style={{ textAlign: "center" }}><span hidden={!disabled} style={{ cursor: this.state.url ? "pointer" : "default" }} onClick={() => this.state.url ? window.open(this.state.url, "_blank") : ""}>{this.state.alert}</span></div>
                     <button style={{ cursor: cursor }} disabled={disabled} onClick={() => this.props.history.push("/", { module: "westland", path: "home" })} >Westland</button>
                     <button style={{ cursor: cursor }} disabled={disabled} onClick={() => this.props.history.push("/", { module: "middendelftland", path: "home" })}>Midden Delftland</button>
-                    <button style={{ cursor: cursor }} disabled={disabled} onClick={() => this.props.history.push("/", { module: "AddMember", path: "home" })}>Jouw gemeente hier<img src={require('../assets/add.png')} alt="addM" /></button>
+                    <button style={{ cursor: cursor }} hidden={disabled} disabled={disabled} onClick={() => this.props.history.push("/", { module: "AddMember", path: "home" })}>Jouw gemeente hier<img src={require('../assets/add.png')} alt="addM" /></button>
                 </div>
             </div>
         </div>

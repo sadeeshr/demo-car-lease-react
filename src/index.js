@@ -16,7 +16,7 @@ import routes from './routes';
 
 const history = createHistory()
 const middleware = routerMiddleware(history)
-let storeUpdates = {}
+// let storeUpdates = {}
 
 const store = createStore(
     rootReducer,
@@ -24,10 +24,10 @@ const store = createStore(
     applyMiddleware(middleware, thunk)
 )
 
-store.subscribe(() => {
-    storeUpdates = store.getState()
-    // console.log("STORE UPDATES: ", storeUpdates);
-})
+// store.subscribe(() => {
+//     storeUpdates = store.getState()
+//     // console.log("STORE UPDATES: ", storeUpdates);
+// })
 
 const App = () => {
     return (

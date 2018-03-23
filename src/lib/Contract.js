@@ -8,27 +8,26 @@ import Eth from 'ethjs';
 import EthJs from 'ethjs-query';
 import EthJsContract from 'ethjs-contract';
 import unit from 'ethjs-unit';
-import EthFilter from 'ethjs-filter';
+// import EthFilter from 'ethjs-filter';
 
 class Contract {
     constructor() {
+        this.spender = "0x1e4fdA42b85Af17c1eE807EE73e6Be7984Db1D26" // Euro Token Contract address
         this.contracts = {
             euroToken: {
-                address: "0x84F71cCa581872a4a9b1F33547674B4e8765E581",
-                abi: [{ "constant": false, "inputs": [{ "name": "spender", "type": "address" }, { "name": "value", "type": "uint256" }], "name": "approve", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [{ "name": "", "type": "uint256", "value": "1000000" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "transferFrom", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }, { "name": "", "type": "address" }], "name": "_approvals", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "tokenOwner", "type": "address" }], "name": "balanceOf", "outputs": [{ "name": "balance", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "transfer", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "from", "type": "address" }, { "indexed": true, "name": "to", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Transfer", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "owner", "type": "address" }, { "indexed": true, "name": "spender", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Approval", "type": "event" }]
+                address: "0x1e4fdA42b85Af17c1eE807EE73e6Be7984Db1D26",
+                abi: [{ "constant": false, "inputs": [{ "name": "_spender", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "approve", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_from", "type": "address" }, { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "transferFrom", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_to", "type": "address" }, { "name": "_amount", "type": "uint256" }], "name": "mint", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_spender", "type": "address" }, { "name": "_subtractedValue", "type": "uint256" }], "name": "decreaseApproval", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_owner", "type": "address" }], "name": "balanceOf", "outputs": [{ "name": "balance", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [{ "name": "", "type": "address", "value": "0x60516aa74f455f642c66fa1ed1e77c553da4be17" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "transfer", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_spender", "type": "address" }, { "name": "_addedValue", "type": "uint256" }], "name": "increaseApproval", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_owner", "type": "address" }, { "name": "_spender", "type": "address" }], "name": "allowance", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "newOwner", "type": "address" }], "name": "transferOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "from", "type": "address" }, { "indexed": true, "name": "to", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Transfer", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "owner", "type": "address" }, { "indexed": true, "name": "spender", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Approval", "type": "event" }]
             },
-            evToken: {
-                address: "0x23FA54b5114dc5F038f754e8c79C6A3E46aCBe8C",
-                abi: [{ "constant": false, "inputs": [{ "name": "_to", "type": "address" }, { "name": "_tokenId", "type": "uint256" }, { "name": "_value", "type": "uint256" }], "name": "transfer", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_to", "type": "address" }, { "name": "_tokenId", "type": "uint256" }, { "name": "_value", "type": "uint256" }], "name": "mintToken", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }], "name": "balanceOf", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "myAddress", "type": "address" }, { "name": "TokenId", "type": "uint256" }], "name": "myTokens", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "inputs": [], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "_from", "type": "address" }, { "indexed": true, "name": "_to", "type": "address" }, { "indexed": false, "name": "_tokenId", "type": "uint256" }, { "indexed": false, "name": "_value", "type": "uint256" }], "name": "Transfer", "type": "event" }]
-            },
-            LeaseContract: {
-                address: "0x2d8F5c6ca4f54b6affcc0cB7Dee7246374BAC2c1",
-                abi: [{ "constant": false, "inputs": [{ "name": "carID", "type": "uint256" }, { "name": "amount", "type": "uint256" }], "name": "raiseFundsForCar", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "totalAmountRaised", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "carID", "type": "uint256" }], "name": "claimInterestAndRedemption", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "euroToken2", "outputs": [{ "name": "", "type": "address", "value": "0x84f71cca581872a4a9b1f33547674b4e8765e581" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }], "name": "balanceOf", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "carID", "type": "uint256" }, { "name": "month", "type": "uint256" }, { "name": "milages", "type": "uint256" }], "name": "payInterestAndRedemption", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "ownershipToken", "outputs": [{ "name": "", "type": "address", "value": "0x23fa54b5114dc5f038f754e8c79c6a3e46acbe8c" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "investorAddress", "type": "address" }, { "name": "carID", "type": "uint256" }], "name": "readInvestorToClaim", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "carID", "type": "uint256" }, { "name": "_carHash", "type": "bytes32" }, { "name": "_carDealer", "type": "address" }, { "name": "_carDriver", "type": "address" }, { "name": "_monthlyRedemption", "type": "uint256" }], "name": "AddNewCar", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "carID", "type": "uint256" }], "name": "buyCarWhenFundsRaised", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "uint256" }], "name": "cars", "outputs": [{ "name": "exist", "type": "bool", "value": false }, { "name": "crowdsaleClosed", "type": "bool", "value": false }, { "name": "carDealerAddress", "type": "address", "value": "0x0000000000000000000000000000000000000000" }, { "name": "carDriver", "type": "address", "value": "0x0000000000000000000000000000000000000000" }, { "name": "carContractHash", "type": "bytes32", "value": "0x0000000000000000000000000000000000000000000000000000000000000000" }, { "name": "carRaised", "type": "uint256", "value": "0" }, { "name": "carMilages", "type": "uint256", "value": "0" }, { "name": "payMonthNr", "type": "uint256", "value": "0" }, { "name": "monthlyRedemption", "type": "uint256", "value": "0" }, { "name": "totalRedemption", "type": "uint256", "value": "0" }, { "name": "unclaimedRedemption", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "inputs": [{ "name": "addressOfEvToken", "type": "address", "index": 0, "typeShort": "address", "bits": "", "displayName": "address Of Ev Token", "template": "elements_input_address", "value": "0x23FA54b5114dc5F038f754e8c79C6A3E46aCBe8C" }, { "name": "addressOfEuroToken", "type": "address", "index": 1, "typeShort": "address", "bits": "", "displayName": "address Of Euro Token", "template": "elements_input_address", "value": "0x84F71cCa581872a4a9b1F33547674B4e8765E581" }], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "_to", "type": "address" }, { "indexed": false, "name": "_value", "type": "uint256" }, { "indexed": false, "name": "isContribution", "type": "bool" }], "name": "FundTransfer", "type": "event" }]
+            LeaseTokenContract: {
+                address: "0x95703522a4E2c4f76A120b55d1275cDe18d8F094",
+                abi: [{ "constant": false, "inputs": [{ "name": "_objectID", "type": "uint256" }, { "name": "_amount", "type": "uint256" }], "name": "investInObject", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_objectPrice", "type": "uint256" }, { "name": "_objectHash", "type": "bytes32" }, { "name": "_objectType", "type": "uint256" }, { "name": "_objectDealerAddr", "type": "address" }, { "name": "_objectFee", "type": "uint256" }], "name": "addNewObject", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "amountObjects", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_owner", "type": "address" }], "name": "balanceOf", "outputs": [{ "name": "balance", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [{ "name": "", "type": "address", "value": "0x60516aa74f455f642c66fa1ed1e77c553da4be17" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_account", "type": "address" }], "name": "sumBalanceOf", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_objectID", "type": "uint256" }], "name": "claimDividend", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_objectID", "type": "uint256" }, { "name": "_paymonth", "type": "uint256" }, { "name": "_milages", "type": "uint256" }], "name": "paySubscription", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_objectID", "type": "uint256" }], "name": "buyObjectWhenFundsRaised", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_to", "type": "address" }, { "name": "_objectID", "type": "uint256" }, { "name": "_value", "type": "uint256" }], "name": "transferLeaseToken", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "uint256" }], "name": "leaseobjects", "outputs": [{ "name": "crowdsaleClosed", "type": "bool", "value": false }, { "name": "objectContractHash", "type": "bytes32", "value": "0x0000000000000000000000000000000000000000000000000000000000000000" }, { "name": "objectDealerAddress", "type": "address", "value": "0x0000000000000000000000000000000000000000" }, { "name": "objectType", "type": "uint256", "value": "0" }, { "name": "objectPrice", "type": "uint256", "value": "0" }, { "name": "objectFee", "type": "uint256", "value": "0" }, { "name": "totalRaised", "type": "uint256", "value": "0" }, { "name": "totalDividends", "type": "uint256", "value": "0" }, { "name": "milages", "type": "uint256", "value": "0" }, { "name": "paymonth", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_owner", "type": "address" }, { "name": "_objectId", "type": "uint256" }], "name": "objectBalanceOf", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "Euro", "outputs": [{ "name": "", "type": "address", "value": "0x1e4fda42b85af17c1ee807ee73e6be7984db1d26" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "newOwner", "type": "address" }], "name": "transferOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_account", "type": "address" }, { "name": "_objectID", "type": "uint256" }], "name": "toClaimDividend", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "inputs": [{ "name": "addressOfEuroToken", "type": "address", "index": 0, "typeShort": "address", "bits": "", "displayName": "address Of Euro Token", "template": "elements_input_address", "value": "0x1e4fdA42b85Af17c1eE807EE73e6Be7984Db1D26" }], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "objectID", "type": "uint256" }], "name": "AddNewObject", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "claimed", "type": "bool" }], "name": "Claim", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "from", "type": "address" }, { "indexed": true, "name": "to", "type": "address" }, { "indexed": false, "name": "objectId", "type": "uint256" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Transfer", "type": "event" }]
             }
         }
         this.filters = {
-            evTransfer: null,
-            lcFundTransfer: null
+            EeuroTransfer: null,
+            EeuroApproval: null,
+            EevTransfer: null,
+            ElcAddNewObject: null
         }
         this.filter = null
         this.watcher = null
@@ -36,9 +35,9 @@ class Contract {
         this.balance = null
         this.eth = null
         this.props = null
-        this.evToken = null
+        this.LeaseTokenContract = null
         this.euroToken = null
-        this.LeaseContract = null
+        this.LeaseTokenContract = null
     }
 
     getAccount = () => {
@@ -88,17 +87,18 @@ class Contract {
         // this.filter.new()
 
         const contract = new EthJsContract(eth)
-        // const LeaseContract = 
+        // const LeaseTokenContract = 
         this.euroToken = contract(this.contracts.euroToken.abi).at(this.contracts.euroToken.address)
-        this.evToken = contract(this.contracts.evToken.abi).at(this.contracts.evToken.address)
-        this.LeaseContract = contract(this.contracts.LeaseContract.abi).at(this.contracts.LeaseContract.address)
+        this.LeaseTokenContract = contract(this.contracts.LeaseTokenContract.abi).at(this.contracts.LeaseTokenContract.address)
 
+        console.log("Euro Token: ", this.euroToken);
+        console.log("Lease Token Contract: ", this.LeaseTokenContract);
         // this.evEventTransfer()
 
         return {
             // euroToken: this.euroToken,
-            // evToken: this.evToken,
-            // LeaseContract: this.LeaseContract
+            // evToken: this.LeaseTokenContract,
+            // LeaseTokenContract: this.LeaseTokenContract
         }
     }
 
@@ -118,42 +118,39 @@ class Contract {
         })
     }
 
+
     /**
-     * EV Token Methods
+     * Euro Token Events
      */
-    evEventTransferSubscribe = () => {
-        this.filters.evTransfer = this.evToken.Transfer()
-        this.filters.evTransfer.new()
-        this.filters.evTransfer.watch((err, result) => {
-            console.log("EVToken Event Transfer() Result: ", err, result);
-            if (err || result.length > 0) setTimeout(() => { this.evEventTransferUnsubscribe(); this.props._reloadTokens() }, 1000);
 
+    euroEventTransferSubscribe = () => {
+        this.filters.EeuroTransfer = this.euroToken.Transfer()
+        this.filters.EeuroTransfer.new()
+        this.filters.EeuroTransfer.watch((err, result) => {
+            console.log("EuroToken Event Transfer() Result: ", err, result);
+            if (err || result.length > 0) setTimeout(() => { this.euroEventTransferUnsubscribe(); }, 1000);
         })
     }
 
-    evEventTransferUnsubscribe = () => {
-        this.filters.evTransfer.uninstall((err, result) => {
-            console.log("EVToken Event Transfer() Unsubscribe: ", err, result);
+    euroEventTransferUnsubscribe = () => {
+        this.filters.EeuroTransfer.uninstall((err, result) => {
+            console.log("EuroToken Event Transfer() Unsubscribe: ", err, result);
         })
     }
 
-    evMyTokens = (account, carID) => {
-        console.log(`Fetching EV Tokens for: ${account}, carID: ${carID}`);
-        return this.evToken.myTokens(account, carID)
-            .then(result => {
-                console.log(`EV TOKENS: ${result[0].toString()}`);
-                // this.setState({ ["evToken_" + carID]: result[0].toString() })
-                return { id: carID, result: result[0].toString() }
-            })
+    euroEventApprovalSubscribe = () => {
+        this.filters.EeuroApproval = this.euroToken.Approval()
+        this.filters.EeuroApproval.new()
+        this.filters.EeuroApproval.watch((err, result) => {
+            console.log("EuroToken Event Approval() Result: ", err, result);
+            if (err || result.length > 0) setTimeout(() => { this.euroEventApprovalUnsubscribe(); }, 1000);
+        })
     }
 
-    evBalanceOf = (account) => {
-        console.log(`Fetching EV Tokens Balance for: ${account}`);
-        return this.evToken.balanceOf(account)
-            .then(result => {
-                console.log(`EV TOKENS BALANCE: ${result[0].toString()}`);
-                return { evTokenBalance: result[0].toString() }
-            })
+    euroEventApprovalUnsubscribe = () => {
+        this.filters.EeuroApproval.uninstall((err, result) => {
+            console.log("EuroToken Event Approval() Unsubscribe: ", err, result);
+        })
     }
 
     /**
@@ -168,92 +165,186 @@ class Contract {
             })
     }
 
+    euroApprove = (value, account) => {
+
+        console.log(`Approve value: ${value} to spend by: ${this.spender} from: ${account}`);
+        return this.euroToken.approve(this.spender, value, { from: account })
+            .then(result => {
+                console.log(`Approval Result: ${result}`);
+                return { approvalResult: result }
+            })
+    }
+
+    euroAllowance = (account) => {
+        console.log(`Fetching Allowance for: ${account}`);
+        return this.euroToken.allowance(account, this.spender)
+            .then(result => {
+                console.log(`Allowance Result: ${result[0].toString()}`);
+                return { allowance: result[0].toString() }
+            })
+    }
+
+    /**
+     * Lease Token Contract Methods
+     */
+
+    /**
+     * Lease Token Methods
+     */
+    evEventTransferSubscribe = () => {
+        this.filters.EevTransfer = this.LeaseTokenContract.Transfer()
+        this.filters.EevTransfer.new()
+        this.filters.EevTransfer.watch((err, result) => {
+            console.log("EVToken Event Transfer() Result: ", err, result);
+            if (err || result.length > 0) { this.props._setEventStatus({ eventTransfer: true }); setTimeout(() => { this.evEventTransferUnsubscribe(); this.props._reloadTokens() }, 1000); }
+
+        })
+    }
+
+    evEventTransferUnsubscribe = () => {
+        this.filters.EevTransfer.uninstall((err, result) => {
+            console.log("EVToken Event Transfer() Unsubscribe: ", err, result);
+        })
+    }
+
+    /**
+     * Lease Token Methods
+     */
+    evMyTokens = (account, objectID) => {
+        console.log(`Fetching EV Tokens for: ${account}, objectID: ${objectID}`);
+        return this.LeaseTokenContract.objectBalanceOf(account, objectID)
+            .then(result => {
+                console.log(`EV TOKENS: ${result[0].toString()}`);
+                // this.setState({ ["evToken_" + objectID]: result[0].toString() })
+                return { id: objectID, result: result[0].toString() }
+            })
+    }
+
+    evBalanceOf = (account) => {
+        console.log(`Fetching EV Tokens Balance for: ${account}`);
+        return this.LeaseTokenContract.balanceOf(account)
+            .then(result => {
+                console.log(`EV TOKENS BALANCE: ${result[0].toString()}`);
+                return { evTokenBalance: result[0].toString() }
+            })
+    }
+
+    /**
+     * Lease Contract Events
+     */
+
+    lcEventAddNewObjectSubscribe = () => {
+        this.filters.ElcAddNewObject = this.LeaseTokenContract.AddNewObject()
+        this.filters.ElcAddNewObject.new()
+        this.filters.ElcAddNewObject.watch((err, result) => {
+            console.log("LeaseTokenContract Event AddNewObject() Result: ", err, result);
+            if (err || result.length > 0) { this.props._setEventStatus({ eventAddNewObject: true }); setTimeout(this.lcEventAddNewObjectUnsubscribe, 1000); }
+        })
+    }
+
+    lcEventAddNewObjectUnsubscribe = () => {
+        this.filters.ElcAddNewObject.uninstall((err, result) => {
+            console.log("LeaseTokenContract Event AddNewObject() Unsubscribe: ", err, result);
+        })
+    }
+
+    lcEventClaimSubscribe = () => {
+        this.filters.lcClaim = this.LeaseTokenContract.Claim()
+        this.filters.lcClaim.new()
+        this.filters.lcClaim.watch((err, result) => {
+            console.log("LeaseTokenContract Event Claim() Result: ", err, result);
+            if (err || result.length > 0) { this.props._setEventStatus({ eventClaim: true }); setTimeout(this.lcEventClaimUnsubscribe, 1000); }
+        })
+    }
+
+    lcEventClaimUnsubscribe = () => {
+        this.filters.lcClaim.uninstall((err, result) => {
+            console.log("LeaseTokenContract Event Claim() Unsubscribe: ", err, result);
+        })
+    }
+
     /**
      * Lease Contract Methods
      */
-    lcEventFundTransferSubscribe = () => {
-        this.filters.lcFundTransfer = this.LeaseContract.FundTransfer()
-        this.filters.lcFundTransfer.new()
-        this.filters.lcFundTransfer.watch((err, result) => {
-            console.log("LeaseContract Event FundTransfer() Result: ", err, result);
-            if (err || result.length > 0) setTimeout(this.lcEventFundTransferUnsubscribe, 1000);
-        })
-    }
 
-    lcEventFundTransferUnsubscribe = () => {
-        this.filters.lcFundTransfer.uninstall((err, result) => {
-            console.log("LeaseContract Event FundTransfer() Unsubscribe: ", err, result);
-        })
-    }
-
-    lcAddNewCar = (carID, carHash, carDealer, carDriver, monRed, account) => {
-        console.log(`Adding New Car for: ${account}`);
-        return this.LeaseContract.AddNewCar(carID, carHash, carDealer, carDriver, monRed, { from: account })
+    lcaddNewobject = (objectPrice, objectHash, objectType, objectDealer, objectFee, account) => {
+        console.log(`Adding New object for: ${account}`);
+        return this.LeaseTokenContract.addNewObject(objectPrice, objectHash, objectType, objectDealer, objectFee, { from: account })
             .then(result => {
-                console.log(`ADD NEW CAR RESULT: ${result}`);
-                return { addNewCarTxID: result, progress: false }
+                console.log(`ADD NEW object RESULT: ${result}`);
+                this.lcEventAddNewObjectSubscribe()
+                return { addNewobjectTxID: result, progress: false }
             })
     }
 
-    lcTotalAmountRaised = () => {
+    lcSumBalanceOf = (account) => {
         console.log(`Fetching Total Amount Raised.`);
-        return this.LeaseContract.totalAmountRaised()
+        return this.LeaseTokenContract.sumBalanceOf(account)
             .then(result => {
-                console.log(`totalAmountRaised RESULT: ${result[0].toNumber()}`);
-                return { totalAmountRaised: result[0].toNumber(), progress: false }
+                console.log(`sumBalanceOf RESULT: ${result[0].toNumber()}`);
+                return { sumBalanceOf: result[0].toNumber(), progress: false }
             })
     }
 
-    lcCars = (carID) => {
-        console.log(`Fetch Car Details for ID: ${carID}`);
-        return this.LeaseContract.cars(carID)
+    lcLeaseObjects = (objectID) => {
+        console.log(`Fetch object Details for ID: ${objectID}`);
+        return this.LeaseTokenContract.leaseobjects(objectID)
             .then(result => {
-                console.log(`Details of CAR ID ${carID} => `, result);
-                // if (selected) this.props._carSelected(result)
+                console.log(`Details of object ID ${objectID} => `, result);
+                // if (selected) this.props._objectSelected(result)
                 // if (result.crowdsaleClosed)
                 // this.crowdsaleClosed = this.crowdsaleClosed + 1
-                // return { [carID]: result }
-                return { id: carID, result: result }
+                // return { [objectID]: result }
+                return { id: objectID, result: result }
             })
     }
 
-
-    lcRaiseFundsForCar = (carID, amount, account) => {
-        console.log(`Calling Raise Funds For Car ID: ${carID}, ${amount}, ${account}`);
-        return this.LeaseContract.raiseFundsForCar(carID, amount || "0", { from: account })
+    lcAmountObjects = () => {
+        console.log(`Fetch Crowd Sale Closed Objects Count:`);
+        return this.LeaseTokenContract.amountObjects()
             .then(result => {
-                console.log(`raiseFundsForCar RESULT: ${result}`);
-                // this.lcEventFundTransferSubscribe()    // contract missing event call, not calling this 
+                console.log(`Crowd Sale Closed Objects Count => `, result, result[0].toNumber());
+                return { crowdsaleClosed: result[0].toNumber() }
+            })
+    }
+
+    lcInvestInObject = (objectID, amount, account) => {
+        console.log(`Calling Raise Funds For object ID: ${objectID}, ${amount}, ${account}`);
+        return this.LeaseTokenContract.investInObject(objectID, amount || "0", { from: account })
+            .then(result => {
+                console.log(`Invest In Object RESULT: ${result}`);
+                // this.lcEventAddNewObjectSubscribe()    // contract missing event call, not calling this 
                 // this.startPendingTranscationWatcher()
                 this.evEventTransferSubscribe()
-                return { raiseFundsForCarTxID: result, progress: false }
+                return { investInObjectTxID: result, progress: false }
             })
     }
 
-    lcPayInterestAndRedemption = (carID, month, milege, account) => {
+    lcPaySubscription = (objectID, month, milege, account) => {
         console.log(`Calling Pay Interest And Redemption.`);
-        return this.LeaseContract.payInterestAndRedemption(carID, month || "0", milege || "0", { from: account })
+        return this.LeaseTokenContract.paySubscription(objectID, month || "0", milege || "0", { from: account })
             .then(result => {
-                console.log(`payInterestAndRedemption RESULT: ${result}`);
-                return { payInterestAndRedemptionTxID: result, progress: false }
+                console.log(`paySubscription RESULT: ${result}`);
+                return { paySubscriptionTxID: result, progress: false }
             })
     }
 
-    lcReadInvestorToClaim = (carID, account) => {
+    lcToClaimDividend = (objectID, account) => {
         console.log(`Calling Read Investor To Claim.`);
-        return this.LeaseContract.readInvestorToClaim(account, carID)
+        return this.LeaseTokenContract.toClaimDividend(account, objectID)
             .then(result => {
-                console.log(`readInvestorToClaim RESULT: ${result[0].toString()}`);
+                console.log(`ToClaimDividend RESULT: ${result[0].toString()}`);
                 return { unClaimedRedemption: result[0].toString(), progress: false }
             })
     }
 
-    lcClaimInterestAndRedemption = (carID, account) => {
+    lcClaimDividend = (objectID, account) => {
         console.log(`Calling Claim Interest And Redemption.`);
-        return this.LeaseContract.claimInterestAndRedemption(carID, { from: account })
+        return this.LeaseTokenContract.claimDividend(objectID, { from: account })
             .then(result => {
-                console.log(`claimInterestAndRedemption RESULT: ${result}`);
-                return { claimInterestAndRedemptionTxID: result, progress: false }
+                console.log(`claimDividend RESULT: ${result}`);
+                this.lcEventClaimSubscribe()
+                return { claimDividendTxID: result, progress: false }
             })
     }
 }

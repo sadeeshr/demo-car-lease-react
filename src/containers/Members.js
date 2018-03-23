@@ -16,8 +16,8 @@ const mapStateToProps = (state) => {
         account: state.account,
         member: state.member,
         members: state.members,
-        addNewCarTxID: state.addNewCarTxID,
-        raiseFundsForCarTxID: state.raiseFundsForCarTxID,
+        addNewObjectTxID: state.addNewObjectTxID,
+        investInObjectTxID: state.investInObjectTxID,
         progress: state.progress ? state.progress : false,
         [state.module]: state[state.module]
     }

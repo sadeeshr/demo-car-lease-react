@@ -7,6 +7,11 @@ const initialState = {}
 const rootReducer = (state = initialState, action) => {
     console.log(action)
     switch (action.type) {
+        // case '@@redux/INIT':
+        //     return {
+        //         initRoute: true
+        //     }
+
         case 'CONNECT_SOCKET':
             return {
                 ...state
@@ -28,7 +33,8 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 progress: true,
-                invoices_new: false
+                invoices_new: false,
+                invoices_edit: false
             }
 
         case 'FETCH_CONTRACT_DATA':
@@ -36,9 +42,10 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 progress: true,
                 module: action.payload,
-                addNewCarTxID: null,
-                raiseFundsForCarTxID: null,
-                invoices_new: false
+                addNewObjectTxID: null,
+                investInObjectTxID: null,
+                invoices_new: false,
+                invoices_edit: false
             }
 
         case 'RELOAD_TOKENS':
@@ -55,7 +62,7 @@ const rootReducer = (state = initialState, action) => {
                 lcCars: null,
                 euroTokenBalance: null,
                 evTokenBalance: null,
-                totalAmountRaised: null,
+                sumBalanceOf: null,
                 progress: false,
                 reloadTokens: false
             }
@@ -82,21 +89,25 @@ const rootReducer = (state = initialState, action) => {
         case 'SET_ACCOUNT_BALANCE':
         case 'EV_BALANCE':
         case 'EURO_BALANCE':
-        case 'ADD_NEW_CAR_RESULT':
-        case 'TOTAL_AMOUNT_RAISED_RESULT':
-        case 'RAISE_FUNDS_FOR_CAR_RESULT':
-        case 'PAY_INTEREST_AND_REDEMPTION_RESULT':
-        case 'CLAIM_INTEREST_AND_REDEMPTION_RESULT':
+        case 'ADD_NEW_OBJECT_RESULT':
+        case 'SUM_BALANCE_OF_RESULT':
+        case 'INVEST_IN_OBJECT_RESULT':
+        case 'PAY_SUBSCRIPTION_RESULT':
+        case 'CLAIM_DIVIDEND_RESULT':
+        case 'AMOUNT_OBJECTS':
+        case 'APPROVE':
+        case 'ALLOWANCE':
+        case 'SET_EVENT_STATUS':
             return {
                 ...state,
                 ...action.payload
             }
 
-        case 'READ_INVESTOR_TO_CLAIM_RESULT':
+        case 'TO_CLAIM_DIVIDEND_RESULT':
             return {
                 ...state,
                 ...action.payload,
-                payInterestAndRedemptionTxID: null
+                paySubscriptionTxID: null
             }
 
         case 'EV_MYTOKENS':
@@ -112,7 +123,7 @@ const rootReducer = (state = initialState, action) => {
                 }
             }
 
-        case 'CAR_RESULT':
+        case 'LEASE_OBJECT_RESULT':
             {
                 let members = state.members.map(member => {
                     if (member.carID === action.payload.id)

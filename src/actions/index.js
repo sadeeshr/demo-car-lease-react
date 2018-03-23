@@ -73,8 +73,8 @@ export const _contractDataResponse = (account, response) => {
     return (dispatch) => {
         if (response.members)
             response.members.map(member => {
-                dispatch(_lcCars(member.carID))
-                dispatch(_evMyTokens(account, member.carID))
+                dispatch(_lcLeaseObjects(1))
+                dispatch(_evMyTokens(account, 1))
                 return 1
             })
 
@@ -151,13 +151,22 @@ export const _setBalance = (data) => {
     }
 }
 
+export const _setEventStatus = (data) => {
+    return (dispatch) => {
+        dispatch({
+            type: "SET_EVENT_STATUS",
+            payload: data
+        })
+    }
+}
+
 /**
  * EV Token Actions
  */
 
-export const _evMyTokens = (account, carID) => {
+export const _evMyTokens = (account, objectID) => {
     return (dispatch) => {
-        return contract.evMyTokens(account, carID)
+        return contract.evMyTokens(account, objectID)
             .then(result =>
                 dispatch(
                     {
@@ -183,6 +192,9 @@ export const _evBalanceOf = (account) => {
     }
 }
 
+/**
+ * Euro Token methods
+ */
 export const _euroBalanceOf = (account) => {
     return (dispatch) => {
         return contract.euroBalanceOf(account)
@@ -197,13 +209,41 @@ export const _euroBalanceOf = (account) => {
     }
 }
 
-export const _lcCars = (carID) => {
+export const _euroApprove = (value, account) => {
     return (dispatch) => {
-        return contract.lcCars(carID)
+        return contract.euroApprove(value, account)
+            .then(result =>
+                dispatch(
+                    {
+                        type: "APPROVE",
+                        payload: result
+                    }
+                )
+            )
+    }
+}
+
+export const _euroAllowance = (account) => {
+    return (dispatch) => {
+        return contract.euroAllowance(account)
+            .then(result =>
+                dispatch(
+                    {
+                        type: "ALLOWANCE",
+                        payload: result
+                    }
+                )
+            )
+    }
+}
+
+export const _lcLeaseObjects = (objectID) => {
+    return (dispatch) => {
+        return contract.lcLeaseObjects(objectID)
             .then(result => {
                 return dispatch(
                     {
-                        type: "CAR_RESULT",
+                        type: "LEASE_OBJECT_RESULT",
                         payload: result
                     }
                 )
@@ -211,14 +251,57 @@ export const _lcCars = (carID) => {
     }
 }
 
-export const _lcAddNewCar = (carID, carHash, carDealer, carDriver, monRed, account) => {
+export const _lcAmountObjects = () => {
     return (dispatch) => {
-        return contract.lcAddNewCar(carID, carHash, carDealer, carDriver, monRed, account)
+        return contract.lcAmountObjects()
+            .then(result => {
+                return dispatch(
+                    {
+                        type: "AMOUNT_OBJECTS",
+                        payload: result
+                    }
+                )
+            })
+    }
+}
+
+export const _lcAddNewObject = (objectPrice, objectHash, objectType, objectDealer, objectFee, account) => {
+    return (dispatch) => {
+        return contract.lcaddNewobject(objectPrice, objectHash, objectType, objectDealer, objectFee, account)
+            .then(result => {
+                // dispatch(goBack())
+                return dispatch(
+                    {
+                        type: "ADD_NEW_OBJECT_RESULT",
+                        payload: result
+                    }
+                )
+            })
+    }
+}
+
+export const _lcSumBalanceOf = (account) => {
+    return (dispatch) => {
+        return contract.lcSumBalanceOf(account)
+            .then(result => {
+                return dispatch(
+                    {
+                        type: "SUM_BALANCE_OF_RESULT",
+                        payload: result
+                    }
+                )
+            })
+    }
+}
+
+export const _lcInvestInObject = (objectID, amount, account) => {
+    return (dispatch) => {
+        return contract.lcInvestInObject(objectID, amount, account)
             .then(result => {
                 dispatch(goBack())
                 return dispatch(
                     {
-                        type: "ADD_NEW_CAR_RESULT",
+                        type: "INVEST_IN_OBJECT_RESULT",
                         payload: result
                     }
                 )
@@ -226,28 +309,14 @@ export const _lcAddNewCar = (carID, carHash, carDealer, carDriver, monRed, accou
     }
 }
 
-export const _lcTotalAmountRaised = () => {
+export const _lcPaySubscription = (objectID, month, milege, account) => {
     return (dispatch) => {
-        return contract.lcTotalAmountRaised()
-            .then(result => {
-                return dispatch(
-                    {
-                        type: "TOTAL_AMOUNT_RAISED_RESULT",
-                        payload: result
-                    }
-                )
-            })
-    }
-}
-
-export const _lcRaiseFundsForCar = (carID, amount, account) => {
-    return (dispatch) => {
-        return contract.lcRaiseFundsForCar(carID, amount, account)
+        return contract.lcPaySubscription(objectID, month, milege, account)
             .then(result => {
                 dispatch(goBack())
                 return dispatch(
                     {
-                        type: "RAISE_FUNDS_FOR_CAR_RESULT",
+                        type: "PAY_SUBSCRIPTION_RESULT",
                         payload: result
                     }
                 )
@@ -255,14 +324,13 @@ export const _lcRaiseFundsForCar = (carID, amount, account) => {
     }
 }
 
-export const _lcPayInterestAndRedemption = (carID, month, milege, account) => {
+export const _lcToClaimDividend = (objectID, account) => {
     return (dispatch) => {
-        return contract.lcPayInterestAndRedemption(carID, month, milege, account)
+        return contract.lcToClaimDividend(objectID, account)
             .then(result => {
-                dispatch(goBack())
                 return dispatch(
                     {
-                        type: "PAY_INTEREST_AND_REDEMPTION_RESULT",
+                        type: "TO_CLAIM_DIVIDEND_RESULT",
                         payload: result
                     }
                 )
@@ -270,27 +338,13 @@ export const _lcPayInterestAndRedemption = (carID, month, milege, account) => {
     }
 }
 
-export const _lcReadInvestorToClaim = (carID, account) => {
+export const _lcClaimDividend = (objectID, account) => {
     return (dispatch) => {
-        return contract.lcReadInvestorToClaim(carID, account)
+        return contract.lcClaimDividend(objectID, account)
             .then(result => {
                 return dispatch(
                     {
-                        type: "READ_INVESTOR_TO_CLAIM_RESULT",
-                        payload: result
-                    }
-                )
-            })
-    }
-}
-
-export const _lcClaimInterestAndRedemption = (carID, account) => {
-    return (dispatch) => {
-        return contract.lcClaimInterestAndRedemption(carID, account)
-            .then(result => {
-                return dispatch(
-                    {
-                        type: "CLAIM_INTEREST_AND_REDEMPTION_RESULT",
+                        type: "CLAIM_DIVIDEND_RESULT",
                         payload: result
                     }
                 )

@@ -9,7 +9,8 @@ import Main from '../components/Main';
 const mapStateToProps = (state) => {
     // console.log("State: ", state)
     return {
-        account : state.account
+        account : state.account,
+        initRoute: state.initRoute
     }
 }
 const mapActionsToProps = (dispatch) => { return bindActionCreators(Actions, dispatch) }

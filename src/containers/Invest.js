@@ -19,10 +19,10 @@ const mapStateToProps = (state) => {
         cars: state.cars,
         car: state.car,
         members: state.members,
-        totalAmountRaised: state.totalAmountRaised,
+        sumBalanceOf: state.sumBalanceOf,
         unClaimedRedemption: state.unClaimedRedemption,
         crowdsaleClosed: state.crowdsaleClosed,
-        payInterestAndRedemptionTxID: state.payInterestAndRedemptionTxID,
+        paySubscriptionTxID: state.paySubscriptionTxID,
         progress: state.progress ? state.progress : false,
         [state.module]: state[state.module],
         [state.account]: state[state.account]

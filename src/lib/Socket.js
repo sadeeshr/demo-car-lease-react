@@ -26,19 +26,26 @@ class Socket {
     }
 
     newData = (data) => {
-        this.socket.emit("new", data)
-        return data
+        if (this.socket) {
+            this.socket.emit("new", data)
+            return data
+        }
     }
 
     fetchData = (account, data) => {
         this.account = account
-        this.socket.emit("fetch", data)
-        return data.query.module
+        if (this.socket) {
+            this.socket.emit("fetch", data)
+            return data.query.module
+        }
+
     }
 
     updateData = (data) => {
-        this.socket.emit("update", data)
-        return data
+        if (this.socket) {
+            this.socket.emit("update", data)
+            return data
+        }
     }
 
     bindSocket = (socket) => {
@@ -47,7 +54,7 @@ class Socket {
         this.socket.on('disconnect', () => { console.log("Offline now"); this.props._socketStatus(true) })
         this.socket.on('data', data => {
             console.log("DATA: ", data, this.account);
-            this.props._contractDataResponse(this.account, { [data.module]: data.result });
+            if (data) this.props._contractDataResponse(this.account, { [data.module]: data.result });
         })
     }
 

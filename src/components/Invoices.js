@@ -11,7 +11,6 @@ class Invoices extends Component {
             month: null,
             year: null
         }
-        this.carID = null
         this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     }
 
@@ -21,9 +20,6 @@ class Invoices extends Component {
     }
 
     componentDidMount() {
-        let now = new Date()
-        this.month = now.getMonth()
-        this.year = now.getFullYear()
         this.carID = this.props.member.carID
         if (this.props.car) this.fetchCarMileagesRedemption()
     }
@@ -36,7 +32,7 @@ class Invoices extends Component {
                 carID: this.props.member.carID
             },
             filter: {
-                _id: 0
+                // _id: 0
             }
         }
         this.props._fetchContractData(this.props.account, data)
@@ -46,9 +42,9 @@ class Invoices extends Component {
         let data = {
             module: "invoices",
             data: {
-                module: this.props.location.state.module,
+                // module: this.props.location.state.module,
                 carID: this.props.member.carID,
-                year: (new Date()).getFullYear(),
+                year: this.state.year || (new Date()).getFullYear(),
                 month: this.state.month ? this.state.month + 1 : (new Date()).getMonth(),
                 mileage: this.state.mileage || 0,
                 amount: this.state.amount || 0,
@@ -58,17 +54,34 @@ class Invoices extends Component {
         this.props._newContractData(data)
     }
 
+    updateInvoice = (invoice, mileage, amount) => {
+        let data = {
+            module: "invoices",
+            query: { "_id": invoice["_id"] },
+            data: {
+                // module: invoice.module,
+                carID: invoice.carID,
+                year: invoice.year,
+                month: invoice.month,
+                mileage: mileage || 0,
+                amount: amount || 0,
+                status: true
+            }
+        }
+        this.props._updateContractData(data)
+    }
+
     fetchCarMileagesRedemption = () => {
         let car = this.props.car
-        this.setState({ carMilages: car.carMilages.toNumber(), monthlyRedemption: car.monthlyRedemption.toNumber() })
+        this.setState({ carMilages: car.milages.toNumber(), monthlyRedemption: car.totalDividends.toNumber() })
     }
 
     componentWillReceiveProps(nextProps) {
         console.log("new props", nextProps);
-        if (nextProps.invoices_new)
+        if (nextProps.invoices_new || nextProps.invoices_edit)
             this.fetchInvoices()
         if (nextProps.invoices && nextProps.invoices.length > 0) {
-            this.setState({ month: this.getMaxMonth(nextProps.invoices) })
+            this.setState({ month: this.getMaxMonth(nextProps.invoices), year: (new Date()).getFullYear() })
         }
     }
 
@@ -81,21 +94,11 @@ class Invoices extends Component {
         return max
     }
 
-    // payInterestAndRedemption = () => {
-    //     this.setState({ progress: true })
-    //     this.props.LeaseContract.payInterestAndRedemption(this.carID, this.month || "0", this.state.mileage || "0", { from: this.props.account })
-    //         .then(result => {
-    //             this.setState({ progress: false })
-    //             this.props.history.goBack()
-    //             console.log("payInterestAndRedemption RESULT: ", result)
-    //         })
-    // }
-
     render() {
         console.log("INVOICE STATE: ", this.state, this.props);
-        // const invoices = this.props.invoices ? this.props.invoices.filter(invoice => (invoice.month === parseInt(this.state.filter, 10))) : []
-        const invoices = this.props.invoices
-        let amount = (this.props.member.car.monthlyRedemption.toNumber() || 0) + ((this.state.mileage - (this.props.member.car.carMilages.toNumber() || 0)) * 1)
+        const invoices = this.props.invoices ? this.props.invoices.filter(invoice => (this.months[invoice.month].toLowerCase().startsWith(this.state.filter) || invoice.year === parseInt(this.state.filter, 10))) : []
+        // const invoices = this.props.invoices
+        let amount = (this.props.member.car.totalDividends.toNumber() || 0) + ((this.state.mileage - (this.props.member.car.milages.toNumber() || 0)) * 1)
         return (
             <div className="mainContentCon">
                 <div className="navCon">
@@ -109,27 +112,30 @@ class Invoices extends Component {
                     <BlockUi tag="div" blocking={this.props.progress}>
                         <h1 id="header">Invoices</h1>
                         <div className="nvoicesCon overflow">
-                        {
-                            invoices && invoices.map((invoice, i) => {
-                                return <div key={i} className="mtableLink">
-                                    <div className="mtableInvoices">
-                                        <p>{invoice.year} {this.months[invoice.month]}</p>
-                                        {
-                                            invoice.mileage === 0 ?
-                                                <input style={{ width: "80px", textAlign: "center" }} maxLength="20" value={this.state.mileage} onChange={(e) => this.setState({ mileage: e.target.value })} type="text" placeholder="Mileage" />
-                                                : invoice.mileage
-                                        }
-                                        <span> km stand {invoice.amount > 0 ? invoice.amount : (amount > 0 ? amount : 0)} euro</span>
+                            {
+                                invoices && invoices.map((invoice, i) => {
+                                    return <div key={i} className="mtableLink">
+                                        <div className="mtableInvoices">
+                                            <p>{invoice.year} {this.months[invoice.month]}</p>
+                                            {
+                                                invoice.mileage === 0 ?
+                                                    <input style={{ width: "80px", textAlign: "center" }} maxLength="20" value={this.state.mileage} onChange={(e) => this.setState({ mileage: e.target.value })} type="text" placeholder="Mileage" />
+                                                    : invoice.mileage
+                                            }
+                                            km stand<p>{invoice.amount > 0 ? invoice.amount : (amount > 0 ? amount : 0)} Euro</p>
+                                        </div>
+                                        <div className="mtableInvoicesIcon">
+                                            {
+                                                invoice.status ?
+                                                    <img src={require('../assets/Payed.png')} alt="Payed" />
+                                                    : <img onClick={() => {
+                                                        this.props._lcPaySubscription(this.props.member.carID, invoice.month, this.state.mileage || "0", this.props.account)
+                                                        this.updateInvoice(invoice, this.state.mileage, amount || 0)
+                                                    }} src={require('../assets/Ether.png')} alt="Ether" />}
+                                        </div>
                                     </div>
-                                    <div className="mtableInvoicesIcon">
-                                        {
-                                            invoice.status ?
-                                                <img src={require('../assets/Payed.png')} alt="Payed" />
-                                                : <img onClick={() => this.props._lcPayInterestAndRedemption(this.carID, this.month || "0", this.state.mileage || "0", this.props.account)} src={require('../assets/Ether.png')} alt="Ether" />}
-                                    </div>
-                                </div>
-                            })
-                        }
+                                })
+                            }
                         </div>
                         {/*
                             <div className="mtableInvoices">
