@@ -20,18 +20,18 @@ html{
      color: #b8b9ba;
 }
  .mainContentCon{
-     width: 330px;
-     margin: 3% auto;
-     /* padding: 0px 0px 60px; */
-     /* min-height: 400px; */
-     /*max-height: 550px;*/    /* changing this from 580px to avoid div overflow problem on laptop screens */
-     height: 580px;
-     /* overflow-y: auto; */
-     /* overflow-x: hidden; */
-     background: rgba(156, 156, 156, .8);
-     border-radius: 40px;
-     border: 2px solid #4c4e54;
-     display: block;
+    width: 316px;
+    margin: 14px auto;
+    /* padding: 0px 0px 60px; */
+    /* min-height: 400px; */
+    /* max-height: 550px; */
+    height: 615px;
+    /* overflow-y: auto; */
+    overflow: hidden;
+    background: rgba(156, 156, 156, .8);
+    border-radius: 35px;
+    border: 5px solid #808080;
+    display: block;
 }
 
 
@@ -68,23 +68,26 @@ img.addBtn {
 }
 
 .navCon{
-    background: rgba(255, 255, 255, 1);
-    height: 50px;
-    width: 330px;
-    border-top-left-radius: 40px;
-    border-top-right-radius: 40px;
-    position: relative;
-
-
-
+    height: 40px;
+    width: 100%;
+    padding-top: 15px;
+    padding-bottom: 25px;
+}
+.content-border{
+    border: 3px solid #4D4D4D;
+    width: 350px;
+    height: 650px;
+    margin: 0 auto;
+    border-radius: 45px;
+    box-shadow: 3px 3px rgba(0,0,0,.3);
 }
 
 .rowSelect{
-    width: 75%;
+    width: 85%;
     background: rgba(255,255,255, .5);
     border-radius: 10px;
     padding: 10px;
-    margin: 0 0 10px 15%;
+    margin: 0px 10px 7px;
     display: inline-block;
     
 }
@@ -102,10 +105,12 @@ img.addBtn {
      font-family: Tahoma, Verdana, Segoe, sans-serif;
      font-weight: normal;
      display: block;
+     color: #fff;
      text-align: center;
-     font-size: 35px;
+     font-size: 16px;
      /* padding-top: 40px; */
      padding-left: 0;
+     font-weight: bold;
      padding-right: 0;
      margin-bottom: 10px;
 }
@@ -113,35 +118,62 @@ img.addBtn {
      padding-top: 20%;
 }
 .contentText{
-    background: rgba(170, 172, 175, .8);
-    border-radius: 10px;
     padding: 10px;
-    margin-bottom: 10px;
+    height: 390px;
+    margin: 0 auto;
 }
 
 
  .contentText p{
      text-align: left;
-     font-size: 14px;
+     font-size: 18px;
+     line-height: 25px;
 }
  .contentBtn a, .contentBtn button{
      text-decoration: none;
      color: #fff;
-     padding: 20px 0;
-     font-size: 20px;
+     padding: 30px 0;
+     font-size: 24px;
      background: rgba(170, 172, 175, .8) ;
      border-radius: 10px;
-     font-weight: 500;
+     font-weight: 700;
      width: 100%;
      outline:0;
-
-
-     border: 3px solid rgba(0, 0, 0, 0);
+     border: 5px solid rgba(0, 0, 0, 0);
 
 }
-
-.contentBtn button:hover{
+.footCon{
+    text-align: center;
+    padding: 25px 20px;
+}
+.footCon img{
+    width: 100%;
+    height: auto;
+}
+.arrowBtn img{
+    width: 22px !important;
+    height: auto;
+}
+.footCon div span{
+    font-size: 18px;
+    margin-right: -40px;
+    font-weight: bold;
+}
+.arrowBtn{
+    position: relative;
+    left: 65px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    color: #fff;
+    background: #fff;
+    border: 3px solid #808080;
+}
+.footCon div button:hover, .footCon div a:hover{
     border: 3px solid rgba(255, 215, 0, .3);
+}
+.contentBtn button:hover{
+    border: 5px solid rgba(255, 215, 0, .3);
 }
 
 .contentBtn.bg-none button{
@@ -161,8 +193,6 @@ img.addBtn {
 }
  .contentBtn{
      text-align: center;
-     width: 94%;
-     margin: 0 auto 10px;
 }
 
 .contentBtn img{
@@ -176,7 +206,7 @@ img.addBtn {
     width: 94% !important;
     width: -moz-available !important;
     width: -webkit-stretch !important;
-    margin: 0 auto 10px !important;
+    margin: 0 auto !important;
      padding: 0px 0px !important;
      display: block;
 }
@@ -185,10 +215,21 @@ img.addBtn {
      width: -moz-available !important;
      width: -webkit-stretch !important;
      text-align: center;
-     color: #b8b9ba;
-     border-radius: 5px !important;
+     color: #000000;
+     font-size: 18px;
+     padding: 5px 15px !important;
+     border-radius: 10px !important;
      background: rgba(255, 255, 255, 1) !important;
-     border: 1px solid #ececec !important;
+     border: 1px solid #808080 !important;
+}
+.m-b-10{
+    margin-bottom: 10px;
+}
+textarea.membership-input{
+    font-family: Tahoma, Verdana, Segoe, sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    text-align: center;
 }
  .fileInput{
      border: 1px solid #ececec !important;
@@ -258,6 +299,9 @@ img.addBtn {
 
 .contentCon{
     padding: 0 15px;
+    height: 430px;
+    background: rgba(170, 172, 175, .8);
+    border-radius: 30px;
 }
  .form-input-containers label{
      margin-bottom: 10px !important;
@@ -278,15 +322,18 @@ img.addBtn {
 
 .carCon{
     /* margin-bottom: 10px ; */
+    border: 3px solid rgba(255, 215, 0, 0);
+    background: rgba(170, 172, 175, .8);
     padding: 10px 0;
     border-radius: 25px;
     display: inline-block;
+    margin-bottom: 10px;
 }
 .carcol{
     width: 44%;
     padding: 3%;
     text-align: left;
-    font-size: 15px;
+    font-size: 18px;
     float: left;
 }
 .carCon.active .carcol{
@@ -321,10 +368,8 @@ img.addBtn {
     text-align: center;
 }
 .carCon.active .carTitle .membership-input{
-    width: 50px !important;
-    float: right;
     padding: 2px 3px;
-    margin-right: 15px;
+    margin-left: 15px;
 }
 .carPrice img{
     width: 35px;
@@ -430,7 +475,7 @@ table tr td {
 
 .memberMesCon{
     text-align: left;
-    font-size: 14px;
+    font-size: 12px;
     width: 70%;
     float: left
 }
@@ -438,6 +483,12 @@ table tr td {
     display: inline-block;
     width: 30%;
 
+}
+.membersBtn .arrowBtn{
+    left: 0;
+}
+.membersBtn .arrowBtn img{
+    width: 22px !important;
 }
 
 .membersBtn a{
@@ -463,11 +514,18 @@ table tr td {
     width: 30px !important;
 }
 
-.membersCon{
-    height: 250px;
+.leaseCarCon{
+    background: rgba(170, 172, 175, .6);
+    border: 3px solid rgba(255, 215, 0, 0);
+    border-radius: 30px;
+    margin-bottom: 10px;
 }
-.bmemberCon{
-    height: 420px;
+.leaseCarCon:hover{
+    border: 3px solid rgba(255, 215, 0, .3);
+}
+
+.contentCon.bg-none{
+    background: rgba(0, 0, 0, 0);
 }
 
 .overflow{
@@ -510,6 +568,16 @@ table tr td {
     margin-bottom: 10px;
 }
 
+.htableTitle td{
+    font-weight: bold;
+    font-size: 12px;
+}
+.htablecar td{
+    padding: 0px 5px;
+}
+.htablecar button{
+    padding: 0;
+}
 .mtableCon{
     display: block;
     width: 100%;
@@ -538,12 +606,12 @@ table tr td {
 .mtableCar{
     float: left;
     text-align: center;
-    width: 60px;
+    width: 90px;
 
 }
 
 .mtableCar img{
-    width: 60px;
+    width: 90px;
     height: auto;
 }
 
@@ -557,14 +625,10 @@ table tr td {
 display: flex;
 width: 94%;
 padding: 15px 0;
-background: rgba(170, 172, 175, .6);
-margin: 0 auto 10px;
 border-radius: 30px;
-border: 3px solid rgba(255, 215, 0, 0);
 }
 
 .mtableLink:hover, .mtableLink:visited, .mtableLink:active, .mtableLink:focus{
-    border: 3px solid rgba(255, 215, 0, .3);
 }
 
 
@@ -579,7 +643,9 @@ border: 3px solid rgba(255, 215, 0, 0);
     padding-left: 10px;
 
 }
-
+.flaticon-back{
+    float: left;
+}
 #center-btn-container img{
     float: left;
     /*margin: 0 auto;*/
@@ -689,3 +755,94 @@ border: 3px solid rgba(255, 215, 0, 0);
 .carCon.active .mtableCar img{
     width: 100%;
 }
+.b-member-con{
+    border: 1px solid #808080;
+    background-color: rgba(255, 255, 255, .3);
+    border-radius: 25px;
+    padding: 10px;
+    display: inline-block;
+}
+.b-member-left{
+    width: 50%;
+    text-align: left;
+    float: left;
+}
+
+.b-member-left .model{
+    font-size: 18px;
+    text-align: left;
+    width: 100%;
+    display: block;
+}
+
+.b-member-left .speed{
+    font-size: 12px;
+    text-align: left;
+}
+.b-member-left img{
+    width: 120px;
+    float: none;
+}
+.b-member-right{
+    width: 50%;
+    text-align: right;
+    float: right;
+}
+.b-member-right .months, .b-member-right .price{
+    font-size: 15px;
+    text-align: right;
+}
+
+.b-member-right .monred{
+   font-size: 32px;
+   display: inline-block;
+}
+
+.b-member-right .monred .per{
+    font-size: 13px;
+}
+
+.investInput .membership-input{
+    width: 80px !important;
+    height: 40px;
+    font-size: 18px;
+    border: 2px solid #999999 !important;
+    padding: 0 !important;
+    margin-right: 10px;
+}
+
+.investInput .arrowBtn{
+    float: left;
+    left: 0;
+    margin: 0 10px;
+}
+.investInput .arrowBtn img{
+padding: 9px;
+}
+
+.investInput {
+    font-size: 18px;
+}
+
+.claim-euroCon.investInput{
+    margin-left: -55px;
+    position: relative;
+    top: -14px;
+}
+.claim-euroCon.investInput .arrowBtn{
+    position: relative;
+    left: -65px;
+    top: 0;
+}
+
+.claim-euro{
+    display: inline-block;
+    position: relative;
+    left: -55px;
+    top: 15px;
+}
+.carCon.active .investInput{
+    line-height: 45px;
+    margin-bottom: 10px;
+}
+

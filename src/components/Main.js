@@ -89,20 +89,22 @@ class Main extends Component {
         const disabled = this.props.account ? false : true
         const cursor = this.props.account ? "pointer" : "not-allowed"
 
-        return <div className="mainContentCon">
+        return <div className="content-border">
+        <div className="mainContentCon">
             <div className="navCon">
-            </div>
-            <div className="contentCon">
                 <h1 id="header">ENERGY NEUTRAL 2030</h1>
+            </div>
+            <div className="contentCon overflow bg-none">
+              
 
                 <table>
                     <tbody>
                         <tr>
-                            <td><img style={img} src={require('../assets/TeslaRoadster.png')} alt="logo" /></td>
-                            <td>
+                            <td><img src={require('../assets/car-solar.png')} alt="logo" /></td>
+                            {/* <td>
                                 <img className="flagMargin" style={thumbImg} src={require('../assets/india_flag.jpg')} alt="logo" />
                                 <img style={thumbImg} src={require('../assets/netherlands_flag.png')} alt="logo" />
-                            </td>
+                            </td> */}
                         </tr>
                     </tbody>
                 </table>
@@ -110,9 +112,14 @@ class Main extends Component {
                     <div hidden={!disabled} id="metamask-logo" style={{ textAlign: "center" }}><span hidden={!disabled} style={{ cursor: this.state.url ? "pointer" : "default" }} onClick={() => this.state.url ? window.open(this.state.url, "_blank") : ""}>{this.state.alert}</span></div>
                     <button style={{ cursor: cursor }} disabled={disabled} onClick={() => this.props.history.push("/", { module: "westland", path: "home" })} >Westland</button>
                     <button style={{ cursor: cursor }} disabled={disabled} onClick={() => this.props.history.push("/", { module: "middendelftland", path: "home" })}>Midden Delftland</button>
-                    <button style={{ cursor: cursor }} hidden={disabled} disabled={disabled} onClick={() => this.props.history.push("/", { module: "AddMember", path: "home" })}>Jouw gemeente hier<img src={require('../assets/add.png')} alt="addM" /></button>
+                   
                 </div>
             </div>
+            <div className="footCon">
+                <div><span>Your town here</span><button className="arrowBtn" hidden={disabled} disabled={disabled} onClick={() => this.props.history.push("/", { module: "AddMember", path: "home" })}><img src={require('../assets/arrow.jpg')} alt="addM" /></button></div>
+
+            </div>
+        </div>
         </div>
     }
 

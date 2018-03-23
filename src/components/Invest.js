@@ -15,8 +15,8 @@ class Invest extends Component {
         this.setState({
             carID: this.props.member ? this.props.member.carID : null,
             car: this.props.member ? this.props.member.car : null,
-            eventTransfer: this.props.eventTransfer === "pending" ? this.props.eventTransfer : null,
-            eventClaim: this.props.eventClaim === "pending" ? this.props.eventClaim : null,
+            eventTransfer: null,
+            eventClaim: null,
         })
     }
 
@@ -210,15 +210,17 @@ class Invest extends Component {
         return (
             <div className="mainContentCon">
                 <div className="navCon">
-                    <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
+                   
+                    <h1 id="header">Invest</h1>
+                    {/* 
+                     <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
                     <div className="float-right">
                         <i title="Invoices" className="flaticon-invoice" onClick={() => this.props.history.push("/", { path: "invoices" })}></i>
                         <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
-                    </div>
+                    </div> */}
                 </div>
-                <div className="contentCon">
+                <div className="contentCon overflow bg-none">
                     <BlockUi tag="div" blocking={this.props.progress}>
-                        <h1 id="header">Invest</h1>
                         <div className="carIntestCon">
                             <div className="carCon">
 
@@ -246,15 +248,6 @@ class Invest extends Component {
                                             {/*<div className="carPrice">{this.props[this.props.account] || ""} ETH</div>*/}
                                             <div className="carPrice">{this.props.evTokenBalance || "0"} EVTokens</div>
                                             <div className="carPrice">{euroTokenBalance || "0"} Euro</div>
-                                            <div hidden={hideInvest} className="carcol">
-                                                <div className="carTitle">
-                                                    <input className="membership-input" maxLength="20" value={this.state.authValue || this.props.allowance || ""} onChange={(e) => this.setState({ authValue: e.target.value })} type="text" placeholder="Authorize Value" />
-                                                    Authorized
-                                                    <div className="carcol img">
-                                                        <img onClick={() => { this.state.authValue && this.props._euroApprove(this.state.authValue, this.props.account) }} src={require('../assets/add.png')} alt="add2" />
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                     }
                                     {
@@ -273,6 +266,15 @@ class Invest extends Component {
                                 <div className="carcol img">
                                     <img hidden={Array.isArray(this.state.eths) ? true : false} onClick={() => {/*this.connectLedger.bind(this)*/ }} src={require('../assets/ledgernanos.png')} alt="ledger" />
                                 </div>
+                                <div hidden={hideInvest} className="">
+                                    <div className="carTitle investInput">
+                                        <div className="arrowBtn">
+                                            <img onClick={() => { this.state.authValue && this.props._euroApprove(this.state.authValue, this.props.account) }} src={require('../assets/add.jpg')} alt="add2" />
+                                        </div>
+                                        <input className="membership-input" maxLength="20" value={this.state.authValue || this.props.allowance || ""} onChange={(e) => this.setState({ authValue: e.target.value })} type="text" placeholder="Authorize Value" />
+                                        Authorized
+                                    </div>
+                                </div>
                             </div>
                             <div className="carCon active">
 
@@ -285,23 +287,31 @@ class Invest extends Component {
                                     </div>
                                 </div>
 
-                                <div hidden={hideInvest} className="carcol img">
-                                    <img style={{ cursor: disableInvest ? "not-allowed" : "pointer" }} onClick={() => !disableInvest && this.props._lcInvestInObject(this.props.member.carID, this.state.ethInvest || "0", this.props.account)} src={require('../assets/add.png')} alt="add" />
-                                </div>
-                                <div hidden={hideInvest} className="carcol">
-                                    <div className="carTitle">Invest Euro:
-                            <input className="membership-input" maxLength="20" value={(typeof this.state.ethInvest === 'undefined') ? euroTokenBalance : this.state.ethInvest} onChange={(e) => this.setState({ ethInvest: e.target.value })} type="text" placeholder="Euro Token" />
+                                {/* <div hidden={hideInvest} className="carcol img arrowBtn">
+                                    <img onClick={() => this.props._lcInvestInObject(this.props.member.carID, this.state.ethInvest || "0", this.props.account)} src={require('../assets/add.jpg')} alt="add" />
+                                </div> */}
+                                <div hidden={hideInvest} className="">
+                                    <div className="carTitle investInput">
+                                        <div className="arrowBtn">
+                                            <img onClick={() => this.props._lcInvestInObject(this.props.member.carID, this.state.ethInvest || "0", this.props.account)}src={require('../assets/add.jpg')} alt="add2" />
+                                        </div>
+                                    
+                                    
+                                        Invest Euro:
+                                        <input className="membership-input" maxLength="20" value={(typeof this.state.ethInvest === 'undefined') ? euroTokenBalance : this.state.ethInvest} onChange={(e) => this.setState({ ethInvest: e.target.value })} type="text" placeholder="Euro Token" />
                                         {this.props.investInObjectTxID && (!this.state.eventTransfer ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>)}
                                     </div>
                                 </div>
-                                <div className="carcol img">
-                                    <img style={{ cursor: (this.props.unClaimedRedemption > 0) ? "pointer" : "not-allowed" }} onClick={() => { (this.props.unClaimedRedemption > 0) && this.props._lcClaimDividend(this.props.member.carID, this.props.account) }} src={require('../assets/add.png')} alt="add2" />
+                                <div className="carTitle investInput">
+                                    <div className="arrowBtn">
+                                        <img onClick={() => { this.props._lcClaimDividend(this.props.member.carID, this.props.account) }} src={require('../assets/add.jpg')} alt="add2" />
+                                    </div>
+                                    Claim Euro: {this.props.unClaimedRedemption || "0"}
+                                    <div className="claim-euro">
+                                        <div className=""></div>
+                                        {this.props.claimDividendTxID && (!this.state.eventClaim ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>)}
+                                    </div>
                                 </div>
-                                <div className="carcol">
-                                    <div className="carTitle">Claim Euro: {this.props.unClaimedRedemption || "0"}</div>
-                                    {this.props.claimDividendTxID && (!this.state.eventClaim ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>)}
-                                </div>
-
                             </div>
 
 

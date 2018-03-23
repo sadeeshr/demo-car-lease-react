@@ -87,18 +87,20 @@ class AddMember extends Component {
         console.log("Add Member State: ", this.state);
         return (
             this.state.seeCars ?
+            <div className="content-border">
                 <div className="mainContentCon">
                     <div className="navCon">
-                        <i className="flaticon-back" onClick={() => this.setState({ seeCars: false })}></i>
+                        <h1 id="header">Select Car</h1>
+                        {/* <i className="flaticon-back" onClick={() => this.setState({ seeCars: false })}></i>
                         <div className="float-right">
                             <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
-                        </div>
+                        </div> */}
                     </div>
-                    <div className="contentCon">
+                    <div className="contentCon overflow bg-none">
                         <BlockUi tag="div" blocking={this.props.progress}>
-                            <h1 id="header">Select Car</h1>
-                            <table style={{ borderSpacing: "0px", borderCollapse: "collapse" }}>
-                                <tbody className="membersCon overflow">
+
+                            {/* <table style={{ borderSpacing: "0px", borderCollapse: "collapse" }}>
+                                <tbody className="membersCon">
                                     {
                                         cars.map((car, i) => {
                                             return (
@@ -114,25 +116,61 @@ class AddMember extends Component {
                                         })
                                     }
                                 </tbody>
+                            </table> */}
+
+                            <table style={{ borderSpacing: "0px", borderCollapse: "collapse" }}>
+                                <tbody className="membersCon">
+                                    {
+                                        cars.map((car, i) => {
+                                            return (
+                                                <tr style={{ padding: "0px 0px" }} key={i} id="center-btn-container" onClick={() => { this.setState({ carModel: car.model, carPic: car.image, carPrice: car.price, carDealer: car.dealer, carMonRedemption: car.monRedemption, carMonths: car.months }) }}>
+                                                    <div className="b-member-con">
+                                                        <div className="b-member-left">
+                                                            <span className="model" title="Model">{car.model || ""}</span>
+                                                            <span className="speed" title="speed">{car.speed || ""}kwh</span>
+                                                            <img src={car.image || ""} alt={"car-" + i} />
+                                                        </div>
+                                                        <div className="b-member-right">
+                                                            <span className="monred" title="monred">{car.monRedemption || ""} <span className="per">Per maand</span></span>
+                                                            <span className="months" title="months">OBV {car.months || ""} MND</span>
+                                                            <span className="price" title="Price">{car.price || ""} Euro</span>
+                                                        </div>
+                                                    </div>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </tbody>
                             </table>
-                            <div className="contentBtn">
+                            
+                            {/* <div className="contentBtn">
                                 <button onClick={this.createAccount.bind(this)}>Confirm & Publish</button>
-                            </div>
+                            </div> */}
                         </BlockUi>
                     </div>
-                </div>
-                :
-                <div className="mainContentCon">
-                    <div className="navCon">
-                        <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
-                        <div className="float-right">
-                            <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
+                    <div className="footCon">
+                        <div>
+                            <span>Confirm & Publish</span>
+                            <button className="arrowBtn" onClick={this.createAccount.bind(this)}>
+                                <img src={require('../assets/add.jpg')} alt="addM" />
+                            </button>
                         </div>
                     </div>
-                    <div className="contentCon">
+                </div>
+            </div>
+                :
+            <div className="content-border">
+                <div className="mainContentCon">
+                    <div className="navCon">
+                        <h1 id="header">Become Member</h1>
+                        {/* <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
+                        <div className="float-right">
+                            <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
+                        </div> */}
+                    </div>
+                    <div className="contentCon overflow">
                         <BlockUi tag="div" blocking={this.props.progress}>
-                            <h1 id="header">Become Member</h1>
-                            <div className="form-row-container bmemberCon overflow">
+                            <div className="form-row-container bmemberCon">
                                 <span className="form-input-containers">
                                     <input className="membership-input" maxLength="20" value={this.state.username || ""} onChange={(e) => this.setState({ username: e.target.value })} type="text" id="username" name="username" placeholder="Username *" />
                                 </span>
@@ -146,19 +184,19 @@ class AddMember extends Component {
                                     <input maxLength="30" className="membership-input" value={this.state.state || ""} onChange={(e) => this.setState({ state: e.target.value })} type="text" id="state" name="state" placeholder="State" />
                                 </span>
                                 <span className="form-input-containers">
-                                    <input maxLength="30" className="membership-input" value={this.state.county || ""} onChange={(e) => this.setState({ county: e.target.value })} type="text" placeholder="County" />
+                                    <input maxLength="30" className="membership-input m-b-10" value={this.state.county || ""} onChange={(e) => this.setState({ county: e.target.value })} type="text" placeholder="County" />
                                 </span>
                                 <span className="form-input-containers">
-                                    <input maxLength="30" className="membership-input" value={this.state.iban || ""} onChange={(e) => this.setState({ iban: e.target.value })} type="text" placeholder="IBAN" />
+                                    <input maxLength="30" className="membership-input m-b-10" value={this.state.iban || ""} onChange={(e) => this.setState({ iban: e.target.value })} type="text" placeholder="IBAN" />
                                 </span>
                                 <span className="form-input-containers">
-                                    <input maxLength="30" className="membership-input" value={this.state.email || ""} onChange={(e) => this.setState({ email: e.target.value })} type="text" placeholder="Email" />
+                                    <input maxLength="30" className="membership-input m-b-10" value={this.state.email || ""} onChange={(e) => this.setState({ email: e.target.value })} type="text" placeholder="Email" />
                                 </span>
                                 <span className="form-input-containers">
                                     <textarea className="membership-input" rows="5" value={this.state.message || ""} onChange={(e) => this.setState({ message: e.target.value })} name="message" placeholder="Your message"></textarea>
                                 </span>
 
-                                <span className="form-input-containers marginBttm inputAddbtn">
+                                {/* <span className="form-input-containers marginBttm inputAddbtn">
                                     <div style={{ "textAlign": "right" }} htmlFor="imageUpload">
                                         <button style={{ "backgroundColor": "Transparent", "outline": "none", "border": "none", "padding": "0" }}
                                             onClick={() => { this.setState({ seeCars: true }) }}>
@@ -167,7 +205,7 @@ class AddMember extends Component {
                                     </div>
                                     <label>Select Car</label>
                                     {(this.state.carPic && !this.state.seeCars) && <img className="inputImg" src={this.state.carPic || ""} alt="CarImage" />}
-                                </span>
+                                </span> */}
                                 {
                                     /*  (this.state.carPic && !this.state.seeCars) &&
                                       <div>
@@ -208,7 +246,16 @@ class AddMember extends Component {
                             </div>
                         </BlockUi>
                     </div>
+                    <div className="footCon">
+                        <div>
+                            <span>Select a car</span>
+                            <button className="arrowBtn" onClick={() => { this.setState({ seeCars: true }) }}>
+                                <img src={require('../assets/arrow.jpg')} alt="addM" />
+                            </button>
+                        </div>
+                    </div>
                 </div>
+            </div>
 
         )
     }
