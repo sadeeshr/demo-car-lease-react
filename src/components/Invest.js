@@ -203,6 +203,9 @@ class Invest extends Component {
         // (this.state.euroTokenBalance || "").substring(0, 8) + "..."
         const account = this.props.account ? this.props.account.substring(0, 7) + '.....' + this.props.account.substring(this.props.account.length - 5) : ""
         const hideInvest = (this.props.member && this.props.member.car.totalRaised.toNumber() >= this.props.member.carPrice) ? true : false
+        const ethInvest = parseInt(this.state.ethInvest || "0", 10)
+        const disableInvest = ((ethInvest < (this.props.member.carPrice - this.props.member.car.totalRaised.toNumber())) && (ethInvest < this.props.allowance) && (ethInvest < this.props.euroTokenBalance) && (ethInvest > 0)) ? false : true
+        console.log("Disable Invest: ", disableInvest, (ethInvest < (this.props.member.carPrice - this.props.member.car.totalRaised.toNumber())), (ethInvest < this.props.allowance), (ethInvest < this.props.euroTokenBalance));
         // (this.props.account || "").substring(0, 8) + "..."
         return (
             <div className="mainContentCon">
@@ -283,7 +286,7 @@ class Invest extends Component {
                                 </div>
 
                                 <div hidden={hideInvest} className="carcol img">
-                                    <img onClick={() => this.props._lcInvestInObject(this.props.member.carID, this.state.ethInvest || "0", this.props.account)} src={require('../assets/add.png')} alt="add" />
+                                    <img style={{ cursor: disableInvest ? "not-allowed" : "pointer" }} onClick={() => !disableInvest && this.props._lcInvestInObject(this.props.member.carID, this.state.ethInvest || "0", this.props.account)} src={require('../assets/add.png')} alt="add" />
                                 </div>
                                 <div hidden={hideInvest} className="carcol">
                                     <div className="carTitle">Invest Euro:
@@ -292,7 +295,7 @@ class Invest extends Component {
                                     </div>
                                 </div>
                                 <div className="carcol img">
-                                    <img onClick={() => { this.props._lcClaimDividend(this.props.member.carID, this.props.account) }} src={require('../assets/add.png')} alt="add2" />
+                                    <img style={{ cursor: (this.props.unClaimedRedemption > 0) ? "pointer" : "not-allowed" }} onClick={() => { (this.props.unClaimedRedemption > 0) && this.props._lcClaimDividend(this.props.member.carID, this.props.account) }} src={require('../assets/add.png')} alt="add2" />
                                 </div>
                                 <div className="carcol">
                                     <div className="carTitle">Claim Euro: {this.props.unClaimedRedemption || "0"}</div>
