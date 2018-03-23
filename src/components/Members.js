@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import BlockUi from 'react-block-ui';
 import 'react-block-ui/style.css';
-import scrollToComponent from 'react-scroll-to-component';
+// import scrollToComponent from 'react-scroll-to-component';
 
 class Members extends Component {
 
@@ -62,11 +62,11 @@ class Members extends Component {
         if (this.props.members) {
             let members = this.sortMembers()
             console.log("######## SORTED MEMBERS ###########", members);
-            if (members.length >= 3) {
-                members[0].car ? members[0].car.crowdsaleClosed = true : ""
+            // if (members.length >= 3) {
+                // members[0].car ? members[0].car.crowdsaleClosed = true : ""
                 // members[1].car ? members[1].car.crowdsaleClosed = true : ""
                 //     // members[2].car ? members[2].car.crowdsaleClosed = true : ""
-            }
+            // }
             this.setState({ members })
             // if (!this.props.lcCars)
             // for (let i = 1; i <= this.props.members.length; i++) {

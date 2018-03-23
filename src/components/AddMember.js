@@ -50,7 +50,7 @@ class AddMember extends Component {
     createAccount = () => {
         this.setState({ progress: true })
         const self = this.state
-        let membersList = this.props.members
+        // let membersList = this.props.members
 
         const carHash = '0x' + md5(self.username + self.state)
 
