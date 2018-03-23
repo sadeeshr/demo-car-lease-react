@@ -120,16 +120,16 @@ class Members extends Component {
                     <div className="memberMesCon">{member.message}</div>
                     <div className="memberMesBtns">
                         <div className="membersBtn">
-                            <a role="button" onClick={() => { this.props.history.push("/", { module: this.props.module, path: "invest" }) }}>
-                                <p><img src={require('../assets/add.png')} alt="test" /> Invest</p>
-                            </a>
+                            <button className="arrowBtn" onClick={() => { this.props.history.push("/", { module: this.props.module, path: "invest" }) }}>
+                                <img src={require('../assets/arrow.jpg')} alt="addM" />
+                            </button>
                         </div>
                     </div>
                 </div>
             )
         }
 
-        return memberRows
+        return <div className="leaseCarCon">{memberRows}</div>
     }
 
     sortMembers = () => {
@@ -201,20 +201,26 @@ class Members extends Component {
                                     </div>
                                 */
                             }
-                         <div className="membersCon overflow">
+                         <div className="membersCon">
                             {
                                 members && members.map((member, i) => {
                                     return this.renderMember(member, i)
                                 })
                             }
                         </div>
-                        <div className="contentBtn">
+                        {/* <div className="contentBtn">
+                            {this.props.addNewObjectTxID && (!this.state.eventAddNewObject ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>)}
+                            <input className="searchBtn" type="text" name="filterMembers" value={this.state.filter || ""} placeholder="Search" onChange={(e) => { console.log("SEARCH: ", e.target.value); this.setState({ filter: e.target.value }) }} />
+                        </div> */}
+
+                    </BlockUi>
+                    </div>
+                    <div className="footCon">
+                        <div>
                             {this.props.addNewObjectTxID && (!this.state.eventAddNewObject ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>)}
                             <input className="searchBtn" type="text" name="filterMembers" value={this.state.filter || ""} placeholder="Search" onChange={(e) => { console.log("SEARCH: ", e.target.value); this.setState({ filter: e.target.value }) }} />
                         </div>
-
-                    </BlockUi>
-
+                    </div>
                 </div>
             </div>
         )

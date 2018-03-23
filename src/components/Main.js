@@ -94,7 +94,7 @@ class Main extends Component {
             <div className="navCon">
                 <h1 id="header">ENERGY NEUTRAL 2030</h1>
             </div>
-            <div className="contentCon overflow">
+            <div className="contentCon overflow bg-none">
               
 
                 <table>
@@ -116,7 +116,7 @@ class Main extends Component {
                 </div>
             </div>
             <div className="footCon">
-                <div><span>Your town here</span><button hidden={disabled} disabled={disabled} onClick={() => this.props.history.push("/", { module: "AddMember", path: "home" })}><img src={require('../assets/arrow.jpg')} alt="addM" /></button></div>
+                <div><span>Your town here</span><button className="arrowBtn" hidden={disabled} disabled={disabled} onClick={() => this.props.history.push("/", { module: "AddMember", path: "home" })}><img src={require('../assets/arrow.jpg')} alt="addM" /></button></div>
 
             </div>
         </div>

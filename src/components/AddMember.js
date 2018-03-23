@@ -99,7 +99,7 @@ class AddMember extends Component {
                     <div className="contentCon overflow bg-none">
                         <BlockUi tag="div" blocking={this.props.progress}>
 
-                            <table style={{ borderSpacing: "0px", borderCollapse: "collapse" }}>
+                            {/* <table style={{ borderSpacing: "0px", borderCollapse: "collapse" }}>
                                 <tbody className="membersCon">
                                     {
                                         cars.map((car, i) => {
@@ -116,7 +116,33 @@ class AddMember extends Component {
                                         })
                                     }
                                 </tbody>
+                            </table> */}
+
+                            <table style={{ borderSpacing: "0px", borderCollapse: "collapse" }}>
+                                <tbody className="membersCon">
+                                    {
+                                        cars.map((car, i) => {
+                                            return (
+                                                <tr style={{ padding: "0px 0px" }} key={i} id="center-btn-container" onClick={() => { this.setState({ carModel: car.model, carPic: car.image, carPrice: car.price, carDealer: car.dealer, carMonRedemption: car.monRedemption, carMonths: car.months }) }}>
+                                                    <div className="b-member-con">
+                                                        <div className="b-member-left">
+                                                            <span className="model" title="Model">{car.model || ""}</span>
+                                                            <span className="speed" title="speed">{car.speed || ""}kwh</span>
+                                                            <img src={car.image || ""} alt={"car-" + i} />
+                                                        </div>
+                                                        <div className="b-member-right">
+                                                            <span className="monred" title="monred">{car.monRedemption || ""} <span className="per">Per maand</span></span>
+                                                            <span className="months" title="months">OBV {car.months || ""} MND</span>
+                                                            <span className="price" title="Price">{car.price || ""} Euro</span>
+                                                        </div>
+                                                    </div>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </tbody>
                             </table>
+                            
                             {/* <div className="contentBtn">
                                 <button onClick={this.createAccount.bind(this)}>Confirm & Publish</button>
                             </div> */}
@@ -125,7 +151,7 @@ class AddMember extends Component {
                     <div className="footCon">
                         <div>
                             <span>Confirm & Publish</span>
-                            <button onClick={this.createAccount.bind(this)}>
+                            <button className="arrowBtn" onClick={this.createAccount.bind(this)}>
                                 <img src={require('../assets/add.jpg')} alt="addM" />
                             </button>
                         </div>
@@ -223,7 +249,7 @@ class AddMember extends Component {
                     <div className="footCon">
                         <div>
                             <span>Select a car</span>
-                            <button role="button" onClick={() => { this.setState({ seeCars: true }) }}>
+                            <button className="arrowBtn" onClick={() => { this.setState({ seeCars: true }) }}>
                                 <img src={require('../assets/arrow.jpg')} alt="addM" />
                             </button>
                         </div>

@@ -49,7 +49,7 @@ class Home extends Component {
                     <div className="footCon">
                         <div>
                             <span>Subscribe</span>
-                            <button role="button" onClick={() => this.props.history.push("/", { module: this.props.location.state.module, path: "addmember" })}>
+                            <button className="arrowBtn" onClick={() => this.props.history.push("/", { module: this.props.location.state.module, path: "addmember" })}>
                                 <img src={require('../assets/arrow.jpg')} alt="addM" />
                             </button>
                         </div>
