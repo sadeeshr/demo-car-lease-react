@@ -128,7 +128,7 @@ class Contract {
         this.filters.EeuroTransfer.new()
         this.filters.EeuroTransfer.watch((err, result) => {
             console.log("EuroToken Event Transfer() Result: ", err, result);
-            if (err || result.length > 0) setTimeout(() => { this.euroEventTransferUnsubscribe(); }, 1000);
+            if (err || result.length > 0) { this.props._setEventStatus({ eventTransfer: true }); setTimeout(() => { this.euroEventTransferUnsubscribe(); this.props._reloadTokens() }, 1000); }
         })
     }
 
@@ -171,6 +171,7 @@ class Contract {
         return this.euroToken.approve(this.spender, value, { from: account })
             .then(result => {
                 console.log(`Approval Result: ${result}`);
+                this.euroEventApprovalSubscribe()
                 return { approvalResult: result }
             })
     }
@@ -238,7 +239,7 @@ class Contract {
         this.filters.ElcAddNewObject.new()
         this.filters.ElcAddNewObject.watch((err, result) => {
             console.log("LeaseTokenContract Event AddNewObject() Result: ", err, result);
-            if (err || result.length > 0) { this.props._setEventStatus({ eventAddNewObject: true }); setTimeout(this.lcEventAddNewObjectUnsubscribe, 1000); }
+            if (err || result.length > 0) { this.props._setEventStatus({ eventAddNewObject: true, objectID: (result[0].data.objectID.toNumber() - 1) }); setTimeout(() => { this.lcEventAddNewObjectUnsubscribe(); this.props._reloadTokens() }, 1000); }
         })
     }
 
@@ -273,7 +274,7 @@ class Contract {
             .then(result => {
                 console.log(`ADD NEW object RESULT: ${result}`);
                 this.lcEventAddNewObjectSubscribe()
-                return { addNewobjectTxID: result, progress: false }
+                return { addNewObjectTxID: result, progress: false }
             })
     }
 
@@ -315,7 +316,7 @@ class Contract {
                 console.log(`Invest In Object RESULT: ${result}`);
                 // this.lcEventAddNewObjectSubscribe()    // contract missing event call, not calling this 
                 // this.startPendingTranscationWatcher()
-                this.evEventTransferSubscribe()
+                this.euroEventTransferSubscribe()
                 return { investInObjectTxID: result, progress: false }
             })
     }

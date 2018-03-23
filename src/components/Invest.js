@@ -15,8 +15,8 @@ class Invest extends Component {
         this.setState({
             carID: this.props.member ? this.props.member.carID : null,
             car: this.props.member ? this.props.member.car : null,
-            eventTransfer: null,
-            eventClaim: null,
+            eventTransfer: this.props.eventTransfer === "pending" ? this.props.eventTransfer : null,
+            eventClaim: this.props.eventClaim === "pending" ? this.props.eventClaim : null,
         })
     }
 

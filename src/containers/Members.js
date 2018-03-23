@@ -17,6 +17,9 @@ const mapStateToProps = (state) => {
         member: state.member,
         members: state.members,
         addNewObjectTxID: state.addNewObjectTxID,
+        eventAddNewObject: state.eventAddNewObject,
+        objectID: state.objectID,
+        newObject: state.newObject,
         investInObjectTxID: state.investInObjectTxID,
         progress: state.progress ? state.progress : false,
         [state.module]: state[state.module]

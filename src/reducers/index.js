@@ -29,12 +29,22 @@ const rootReducer = (state = initialState, action) => {
                 ...action.payload
             }
 
-        case 'NEW_CONTRACT_DATA':
+        case 'SET_NEW_CONTRACT_DATA':
+            return {
+                ...state,
+                newObject: action.payload,
+                progress: true
+            }
+
+        case 'WRITE_NEW_CONTRACT_DATA':
             return {
                 ...state,
                 progress: true,
                 invoices_new: false,
-                invoices_edit: false
+                invoices_edit: false,
+                eventAddNewObject: false,
+                objectID: false,
+                newObject: false
             }
 
         case 'FETCH_CONTRACT_DATA':
@@ -94,7 +104,6 @@ const rootReducer = (state = initialState, action) => {
         case 'INVEST_IN_OBJECT_RESULT':
         case 'PAY_SUBSCRIPTION_RESULT':
         case 'CLAIM_DIVIDEND_RESULT':
-        case 'AMOUNT_OBJECTS':
         case 'APPROVE':
         case 'ALLOWANCE':
         case 'SET_EVENT_STATUS':
@@ -102,7 +111,13 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 ...action.payload
             }
-
+        case 'AMOUNT_OBJECTS':
+            return {
+                ...state,
+                ...action.payload,
+                claimDividendTxID: null,
+                investInObjectTxID: null
+            }
         case 'TO_CLAIM_DIVIDEND_RESULT':
             return {
                 ...state,

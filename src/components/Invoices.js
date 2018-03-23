@@ -17,6 +17,12 @@ class Invoices extends Component {
 
     componentWillMount() {
         this.fetchInvoices()
+        console.log("Object Fees: ", this.props.member.car.objectFee.toNumber())
+        console.log("Object Price: ", this.props.member.car.objectPrice.toNumber())
+        console.log("Object Type: ", this.props.member.car.objectType.toNumber())
+        console.log("Object paymonth: ", this.props.member.car.paymonth.toNumber())
+        console.log("Object milages: ", this.props.member.car.milages.toNumber())
+        console.log("Object totalDividends: ", this.props.member.car.totalDividends.toNumber())
     }
 
     componentDidMount() {
@@ -51,7 +57,7 @@ class Invoices extends Component {
                 status: false
             }
         }
-        this.props._newContractData(data)
+        this.props._writeNewContractData(data)
     }
 
     updateInvoice = (invoice, mileage, amount) => {
@@ -98,7 +104,7 @@ class Invoices extends Component {
         console.log("INVOICE STATE: ", this.state, this.props);
         const invoices = this.props.invoices ? this.props.invoices.filter(invoice => (this.months[invoice.month].toLowerCase().startsWith(this.state.filter) || invoice.year === parseInt(this.state.filter, 10))) : []
         // const invoices = this.props.invoices
-        let amount = (this.props.member.car.totalDividends.toNumber() || 0) + ((this.state.mileage - (this.props.member.car.milages.toNumber() || 0)) * 1)
+        let amount = ((this.props.member.car.totalDividends.toNumber() || 0) * 1000000) + ((this.state.mileage - (this.props.member.car.milages.toNumber() || 0)) * 100000)
         return (
             <div className="mainContentCon">
                 <div className="navCon">
@@ -129,7 +135,7 @@ class Invoices extends Component {
                                                 invoice.status ?
                                                     <img src={require('../assets/Payed.png')} alt="Payed" />
                                                     : <img onClick={() => {
-                                                        this.props._lcPaySubscription(this.props.member.carID, invoice.month, this.state.mileage || "0", this.props.account)
+                                                        this.props._lcPaySubscription(this.props.member.carID, this.props.member.car.paymonth.toNumber(), this.state.mileage || "0", this.props.account)
                                                         this.updateInvoice(invoice, this.state.mileage, amount || 0)
                                                     }} src={require('../assets/Ether.png')} alt="Ether" />}
                                         </div>
