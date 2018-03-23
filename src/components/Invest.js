@@ -205,17 +205,19 @@ class Invest extends Component {
         const hideInvest = (this.props.member && this.props.member.car.totalRaised.toNumber() >= this.props.member.carPrice) ? true : false
         // (this.props.account || "").substring(0, 8) + "..."
         return (
+            <div className="content-border">
             <div className="mainContentCon">
                 <div className="navCon">
-                    <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
+                    <h1 id="header">Invest</h1>
+                    {/* <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
                     <div className="float-right">
                         <i title="Invoices" className="flaticon-invoice" onClick={() => this.props.history.push("/", { path: "invoices" })}></i>
                         <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
-                    </div>
+                    </div> */}
                 </div>
-                <div className="contentCon">
+                <div className="contentCon overflow">
                     <BlockUi tag="div" blocking={this.props.progress}>
-                        <h1 id="header">Invest</h1>
+                
                         <div className="carIntestCon">
                             <div className="carCon">
 
@@ -315,6 +317,7 @@ class Invest extends Component {
                     </BlockUi>
                 </div>
             </div>
+        </div>
         )
     }
 }

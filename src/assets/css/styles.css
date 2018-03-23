@@ -20,18 +20,18 @@ html{
      color: #b8b9ba;
 }
  .mainContentCon{
-     width: 330px;
-     margin: 3% auto;
-     /* padding: 0px 0px 60px; */
-     /* min-height: 400px; */
-     /*max-height: 550px;*/    /* changing this from 580px to avoid div overflow problem on laptop screens */
-     height: 580px;
-     /* overflow-y: auto; */
-     /* overflow-x: hidden; */
-     background: rgba(156, 156, 156, .8);
-     border-radius: 40px;
-     border: 2px solid #4c4e54;
-     display: block;
+    width: 316px;
+    margin: 14px auto;
+    /* padding: 0px 0px 60px; */
+    /* min-height: 400px; */
+    /* max-height: 550px; */
+    height: 615px;
+    /* overflow-y: auto; */
+    overflow: hidden;
+    background: rgba(156, 156, 156, .8);
+    border-radius: 35px;
+    border: 5px solid #808080;
+    display: block;
 }
 
 
@@ -68,15 +68,18 @@ img.addBtn {
 }
 
 .navCon{
-    background: rgba(255, 255, 255, 1);
-    height: 50px;
-    width: 330px;
-    border-top-left-radius: 40px;
-    border-top-right-radius: 40px;
-    position: relative;
-
-
-
+    height: 40px;
+    width: 100%;
+    padding-top: 15px;
+    padding-bottom: 25px;
+}
+.content-border{
+    border: 3px solid #4D4D4D;
+    width: 350px;
+    height: 650px;
+    margin: 0 auto;
+    border-radius: 45px;
+    box-shadow: 3px 3px rgba(0,0,0,.3);
 }
 
 .rowSelect{
@@ -102,10 +105,12 @@ img.addBtn {
      font-family: Tahoma, Verdana, Segoe, sans-serif;
      font-weight: normal;
      display: block;
+     color: #fff;
      text-align: center;
-     font-size: 35px;
+     font-size: 16px;
      /* padding-top: 40px; */
      padding-left: 0;
+     font-weight: bold;
      padding-right: 0;
      margin-bottom: 10px;
 }
@@ -113,35 +118,58 @@ img.addBtn {
      padding-top: 20%;
 }
 .contentText{
-    background: rgba(170, 172, 175, .8);
-    border-radius: 10px;
     padding: 10px;
-    margin-bottom: 10px;
+    height: 390px;
+    margin: 0 auto;
 }
 
 
  .contentText p{
      text-align: left;
-     font-size: 14px;
+     font-size: 18px;
+     line-height: 25px;
 }
  .contentBtn a, .contentBtn button{
      text-decoration: none;
      color: #fff;
-     padding: 20px 0;
-     font-size: 20px;
+     padding: 30px 0;
+     font-size: 24px;
      background: rgba(170, 172, 175, .8) ;
      border-radius: 10px;
-     font-weight: 500;
+     font-weight: 700;
      width: 100%;
      outline:0;
-
-
-     border: 3px solid rgba(0, 0, 0, 0);
+     border: 5px solid rgba(0, 0, 0, 0);
 
 }
-
-.contentBtn button:hover{
+.footCon{
+    text-align: center;
+    padding: 25px 20px;
+}
+.footCon img{
+    width: 100%;
+    height: auto;
+}
+.footCon div span{
+    font-size: 18px;
+    margin-right: -40px;
+    font-weight: bold;
+}
+.footCon div button, .footCon div a{
+    position: relative;
+    left: 65px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    color: #fff;
+    background: #fff;
+    border: 3px solid #808080;
+}
+.footCon div button:hover, .footCon div a:hover{
     border: 3px solid rgba(255, 215, 0, .3);
+}
+.contentBtn button:hover{
+    border: 5px solid rgba(255, 215, 0, .3);
 }
 
 .contentBtn.bg-none button{
@@ -161,8 +189,6 @@ img.addBtn {
 }
  .contentBtn{
      text-align: center;
-     width: 94%;
-     margin: 0 auto 10px;
 }
 
 .contentBtn img{
@@ -176,7 +202,7 @@ img.addBtn {
     width: 94% !important;
     width: -moz-available !important;
     width: -webkit-stretch !important;
-    margin: 0 auto 10px !important;
+    margin: 0 auto !important;
      padding: 0px 0px !important;
      display: block;
 }
@@ -185,10 +211,21 @@ img.addBtn {
      width: -moz-available !important;
      width: -webkit-stretch !important;
      text-align: center;
-     color: #b8b9ba;
-     border-radius: 5px !important;
+     color: #000000;
+     font-size: 18px;
+     padding: 5px 15px !important;
+     border-radius: 10px !important;
      background: rgba(255, 255, 255, 1) !important;
-     border: 1px solid #ececec !important;
+     border: 1px solid #808080 !important;
+}
+.m-b-10{
+    margin-bottom: 10px;
+}
+textarea.membership-input{
+    font-family: Tahoma, Verdana, Segoe, sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    text-align: center;
 }
  .fileInput{
      border: 1px solid #ececec !important;
@@ -258,6 +295,9 @@ img.addBtn {
 
 .contentCon{
     padding: 0 15px;
+    height: 430px;
+    background: rgba(170, 172, 175, .8);
+    border-radius: 30px;
 }
  .form-input-containers label{
      margin-bottom: 10px !important;
@@ -464,10 +504,11 @@ table tr td {
 }
 
 .membersCon{
-    height: 250px;
+    /* height: 250px; */
 }
-.bmemberCon{
-    height: 420px;
+
+.contentCon.bg-none{
+    background: rgba(0, 0, 0, 0);
 }
 
 .overflow{
@@ -510,6 +551,16 @@ table tr td {
     margin-bottom: 10px;
 }
 
+.htableTitle td{
+    font-weight: bold;
+    font-size: 12px;
+}
+.htablecar td{
+    padding: 0px 5px;
+}
+.htablecar button{
+    padding: 0;
+}
 .mtableCon{
     display: block;
     width: 100%;

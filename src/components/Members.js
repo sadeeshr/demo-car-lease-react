@@ -158,55 +158,59 @@ class Members extends Component {
         // }, 1000);
 
         return (
-            <div className="mainContentCon">
-                <div className="navCon">
-                    <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
-                    <div className="float-right">
-                        <i onClick={() => this.fetchMembers()} className="flaticon-rotate"></i>
-                        <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
-                    </div>
-                </div>
-                <div className="contentCon">
-                    <BlockUi tag="div" blocking={this.props.progress}>
-
+            <div className="content-border">
+                <div className="mainContentCon">
+                    <div className="navCon">
                         <h1 id="header">Leasecars</h1>
-                        {
-                            this.props.location.state && this.props.location.state.addNewObjectTxID &&
-                            <div className="carCon">
-                                <div className="carcol">
-                                    <div className="carTitle">Transaction ID:</div>
-                                    <div className="carEth">{this.props.location.state.addNewObjectTxID}</div>
-                                    <div className="carPrice"><a target="_blank" href={"https://rinkbey.etherscan.io/tx/" + this.props.location.state.addNewObjectTxID}>Check Transaction </a></div>
-                                </div>
-                            </div>
-                        }
-                        {
-                            /*
-                                <div className="mtableCon">
-                                    <div className="mtableTitle">
-                                        <div className="mtableTokens">EVTokens</div>
-                                        <div className="mtableUser">User Town</div>
-                                        <div className="mtableCar">Car</div>
+                        {/* <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
+                        <div className="float-right">
+                            <i onClick={() => this.fetchMembers()} className="flaticon-rotate"></i>
+                            <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
+                        </div> */}
+                    </div>
+                    <div className="contentCon overflow bg-none">
+                        <BlockUi tag="div" blocking={this.props.progress}>
+
+                            {
+                                this.props.location.state && this.props.location.state.addNewObjectTxID &&
+                                <div className="carCon">
+                                    <div className="carcol">
+                                        <div className="carTitle">Transaction ID:</div>
+                                        <div className="carEth">{this.props.location.state.addNewObjectTxID}</div>
+                                        <div className="carPrice"><a target="_blank" href={"https://rinkbey.etherscan.io/tx/" + this.props.location.state.addNewObjectTxID}>Check Transaction </a></div>
                                     </div>
                                 </div>
-                            */
-                        }
-                        <div className="membersCon overflow">
-                            {
-                                members && members.map((member, i) => {
-                                    return this.renderMember(member, i)
-                                })
                             }
-                        </div>
-                        <div className="contentBtn">
+                            {
+                                /*
+                                    <div className="mtableCon">
+                                        <div className="mtableTitle">
+                                            <div className="mtableTokens">EVTokens</div>
+                                            <div className="mtableUser">User Town</div>
+                                            <div className="mtableCar">Car</div>
+                                        </div>
+                                    </div>
+                                */
+                            }
+                            <div className="membersCon">
+                                {
+                                    members && members.map((member, i) => {
+                                        return this.renderMember(member, i)
+                                    })
+                                }
+                            </div>
+   
+
+                        </BlockUi>
+
+                    </div>
+                    <div className="footCon">
+                        <div>
                             <input className="searchBtn" type="text" name="filterMembers" value={this.state.filter || ""} placeholder="Search" onChange={(e) => { console.log("SEARCH: ", e.target.value); this.setState({ filter: e.target.value }) }} />
-
                         </div>
-
-                    </BlockUi>
+                    </div>
 
                 </div>
-
             </div>
         )
     }
