@@ -293,7 +293,7 @@ class Invest extends Component {
                                 <div hidden={hideInvest} className="">
                                     <div className="carTitle investInput">
                                         <div className="arrowBtn">
-                                            <img onClick={() => this.props._lcInvestInObject(this.props.member.carID, this.state.ethInvest || "0", this.props.account)}src={require('../assets/add.jpg')} alt="add2" />
+                                            <img style={{ cursor: disableInvest ? "not-allowed" : "pointer" }} onClick={() => !disableInvest && this.props._lcInvestInObject(this.props.member.carID, this.state.ethInvest || "0", this.props.account)}src={require('../assets/add.jpg')} alt="add2" />
                                         </div>
                                     
                                     
@@ -304,7 +304,7 @@ class Invest extends Component {
                                 </div>
                                 <div className="carTitle investInput">
                                     <div className="arrowBtn">
-                                        <img onClick={() => { this.props._lcClaimDividend(this.props.member.carID, this.props.account) }} src={require('../assets/add.jpg')} alt="add2" />
+                                        <img style={{ cursor: (this.props.unClaimedRedemption > 0) ? "pointer" : "not-allowed" }} onClick={() => { (this.props.unClaimedRedemption > 0) && this.props._lcClaimDividend(this.props.member.carID, this.props.account) }} src={require('../assets/add.jpg')} alt="add2" />
                                     </div>
                                     Claim Euro: {this.props.unClaimedRedemption || "0"}
                                     <div className="claim-euro">
