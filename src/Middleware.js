@@ -56,7 +56,7 @@ handleFetch = (socket, data) => {
     mongo.db[data.module].find(
         query,
         filter,
-        (err, result) => { console.log("RESULT: ", result); socket.emit('data', { module: data.module, result: result }) });
+        (err, result) => { console.log("RESULT: ", result); socket.emit('data', { module: data.result || data.module, result: result }) });
 }
 
 handleNew = (socket, request) => {

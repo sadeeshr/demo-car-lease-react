@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import BlockUi from 'react-block-ui';
 import 'react-block-ui/style.css';
+import { Link } from 'react-router-dom'
+
 // import scrollToComponent from 'react-scroll-to-component';
 
 class Members extends Component {
@@ -10,6 +12,7 @@ class Members extends Component {
         this.state = {
             filter: ''
         }
+        this.rinkebyStatsURL = "https://rinkeby.etherscan.io/tx/"
     }
 
 
@@ -63,9 +66,9 @@ class Members extends Component {
             let members = this.sortMembers()
             console.log("######## SORTED MEMBERS ###########", members);
             // if (members.length >= 3) {
-                // members[0].car ? members[0].car.crowdsaleClosed = true : ""
-                // members[1].car ? members[1].car.crowdsaleClosed = true : ""
-                //     // members[2].car ? members[2].car.crowdsaleClosed = true : ""
+            // members[0].car ? members[0].car.crowdsaleClosed = true : ""
+            // members[1].car ? members[1].car.crowdsaleClosed = true : ""
+            //     // members[2].car ? members[2].car.crowdsaleClosed = true : ""
             // }
             this.setState({ members })
             // if (!this.props.lcCars)
@@ -169,13 +172,13 @@ class Members extends Component {
         return (
             <div className="content-border">
                 <div className="mainContentCon">
+                    <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
+                    <div className="float-right">
+                        <i onClick={() => this.fetchMembers()} className="flaticon-rotate"></i>
+                        <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
+                    </div>
                     <div className="navCon">
                         <h1 id="header">Leasecars</h1>
-                        {/* <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
-                        <div className="float-right">
-                            <i onClick={() => this.fetchMembers()} className="flaticon-rotate"></i>
-                            <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
-                        </div> */}
                     </div>
                     <div className="contentCon overflow bg-none">
                         <BlockUi tag="div" blocking={this.props.progress}>
@@ -201,23 +204,23 @@ class Members extends Component {
                                     </div>
                                 */
                             }
-                         <div className="membersCon">
-                            {
-                                members && members.map((member, i) => {
-                                    return this.renderMember(member, i)
-                                })
-                            }
-                        </div>
-                        {/* <div className="contentBtn">
+                            <div className="membersCon">
+                                {
+                                    members && members.map((member, i) => {
+                                        return this.renderMember(member, i)
+                                    })
+                                }
+                            </div>
+                            {/* <div className="contentBtn">
                             {this.props.addNewObjectTxID && (!this.state.eventAddNewObject ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>)}
                             <input className="searchBtn" type="text" name="filterMembers" value={this.state.filter || ""} placeholder="Search" onChange={(e) => { console.log("SEARCH: ", e.target.value); this.setState({ filter: e.target.value }) }} />
                         </div> */}
 
-                    </BlockUi>
+                        </BlockUi>
                     </div>
                     <div className="footCon">
                         <div>
-                            {this.props.addNewObjectTxID && (!this.state.eventAddNewObject ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>)}
+                            {this.props.addNewObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.addNewObjectTxID}>{!this.state.eventAddNewObject ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>} </Link>)}
                             <input className="searchBtn" type="text" name="filterMembers" value={this.state.filter || ""} placeholder="Search" onChange={(e) => { console.log("SEARCH: ", e.target.value); this.setState({ filter: e.target.value }) }} />
                         </div>
                     </div>

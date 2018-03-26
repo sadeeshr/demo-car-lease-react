@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import BigNumber from 'bignumber.js';
 import BlockUi from 'react-block-ui';
+import { Link } from 'react-router-dom'
 
 class Invest extends Component {
 
     constructor(props) {
         super(props)
         this.state = {}
+        this.rinkebyStatsURL = "https://rinkeby.etherscan.io/tx/"
     }
 
 
@@ -199,25 +201,25 @@ class Invest extends Component {
         console.log("#####", this.state);
         if (this.props.account && !this.props[this.props.account]) this.props._getBalance(this.props.account);
 
-        const euroTokenBalance = this.props.euroTokenBalance ? (this.props.euroTokenBalance.length > 5 ? this.props.euroTokenBalance.substring(0, 5) + "..." : this.props.euroTokenBalance) : ""
+        const amountRemaining = this.props.member.carPrice - this.props.member.car.totalRaised.toNumber()
+        const allowedAmountToInvest = Math.min(Math.min(amountRemaining, this.props.allowance), this.props.euroTokenBalance)
+        // const euroTokenBalance = this.props.euroTokenBalance ? (this.props.euroTokenBalance.length > 5 ? this.props.euroTokenBalance.substring(0, 5) + "..." : this.props.euroTokenBalance) : ""
         // (this.state.euroTokenBalance || "").substring(0, 8) + "..."
         const account = this.props.account ? this.props.account.substring(0, 7) + '.....' + this.props.account.substring(this.props.account.length - 5) : ""
         const hideInvest = (this.props.member && this.props.member.car.totalRaised.toNumber() >= this.props.member.carPrice) ? true : false
         const ethInvest = parseInt(this.state.ethInvest || "0", 10)
-        const disableInvest = ((ethInvest < (this.props.member.carPrice - this.props.member.car.totalRaised.toNumber())) && (ethInvest < this.props.allowance) && (ethInvest < this.props.euroTokenBalance) && (ethInvest > 0)) ? false : true
-        console.log("Disable Invest: ", disableInvest, (ethInvest < (this.props.member.carPrice - this.props.member.car.totalRaised.toNumber())), (ethInvest < this.props.allowance), (ethInvest < this.props.euroTokenBalance));
+        const disableInvest = ((ethInvest < amountRemaining) && (ethInvest < this.props.allowance) && (ethInvest < this.props.euroTokenBalance) && (ethInvest > 0)) ? false : true
+        console.log("Disable Invest: ", disableInvest, (ethInvest < amountRemaining), (ethInvest < this.props.allowance), (ethInvest < this.props.euroTokenBalance));
         // (this.props.account || "").substring(0, 8) + "..."
         return (
             <div className="mainContentCon">
+                <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
+                <div className="float-right">
+                    <i title="Invoices" className="flaticon-invoice" onClick={() => this.props.history.push("/", { path: "invoices" })}></i>
+                    <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
+                </div>
                 <div className="navCon">
-                   
                     <h1 id="header">Invest</h1>
-                    {/* 
-                     <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
-                    <div className="float-right">
-                        <i title="Invoices" className="flaticon-invoice" onClick={() => this.props.history.push("/", { path: "invoices" })}></i>
-                        <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
-                    </div> */}
                 </div>
                 <div className="contentCon overflow bg-none">
                     <BlockUi tag="div" blocking={this.props.progress}>
@@ -247,7 +249,7 @@ class Invest extends Component {
                                             <div className="carPrice">{account || ""}</div>
                                             {/*<div className="carPrice">{this.props[this.props.account] || ""} ETH</div>*/}
                                             <div className="carPrice">{this.props.evTokenBalance || "0"} EVTokens</div>
-                                            <div className="carPrice">{euroTokenBalance || "0"} Euro</div>
+                                            <div className="carPrice">{allowedAmountToInvest || "0"} Euro</div>
                                         </div>
                                     }
                                     {
@@ -280,7 +282,7 @@ class Invest extends Component {
 
                                 <div className="mtableLink">
                                     <div className="mtableTokens" title="Car ID">{this.props.member.car.totalRaised.toNumber() || ""} <p title="EVTokens">{this.props.member.evTokens}</p></div>
-                                    <div className="mtableUser">{this.props.member.username || ""}<p>{this.props.member.state || ""}</p></div>
+                                    <div className="mtableUser">{this.props.member.username || ""}<p>{this.props.member.municipality || ""}</p></div>
                                     <div className="mtableCar">
                                         <img src={this.props.member.carPic || ""} alt="carImage" />
                                         <span title="Price" style={{ fontSize: "10px" }}>Euro {this.props.member.carPrice || "0"}</span>
@@ -293,13 +295,13 @@ class Invest extends Component {
                                 <div hidden={hideInvest} className="">
                                     <div className="carTitle investInput">
                                         <div className="arrowBtn">
-                                            <img style={{ cursor: disableInvest ? "not-allowed" : "pointer" }} onClick={() => !disableInvest && this.props._lcInvestInObject(this.props.member.carID, this.state.ethInvest || "0", this.props.account)}src={require('../assets/add.jpg')} alt="add2" />
+                                            <img style={{ cursor: disableInvest ? "not-allowed" : "pointer" }} onClick={() => !disableInvest && this.props._lcInvestInObject(this.props.member.carID, this.state.ethInvest || "0", this.props.account)} src={require('../assets/add.jpg')} alt="add2" />
                                         </div>
-                                    
-                                    
+
+
                                         Invest Euro:
-                                        <input className="membership-input" maxLength="20" value={(typeof this.state.ethInvest === 'undefined') ? euroTokenBalance : this.state.ethInvest} onChange={(e) => this.setState({ ethInvest: e.target.value })} type="text" placeholder="Euro Token" />
-                                        {this.props.investInObjectTxID && (!this.state.eventTransfer ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>)}
+                                        <input className="membership-input" maxLength="20" value={(typeof this.state.ethInvest === 'undefined') ? (allowedAmountToInvest || 0) : this.state.ethInvest} onChange={(e) => this.setState({ ethInvest: e.target.value })} type="text" placeholder="Euro Token" />
+                                        {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{!this.state.eventTransfer ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>}</Link>)}
                                     </div>
                                 </div>
                                 <div className="carTitle investInput">
@@ -309,7 +311,7 @@ class Invest extends Component {
                                     Claim Euro: {this.props.unClaimedRedemption || "0"}
                                     <div className="claim-euro">
                                         <div className=""></div>
-                                        {this.props.claimDividendTxID && (!this.state.eventClaim ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>)}
+                                        {this.props.claimDividendTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.claimDividendTxID}>{!this.state.eventClaim ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>} </Link>)}
                                     </div>
                                 </div>
                             </div>

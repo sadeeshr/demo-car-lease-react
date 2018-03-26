@@ -55,7 +55,8 @@ const rootReducer = (state = initialState, action) => {
                 addNewObjectTxID: null,
                 investInObjectTxID: null,
                 invoices_new: false,
-                invoices_edit: false
+                invoices_edit: false,
+                usernames: null
             }
 
         case 'RELOAD_TOKENS':

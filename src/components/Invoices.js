@@ -104,19 +104,21 @@ class Invoices extends Component {
         console.log("INVOICE STATE: ", this.state, this.props);
         const invoices = this.props.invoices ? this.props.invoices.filter(invoice => (this.months[invoice.month].toLowerCase().startsWith(this.state.filter) || invoice.year === parseInt(this.state.filter, 10))) : []
         // const invoices = this.props.invoices
-        let amount = ((this.props.member.car.totalDividends.toNumber() || 0) * 1000000) + ((this.state.mileage - (this.props.member.car.milages.toNumber() || 0)) * 100000)
+        let amount = (this.props.member.car.totalDividends.toNumber() || 0) + ((this.state.mileage - (this.props.member.car.milages.toNumber() || 0)) * 0.10)
+        console.log(this.state.mileage, this.props.member.car.milages.toNumber(), (this.state.mileage <= this.props.member.car.milages.toNumber()));
+        const disableInvoice = (this.state.mileage <= this.props.member.car.milages.toNumber()) ? true : false
         return (
             <div className="mainContentCon">
+                <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
+                <div className="float-right">
+                    <i title="Add Invoice" className="flaticon-invoice" onClick={this.createInvoice.bind(this)}></i>
+                    <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
+                </div>
                 <div className="navCon">
-                    <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
-                    <div className="float-right">
-                        <i title="Add Invoice" className="flaticon-invoice" onClick={this.createInvoice.bind(this)}></i>
-                        <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
-                    </div>
+                    <h1 id="header">Invoices</h1>
                 </div>
                 <div className="contentCon">
                     <BlockUi tag="div" blocking={this.props.progress}>
-                        <h1 id="header">Invoices</h1>
                         <div className="nvoicesCon overflow">
                             {
                                 invoices && invoices.map((invoice, i) => {
@@ -128,15 +130,15 @@ class Invoices extends Component {
                                                     <input style={{ width: "80px", textAlign: "center" }} maxLength="20" value={this.state.mileage} onChange={(e) => this.setState({ mileage: e.target.value })} type="text" placeholder="Mileage" />
                                                     : invoice.mileage
                                             }
-                                            km stand<p>{invoice.amount > 0 ? invoice.amount : (amount > 0 ? amount : 0)} Euro</p>
+                                            km stand<p title="Includes Monthy-Fee and Running-Cost">{invoice.amount > 0 ? invoice.amount : (amount > 0 ? amount : 0)} Euro</p>
                                         </div>
                                         <div className="mtableInvoicesIcon">
                                             {
                                                 invoice.status ?
                                                     <img src={require('../assets/Payed.png')} alt="Payed" />
-                                                    : <img onClick={() => {
-                                                        this.props._lcPaySubscription(this.props.member.carID, this.props.member.car.paymonth.toNumber(), this.state.mileage || "0", this.props.account)
-                                                        this.updateInvoice(invoice, this.state.mileage, amount || 0)
+                                                    : <img style={{ cursor: disableInvoice ? "not-allowed" : "pointer" }} onClick={() => {
+                                                        !disableInvoice && this.props._lcPaySubscription(this.props.member.carID, this.props.member.car.paymonth.toNumber(), this.state.mileage || "0", this.props.account)
+                                                        !disableInvoice && this.updateInvoice(invoice, this.state.mileage, amount || 0)
                                                     }} src={require('../assets/Ether.png')} alt="Ether" />}
                                         </div>
                                     </div>

@@ -16,12 +16,13 @@ class Home extends Component {
         return (
             <div className="content-border">
                 <div className="mainContentCon">
+                    <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
+                    <div className="float-right">
+                        <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
+                    </div>
                     <div className="navCon">
                         <h1 id="header">WESTLAND ENERGY NEUTRAL</h1>
-                        {/* <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
-                        <div className="float-right">
-                            <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
-                        </div> */}
+                        {/*  */}
                     </div>
                     <div className="contentCon overflow">
                         <div className="contentText">
@@ -29,7 +30,7 @@ class Home extends Component {
                             <p>We not only offer you renewable energy but provides you a solution to finance your transition to a sustainable future.</p>
                             <div className="contentBtn bg-none">
                                 <table style={{ borderSpacing: "0px", borderCollapse: "collapse" }}>
-                                
+
                                     <tbody>
                                         <tr className="htableTitle">
                                             <td>Now available</td>

@@ -20,6 +20,7 @@ const mapStateToProps = (state) => {
         objectID: state.objectID,
         newObject: state.newObject,
         progress: state.progress ? state.progress : false,
+        usernames: state.usernames,
         [state.module]: state[state.module]
     }
 }

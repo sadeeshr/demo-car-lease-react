@@ -12,7 +12,7 @@ import unit from 'ethjs-unit';
 
 class Contract {
     constructor() {
-        this.spender = "0x1e4fdA42b85Af17c1eE807EE73e6Be7984Db1D26" // Euro Token Contract address
+        this.spender = "0x95703522a4E2c4f76A120b55d1275cDe18d8F094" // Lease Token Contract address as spender for Approve / Allowance methods
         this.contracts = {
             euroToken: {
                 address: "0x1e4fdA42b85Af17c1eE807EE73e6Be7984Db1D26",
@@ -160,15 +160,15 @@ class Contract {
         console.log(`Fetching EURO Tokens Balance for: ${account}`);
         return this.euroToken.balanceOf(account)
             .then(result => {
-                console.log(`EURO TOKENS BALANCE: ${result[0].toString()}`);
-                return { euroTokenBalance: result[0].toString() }
+                console.log(`EURO TOKENS BALANCE: ${result[0].toString() / 1000000}`);
+                return { euroTokenBalance: (result[0].toString() / 1000000) }
             })
     }
 
     euroApprove = (value, account) => {
 
-        console.log(`Approve value: ${value} to spend by: ${this.spender} from: ${account}`);
-        return this.euroToken.approve(this.spender, value, { from: account })
+        console.log(`Approve value: ${value * 1000000} to spend by: ${this.spender} from: ${account}`);
+        return this.euroToken.approve(this.spender, (value * 1000000), { from: account })
             .then(result => {
                 console.log(`Approval Result: ${result}`);
                 this.euroEventApprovalSubscribe()
@@ -180,8 +180,8 @@ class Contract {
         console.log(`Fetching Allowance for: ${account}`);
         return this.euroToken.allowance(account, this.spender)
             .then(result => {
-                console.log(`Allowance Result: ${result[0].toString()}`);
-                return { allowance: result[0].toString() }
+                console.log(`Allowance Result: ${result[0].toString() / 1000000}`);
+                return { allowance: (result[0].toString() / 1000000) }
             })
     }
 
