@@ -145,9 +145,9 @@ class AddMember extends Component {
                                         {
                                             cars.map((car, i) => {
                                                 return (
-                                                    <tr style={{ padding: "0px 0px" }} key={i} id="center-btn-container" onClick={() => { this.setState({ carModel: car.model, carPic: car.image, carPrice: car.price, carDealer: car.dealer, carMonRedemption: car.monRedemption, carMonths: car.months }) }}>
+                                                    <tr style={{ padding: "0px 0px" }} key={i} id="center-btn-container" onClick={() => { this.setState({ carModel: car.model, carPic: car.image, carPrice: car.price, carDealer: car.dealer, carMonRedemption: car.monRedemption, carMonths: car.months, carSelected: i }) }}>
                                                         <td>
-                                                            <div className="b-member-con active">
+                                                            <div className={this.state.carSelected === i ? "b-member-con active" : "b-member-con"}>
                                                                 <div className="b-member-left">
                                                                     <span className="model" title="Model">{car.model || ""}</span>
                                                                     <span className="speed" title="speed">{car.speed || ""}kwh</span>

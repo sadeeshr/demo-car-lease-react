@@ -211,7 +211,7 @@ class Invest extends Component {
         const disableInvest = ((ethInvest < amountRemaining) && (ethInvest < this.props.allowance) && (ethInvest < this.props.euroTokenBalance) && (ethInvest > 0)) ? false : true
         console.log("Disable Invest: ", disableInvest, (ethInvest < amountRemaining), (ethInvest < this.props.allowance), (ethInvest < this.props.euroTokenBalance));
         // (this.props.account || "").substring(0, 8) + "..."
-        return ( <div className="content-border">
+        return (<div className="content-border">
             <div className="mainContentCon">
                 {/* <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
                 <div className="float-right">
@@ -225,7 +225,8 @@ class Invest extends Component {
                         </div>
                         Invest
                         <div className="fr">
-                            <i title="Invoices" className="flaticon-invoice marIcon" onClick={() => this.props.history.push("/", { path: "invoices" })}></i><i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
+                            <i title="Invoices" className="flaticon-invoice marIcon" onClick={() => this.props.history.push("/", { path: "invoices" })}></i>
+                            <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
                         </div></h1>
                 </div>
                 <div className="contentCon bg-none">
