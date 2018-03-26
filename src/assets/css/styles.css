@@ -831,6 +831,9 @@ position: inherit;
 .b-member-con:hover{
     border: 5px solid rgba(255, 215, 0, .3);
 }
+.b-member-con.active{
+    border: 5px solid rgba(255, 215, 0, .3);
+}
 .b-member-left{
     width: 50%;
     text-align: left;

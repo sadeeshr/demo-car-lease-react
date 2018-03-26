@@ -147,7 +147,7 @@ class AddMember extends Component {
                                                 return (
                                                     <tr style={{ padding: "0px 0px" }} key={i} id="center-btn-container" onClick={() => { this.setState({ carModel: car.model, carPic: car.image, carPrice: car.price, carDealer: car.dealer, carMonRedemption: car.monRedemption, carMonths: car.months }) }}>
                                                         <td>
-                                                            <div className="b-member-con">
+                                                            <div className="b-member-con active">
                                                                 <div className="b-member-left">
                                                                     <span className="model" title="Model">{car.model || ""}</span>
                                                                     <span className="speed" title="speed">{car.speed || ""}kwh</span>
