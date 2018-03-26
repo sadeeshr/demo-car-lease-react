@@ -69,9 +69,11 @@ img.addBtn {
 
 .navCon{
     height: 40px;
-    width: 100%;
+    width: 90%;
     padding-top: 15px;
     padding-bottom: 25px;
+    padding-left: 5%;
+    padding-right: 5%;
 }
 .content-border{
     border: 3px solid #4D4D4D;
@@ -83,22 +85,26 @@ img.addBtn {
 }
 
 .rowSelect{
-    width: 85%;
+    width: 93%;
     background: rgba(255,255,255, .5);
     border-radius: 10px;
     padding: 10px;
-    margin: 0px 10px 7px;
+    margin-bottom: 5px;
     display: inline-block;
     
 }
 
 
 .navCon i{
-    color: #b8b9ba;
-    padding-top: 13px;
-    display: inline-block;
+    color: #fff;
+    padding-top: 0px;
     margin-left: 0;
 }
+
+.navCon i:before{
+   margin-left: 0px; 
+}
+
 
 
  #header{
@@ -107,12 +113,13 @@ img.addBtn {
      display: block;
      color: #fff;
      text-align: center;
-     font-size: 16px;
+     font-size: 18px;
      /* padding-top: 40px; */
      padding-left: 0;
      font-weight: bold;
      padding-right: 0;
      margin-bottom: 10px;
+     text-transform: uppercase;
 }
  #header.cusPadding{
      padding-top: 20%;
@@ -223,12 +230,12 @@ img.addBtn {
      border: 1px solid #808080 !important;
 }
 .m-b-10{
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 textarea.membership-input{
     font-family: Tahoma, Verdana, Segoe, sans-serif;
     font-weight: 500;
-    font-size: 15px;
+    font-size: 12px;
     text-align: center;
 }
  .fileInput{
@@ -296,12 +303,19 @@ textarea.membership-input{
      height: auto;
 
 }
+.marIcon{
+    padding-right: 5px;
+}
 
+.tablepadBot{
+
+}
 .contentCon{
-    padding: 0 15px;
+    padding: 0 3px;
     height: 430px;
-    background: rgba(170, 172, 175, .8);
+    background: rgba(170, 172, 175, .3);
     border-radius: 30px;
+    margin: 0 5px;
 }
  .form-input-containers label{
      margin-bottom: 10px !important;
@@ -315,6 +329,7 @@ textarea.membership-input{
      text-align: center;
      padding-right: 0 !important;
      padding-left: 0 !important;
+     padding-top: 20px
 }
  .form-row-container.btn{
      display: block;
@@ -455,7 +470,12 @@ textarea.membership-input{
   float:right;
   margin: 0px 25px;
 }
-
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
 .tableCon td img{
     width: 60px;
     height: auto;
@@ -466,7 +486,7 @@ table{
 }
 
 table tr td {
-    padding: 15px 5px;
+    padding: 0;
 }
 
 .memberSelect{
@@ -515,17 +535,20 @@ table tr td {
 }
 
 .leaseCarCon{
-    background: rgba(170, 172, 175, .6);
+    background: rgba(170, 172, 175, .3);
     border: 3px solid rgba(255, 215, 0, 0);
-    border-radius: 30px;
+    border-radius: 12px;
     margin-bottom: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
-.leaseCarCon:hover{
+.leaseCarCon:hover, .leaseCarCon:active, .leaseCarCon:focus{
     border: 3px solid rgba(255, 215, 0, .3);
 }
 
 .contentCon.bg-none{
     background: rgba(0, 0, 0, 0);
+    border-radius: 0;
 }
 
 .overflow{
@@ -567,10 +590,16 @@ table tr td {
 .flagMargin{
     margin-bottom: 10px;
 }
-
+.htableTitle{
+    padding: 10px 0
+}
 .htableTitle td{
     font-weight: bold;
+    padding: 5px 0;
     font-size: 12px;
+}
+.tablepadBot{
+    margin-top: 50px;
 }
 .htablecar td{
     padding: 0px 5px;
@@ -594,53 +623,80 @@ table tr td {
     padding-right: 10px;
     text-align: right;
     cursor: default;
+    font-size: 18px;
 }
 
 .mtableUser{
-    width: 145px;
+    width: 100px;
     float: left;
     padding: 0 10px;
+    font-size: 18px;
     cursor: default;
 }
-
+.mtableUser p{
+margin: 0;
+}
 .mtableCar{
-    float: left;
-    text-align: center;
-    width: 90px;
+    float: right;
+    text-align: right;
+    width: 119px;
 
 }
 
 .mtableCar img{
-    width: 90px;
+    /* width: 75px; */
     height: auto;
 }
 
 .mtableTokens p{
-    font-size: 13px;
+    font-size: 12px;
     margin: 0;
 
 }
 
 .mtableLink{
 display: flex;
-width: 94%;
-padding: 15px 0;
+/* width: 100%; */
+padding: 5px 0;
 border-radius: 30px;
+
+}
+.nvoicesCon .mtableLink{
+    background-color: rgba(255, 255, 255, .3);
+    border: 5px solid rgba(204, 204, 204, .3);
+    border-radius: 15px;
+    padding: 10px 0;
+    margin-bottom: 8px;
 }
 
 .mtableLink:hover, .mtableLink:visited, .mtableLink:active, .mtableLink:focus{
 }
 
-
+span.inLeft{
+    width: 40%;
+    display: inline-block;
+    text-align: right;
+    padding-right: 5%;
+}
+span.inLeft input{
+    width: 100%;
+    text-align: center;
+    border: 2px solid #999999;
+    border-radius: 10px;
+    font-size: 18px;
+    color: #656262;
+}
 .mtableInvoices p{
     margin: 0;
     font-weight: 500;
     line-height: 20px;
 }
 
+
 .mtableInvoices{
     width: 77%;
     padding-left: 10px;
+    font-size: 18px;
 
 }
 .flaticon-back{
@@ -658,6 +714,14 @@ border-radius: 30px;
 .mtableInvoicesIcon img{
     width: 40px;
     height: auto;
+}
+.mtableInvoicesIcon .arrowBtn{
+left: 0;
+margin-top: 10px;
+position: inherit;
+}
+.mtableInvoicesIcon .arrowBtn img{
+    padding: 9px;
 }
 
 .contentBtn.addMe, .contentBtn.selectCar{
@@ -760,7 +824,12 @@ border-radius: 30px;
     background-color: rgba(255, 255, 255, .3);
     border-radius: 25px;
     padding: 10px;
+    border: 5px solid rgba(255, 215, 0, 0);
     display: inline-block;
+    margin-bottom: 5px;
+}
+.b-member-con:hover{
+    border: 5px solid rgba(255, 215, 0, .3);
 }
 .b-member-left{
     width: 50%;

@@ -107,39 +107,43 @@ class Invoices extends Component {
         let amount = (this.props.member.car.totalDividends.toNumber() || 0) + ((this.state.mileage - (this.props.member.car.milages.toNumber() || 0)) * 0.10)
         console.log(this.state.mileage, this.props.member.car.milages.toNumber(), (this.state.mileage <= this.props.member.car.milages.toNumber()));
         const disableInvoice = (this.state.mileage <= this.props.member.car.milages.toNumber()) ? true : false
-        return (
+        return ( <div className="content-border">
             <div className="mainContentCon">
-                <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
+                {/* <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
                 <div className="float-right">
                     <i title="Add Invoice" className="flaticon-invoice" onClick={this.createInvoice.bind(this)}></i>
                     <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
-                </div>
+                </div> */}
                 <div className="navCon">
-                    <h1 id="header">Invoices</h1>
+                    <h1 id="header"><div className="fl"><i className="flaticon-back" onClick={() => this.props.history.goBack()}></i></div>Invoices
+                    <div className="fr"><i title="Add Invoice" className="flaticon-invoic marIcone" onClick={this.createInvoice.bind(this)}></i>
+                    <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i></div></h1>
                 </div>
-                <div className="contentCon">
+                <div className="contentCon overflow bg-none">
                     <BlockUi tag="div" blocking={this.props.progress}>
-                        <div className="nvoicesCon overflow">
+                        <div className="nvoicesCon">
                             {
                                 invoices && invoices.map((invoice, i) => {
                                     return <div key={i} className="mtableLink">
                                         <div className="mtableInvoices">
-                                            <p>{invoice.year} {this.months[invoice.month]}</p>
+                                            <div classNanme="inDate"><span className="inLeft">{invoice.year}</span><span className="inRight">{this.months[invoice.month]}</span></div>
+                                            <div className="inKm">
                                             {
                                                 invoice.mileage === 0 ?
-                                                    <input style={{ width: "80px", textAlign: "center" }} maxLength="20" value={this.state.mileage} onChange={(e) => this.setState({ mileage: e.target.value })} type="text" placeholder="Mileage" />
-                                                    : invoice.mileage
+                                                    <span  className="inLeft"><input style={{ width: "80px", textAlign: "center" }} maxLength="20" value={this.state.mileage} onChange={(e) => this.setState({ mileage: e.target.value })} type="text" placeholder="Mileage" /></span>
+                                                    : <span className="inLeft">invoice.mileage</span>
                                             }
-                                            km stand<p title="Includes Monthy-Fee and Running-Cost">{invoice.amount > 0 ? invoice.amount : (amount > 0 ? amount : 0)} Euro</p>
+                                            <span className="inRight">km stand</span></div>
+                                            <div className="inCost"><span className="inLeft" title="Includes Monthy-Fee and Running-Cost">{invoice.amount > 0 ? invoice.amount : (amount > 0 ? amount : 0)} </span><span className="inRight">Euro</span></div>
                                         </div>
                                         <div className="mtableInvoicesIcon">
                                             {
                                                 invoice.status ?
-                                                    <img src={require('../assets/Payed.png')} alt="Payed" />
-                                                    : <img style={{ cursor: disableInvoice ? "not-allowed" : "pointer" }} onClick={() => {
+                                                      <div className="arrowBtn"><img src={require('../assets/check.jpg')} alt="Payed" /></div>
+                                                    : <div className="arrowBtn"><img style={{ cursor: disableInvoice ? "not-allowed" : "pointer" }} onClick={() => {
                                                         !disableInvoice && this.props._lcPaySubscription(this.props.member.carID, this.props.member.car.paymonth.toNumber(), this.state.mileage || "0", this.props.account)
                                                         !disableInvoice && this.updateInvoice(invoice, this.state.mileage, amount || 0)
-                                                    }} src={require('../assets/Ether.png')} alt="Ether" />}
+                                                    }} src={require('../assets/add.jpg')} alt="Ether" /></div>}
                                         </div>
                                     </div>
                                 })
@@ -165,12 +169,18 @@ class Invoices extends Component {
                        </div>*/}
 
 
-                        <div className="contentBtn">
+                        {/* <div className="contentBtn">
                             <input className="searchBtn" type="text" name="filterMembers" value={this.state.filter || ""} placeholder="Search" onChange={(e) => { console.log("SEARCH: ", e.target.value); this.setState({ filter: e.target.value }) }} />
-                        </div>
+                        </div> */}
                     </BlockUi>
                 </div>
+                <div className="footCon">
+                        <div>
+                            <input className="searchBtn" type="text" name="filterMembers" value={this.state.filter || ""} placeholder="Search" onChange={(e) => { console.log("SEARCH: ", e.target.value); this.setState({ filter: e.target.value }) }} />
+                        </div>
+                    </div>
             </div>
+        </div>
         )
     }
 }

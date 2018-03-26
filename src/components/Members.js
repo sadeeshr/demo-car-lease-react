@@ -110,9 +110,9 @@ class Members extends Component {
         const selected = (this.props.member && !this.props.member.car.crowdsaleClosed) ? (this.props.member.username === member.username ? true : false) : false
         let memberRows = [
             <div className="mtableLink" ref={divRef => this[member.carID] = divRef} key={i} onClick={() => this.props._memberSelected(member)}>
-                <div className="mtableTokens">{member.car ? (member.car.crowdsaleClosed ? <span style={{ color: "green", fontSize: "10px" }}>Closed</span> : member.car.totalRaised.toNumber()) : "0" || ""} <p>{member.evTokens}</p></div>
+                <div className="mtableTokens">{member.car ? (member.car.crowdsaleClosed ? <span style={{ color: "green", fontSize: "12px" }}>Closed</span> : member.car.totalRaised.toNumber()) : "0" || ""} <p>{member.evTokens}</p></div>
                 <div className="mtableUser">{member.username || ""} <p>{member.state || ""}</p></div>
-                <div className="mtableCar"><img style={img} src={member.carPic || ""} alt="carImage" /><span title="Car Raised" style={{ fontSize: "10px" }}>Euro {member.carPrice}</span></div>
+                <div className="mtableCar"><img style={img} src={member.carPic || ""} alt="carImage" /><span title="Car Raised" style={{ fontSize: "12px" }}>Euro {member.carPrice}</span></div>
             </div>
         ]
 
@@ -172,13 +172,13 @@ class Members extends Component {
         return (
             <div className="content-border">
                 <div className="mainContentCon">
-                    <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
+                    {/* <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
                     <div className="float-right">
                         <i onClick={() => this.fetchMembers()} className="flaticon-rotate"></i>
                         <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
-                    </div>
+                    </div> */}
                     <div className="navCon">
-                        <h1 id="header">Leasecars</h1>
+                        <h1 id="header"><div className="fl"><i className="flaticon-back" onClick={() => this.props.history.goBack()}></i></div>Leasecars<div className="fr"><i onClick={() => this.fetchMembers()} className="flaticon-rotate marIcon"></i><i onClick={() => this.props.history.push("/")} className="flaticon-home"></i></div></h1>
                     </div>
                     <div className="contentCon overflow bg-none">
                         <BlockUi tag="div" blocking={this.props.progress}>

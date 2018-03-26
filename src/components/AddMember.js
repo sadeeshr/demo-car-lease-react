@@ -110,12 +110,12 @@ class AddMember extends Component {
             this.state.seeCars ?
                 <div className="content-border">
                     <div className="mainContentCon">
-                        <i className="flaticon-back" onClick={() => this.setState({ seeCars: false })}></i>
+                        {/* <i className="flaticon-back" onClick={() => this.setState({ seeCars: false })}></i>
                         <div className="float-right">
                             <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
-                        </div>
+                        </div> */}
                         <div className="navCon">
-                            <h1 id="header">Select Car</h1>
+                            <h1 id="header"><div className="fl"><i className="flaticon-back" onClick={() => this.setState({ seeCars: false })}></i></div>Select Car<div className="fr"><i onClick={() => this.props.history.push("/")} className="flaticon-home"></i></div></h1>
                             {/*  */}
                         </div>
                         <div className="contentCon overflow bg-none">
@@ -146,18 +146,20 @@ class AddMember extends Component {
                                             cars.map((car, i) => {
                                                 return (
                                                     <tr style={{ padding: "0px 0px" }} key={i} id="center-btn-container" onClick={() => { this.setState({ carModel: car.model, carPic: car.image, carPrice: car.price, carDealer: car.dealer, carMonRedemption: car.monRedemption, carMonths: car.months }) }}>
-                                                        <div className="b-member-con">
-                                                            <div className="b-member-left">
-                                                                <span className="model" title="Model">{car.model || ""}</span>
-                                                                <span className="speed" title="speed">{car.speed || ""}kwh</span>
-                                                                <img src={car.image || ""} alt={"car-" + i} />
+                                                        <td>
+                                                            <div className="b-member-con">
+                                                                <div className="b-member-left">
+                                                                    <span className="model" title="Model">{car.model || ""}</span>
+                                                                    <span className="speed" title="speed">{car.speed || ""}kwh</span>
+                                                                    <img src={car.image || ""} alt={"car-" + i} />
+                                                                </div>
+                                                                <div className="b-member-right">
+                                                                    <span className="monred" title="monred">{car.monRedemption || ""} <span className="per">Per maand</span></span>
+                                                                    <span className="months" title="months">OBV {car.months || ""} MND</span>
+                                                                    <span className="price" title="Price">{car.price || ""} Euro</span>
+                                                                </div>
                                                             </div>
-                                                            <div className="b-member-right">
-                                                                <span className="monred" title="monred">{car.monRedemption || ""} <span className="per">Per maand</span></span>
-                                                                <span className="months" title="months">OBV {car.months || ""} MND</span>
-                                                                <span className="price" title="Price">{car.price || ""} Euro</span>
-                                                            </div>
-                                                        </div>
+                                                        </td>
                                                     </tr>
                                                 )
                                             })
@@ -183,12 +185,12 @@ class AddMember extends Component {
                 :
                 <div className="content-border">
                     <div className="mainContentCon">
-                        <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
-                        <div className="float-right">
+                        {/* <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i> */}
+                        {/* <div className="float-right">
                             <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
-                        </div>
+                        </div> */}
                         <div className="navCon">
-                            <h1 id="header">Become Member</h1>
+                            <h1 id="header"> <i className="flaticon-back fl" onClick={() => this.props.history.goBack()}></i>Become Member<i onClick={() => this.props.history.push("/")} className="flaticon-home fr"></i></h1>
                             {/*  */}
                         </div>
                         <div className="contentCon overflow">

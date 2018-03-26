@@ -29,7 +29,7 @@ class Home extends Component {
                             <p>Westland Energy Neutral is your local energy cooperation that helps you to quit your fossil fuel addiction  by giving you an alternative.</p>
                             <p>We not only offer you renewable energy but provides you a solution to finance your transition to a sustainable future.</p>
                             <div className="contentBtn bg-none">
-                                <table style={{ borderSpacing: "0px", borderCollapse: "collapse" }}>
+                                <table className="tablepadBot" style={{ borderSpacing: "0px", borderCollapse: "collapse" }}>
 
                                     <tbody>
                                         <tr className="htableTitle">

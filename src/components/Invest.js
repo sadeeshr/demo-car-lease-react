@@ -211,17 +211,24 @@ class Invest extends Component {
         const disableInvest = ((ethInvest < amountRemaining) && (ethInvest < this.props.allowance) && (ethInvest < this.props.euroTokenBalance) && (ethInvest > 0)) ? false : true
         console.log("Disable Invest: ", disableInvest, (ethInvest < amountRemaining), (ethInvest < this.props.allowance), (ethInvest < this.props.euroTokenBalance));
         // (this.props.account || "").substring(0, 8) + "..."
-        return (
+        return ( <div className="content-border">
             <div className="mainContentCon">
-                <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
+                {/* <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
                 <div className="float-right">
                     <i title="Invoices" className="flaticon-invoice" onClick={() => this.props.history.push("/", { path: "invoices" })}></i>
                     <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
-                </div>
+                </div> */}
                 <div className="navCon">
-                    <h1 id="header">Invest</h1>
+                    <h1 id="header">
+                        <div className="fl">
+                            <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
+                        </div>
+                        Invest
+                        <div className="fr">
+                            <i title="Invoices" className="flaticon-invoice marIcon" onClick={() => this.props.history.push("/", { path: "invoices" })}></i><i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
+                        </div></h1>
                 </div>
-                <div className="contentCon overflow bg-none">
+                <div className="contentCon bg-none">
                     <BlockUi tag="div" blocking={this.props.progress}>
                         <div className="carIntestCon">
                             <div className="carCon">
@@ -330,6 +337,7 @@ class Invest extends Component {
                     </BlockUi>
                 </div>
             </div>
+        </div>
         )
     }
 }
