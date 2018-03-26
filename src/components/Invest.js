@@ -18,32 +18,14 @@ class Invest extends Component {
             carID: this.props.member ? this.props.member.carID : null,
             car: this.props.member ? this.props.member.car : null,
             eventTransfer: null,
+            eventApprove: null,
             eventClaim: null,
+            refreshValues: false
         })
     }
 
     componentDidMount() {
-
-        if (!this.props.unClaimedRedemption)
-            this.props._lcToClaimDividend(this.props.member.carID, this.props.account)
-
-        // for (let i = 1; i <= this.props.members.length; i++) {
-        //     // this.fetchCar(i)
-        //     this.props._lcCars(i, i === this.carID ? true : false)
-        // }
-        // this.props._lcCars(this.carID)
-        // this.fetchCar()     // we check the details for carID from Smart Contract cars(carId)
-
-        if (!this.props.sumBalanceOf)
-            this.props._lcSumBalanceOf(this.props.account)
-
-        if (!this.props.euroTokenBalance) this.props._euroBalanceOf(this.props.account)
-        if (!this.props.evTokenBalance) this.props._evBalanceOf(this.props.account)
-        if (!this.props.crowdsaleClosed) this.props._lcAmountObjects()
-        if (!this.props.allowance) this.props._euroAllowance(this.props.account)
-        // if (!this.state["evToken_" + this.carID]) this.evTokenMyTokens()
-
-        this.eventHandler()
+        this.refreshValues()
     }
 
     componentWillReceiveProps(nextProps) {
@@ -52,8 +34,22 @@ class Invest extends Component {
             this.props._lcToClaimDividend(this.props.member.carID, this.props.account)
         if (this.props.eventClaim && !this.state.eventClaim) this.setState({ eventClaim: this.props.eventClaim })
         if (this.props.eventTransfer && !this.state.eventTransfer) this.setState({ eventTransfer: this.props.eventTransfer })
+        if (this.props.eventApprove && !this.state.eventApprove) this.setState({ eventApprove: this.props.eventApprove })
+
+        this.setState({ refreshValues: !this.state.refreshValues })
+        this.refreshValues()
+
     }
 
+    refreshValues = () => {
+        if (!this.props.unClaimedRedemption) this.props._lcToClaimDividend(this.props.member.carID, this.props.account)
+        if (!this.props.totalSupply) this.props._lcTotalSupply()
+        if (!this.props.euroTokenBalance) this.props._euroBalanceOf(this.props.account)
+        if (!this.props.evTokenBalance) this.props._evBalanceOf(this.props.account)
+        if (!this.props.crowdsaleClosed) this.props._lcAmountObjects()
+        if (!this.props.allowance) this.props._euroAllowance(this.props.account)
+        this.setState({ refreshValues: true })
+    }
 
     /**
      * COIN MARKETCAP API
@@ -208,8 +204,8 @@ class Invest extends Component {
         const account = this.props.account ? this.props.account.substring(0, 7) + '.....' + this.props.account.substring(this.props.account.length - 5) : ""
         const hideInvest = (this.props.member && this.props.member.car.totalRaised.toNumber() >= this.props.member.carPrice) ? true : false
         const ethInvest = parseInt(this.state.ethInvest || "0", 10)
-        const disableInvest = ((ethInvest < amountRemaining) && (ethInvest < this.props.allowance) && (ethInvest < this.props.euroTokenBalance) && (ethInvest > 0)) ? false : true
-        console.log("Disable Invest: ", disableInvest, (ethInvest < amountRemaining), (ethInvest < this.props.allowance), (ethInvest < this.props.euroTokenBalance));
+        const disableInvest = ((ethInvest <= amountRemaining) && (ethInvest <= this.props.allowance) && (ethInvest <= this.props.euroTokenBalance) && (ethInvest > 0)) ? false : true
+        console.log("Disable Invest: ", disableInvest, (ethInvest <= amountRemaining), (ethInvest <= this.props.allowance), (ethInvest <= this.props.euroTokenBalance));
         // (this.props.account || "").substring(0, 8) + "..."
         return (<div className="content-border">
             <div className="mainContentCon">
@@ -240,7 +236,7 @@ class Invest extends Component {
                                 <div className="carcol">
                                     <div className="carTitle">Total raised: </div>
                                     {/*<div className="carEth">{this.state.totalEthRaised || "0"} ETH</div>*/}
-                                    <div className="carEth">{this.props.sumBalanceOf || "0"} Euro</div>
+                                    <div className="carEth">{this.props.totalSupply || "0"} Euro</div>
                                     {<div className="carPrice">{this.props.crowdsaleClosed || "0"} cars</div>}
                                 </div>
                             </div>
@@ -257,7 +253,7 @@ class Invest extends Component {
                                             <div className="carPrice">{account || ""}</div>
                                             {/*<div className="carPrice">{this.props[this.props.account] || ""} ETH</div>*/}
                                             <div className="carPrice">{this.props.evTokenBalance || "0"} EVTokens</div>
-                                            <div className="carPrice">{allowedAmountToInvest || "0"} Euro</div>
+                                            <div className="carPrice">{this.props.euroTokenBalance || "0"} Euro</div>
                                         </div>
                                     }
                                     {
@@ -281,8 +277,9 @@ class Invest extends Component {
                                         <div className="arrowBtn">
                                             <img onClick={() => { this.state.authValue && this.props._euroApprove(this.state.authValue, this.props.account) }} src={require('../assets/add.jpg')} alt="add2" />
                                         </div>
-                                        <input className="membership-input" maxLength="20" value={this.state.authValue || this.props.allowance || ""} onChange={(e) => this.setState({ authValue: e.target.value })} type="text" placeholder="Authorize Value" />
+                                        <input className="membership-input" maxLength="20" value={this.state.authValue || this.props.allowance || 0} onChange={(e) => this.setState({ authValue: e.target.value })} type="text" placeholder="Authorize Value" />
                                         Authorized
+                                        {this.props.approveTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.approveTxID}>{!this.state.eventApprove ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>}</Link>)}
                                     </div>
                                 </div>
                             </div>

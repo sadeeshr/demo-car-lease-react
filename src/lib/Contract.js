@@ -143,7 +143,7 @@ class Contract {
         this.filters.EeuroApproval.new()
         this.filters.EeuroApproval.watch((err, result) => {
             console.log("EuroToken Event Approval() Result: ", err, result);
-            if (err || result.length > 0) setTimeout(() => { this.euroEventApprovalUnsubscribe(); }, 1000);
+            if (err || result.length > 0) { this.props._setEventStatus({ eventApprove: true }); setTimeout(() => { this.euroEventApprovalUnsubscribe(); }, 1000) };
         })
     }
 
@@ -172,7 +172,7 @@ class Contract {
             .then(result => {
                 console.log(`Approval Result: ${result}`);
                 this.euroEventApprovalSubscribe()
-                return { approvalResult: result }
+                return { approveTxID: result }
             })
     }
 
@@ -279,11 +279,20 @@ class Contract {
     }
 
     lcSumBalanceOf = (account) => {
-        console.log(`Fetching Total Amount Raised.`);
+        console.log(`Fetching Sum Balance Of: `);
         return this.LeaseTokenContract.sumBalanceOf(account)
             .then(result => {
                 console.log(`sumBalanceOf RESULT: ${result[0].toNumber()}`);
                 return { sumBalanceOf: result[0].toNumber(), progress: false }
+            })
+    }
+
+    lcTotalSupply = () => {
+        console.log(`Fetching Total Amount Raised.`);
+        return this.LeaseTokenContract.totalSupply()
+            .then(result => {
+                console.log(`Total Supply RESULT: ${result[0].toNumber()}`);
+                return { totalSupply: result[0].toNumber(), progress: false }
             })
     }
 
@@ -322,8 +331,9 @@ class Contract {
     }
 
     lcPaySubscription = (objectID, month, milege, account) => {
-        console.log(`Calling Pay Interest And Redemption.`);
-        return this.LeaseTokenContract.paySubscription(objectID, month || "0", milege || "0", { from: account })
+        // account = "0xA30b6a96D652E99AA25162B2b9165f2c3f683ACc"
+        console.log(`Calling Pay Interest And Redemption: ${objectID}, ${month}, ${milege}, ${account}`);
+        return this.LeaseTokenContract.paySubscription(objectID, month, milege, { from: account })
             .then(result => {
                 console.log(`paySubscription RESULT: ${result}`);
                 return { paySubscriptionTxID: result, progress: false }

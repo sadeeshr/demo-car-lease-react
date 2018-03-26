@@ -303,6 +303,20 @@ export const _lcSumBalanceOf = (account) => {
     }
 }
 
+export const _lcTotalSupply = () => {
+    return (dispatch) => {
+        return contract.lcTotalSupply()
+            .then(result => {
+                return dispatch(
+                    {
+                        type: "TOTAL_SUPPLY_RESULT",
+                        payload: result
+                    }
+                )
+            })
+    }
+}
+
 export const _lcInvestInObject = (objectID, amount, account) => {
     return (dispatch) => {
         return contract.lcInvestInObject(objectID, amount, account)

@@ -53,6 +53,7 @@ const rootReducer = (state = initialState, action) => {
                 progress: true,
                 module: action.payload,
                 addNewObjectTxID: null,
+                approveTxID: null,
                 investInObjectTxID: null,
                 invoices_new: false,
                 invoices_edit: false,
@@ -73,7 +74,7 @@ const rootReducer = (state = initialState, action) => {
                 lcCars: null,
                 euroTokenBalance: null,
                 evTokenBalance: null,
-                sumBalanceOf: null,
+                totalSupply: null,
                 progress: false,
                 reloadTokens: false
             }
@@ -102,22 +103,34 @@ const rootReducer = (state = initialState, action) => {
         case 'EURO_BALANCE':
         case 'ADD_NEW_OBJECT_RESULT':
         case 'SUM_BALANCE_OF_RESULT':
-        case 'INVEST_IN_OBJECT_RESULT':
         case 'PAY_SUBSCRIPTION_RESULT':
         case 'CLAIM_DIVIDEND_RESULT':
-        case 'APPROVE':
         case 'ALLOWANCE':
-        case 'SET_EVENT_STATUS':
+        case 'INVEST_IN_OBJECT_RESULT':
+        case 'APPROVE':
+        case 'TOTAL_SUPPLY_RESULT':
             return {
                 ...state,
                 ...action.payload
             }
+
+        case 'SET_EVENT_STATUS':
+            return {
+                ...state,
+                ...action.payload,
+                unClaimedRedemption: null,
+                totalSupply: null,
+                euroTokenBalance: null,
+                evTokenBalance: null,
+                crowdsaleClosed: null,
+                allowance: null
+            }
+
         case 'AMOUNT_OBJECTS':
             return {
                 ...state,
                 ...action.payload,
-                claimDividendTxID: null,
-                investInObjectTxID: null
+                claimDividendTxID: null
             }
         case 'TO_CLAIM_DIVIDEND_RESULT':
             return {

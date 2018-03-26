@@ -20,7 +20,7 @@ class Invoices extends Component {
         console.log("Object Fees: ", this.props.member.car.objectFee.toNumber())
         console.log("Object Price: ", this.props.member.car.objectPrice.toNumber())
         console.log("Object Type: ", this.props.member.car.objectType.toNumber())
-        console.log("Object paymonth: ", this.props.member.car.paymonth.toNumber())
+        console.log("Object paymonth: ", this.props.member.car.paymonth.toString())
         console.log("Object milages: ", this.props.member.car.milages.toNumber())
         console.log("Object totalDividends: ", this.props.member.car.totalDividends.toNumber())
     }
@@ -79,7 +79,7 @@ class Invoices extends Component {
 
     fetchCarMileagesRedemption = () => {
         let car = this.props.car
-        this.setState({ carMilages: car.milages.toNumber(), monthlyRedemption: car.totalDividends.toNumber() })
+        this.setState({ carMilages: car.milages.toNumber(), monthlyRedemption: car.objectFee.toNumber() })
     }
 
     componentWillReceiveProps(nextProps) {
@@ -104,7 +104,7 @@ class Invoices extends Component {
         console.log("INVOICE STATE: ", this.state, this.props);
         const invoices = this.props.invoices ? this.props.invoices.filter(invoice => (this.months[invoice.month].toLowerCase().startsWith(this.state.filter) || invoice.year === parseInt(this.state.filter, 10))) : []
         // const invoices = this.props.invoices
-        let amount = (this.props.member.car.totalDividends.toNumber() || 0) + ((this.state.mileage - (this.props.member.car.milages.toNumber() || 0)) * 0.10)
+        let amount = (this.props.member.car.objectFee.toNumber() || 0) + ((this.state.mileage - (this.props.member.car.milages.toNumber() || 0)) * 0.10)
         console.log(this.state.mileage, this.props.member.car.milages.toNumber(), (this.state.mileage <= this.props.member.car.milages.toNumber()));
         const disableInvoice = (this.state.mileage <= this.props.member.car.milages.toNumber()) ? true : false
         return (<div className="content-border">
@@ -142,7 +142,7 @@ class Invoices extends Component {
                                                 invoice.status ?
                                                     <div className="arrowBtn"><img src={require('../assets/check.jpg')} alt="Payed" /></div>
                                                     : <div className="arrowBtn"><img style={{ cursor: disableInvoice ? "not-allowed" : "pointer" }} onClick={() => {
-                                                        !disableInvoice && this.props._lcPaySubscription(this.props.member.carID, this.props.member.car.paymonth.toNumber(), this.state.mileage || "0", this.props.account)
+                                                        !disableInvoice && this.props._lcPaySubscription(this.props.member.carID, (this.props.member.car.paymonth.toNumber() + 1), parseInt(this.state.mileage, 10), this.props.account)
                                                         !disableInvoice && this.updateInvoice(invoice, this.state.mileage, amount || 0)
                                                     }} src={require('../assets/add.jpg')} alt="Ether" /></div>}
                                         </div>
