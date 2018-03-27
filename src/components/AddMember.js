@@ -206,7 +206,7 @@ class AddMember extends Component {
                                         <input className="membership-input" maxLength="20" value={this.state.address || ""} onChange={(e) => this.setState({ address: e.target.value })} type="text" id="address" name="address" placeholder="Address" />
                                     </span>
                                     <span className="form-input-containers">
-                                        <input maxLength="30" className="membership-input" value={this.state.municipality || ""} onChange={(e) => this.setState({ municipality: e.target.value })} type="text" id="municipality" name="municipality" placeholder="Municipality *" />
+                                        <input maxLength="30" className="membership-input" value={this.state.municipality || ""} onChange={(e) => this.setState({ municipality: e.target.value })} type="text" id="municipality" name="municipality" placeholder="Town *" />
                                     </span>
                                     <span className="form-input-containers">
                                         <input maxLength="30" className="membership-input m-b-10" value={this.state.zip || ""} onChange={(e) => this.setState({ zip: e.target.value })} type="text" placeholder="Zip Code" />

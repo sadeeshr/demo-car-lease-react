@@ -126,26 +126,35 @@ class Invest extends Component {
                                     <img src={require('../assets/TeslaRoadster.png')} alt="cars" />
                                 </div>
                                 <div className="carcol">
-                                    <div className="carTitle">Total raised: </div>
+                                    <div className="carTitle"><strong>Total raised: </strong></div>
                                     {/*<div className="carEth">{this.state.totalEthRaised || "0"} ETH</div>*/}
-                                    <div className="carEth">{this.props.totalSupply || "0"} Euro</div>
-                                    {<div className="carPrice">{this.props.crowdsaleClosed || "0"} cars</div>}
+                                    <div className="carEth"><strong>{this.props.totalSupply || "0"}</strong> Euro</div>
+                                    {<div className="carPrice"><strong>{this.props.crowdsaleClosed || "0"}</strong> cars</div>}
                                 </div>
                             </div>
                             <div className="carCon">
 
-                                <div className="carcol">
+                                <div className="myaccount">
                                     {/*!this.state.eths && <div className="carTitle">"Click On Device"</div>*/}
                                     {!this.props.account && <div className="carTitle">Please Unlock Your Metamask Account.</div>}
                                     {this.state.eth && <div className="carTitle">{this.state.eth}</div>}
                                     {this.state.ethBal && <div className="carEth">{this.state.ethBal} ETH</div>}
                                     {this.props.account &&
                                         <div>
-                                            <div className="carTitle">My Account: </div>
-                                            <div className="carPrice">{account || ""}</div>
+                                            
+                                            <div className="mad1">
+                                                <div className="carTitle"><strong>My Account: </strong></div>
+                                                <div className="carPrice"><u>{account || ""}</u></div>
+                                            </div>
+                                            <div className="mad2 ledgerImg">
+                                                <img hidden={Array.isArray(this.state.eths) ? true : false} onClick={() => {/*this.connectLedger.bind(this)*/ }} src={require('../assets/ledgernanos2.png')} alt="ledger" />
+                                            </div>
+                                           
+                                            
+
                                             {/*<div className="carPrice">{this.props[this.props.account] || ""} ETH</div>*/}
-                                            <div className="carPrice">{this.props.evTokenBalance || "0"} EVTokens</div>
-                                            <div className="carPrice">{this.props.euroTokenBalance || "0"} Euro</div>
+                                            <div className="mad3 carPrice"><strong>{this.props.evTokenBalance || "0"}</strong> LeaseTokens</div>
+                                            <div className="mad4 carPrice"><strong>{this.props.euroTokenBalance || "0"}</strong> EuroTokens</div>
                                         </div>
                                     }
                                     {
@@ -161,9 +170,7 @@ class Invest extends Component {
                                             this.state.eths ? this.state.eths + ".  Please check your device." : ""
                                     }
                                 </div>
-                                <div className="carcol img">
-                                    <img hidden={Array.isArray(this.state.eths) ? true : false} onClick={() => {/*this.connectLedger.bind(this)*/ }} src={require('../assets/ledgernanos.png')} alt="ledger" />
-                                </div>
+                                
                                 <div hidden={hideInvest} className="">
                                     <div className="carTitle investInput">
                                         <div className="arrowBtn">
