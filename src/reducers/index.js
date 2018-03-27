@@ -115,7 +115,7 @@ const rootReducer = (state = initialState, action) => {
         case 'TOTAL_SUPPLY_RESULT':
             return {
                 ...state,
-                ...action.payload               
+                ...action.payload
             }
 
         case 'SET_EVENT_STATUS':
@@ -150,6 +150,10 @@ const rootReducer = (state = initialState, action) => {
                         member["evTokens"] = action.payload.result
                     return member
                 })
+                
+                if (state.member && (state.member.carID === action.payload.id))
+                    state.member["evTokens"] = action.payload.result
+
                 return {
                     ...state,
                     members: members
@@ -190,7 +194,7 @@ const rootReducer = (state = initialState, action) => {
                 eventApprove: false,
                 eventClaim: false
             }
-            
+
         default:
             return { ...state }
     }

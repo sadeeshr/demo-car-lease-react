@@ -38,9 +38,9 @@ class Invest extends Component {
             nextProps._lcToClaimDividend(nextProps.member.carID, nextProps.account)
 
         let timeOut = 1000
-        if (nextProps.eventClaim && !this.state.eventClaim) { this.setState({ eventClaim: nextProps.eventClaim }) }
+        if (nextProps.eventClaim && !this.state.eventClaim) { this.setState({ eventClaim: nextProps.eventClaim, ethInvest: null }) }
         if (nextProps.eventTransfer && !this.state.eventTransfer) { this.setState({ eventTransfer: nextProps.eventTransfer, ethInvest: null }) }
-        if (nextProps.eventApprove && !this.state.eventApprove) { this.setState({ eventApprove: nextProps.eventApprove }) }
+        if (nextProps.eventApprove && !this.state.eventApprove) { this.setState({ eventApprove: nextProps.eventApprove, ethInvest: null }) }
 
         // this.setState({ refreshValues: !this.state.refreshValues })
         console.log("#### TOTAL SUPPLY: ######", nextProps.eventTransfer, this.props.totalSupply, nextProps.totalSupply);
@@ -75,7 +75,8 @@ class Invest extends Component {
         // fetch Object ID's Values
         this.props._lcLeaseObjects(this.props.member.carID)
 
-        // fetch Object ID's
+        // fetch Object ID's EVTokens
+        this.props._evMyTokens(this.props.account, this.props.member.carID)
 
         if (!this.props.unClaimedRedemption) this.props._lcToClaimDividend(this.props.member.carID, this.props.account)
         if (!this.props.totalSupply) this.props._lcTotalSupply()
@@ -87,6 +88,7 @@ class Invest extends Component {
 
     render() {
         console.log("#####", this.state, this.props);
+        console.log("##### EVT", this.props.member ? this.props.member.evTokens : "no evtokens");
         if (this.props.account && !this.props[this.props.account]) this.props._getBalance(this.props.account);
 
         const amountRemaining = this.props.member.carPrice - this.props.member.car.totalRaised.toNumber()
@@ -141,7 +143,7 @@ class Invest extends Component {
                                     {this.state.ethBal && <div className="carEth">{this.state.ethBal} ETH</div>}
                                     {this.props.account &&
                                         <div>
-                                            
+
                                             <div className="mad1">
                                                 <div className="carTitle"><strong>My Account: </strong></div>
                                                 <div className="carPrice"><u>{account || ""}</u></div>
@@ -149,8 +151,8 @@ class Invest extends Component {
                                             <div className="mad2 ledgerImg">
                                                 <img hidden={Array.isArray(this.state.eths) ? true : false} onClick={() => {/*this.connectLedger.bind(this)*/ }} src={require('../assets/ledgernanos2.png')} alt="ledger" />
                                             </div>
-                                           
-                                            
+
+
 
                                             {/*<div className="carPrice">{this.props[this.props.account] || ""} ETH</div>*/}
                                             <div className="mad3 carPrice"><strong>{this.props.evTokenBalance || "0"}</strong> LeaseTokens</div>
@@ -170,7 +172,7 @@ class Invest extends Component {
                                             this.state.eths ? this.state.eths + ".  Please check your device." : ""
                                     }
                                 </div>
-                                
+
                                 <div hidden={hideInvest} className="">
                                     <div className="carTitle investInput">
                                         <div className="arrowBtn">
