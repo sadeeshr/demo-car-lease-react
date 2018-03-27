@@ -180,7 +180,7 @@ class Invest extends Component {
                                         </div>
                                         <input className="membership-input" maxLength="20" value={this.state.authValue || this.props.allowance || 0} onChange={(e) => this.setState({ authValue: e.target.value })} type="text" placeholder="Authorize Value" />
                                         Authorized
-                                        {this.props.approveTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.approveTxID}>{!this.state.eventApprove ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>}</Link>)}
+                                        {this.props.approveTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.approveTxID}>{!this.state.eventApprove ? <p className="p-authorized" style={{ color: "red" }}>pending</p> : <p className="p-authorized" style={{ color: "green" }}><i>Confirmed</i></p>}</Link>)}
                                     </div>
                                 </div>
                             </div>
@@ -205,7 +205,7 @@ class Invest extends Component {
                                         </div>
                                         Invest Euro:
                                         <input className="membership-input" maxLength="20" value={(typeof this.state.ethInvest === 'undefined') ? (allowedAmountToInvest || 0) : this.state.ethInvest} onChange={(e) => this.setState({ ethInvest: e.target.value })} type="text" placeholder="Euro Token" />
-                                        {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{!this.state.eventTransfer ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>}</Link>)}
+                                        {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{!this.state.eventTransfer ? <p className="p-euro" style={{ color: "red" }}>pending</p> : <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p>}</Link>)}
                                     </div>
                                 </div>
                                 <div className="carTitle investInput">
@@ -214,7 +214,7 @@ class Invest extends Component {
                                     </div>
                                     Claim Euro: {this.props.unClaimedRedemption || "0"}
                                     <div className="claim-euro">
-                                        {this.props.claimDividendTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.claimDividendTxID}>{!this.state.eventClaim ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>} </Link>)}
+                                        {this.props.claimDividendTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.claimDividendTxID}>{!this.state.eventClaim ? <p className="p-claim" style={{ color: "red" }}>pending</p> : <p className="p-claim" style={{ color: "green" }}><i>Confirmed</i></p>} </Link>)}
                                     </div>
                                 </div>
                             </div>
