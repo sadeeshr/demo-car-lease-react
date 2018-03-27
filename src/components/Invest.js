@@ -189,7 +189,7 @@ class Invest extends Component {
                                     <div className="mtableUser">{this.props.member.username || ""}<p>{this.props.member.municipality || ""}</p></div>
                                     <div className="mtableCar">
                                         <img src={this.props.member.carPic || ""} alt="carImage" />
-                                        <span title="Price" style={{ fontSize: "10px" }}>Euro {this.props.member.carPrice || "0"}</span>
+                                        <span title="Price" style={{ fontSize: "12px" }}>Euro {this.props.member.carPrice || "0"}</span>
                                     </div>
                                 </div>
 
@@ -212,7 +212,6 @@ class Invest extends Component {
                                     </div>
                                     Claim Euro: {this.props.unClaimedRedemption || "0"}
                                     <div className="claim-euro">
-                                        <div className=""></div>
                                         {this.props.claimDividendTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.claimDividendTxID}>{!this.state.eventClaim ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>} </Link>)}
                                     </div>
                                 </div>
