@@ -39,7 +39,6 @@ class Invest extends Component {
 
         let timeOut = 1000
         if (nextProps.eventClaim && !this.state.eventClaim) { this.setState({ eventClaim: nextProps.eventClaim, ethInvest: null }) }
-        if (nextProps.eventTransfer && !this.state.eventTransfer) { this.setState({ eventTransfer: nextProps.eventTransfer, ethInvest: null }) }
         if (nextProps.eventApprove && !this.state.eventApprove) { this.setState({ eventApprove: nextProps.eventApprove, ethInvest: null }) }
 
         // this.setState({ refreshValues: !this.state.refreshValues })
@@ -47,9 +46,10 @@ class Invest extends Component {
         if (nextProps.eventTransfer || nextProps.eventApprove || nextProps.eventClaim)
             setTimeout(this.refreshValues, timeOut)
 
-        if (this.props.totalSupply !== nextProps.totalSupply || this.props.allowance !== nextProps.allowance || this.props.unClaimedRedemption !== nextProps.unClaimedRedemption)
+        if (this.props.totalSupply !== nextProps.totalSupply || this.props.allowance !== nextProps.allowance || this.props.unClaimedRedemption !== nextProps.unClaimedRedemption) {
             this.props._resetEvent()
-
+            if (nextProps.eventTransfer && !this.state.eventTransfer) { this.setState({ eventTransfer: nextProps.eventTransfer, ethInvest: null }) }
+        }
         this.props = nextProps
     }
 
