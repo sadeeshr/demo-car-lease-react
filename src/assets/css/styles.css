@@ -121,7 +121,18 @@ img.addBtn {
    margin-left: 0px; 
 }
 
-
+.p-authorized{
+    margin-left: 144px;
+    margin-top: -13px;
+}
+.p-euro{
+margin-left: 51px;
+margin-top: -13px;
+}
+.p-claim{
+    margin-left: -53px;
+    margin-top: -12px;
+}
 
  #header{
      font-family: Tahoma, Verdana, Segoe, sans-serif;
@@ -838,7 +849,7 @@ position: inherit;
 }
 
 .carCon.active .mtableCar img{
-    width: 100%;
+    width: 100px;
 }
 .b-member-con{
     border: 1px solid #808080;
@@ -904,10 +915,7 @@ position: inherit;
     margin-right: 10px;
 }
 .investInput p{
-    margin: 0;
     position: absolute;
-    margin-left: 55px;
-    margin-top: -15px;
     font-size: 12px;
     font-weight: bold;
     line-height: 14px;
