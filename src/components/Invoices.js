@@ -20,9 +20,12 @@ class Invoices extends Component {
         console.log("Object Fees: ", this.props.member.car.objectFee.toNumber())
         console.log("Object Price: ", this.props.member.car.objectPrice.toNumber())
         console.log("Object Type: ", this.props.member.car.objectType.toNumber())
-        console.log("Object paymonth: ", this.props.member.car.paymonth.toString())
+        console.log("Object paymonth: ", this.props.member.car.paymonth.toNumber())
         console.log("Object milages: ", this.props.member.car.milages.toNumber())
         console.log("Object totalDividends: ", this.props.member.car.totalDividends.toNumber())
+
+        this.props._lcLeaseObjects(this.props.member.carID)
+
     }
 
     componentDidMount() {
@@ -89,6 +92,15 @@ class Invoices extends Component {
         if (nextProps.invoices && nextProps.invoices.length > 0) {
             this.setState({ month: this.getMaxMonth(nextProps.invoices), year: (new Date()).getFullYear() })
         }
+
+        if (nextProps.member && nextProps.member.car) {
+            console.log("Object Fees: ", this.props.member.car.objectFee.toNumber())
+            console.log("Object Price: ", this.props.member.car.objectPrice.toNumber())
+            console.log("Object Type: ", this.props.member.car.objectType.toNumber())
+            console.log("Object paymonth: ", this.props.member.car.paymonth.toNumber())
+            console.log("Object milages: ", this.props.member.car.milages.toNumber())
+            console.log("Object totalDividends: ", this.props.member.car.totalDividends.toNumber())
+        }
     }
 
     getMaxMonth = (invoices) => {
@@ -105,8 +117,9 @@ class Invoices extends Component {
         const invoices = this.props.invoices ? this.props.invoices.filter(invoice => (this.months[invoice.month].toLowerCase().startsWith(this.state.filter) || invoice.year === parseInt(this.state.filter, 10))) : []
         // const invoices = this.props.invoices
         let amount = (this.props.member.car.objectFee.toNumber() || 0) + ((this.state.mileage - (this.props.member.car.milages.toNumber() || 0)) * 0.10)
-        console.log(this.state.mileage, this.props.member.car.milages.toNumber(), (this.state.mileage <= this.props.member.car.milages.toNumber()));
-        const disableInvoice = (this.state.mileage <= this.props.member.car.milages.toNumber()) ? true : false
+        console.log(amount, ' <= ', this.props.allowance, (amount <= this.props.allowance), this.state.mileage, ' >= ', this.props.member.car.milages.toNumber(), (this.state.mileage >= this.props.member.car.milages.toNumber()));
+        const enableInvoice = ((this.state.mileage >= this.props.member.car.milages.toNumber()) && (amount <= this.props.allowance)) ? true : false
+        console.log("Invoice Enabled: ", enableInvoice);
         return (<div className="content-border">
             <div className="mainContentCon">
                 {/* <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
@@ -141,9 +154,9 @@ class Invoices extends Component {
                                             {
                                                 invoice.status ?
                                                     <div className="arrowBtn"><img src={require('../assets/check.jpg')} alt="Payed" /></div>
-                                                    : <div className="arrowBtn"><img style={{ cursor: disableInvoice ? "not-allowed" : "pointer" }} onClick={() => {
-                                                        !disableInvoice && this.props._lcPaySubscription(this.props.member.carID, (this.props.member.car.paymonth.toNumber() + 1), parseInt(this.state.mileage, 10), this.props.account)
-                                                        !disableInvoice && this.updateInvoice(invoice, this.state.mileage, amount || 0)
+                                                    : <div title={!(amount <= this.props.allowance) ? "Less Allowance Set" : (!(this.state.mileage >= this.props.member.car.milages.toNumber()) ? "Mileage Too Low" : "Pay Invoice")} className="arrowBtn"><img style={{ cursor: enableInvoice ? "pointer" : "not-allowed" }} onClick={() => {
+                                                        enableInvoice && this.props._lcPaySubscription(this.props.member.carID, (this.props.member.car.paymonth.toNumber() + 1), parseInt(this.state.mileage, 10), this.props.account)
+                                                        enableInvoice && this.updateInvoice(invoice, this.state.mileage, amount || 0)
                                                     }} src={require('../assets/add.jpg')} alt="Ether" /></div>}
                                         </div>
                                     </div>

@@ -374,3 +374,11 @@ export const _lcClaimDividend = (objectID, account) => {
             })
     }
 }
+
+export const _resetTxIds = () => ({
+    type: "RESET_TX_IDS"
+})
+
+export const _resetEvent = () => ({
+    type: "RESET_EVENT"
+})

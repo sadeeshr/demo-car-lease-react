@@ -108,22 +108,26 @@ const rootReducer = (state = initialState, action) => {
         case 'ALLOWANCE':
         case 'INVEST_IN_OBJECT_RESULT':
         case 'APPROVE':
-        case 'TOTAL_SUPPLY_RESULT':
             return {
                 ...state,
                 ...action.payload
+            }
+        case 'TOTAL_SUPPLY_RESULT':
+            return {
+                ...state,
+                ...action.payload               
             }
 
         case 'SET_EVENT_STATUS':
             return {
                 ...state,
                 ...action.payload,
-                unClaimedRedemption: null,
-                totalSupply: null,
-                euroTokenBalance: null,
-                evTokenBalance: null,
-                crowdsaleClosed: null,
-                allowance: null
+                // unClaimedRedemption: null,
+                // totalSupply: null,
+                // euroTokenBalance: null,
+                // evTokenBalance: null,
+                // crowdsaleClosed: null,
+                // allowance: null
             }
 
         case 'AMOUNT_OBJECTS':
@@ -160,12 +164,33 @@ const rootReducer = (state = initialState, action) => {
                     return member
                 })
 
+                if (state.member && (state.member.carID === action.payload.id))
+                    state.member["car"] = action.payload.result
+
                 return {
                     ...state,
                     members: members
                 }
             }
 
+        case 'RESET_TX_IDS':
+            return {
+                ...state,
+                addNewObjectTxID: null,
+                approveTxID: null,
+                investInObjectTxID: null,
+                paySubscriptionTxID: null,
+                claimDividendTxID: null
+            }
+
+        case 'RESET_EVENT':
+            return {
+                ...state,
+                eventTransfer: false,
+                eventApprove: false,
+                eventClaim: false
+            }
+            
         default:
             return { ...state }
     }

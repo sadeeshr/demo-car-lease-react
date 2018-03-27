@@ -103,6 +103,7 @@ class Members extends Component {
 
     renderMember = (member, i) => {
 
+        console.log("Member: ", member);
         const img = { "display": "block" }
         // if (this.props.account)
         // if (!(this.props.evTokens && this.props.evTokens[member.carID]) || this.props.addNewObjectTxID || this.props.raiseFundsForCarTxID) this.props._evMyTokens(this.props.account, member.carID)
@@ -123,7 +124,7 @@ class Members extends Component {
                     <div className="memberMesCon">{member.message}</div>
                     <div className="memberMesBtns">
                         <div className="membersBtn">
-                            <button className="arrowBtn" onClick={() => { this.props.history.push("/", { module: this.props.module, path: "invest" }) }}>
+                            <button className="arrowBtn" onClick={() => { this.props.history.push("/", { module: this.props.location.state.module, path: "invest" }) }}>
                                 <img src={require('../assets/arrow.jpg')} alt="addM" />
                             </button>
                         </div>
@@ -132,7 +133,7 @@ class Members extends Component {
             )
         }
 
-        return <div className="leaseCarCon">{memberRows}</div>
+        return <div className="leaseCarCon" key={i}>{memberRows}</div>
     }
 
     sortMembers = () => {

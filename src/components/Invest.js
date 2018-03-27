@@ -24,177 +24,69 @@ class Invest extends Component {
         })
     }
 
+    componentWillUnmount() {
+        this.props._resetTxIds()
+    }
+
+
     componentDidMount() {
         this.refreshValues()
     }
 
     componentWillReceiveProps(nextProps) {
+        if (nextProps.paySubscriptionTxID)
+            nextProps._lcToClaimDividend(nextProps.member.carID, nextProps.account)
+
+        let timeOut = 1000
+        if (nextProps.eventClaim && !this.state.eventClaim) { this.setState({ eventClaim: nextProps.eventClaim }) }
+        if (nextProps.eventTransfer && !this.state.eventTransfer) { this.setState({ eventTransfer: nextProps.eventTransfer, ethInvest: null }) }
+        if (nextProps.eventApprove && !this.state.eventApprove) { this.setState({ eventApprove: nextProps.eventApprove }) }
+
+        // this.setState({ refreshValues: !this.state.refreshValues })
+        console.log("#### TOTAL SUPPLY: ######", nextProps.eventTransfer, this.props.totalSupply, nextProps.totalSupply);
+        if (nextProps.eventTransfer || nextProps.eventApprove || nextProps.eventClaim)
+            setTimeout(this.refreshValues, timeOut)
+
+        if (this.props.totalSupply !== nextProps.totalSupply || this.props.allowance !== nextProps.allowance || this.props.unClaimedRedemption !== nextProps.unClaimedRedemption)
+            this.props._resetEvent()
+
         this.props = nextProps
-        if (this.props.paySubscriptionTxID)
-            this.props._lcToClaimDividend(this.props.member.carID, this.props.account)
-        if (this.props.eventClaim && !this.state.eventClaim) this.setState({ eventClaim: this.props.eventClaim })
-        if (this.props.eventTransfer && !this.state.eventTransfer) this.setState({ eventTransfer: this.props.eventTransfer })
-        if (this.props.eventApprove && !this.state.eventApprove) this.setState({ eventApprove: this.props.eventApprove })
-
-        this.setState({ refreshValues: !this.state.refreshValues })
-        this.refreshValues()
-
     }
 
     refreshValues = () => {
+        // fetch Total Supply
+        this.props._lcTotalSupply()
+
+        // fetch Total Crowdsale Closed Objects
+        this.props._lcAmountObjects()
+
+        // fetch My Lease Tokens
+        this.props._evBalanceOf(this.props.account)
+
+        // fetch My Euro Tokens
+        this.props._euroBalanceOf(this.props.account)
+
+        // fetch My Allowance Value
+        this.props._euroAllowance(this.props.account)
+
+        // fetch Object ID's To Claim Dividend Value
+        this.props._lcToClaimDividend(this.props.member.carID, this.props.account)
+
+        // fetch Object ID's Values
+        this.props._lcLeaseObjects(this.props.member.carID)
+
+        // fetch Object ID's
+
         if (!this.props.unClaimedRedemption) this.props._lcToClaimDividend(this.props.member.carID, this.props.account)
         if (!this.props.totalSupply) this.props._lcTotalSupply()
         if (!this.props.euroTokenBalance) this.props._euroBalanceOf(this.props.account)
         if (!this.props.evTokenBalance) this.props._evBalanceOf(this.props.account)
         if (!this.props.crowdsaleClosed) this.props._lcAmountObjects()
         if (!this.props.allowance) this.props._euroAllowance(this.props.account)
-        this.setState({ refreshValues: true })
-    }
-
-    /**
-     * COIN MARKETCAP API
-     * ******************
-     * To convert Euro to Eth
-     */
-
-    // convertEuroToEth = () => {
-    //     const apiURL = "https://api.coinmarketcap.com/v1/ticker/ethereum/?convert=EUR"
-    //     fetch(apiURL)
-    //         .then((resp) => resp.json())
-    //         .then((data) => {
-    //             console.log(data[0]);
-    //             let euroBalToEthBal = this.props.sumBalanceOf / Number(data[0]["price_eur"])
-    //             console.log("TotalEthRaised: ", euroBalToEthBal);
-    //             this.setState({ totalEthRaised: euroBalToEthBal })
-    //         })
-    // }
-
-    /**
-     * EURO TOKEN METHODS:
-     * *******************
-     * balanceOf                 [IMPLEMENTED]
-     */
-
-
-    /**
-     * EV TOKEN METHODS:
-     * *******************
-     * balanceOf                 [IMPLEMENTED]
-     * myTokens                  [IMPLEMENTED]
-     */
-
-    // evTokenBalanceOf = () => {
-    //     this.props.evToken.balanceOf(this.props.account)
-    //         .then(result => {
-    //             console.log("evTokenBalance: ", util.inspect(result[0].toString(), false, null))
-    //             this.setState({ evTokenBalance: result[0].toString() })
-    //         })
-    // }
-
-
-    /**
-     * LEASE CONTRACT METHODS:
-     * ***********************
-     * AddNewCar                  [IMPLEMENTED]
-     * raiseFundsForCar           [IMPLEMENTED]
-     * buyCarWhenFundsRaised      [IMPLEMENTED  - UI PENDING]
-     * payInterestAndRedemption   [IMPLEMENTED  - UI PENDING]
-     * ClaimDividend [IMPLEMENTED]
-     * ToClaimDividend        [IMPLEMENTED]
-     */
-
-    // fetchsumBalanceOf = () => {
-    //     this.props.LeaseContract.sumBalanceOf()
-    //         .then(result => {
-    //             console.log("sumBalanceOf: ", util.inspect(result[0].toNumber(), false, null))
-    //             this.setState({ sumBalanceOf: result[0].toNumber() })
-    //             this.convertEuroToEth()
-    //         })
-    // }
-
-    // fetchCar = (carID) => {
-    //     this.props.LeaseContract.cars(carID)
-    //         .then(car => {
-    //             console.log("CAR EXISTS ? ", util.inspect(car[0], false, null))
-    //             console.log(`Details of CAR ID ${carID} => `, car)
-    //             console.log(`CROWD SALE STATUS: CAR ID ${carID} => `, car.crowdsaleClosed)
-    //             if (car.crowdsaleClosed) {
-    //                 this.setState({ crowdsaleClosed: this.state.crowdsaleClosed + 1 })
-    //             }
-    //             if (carID === this.carID)
-    //                 this.props._carSelected(car)
-    //         })
-    // }
-
-    // raiseFundsForCar = () => {
-    //     this.setState({ progress: true })
-    //     this.props.LeaseContract.raiseFundsForCar(this.carID, this.state.ethInvest || "0", { from: this.props.account })
-    //         .then(result => { this.setState({ progress: false }); this.props.history.goBack(); console.log("raiseFundsForCar RESULT: ", result) })
-    // }
-
-    buyCarWhenFundsRaised = () => {
-        this.props.LeaseContract.buyCarWhenFundsRaised(this.props.member.carID)
-            .then(result => console.log("buyCarWhenFundsRaised RESULT: ", result))
-    }
-
-    // payInterestAndRedemption = () => {
-    //     this.props.LeaseContract.payInterestAndRedemption(this.carID, this.state.month || "0", this.state.milege || "0")
-    //         .then(result => console.log("buyCarWhenFundsRaised RESULT: ", result))
-    // }
-
-    // ToClaimDividend = () => {
-    //     // const investorAddress = "0x0BA9F1b34681255664C26543AD451658f8d1AAdB"   // for testing
-    //     this.props.LeaseContract.ToClaimDividend(this.props.account, this.carID)
-    //         .then(result => {
-    //             console.log("unClaimedRedemption: ", util.inspect(result[0].toString(), false, null))
-    //             this.setState({ unClaimedRedemption: result[0].toString() })
-    //         })
-    // }
-
-    // ClaimDividend = () => {
-    //     this.setState({ progress: true })
-    //     this.props.LeaseContract.ClaimDividend(this.carID, { from: this.props.account })
-    //         .then(result => { this.setState({ progress: false }); console.log("ClaimDividend RESULT: ", result) })
-    // }
-
-    // Till Here
-
-    eventHandler = () => {
-        // const euroTokenTransferEvent = this.props.euroToken.Transfer().new((error, result) => {
-        //     console.log("WATCH result: ", error, result, euroTokenTransferEvent);
-        // });
-
-
-        // const euroTokenApprovalEvent = this.props.euroToken.Approval().new((error, result) => { });
-        // euroTokenApprovalEvent.watch().then((result) => {
-        //     // result null FilterResult {...} (will only fire once)
-        // });
-
-        // const evTokenTransferEvent = this.props.evToken.Transfer().new((error, result) => { });
-        // evTokenTransferEvent.watch().then((result) => {
-        //     // result null FilterResult {...} (will only fire once)
-        // });
-
-        // const LeaseContractFundTransferEvent = this.props.LeaseContract.FundTransfer().new((error, result) => { });
-        // LeaseContractFundTransferEvent.watch().then((result) => {
-        //     // result null FilterResult {...} (will only fire once)
-        // });
-
-        //   euroTokenTransferEvent.uninstall((error, result) => {
-        //     // result null Boolean filterUninstalled
-        //   });
-    }
-
-    sendTransaction = () => {
-        // this.setState({ progress: true })
-        // ledgerApi.genRawTransaction(this.props.member.id, this.state.eth, this.state.ethInvest, (txId) => {
-        //     console.log("Transaction ID: ", txId.result)
-        //     this.setState({ txId: txId.result, progress: false })
-        // })
     }
 
     render() {
-        console.log("#####", this.state);
+        console.log("#####", this.state, this.props);
         if (this.props.account && !this.props[this.props.account]) this.props._getBalance(this.props.account);
 
         const amountRemaining = this.props.member.carPrice - this.props.member.car.totalRaised.toNumber()
@@ -203,9 +95,9 @@ class Invest extends Component {
         // (this.state.euroTokenBalance || "").substring(0, 8) + "..."
         const account = this.props.account ? this.props.account.substring(0, 7) + '.....' + this.props.account.substring(this.props.account.length - 5) : ""
         const hideInvest = (this.props.member && this.props.member.car.totalRaised.toNumber() >= this.props.member.carPrice) ? true : false
-        const ethInvest = parseInt(this.state.ethInvest || "0", 10)
-        const disableInvest = ((ethInvest <= amountRemaining) && (ethInvest <= this.props.allowance) && (ethInvest <= this.props.euroTokenBalance) && (ethInvest > 0)) ? false : true
-        console.log("Disable Invest: ", disableInvest, (ethInvest <= amountRemaining), (ethInvest <= this.props.allowance), (ethInvest <= this.props.euroTokenBalance));
+        const ethInvest = parseInt((this.state.ethInvest || "0"), 10)
+        const enableInvest = ((ethInvest <= amountRemaining) && (ethInvest <= this.props.allowance) && (ethInvest <= this.props.euroTokenBalance) && (this.state.ethInvest !== "") && (this.state.ethInvest !== "0"))
+        console.log("Enable Invest: ", ethInvest, enableInvest, (ethInvest <= amountRemaining), (ethInvest <= this.props.allowance), (ethInvest <= this.props.euroTokenBalance), (this.state.ethInvest !== ""));
         // (this.props.account || "").substring(0, 8) + "..."
         return (<div className="content-border">
             <div className="mainContentCon">
@@ -300,10 +192,8 @@ class Invest extends Component {
                                 <div hidden={hideInvest} className="">
                                     <div className="carTitle investInput">
                                         <div className="arrowBtn">
-                                            <img style={{ cursor: disableInvest ? "not-allowed" : "pointer" }} onClick={() => !disableInvest && this.props._lcInvestInObject(this.props.member.carID, this.state.ethInvest || "0", this.props.account)} src={require('../assets/add.jpg')} alt="add2" />
+                                            <img style={{ cursor: enableInvest ? "pointer" : "not-allowed" }} onClick={() => enableInvest && this.props._lcInvestInObject(this.props.member.carID, this.state.ethInvest || "0", this.props.account)} src={require('../assets/add.jpg')} alt="add2" />
                                         </div>
-
-
                                         Invest Euro:
                                         <input className="membership-input" maxLength="20" value={(typeof this.state.ethInvest === 'undefined') ? (allowedAmountToInvest || 0) : this.state.ethInvest} onChange={(e) => this.setState({ ethInvest: e.target.value })} type="text" placeholder="Euro Token" />
                                         {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{!this.state.eventTransfer ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>}</Link>)}
