@@ -133,6 +133,14 @@ margin-top: -13px;
     margin-left: -53px;
     margin-top: -12px;
 }
+.p-ip{
+    margin-left: -10px;
+    margin-top: 0px;
+}
+.p-ic{
+    margin-left: -20px;
+    margin-top: 0px;
+}
 
  #header{
      font-family: Tahoma, Verdana, Segoe, sans-serif;
@@ -726,7 +734,7 @@ span.inLeft input{
 
 
 .mtableInvoices{
-    width: 77%;
+    width: 73%;
     padding-left: 10px;
     font-size: 18px;
 

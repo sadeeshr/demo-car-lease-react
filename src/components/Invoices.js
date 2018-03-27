@@ -135,7 +135,7 @@ class Invoices extends Component {
                 <div className="navCon">
                     <h1 id="header"><div className="fl"><i className="flaticon-back" onClick={() => this.props.history.goBack()}></i></div>Invoices
                     <div className="fr">
-                            <i title="Add Invoice" className="flaticon-invoice marIcone" onClick={this.createInvoice.bind(this)}></i>
+                            <i title="Add Invoice" className="flaticon-invoice marIcon" onClick={this.createInvoice.bind(this)}></i>
                             <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i></div></h1>
                 </div>
                 <div className="contentCon overflow bg-none">
@@ -167,7 +167,7 @@ class Invoices extends Component {
                                                             }}
                                                             src={require('../assets/add.jpg')}
                                                             alt="Ether" />
-                                                        {this.props.paySubscriptionTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.paySubscriptionTxID}>{!this.state.eventSubscription ? <p className="p-authorized" style={{ color: "red" }}>pending</p> : <p className="p-authorized" style={{ color: "green" }}><i>Confirmed</i></p>}</Link>)}
+                                                        {this.props.paySubscriptionTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.paySubscriptionTxID}>{!this.state.eventSubscription ? <p className="p-ip" style={{ color: "red" }}>pending</p> : <p className="p-ic" style={{ color: "green" }}><i>Confirmed</i></p>}</Link>)}
                                                     </div>}
                                         </div>
                                     </div>
