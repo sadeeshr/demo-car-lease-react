@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import BlockUi from 'react-block-ui';
+import { Link } from 'react-router-dom'
 
 class Invoices extends Component {
     constructor(props) {
@@ -9,8 +10,10 @@ class Invoices extends Component {
             mileage: 0,
             progress: false,
             month: null,
-            year: null
+            year: null,
+            eventSubscription: null
         }
+        this.rinkebyStatsURL = "https://rinkeby.etherscan.io/tx/"
         this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     }
 
@@ -92,6 +95,7 @@ class Invoices extends Component {
         if (nextProps.invoices && nextProps.invoices.length > 0) {
             this.setState({ month: this.getMaxMonth(nextProps.invoices), year: (new Date()).getFullYear() })
         }
+        if (nextProps.eventSubscription && !this.state.eventSubscription) { this.setState({ eventSubscription: nextProps.eventSubscription }) }
 
         if (nextProps.member && nextProps.member.car) {
             console.log("Object Fees: ", this.props.member.car.objectFee.toNumber())
@@ -115,8 +119,9 @@ class Invoices extends Component {
     render() {
         console.log("INVOICE STATE: ", this.state, this.props);
         const invoices = this.props.invoices ? this.props.invoices.filter(invoice => (this.months[invoice.month].toLowerCase().startsWith(this.state.filter) || invoice.year === parseInt(this.state.filter, 10))) : []
+        invoices.sort((a, b) => parseFloat(b.month) - parseFloat(a.month))
         // const invoices = this.props.invoices
-        let amount = (this.props.member.car.objectFee.toNumber() || 0) + ((this.state.mileage - (this.props.member.car.milages.toNumber() || 0)) * 0.10)
+        let amount = (this.props.member.car.objectFee.toNumber()) + (((this.state.mileage || this.props.member.car.milages.toNumber()) - this.props.member.car.milages.toNumber()) * 0.10)
         console.log(amount, ' <= ', this.props.allowance, (amount <= this.props.allowance), this.state.mileage, ' >= ', this.props.member.car.milages.toNumber(), (this.state.mileage >= this.props.member.car.milages.toNumber()));
         const enableInvoice = ((this.state.mileage >= this.props.member.car.milages.toNumber()) && (amount <= this.props.allowance)) ? true : false
         console.log("Invoice Enabled: ", enableInvoice);
@@ -144,7 +149,7 @@ class Invoices extends Component {
                                             <div className="inKm">
                                                 {
                                                     invoice.mileage === 0 ?
-                                                        <span className="inLeft"><input style={{ width: "80px", textAlign: "center" }} maxLength="20" value={this.state.mileage} onChange={(e) => this.setState({ mileage: e.target.value })} type="text" placeholder="Mileage" /></span>
+                                                        <span className="inLeft"><input style={{ width: "80px", textAlign: "center" }} maxLength="20" value={this.state.mileage || this.props.member.car.milages.toNumber()} onChange={(e) => this.setState({ mileage: e.target.value })} type="text" placeholder="Mileage" /></span>
                                                         : <span className="inLeft">{invoice.mileage}</span>
                                                 }
                                                 <span className="inRight">km stand</span></div>
@@ -154,10 +159,16 @@ class Invoices extends Component {
                                             {
                                                 invoice.status ?
                                                     <div className="arrowBtn"><img src={require('../assets/check.jpg')} alt="Payed" /></div>
-                                                    : <div title={!(amount <= this.props.allowance) ? "Less Allowance Set" : (!(this.state.mileage >= this.props.member.car.milages.toNumber()) ? "Mileage Too Low" : "Pay Invoice")} className="arrowBtn"><img style={{ cursor: enableInvoice ? "pointer" : "not-allowed" }} onClick={() => {
-                                                        enableInvoice && this.props._lcPaySubscription(this.props.member.carID, (this.props.member.car.paymonth.toNumber() + 1), parseInt(this.state.mileage, 10), this.props.account)
-                                                        enableInvoice && this.updateInvoice(invoice, this.state.mileage, amount || 0)
-                                                    }} src={require('../assets/add.jpg')} alt="Ether" /></div>}
+                                                    : <div title={!(amount <= this.props.allowance) ? "Less Allowance Set" : (!(this.state.mileage >= this.props.member.car.milages.toNumber()) ? "Mileage Too Low" : "Pay Invoice")} className="arrowBtn">
+                                                        <img style={{ cursor: enableInvoice ? "pointer" : "not-allowed" }}
+                                                            onClick={() => {
+                                                                enableInvoice && this.props._lcPaySubscription(this.props.member.carID, (this.props.member.car.paymonth.toNumber() + 1), parseInt(this.state.mileage, 10), this.props.account)
+                                                                enableInvoice && this.updateInvoice(invoice, this.state.mileage, amount || 0)
+                                                            }}
+                                                            src={require('../assets/add.jpg')}
+                                                            alt="Ether" />
+                                                        {this.props.paySubscriptionTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.paySubscriptionTxID}>{!this.state.eventSubscription ? <p className="p-authorized" style={{ color: "red" }}>pending</p> : <p className="p-authorized" style={{ color: "green" }}><i>Confirmed</i></p>}</Link>)}
+                                                    </div>}
                                         </div>
                                     </div>
                                 })

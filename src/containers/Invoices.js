@@ -14,7 +14,9 @@ const mapStateToProps = (state) => {
         allowance: state.allowance,
         progress: state.progress ? state.progress : false,
         invoices: state.invoices,
-        invoices_new: state.invoices_new
+        invoices_new: state.invoices_new,
+        paySubscriptionTxID: state.paySubscriptionTxID,
+        eventSubscription: state.eventSubscription
     }
 }
 const mapActionsToProps = (dispatch) => { return bindActionCreators(Actions, dispatch) }

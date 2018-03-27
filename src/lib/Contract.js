@@ -35,6 +35,10 @@ class Contract {
         this.balance = null
         this.eth = null
         this.props = null
+        this.addNewObjectTxID = null
+        this.investInObjectTxID = null
+        this.claimDividendTxID = null
+        this.paySubscriptionTxID = null
         this.LeaseTokenContract = null
         this.euroToken = null
         this.LeaseTokenContract = null
@@ -128,13 +132,38 @@ class Contract {
         this.filters.EeuroTransfer.new()
         this.filters.EeuroTransfer.watch((err, result) => {
             console.log("EuroToken Event Transfer() Result: ", err, result);
-            if (err || result.length > 0) { this.props._setEventStatus({ eventTransfer: true }); setTimeout(() => { this.euroEventTransferUnsubscribe(); this.props._reloadTokens() }, 1000); }
+            if (err || result.length > 0) {
+                let resultObj = { eventTransfer: true }
+
+                if (this.paySubscriptionTxID)
+                    resultObj = { eventSubscription: true }
+
+                this.props._setEventStatus(resultObj); setTimeout(() => { this.paySubscriptionTxID = null; this.investInObjectTxID = null; this.euroEventTransferUnsubscribe(); this.props._reloadTokens() }, 1000);
+            }
+
+            // if (err || result.length > 0) {
+            //     if (!err)
+            //         result.map(res => {
+            //             if (res.transactionHash === this.investInObjectTxID)
+            //                 this.props._setEventStatus({ eventTransfer: true }); setTimeout(() => { this.investInObjectTxID = null; this.euroEventTransferUnsubscribe(); this.props._reloadTokens() }, 1000);
+            //             if (res.transactionHash === this.paySubscriptionTxID)
+            //                 this.props._setEventStatus({ eventSubscription: true }); setTimeout(() => { this.paySubscriptionTxID = null; this.euroEventTransferUnsubscribe(); }, 1000);
+            //         })
+            //     else
+            //         err.map(res => {
+            //             if (res.transactionHash === this.investInObjectTxID)
+            //                 this.props._setEventStatus({ eventTransfer: true }); setTimeout(() => { this.euroEventTransferUnsubscribe(); this.props._reloadTokens() }, 1000);
+            //             if (res.transactionHash === this.paySubscriptionTxID)
+            //                 this.props._setEventStatus({ eventSubscription: true }); setTimeout(() => { this.paySubscriptionTxID = null; this.euroEventTransferUnsubscribe(); }, 1000);
+            //         })
+            // }
         })
     }
 
     euroEventTransferUnsubscribe = () => {
         this.filters.EeuroTransfer.uninstall((err, result) => {
             console.log("EuroToken Event Transfer() Unsubscribe: ", err, result);
+            this.investInObjectTxID = null
         })
     }
 
@@ -144,12 +173,26 @@ class Contract {
         this.filters.EeuroApproval.watch((err, result) => {
             console.log("EuroToken Event Approval() Result: ", err, result);
             if (err || result.length > 0) { this.props._setEventStatus({ eventApprove: true }); setTimeout(() => { this.euroEventApprovalUnsubscribe(); }, 1000) };
+
+            // if (err || result.length > 0) {
+            //     if (!err)
+            //         result.map(res => {
+            //             if (res.transactionHash === this.approveTxID)
+            //                 this.props._setEventStatus({ eventApprove: true }); setTimeout(() => { this.euroEventApprovalUnsubscribe(); }, 1000)
+            //         })
+            //     else
+            //         err.map(res => {
+            //             if (res.transactionHash === this.approveTxID)
+            //                 this.props._setEventStatus({ eventApprove: true }); setTimeout(() => { this.euroEventApprovalUnsubscribe(); }, 1000)
+            //         })
+            // };
         })
     }
 
     euroEventApprovalUnsubscribe = () => {
         this.filters.EeuroApproval.uninstall((err, result) => {
             console.log("EuroToken Event Approval() Unsubscribe: ", err, result);
+            this.approveTxID = null
         })
     }
 
@@ -172,6 +215,7 @@ class Contract {
             .then(result => {
                 console.log(`Approval Result: ${result}`);
                 this.euroEventApprovalSubscribe()
+                this.approveTxID = result
                 return { approveTxID: result }
             })
     }
@@ -239,13 +283,22 @@ class Contract {
         this.filters.ElcAddNewObject.new()
         this.filters.ElcAddNewObject.watch((err, result) => {
             console.log("LeaseTokenContract Event AddNewObject() Result: ", err, result);
-            if (err || result.length > 0) { this.props._setEventStatus({ eventAddNewObject: true, objectID: (result[0].data.objectID.toNumber() - 1) }); setTimeout(() => { this.lcEventAddNewObjectUnsubscribe(); this.props._reloadTokens() }, 1000); }
+            if (err || result.length > 0) {
+                if (!err)
+                    result.map(res => {
+                        if (res.transactionHash === this.addNewObjectTxID)
+                            this.props._setEventStatus({ eventAddNewObject: true, objectID: (result[0].data.objectID.toNumber() - 1) }); setTimeout(() => { this.lcEventAddNewObjectUnsubscribe(); this.props._reloadTokens() }, 1000);
+                    })
+                else
+                    console.log(err)
+            }
         })
     }
 
     lcEventAddNewObjectUnsubscribe = () => {
         this.filters.ElcAddNewObject.uninstall((err, result) => {
             console.log("LeaseTokenContract Event AddNewObject() Unsubscribe: ", err, result);
+            this.addNewObjectTxID = null
         })
     }
 
@@ -255,12 +308,26 @@ class Contract {
         this.filters.lcClaim.watch((err, result) => {
             console.log("LeaseTokenContract Event Claim() Result: ", err, result);
             if (err || result.length > 0) { this.props._setEventStatus({ eventClaim: true }); setTimeout(this.lcEventClaimUnsubscribe, 1000); }
+
+            // if (err || result.length > 0) {
+            //     if (!err)
+            //         result.map(res => {
+            //             if (res.transactionHash === this.claimDividendTxID)
+            //                 this.props._setEventStatus({ eventClaim: true }); setTimeout(this.lcEventClaimUnsubscribe, 1000);
+            //         })
+            //     else
+            //         err.map(res => {
+            //             if (res.transactionHash === this.claimDividendTxID)
+            //                 this.props._setEventStatus({ eventClaim: true }); setTimeout(this.lcEventClaimUnsubscribe, 1000);
+            //         })
+            // }
         })
     }
 
     lcEventClaimUnsubscribe = () => {
         this.filters.lcClaim.uninstall((err, result) => {
             console.log("LeaseTokenContract Event Claim() Unsubscribe: ", err, result);
+            this.claimDividendTxID = null
         })
     }
 
@@ -274,6 +341,7 @@ class Contract {
             .then(result => {
                 console.log(`ADD NEW object RESULT: ${result}`);
                 this.lcEventAddNewObjectSubscribe()
+                this.addNewObjectTxID = result
                 return { addNewObjectTxID: result, progress: false }
             })
     }
@@ -326,6 +394,7 @@ class Contract {
                 // this.lcEventAddNewObjectSubscribe()    // contract missing event call, not calling this 
                 // this.startPendingTranscationWatcher()
                 this.euroEventTransferSubscribe()
+                this.investInObjectTxID = result
                 return { investInObjectTxID: result, progress: false }
             })
     }
@@ -336,6 +405,8 @@ class Contract {
         return this.LeaseTokenContract.paySubscription(objectID, month, milege, { from: account })
             .then(result => {
                 console.log(`paySubscription RESULT: ${result}`);
+                this.euroEventTransferSubscribe()
+                this.paySubscriptionTxID = result
                 return { paySubscriptionTxID: result, progress: false }
             })
     }
@@ -355,6 +426,7 @@ class Contract {
             .then(result => {
                 console.log(`claimDividend RESULT: ${result}`);
                 this.lcEventClaimSubscribe()
+                this.claimDividendTxID = result
                 return { claimDividendTxID: result, progress: false }
             })
     }

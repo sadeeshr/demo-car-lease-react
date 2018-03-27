@@ -336,7 +336,7 @@ export const _lcPaySubscription = (objectID, month, milege, account) => {
     return (dispatch) => {
         return contract.lcPaySubscription(objectID, month, milege, account)
             .then(result => {
-                dispatch(goBack())
+                // dispatch(goBack())
                 return dispatch(
                     {
                         type: "PAY_SUBSCRIPTION_RESULT",
