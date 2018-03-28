@@ -5,7 +5,7 @@
 */
 import socApi from '../lib/Socket';
 import contract from '../lib/Contract';
-import { goBack, push } from 'react-router-redux'
+import { push } from 'react-router-redux'
 
 export const _connectSocket = (props) => {
     return (dispatch) => {

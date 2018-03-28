@@ -85,7 +85,7 @@ class Main extends Component {
 
     renderMain = () => {
         const img = { "maxHeight": "95px", "maxWidth": "180px", "display": "block", "width": "auto", "height": "auto" }
-        const thumbImg = { "maxHeight": "40px", "maxWidth": "40px", "display": "block", "width": "auto", "height": "auto" }
+        // const thumbImg = { "maxHeight": "40px", "maxWidth": "40px", "display": "block", "width": "auto", "height": "auto" }
         const disabled = this.props.account ? false : true
         const cursor = this.props.account ? "pointer" : "not-allowed"
 
