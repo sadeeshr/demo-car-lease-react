@@ -129,10 +129,10 @@ class Main extends Component {
                             </tr>
                         </tbody>
                     </table>
-                    <p>This is your last chance.</p>
-                    <p>Afer this, there is no turning back</p>
-                    <p>You press the blue pull--the story ends, you wake up in your bed and believe whatever you want to believe.</p>
-                    <p>You press the red pill--you stay in Wonderland, and I show you how deep the rabbit hole goes.</p>
+                    <p className="text-center"><strong>This is your last chance.<br />Afer this, there is no turning back</strong></p>
+                    <p className="text-center">You press the blue pull--the story ends, you wake up in your bed and believe whatever you want to believe.</p>
+                    <p className="text-center">You press the red pill--you stay in Wonderland, and I show you how deep the rabbit hole goes.</p>
+
 
                     {/*<div className="contentBtn ">
                         <div hidden={!disabled} id="metamask-logo" style={{ textAlign: "center" }}><span hidden={!disabled} style={{ cursor: this.state.url ? "pointer" : "default" }} onClick={() => this.state.url ? window.open(this.state.url, "_blank") : ""}>{this.state.alert}</span></div>
@@ -145,9 +145,10 @@ class Main extends Component {
                     <div className="contentBtn "><div hidden={!disabled} id="metamask-logo" style={{ textAlign: "center" }}><span hidden={!disabled} style={{ cursor: this.state.url ? "pointer" : "default" }} onClick={() => this.state.url ? window.open(this.state.url, "_blank") : ""}>{this.state.alert}</span></div></div>
                     {this.props.usernames && <div>
                         {/*<span>Your town here</span><button className="arrowBtn" hidden={disabled} disabled={disabled} onClick={() => this.props.history.push("/", { module: "AddMember", path: "home" })}><img src={require('../assets/arrow.jpg')} alt="addM" /></button>*/}
-                        <button style={{ backgroundColor: "blue" }}>.........</button>
-                        <button style={{ backgroundColor: "red" }} onClick={() => this.props.history.push("/", { module: "westland", path: this.state.registered ? "members" : "addmember" })}>.........</button>
+                        <button className="lrBtn"><img src={require('../assets/blue-light.png')} /></button>
+                        <button className="lrBtn" onClick={() => this.props.history.push("/", { module: "westland", path: this.state.registered ? "members" : "addmember" })}><img src={require('../assets/red-light.png')} /></button>
                     </div>}
+                    {/*<button onClick={() => this.props.history.push("/", { module: "westland", path: "members" })}>Members</button>*/}
                 </div>
             </div>
         </div>

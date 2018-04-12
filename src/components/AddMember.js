@@ -212,14 +212,15 @@ class AddMember extends Component {
                                         <input pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" maxLength="30" className="membership-input m-b-10" value={this.state.email || ""} onChange={(e) => this.setState({ email: e.target.value })} type="text" placeholder="Email" />
                                     </span>
                                     <span className="form-input-containers marginBttm inputAddbtn">
-                                        <div className="image-upload" htmlFor="imageUpload">
-                                            <label style={{ "textAlign": "center", }} htmlFor="prPicIn">
-                                                <img src={require('../assets/add.png')} alt="prPic" />
-                                            </label>
-                                            <input type="file" id="prPicIn" onChange={(e) => { this.fileUploadHandler(e.target.files[0], "profilePic") }} />
+                                        <div className="upload-selfieCon">
+                                            <div className="image-upload" htmlFor="imageUpload">
+                                                <label className="image-upload-selfieCon"style={{ "textAlign": "center", }} htmlFor="prPicIn">
+                                                    <img className="image-upload-selfie" src={require('../assets/upload.jpg')} alt="prPic" />
+                                                </label>
+                                                <input type="file" id="prPicIn" onChange={(e) => { this.fileUploadHandler(e.target.files[0], "profilePic") }} />
+                                            </div>
+                                            <label >Upload Selfie</label>
                                         </div>
-                                        <label >Upload Selfie</label>
-
                                         {this.state.profilePic && <img className="inputImg" src={this.state.profilePic} alt="intI" />}
                                     </span>
                                     <span className="form-input-containers">
@@ -281,7 +282,7 @@ class AddMember extends Component {
                                 <span>Confirm & Publish</span>
                                 {console.log(`Usernames: ${usernames}, ${usernames.indexOf(this.state.username)}`)}
                                 <button disabled={!this.checkMandatory() || (usernames.indexOf(this.state.username) !== -1)} title={!this.checkMandatory() ? "Please fill mandatory fields" : (usernames.indexOf(this.state.username) !== -1 ? "Username already exists" : "Select Car")} className="arrowBtn" onClick={this.createAccount.bind(this)}>
-                                    <img src={require('../assets/arrow.jpg')} alt="addM" />
+                                    <img src={require('../assets/add.jpg')} alt="addM" />
                                 </button>
                             </div>
                         </div>

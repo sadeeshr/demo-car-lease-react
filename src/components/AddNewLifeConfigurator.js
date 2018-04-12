@@ -2,6 +2,14 @@ import React, { Component } from 'react'
 import md5 from 'md5';
 import BlockUi from 'react-block-ui';
 
+import ReactDOM from 'react-dom';
+import Coverflow from 'react-coverflow';
+
+
+const fn = function () {
+    /* do your action */
+  }
+
 class AddNewLifeConfigurator extends Component {
     constructor(props) {
         super(props)
@@ -102,8 +110,8 @@ class AddNewLifeConfigurator extends Component {
                     </div>
 
                     <div className="contentCon overflow bg-none">
-                        <BlockUi tag="div" blocking={this.props.progress}>
-
+                         <BlockUi tag="div" blocking={this.props.progress}>
+                            {/*
                             <table style={{ borderSpacing: "0px", borderCollapse: "collapse" }}>
                                 <tbody className="membersCon">
                                     {
@@ -129,7 +137,112 @@ class AddNewLifeConfigurator extends Component {
                                         })
                                     }
                                 </tbody>
-                            </table>
+                            </table>  */}
+
+
+                                            <div className="newLifeCon">
+                    <Coverflow
+                        width={'auto'}
+                        height={430}
+                        displayQuantityOfSide={0}
+                        navigation={false}
+                        enableHeading={false}
+                        active={this.state.active}
+                    > 
+                        <div
+                            onClick={() => fn()}
+                            onKeyDown={() => fn()}
+                            role="menuitem"
+                            tabIndex="0"
+                        >
+                            <div className="newLifeItem">
+                                <div className="newlifeImage">
+                                    <img src={require('../assets/NotNeeded/car.png')} alt="" /> 
+                                </div>
+                                <div className="newLifeDetails">
+                                    <span className="nl-con">
+                                        <label className="nl-label">Color</label>
+                                        <div className="nl-inp">Blue</div>
+                                    </span>
+                                    <span className="nl-con">
+                                        <label className="nl-label">Fee</label>
+                                        <div className="nl-inp">300</div>
+                                    </span>
+                                    <span className="nl-con">
+                                        <label className="nl-label">Mnd</label>
+                                        <div className="nl-inp">60</div>
+                                    </span>
+                                    <span className="nl-con">
+                                        <label className="nl-label">Price</label>
+                                        <div className="nl-inp">25000</div>
+                                    </span>
+                                    <span className="nl-con">
+                                        <label className="nl-label">Price</label>
+                                        <div className="nl-inp">Reservation</div>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="newLifeItem">
+                            <div className="newlifeImage">
+                                <img src={require('../assets/NotNeeded/car.png')} alt="" /> 
+                            </div>
+                            <div className="newLifeDetails">
+                                <span className="nl-con">
+                                    <label className="nl-label">Color</label>
+                                    <div className="nl-inp">Blue</div>
+                                </span>
+                                <span className="nl-con">
+                                    <label className="nl-label">Fee</label>
+                                    <div className="nl-inp">300</div>
+                                </span>
+                                <span className="nl-con">
+                                    <label className="nl-label">Mnd</label>
+                                    <div className="nl-inp">60</div>
+                                </span>
+                                <span className="nl-con">
+                                    <label className="nl-label">Price</label>
+                                    <div className="nl-inp">25000</div>
+                                </span>
+                                <span className="nl-con">
+                                    <label className="nl-label">Price</label>
+                                    <div className="nl-inp">Reservation</div>
+                                </span>
+                            </div>
+                        </div>
+                        <div className="newLifeItem">
+                            <div className="newlifeImage">
+                                <img src={require('../assets/NotNeeded/car.png')} alt="" /> 
+                            </div>
+                            <div className="newLifeDetails">
+                                <span className="nl-con">
+                                    <label className="nl-label">Color</label>
+                                    <div className="nl-inp">Blue</div>
+                                </span>
+                                <span className="nl-con">
+                                    <label className="nl-label">Fee</label>
+                                    <div className="nl-inp">300</div>
+                                </span>
+                                <span className="nl-con">
+                                    <label className="nl-label">Mnd</label>
+                                    <div className="nl-inp">60</div>
+                                </span>
+                                <span className="nl-con">
+                                    <label className="nl-label">Price</label>
+                                    <div className="nl-inp">25000</div>
+                                </span>
+                                <span className="nl-con">
+                                    <label className="nl-label">Price</label>
+                                    <div className="nl-inp">Reservation</div>
+                                </span>
+                            </div>
+                        </div>
+                    </Coverflow>
+                    </div>
+
+
+
+
 
                             {/* <div className="contentBtn">
                                 <button onClick={this.createAccount.bind(this)}>Confirm & Publish</button>
