@@ -1,776 +1,777 @@
 html{
-     padding: 0;
-     margin: 0;
-     height: 100%;
+    padding: 0;
+    margin: 0;
+    height: 100%;
 }
- body{
-    background-image: url("../cryptocurrency.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center top;
-    color: #fff;
+body{
+   background-image: url("../cryptocurrency.jpg");
+   background-size: cover;
+   background-repeat: no-repeat;
+   background-attachment: fixed;
+   background-position: center top;
+   color: #fff;
 
 }
 strong{
-    font-weight: 800;
+   font-weight: 800;
 }
 
 :focus{
-    outline: none;
+   outline: none;
 }
- a{
-     color: #b8b9ba;
+a{
+    color: #b8b9ba;
 }
- .mainContentCon{
-    width: 316px;
-    margin: 14px auto;
-    /* padding: 0px 0px 60px; */
-    /* min-height: 400px; */
-    /* max-height: 550px; */
-    height: 615px;
-    /* overflow-y: auto; */
-    overflow: hidden;
+.mainContentCon{
+   width: 316px;
+   margin: 14px auto;
+   /* padding: 0px 0px 60px; */
+   /* min-height: 400px; */
+   /* max-height: 550px; */
+   height: 615px;
+   /* overflow-y: auto; */
+   overflow: hidden;
 
-    /* border: 1px; */
-    background-color:rgba(255,255,255,0.3);
-    border: 2px solid gray; 
-    /* background: rgba(255, 255, 255, .5); */  
-    /* border: 5px solid #808080; */
+   /* border: 1px; */
+   background-color:rgba(255,255,255,0.3);
+   border: 2px solid gray; 
+   /* background: rgba(255, 255, 255, .5); */  
+   /* border: 5px solid #808080; */
 
-    border-radius: 35px;
-    display: block;
+   border-radius: 35px;
+   display: block;
 }
 
 
 /* Let's get this party started */
 ::-webkit-scrollbar {
-    width: 1px;
-    height: 1px;
+   width: 1px;
+   height: 1px;
 }
 ::-webkit-scrollbar-track {
-    background: rgba(0,0,0,0); 
+   background: rgba(0,0,0,0); 
 }
 ::-webkit-scrollbar-thumb {
-    background: #aaacafcc; 
+   background: #aaacafcc; 
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: #fff; 
+   background: #fff; 
 }
 .ledgerImg{
-    text-align: center !important;
-    float: right;
-    width: 60px;
-    padding-right: 30px;
+   text-align: center !important;
+   float: right;
+   width: 60px;
+   padding-right: 30px;
 }
 .ledgerImg img{
-    width: 100%;
-    height: auto;
+   width: 100%;
+   height: auto;
 }
 .myaccount{
-    width: initial;
-    margin-bottom: 10px;
+   width: initial;
+   margin-bottom: 10px;
 }
 img.addBtn {
-    width: 50px;
-    height: auto;
-    position: relative;
-    bottom: 15px;
-    right: 115px;
+   width: 50px;
+   height: auto;
+   position: relative;
+   bottom: 15px;
+   right: 115px;
 
 }
 
 .btnName{
-    position: relative;
-    top: -52px;
-    text-align: center;
-    padding-left: 15px;
+   position: relative;
+   top: -52px;
+   text-align: center;
+   padding-left: 15px;
 }
 
 .navCon{
-    height: 40px;
-    width: 90%;
-    padding-top: 15px;
-    padding-bottom: 25px;
-    padding-left: 5%;
-    padding-right: 5%;
+   height: 40px;
+   width: 90%;
+   padding-top: 15px;
+   padding-bottom: 25px;
+   padding-left: 5%;
+   padding-right: 5%;
 }
 .content-border{
-    border: 3px solid #4D4D4D;
-    width: 350px;
-    height: 650px;
-    margin: 0 auto;
-    border-radius: 45px;
-    box-shadow: 3px 3px rgba(0,0,0,.3);
+   border: 3px solid #4D4D4D;
+   width: 350px;
+   height: 650px;
+   margin: 0 auto;
+   border-radius: 45px;
+   box-shadow: 3px 3px rgba(0,0,0,.3);
 }
 
 .rowSelect{
-    width: 93%;
-    background: rgba(255,255,255, .5);
-    border-radius: 10px;
-    padding: 10px;
-    margin-bottom: 5px;
-    display: inline-block;
-    
+   width: 93%;
+   background: rgba(255,255,255, .5);
+   border-radius: 10px;
+   padding: 10px;
+   margin-bottom: 5px;
+   display: inline-block;
+   
 }
 
 
 .navCon i{
-    color: #fff;
-    padding-top: 0px;
-    font-weight: normal;
-    margin-left: 0;
+   color: #fff;
+   padding-top: 0px;
+   font-weight: normal;
+   margin-left: 0;
 }
 
 .navCon i:before{
-   margin-left: 0px; 
+  margin-left: 0px; 
 }
 
 .p-authorized{
-    margin-left: 144px;
-    margin-top: -13px;
+   margin-left: 144px;
+   margin-top: -13px;
 }
 .p-euro{
 margin-left: 51px;
 margin-top: -13px;
 }
 .p-claim{
-    margin-left: -53px;
-    margin-top: -12px;
+   margin-left: -53px;
+   margin-top: -12px;
 }
 .p-ip{
-    margin-left: -10px;
-    margin-top: 0px;
+   margin-left: -10px;
+   margin-top: 0px;
 }
 .p-ic{
-    margin-left: -20px;
-    margin-top: 0px;
+   margin-left: -20px;
+   margin-top: 0px;
 }
 .text-center{
-    text-align: center;
+   text-align: center;
 }
 
 .lrBtn{
-    background: none;
-    border: 0;
-    padding: 0 15px;
+   background: none;
+   border: 0;
+   padding: 0 15px;
 }
 .lrBtn:hover{
-    border: 0 !important;
-    outline: 0;
+   border: 0 !important;
+   outline: 0;
 }
 .lrBtn img{
-    width: 80px !important;
+   width: 80px !important;
 
 }
 .image-upload-selfie{
-    padding-top: 5px;
-    width: auto !important;
+   padding-top: 5px;
+   width: auto !important;
 }
 .inputAddbtn div.upload-selfieCon{
+   display: flex;
+   width: 100% !important;
+   text-align: center;
+   color: #000000;
+   font-size: 18px;
+   border-radius: 10px !important;
+   background: rgba(255, 255, 255, 1) !important;
+   border: 1px solid #808080 !important;
+}
+.inputAddbtn div.upload-selfieCon label{
+   line-height: 30px;
+}
+.newlifeImage{
+   text-align: center;
+   margin: 0 0 10px;
+   width: 200px;
+}
+.newlifeImage img{
+   width: 80%;
+}
+.nl-con{
+   display: block;
+   width: 200px;
+   margin: 0 0 10px;
+}
+.nl-label{
+   display: inline-block;
+   font-weight: 600;
+   width: 20%;
+   text-align: right;
+   padding-right: 10px;
+   font-size: 9px;
+}
+.nl-inp{
+   display: inline-block;
+   border: 3px solid #fff;
+   width: 50%;
+   padding: 3px;
+   border-radius: 5px;
+   font-size: 9px;
+   text-align: center;
+}
+.coverflow__figure__zEOhf{
+   box-shadow: none !important;
+}
+.coverflow__cover__3uJrO{
+   height: 240px;
+   margin-left: -25px;
+   box-shadow: none !important;
+}
+
+
+
+#header{
+    font-family: Tahoma, Verdana, Segoe, sans-serif;
+    font-weight: normal;
+    display: block;
+    color: #fff;
+    text-align: center;
+    font-size: 18px;
+    /* padding-top: 40px; */
+    padding-left: 0;
+    font-weight: bold;
+    padding-right: 0;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+#header.cusPadding{
+    padding-top: 20%;
+}
+.contentText{
+   padding: 10px;
+   height: 390px;
+   margin: 0 auto;
+}
+
+
+.contentText p{
+    text-align: left;
+    font-size: 18px;
+    line-height: 25px;
+}
+.contentBtn a, .contentBtn button{
+    text-decoration: none;
+    color: #fff;
+    padding: 30px 0;
+    font-size: 24px;
+    background: rgba(255, 255, 255, .3) ;
+    border-radius: 10px;
+    font-weight: 700;
+    width: 100%;
+    outline:0;
+    border: 5px solid rgba(0, 0, 0, 0);
+
+}
+.footCon{
+   text-align: center;
+   padding: 25px 20px;
+}
+.footCon img{
+   width: 100%;
+   height: auto;
+}
+.arrowBtn img{
+   width: 19px !important;
+   height: auto;
+}
+.footCon div span{
+   font-size: 18px;
+   margin-right: -40px;
+   font-weight: bold;
+}
+.arrowBtn{
+   position: relative;
+   left: 65px;
+   border-radius: 50%;
+   width: 35px;
+   height: 35px;
+   color: #fff;
+   background: #fff;
+   border: 3px solid #808080;
+}
+.footCon div button:hover, .footCon div a:hover{
+   border: 3px solid rgba(255, 215, 0, .3);
+}
+.contentBtn button:hover{
+   border: 5px solid rgba(255, 215, 0, .3);
+}
+
+.contentBtn.bg-none button{
+   background: rgba(0, 0, 0, 0);
+   border: 0;
+}
+
+.contentBtn button{
+   margin-bottom: 10px;
+}
+
+.btnwithAdd{
+   padding: 8px 10px !important;
+   text-align: right;
+   width : 150px;
+   height: 35px;
+}
+.contentBtn{
+    text-align: center;
+}
+
+.contentBtn img{
+   width: 50px;
+   display: block;
+   margin: 10px auto 0
+
+}
+
+.form-input-containers{
+   width: 94% !important;
+   width: -moz-available !important;
+   width: -webkit-stretch !important;
+   margin: 0 auto !important;
+    padding: 0px 0px !important;
     display: flex;
-    width: 100% !important;
+}
+.membership-input{
+    width: 90% !important;
+    width: -moz-available !important;
+    width: -webkit-stretch !important;
     text-align: center;
     color: #000000;
     font-size: 18px;
+    padding: 5px 15px !important;
     border-radius: 10px !important;
     background: rgba(255, 255, 255, 1) !important;
     border: 1px solid #808080 !important;
 }
-.inputAddbtn div.upload-selfieCon label{
-    line-height: 30px;
-}
-.newlifeImage{
-    text-align: center;
-    margin: 0 auto 10px;
-    width: 200px;
-}
-.newlifeImage img{
-    width: 80%;
-}
-.nl-con{
-    display: block;
-    width: 200px;
-    margin: 0 auto 10px;
-}
-.nl-label{
-    display: inline-block;
-    font-weight: 600;
-    width: 20%;
-    text-align: right;
-    padding-right: 10px;
-    font-size: 9px;
-}
-.nl-inp{
-    display: inline-block;
-    border: 3px solid #fff;
-    width: 50%;
-    padding: 3px;
-    border-radius: 5px;
-    font-size: 9px;
-    text-align: center;
-}
-.coverflow__figure__zEOhf{
-    box-shadow: none !important;
-}
-.coverflow__cover__3uJrO{
-    height: 240px;
-    box-shadow: none !important;
-}
-
-
-
- #header{
-     font-family: Tahoma, Verdana, Segoe, sans-serif;
-     font-weight: normal;
-     display: block;
-     color: #fff;
-     text-align: center;
-     font-size: 18px;
-     /* padding-top: 40px; */
-     padding-left: 0;
-     font-weight: bold;
-     padding-right: 0;
-     margin-bottom: 10px;
-     text-transform: uppercase;
-}
- #header.cusPadding{
-     padding-top: 20%;
-}
-.contentText{
-    padding: 10px;
-    height: 390px;
-    margin: 0 auto;
-}
-
-
- .contentText p{
-     text-align: left;
-     font-size: 18px;
-     line-height: 25px;
-}
- .contentBtn a, .contentBtn button{
-     text-decoration: none;
-     color: #fff;
-     padding: 30px 0;
-     font-size: 24px;
-     background: rgba(255, 255, 255, .3) ;
-     border-radius: 10px;
-     font-weight: 700;
-     width: 100%;
-     outline:0;
-     border: 5px solid rgba(0, 0, 0, 0);
-
-}
-.footCon{
-    text-align: center;
-    padding: 25px 20px;
-}
-.footCon img{
-    width: 100%;
-    height: auto;
-}
-.arrowBtn img{
-    width: 19px !important;
-    height: auto;
-}
-.footCon div span{
-    font-size: 18px;
-    margin-right: -40px;
-    font-weight: bold;
-}
-.arrowBtn{
-    position: relative;
-    left: 65px;
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
-    color: #fff;
-    background: #fff;
-    border: 3px solid #808080;
-}
-.footCon div button:hover, .footCon div a:hover{
-    border: 3px solid rgba(255, 215, 0, .3);
-}
-.contentBtn button:hover{
-    border: 5px solid rgba(255, 215, 0, .3);
-}
-
-.contentBtn.bg-none button{
-    background: rgba(0, 0, 0, 0);
-    border: 0;
-}
-
-.contentBtn button{
-    margin-bottom: 10px;
-}
-
-.btnwithAdd{
-    padding: 8px 10px !important;
-    text-align: right;
-    width : 150px;
-    height: 35px;
-}
- .contentBtn{
-     text-align: center;
-}
-
-.contentBtn img{
-    width: 50px;
-    display: block;
-    margin: 10px auto 0
-
-}
-
- .form-input-containers{
-    width: 94% !important;
-    width: -moz-available !important;
-    width: -webkit-stretch !important;
-    margin: 0 auto !important;
-     padding: 0px 0px !important;
-     display: flex;
-}
- .membership-input{
-     width: 90% !important;
-     width: -moz-available !important;
-     width: -webkit-stretch !important;
-     text-align: center;
-     color: #000000;
-     font-size: 18px;
-     padding: 5px 15px !important;
-     border-radius: 10px !important;
-     background: rgba(255, 255, 255, 1) !important;
-     border: 1px solid #808080 !important;
-}
 .m-b-10{
-    margin-bottom: 15px;
+   margin-bottom: 15px;
 }
 textarea.membership-input{
-    font-family: Tahoma, Verdana, Segoe, sans-serif;
-    font-weight: 500;
-    font-size: 12px;
+   font-family: Tahoma, Verdana, Segoe, sans-serif;
+   font-weight: 500;
+   font-size: 12px;
+   text-align: center;
+}
+.fileInput{
+    border: 1px solid #ececec !important;
+    color: #b8b9ba;
+    padding: 7px 60px !important;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 5px !important;
+    padding: 7px 4em !important;
+    width: 100%;
+    width: -moz-available;
+    width: -webkit-stretch;
+    display: none;
+    margin: 0 0 0 0 !important;
+}
+.textbtn{
+    margin: 0;
+    color: #b8b9ba;
+    display: inline-block;
+    background-color: #ffffff;
+    padding: 8px 30px;
+    border-radius: 5px !important;
+    margin-bottom: 10px;
+    font-size: 14px;
     text-align: center;
 }
- .fileInput{
-     border: 1px solid #ececec !important;
-     color: #b8b9ba;
-     padding: 7px 60px !important;
-     background: rgba(255, 255, 255, 1);
-     border-radius: 5px !important;
-     padding: 7px 4em !important;
-     width: 100%;
-     width: -moz-available;
-     width: -webkit-stretch;
-     display: none;
-     margin: 0 0 0 0 !important;
-}
- .textbtn{
-     margin: 0;
-     color: #b8b9ba;
-     display: inline-block;
-     background-color: #ffffff;
-     padding: 8px 30px;
-     border-radius: 5px !important;
-     margin-bottom: 10px;
-     font-size: 14px;
-     text-align: center;
-}
- .textbtn, .textbtn.profile{
-     float: none;
-     width: 100%;
-     width: -moz-available;
-     width: -webkit-stretch;
-     margin-bottom: 10px;
-     margin-left: 0;
+.textbtn, .textbtn.profile{
+    float: none;
+    width: 100%;
+    width: -moz-available;
+    width: -webkit-stretch;
+    margin-bottom: 10px;
+    margin-left: 0;
 }
 
- .imgPreview{
-     background: rgba(255, 255, 255, 1);
-     display: inline-block;
-     border-radius: 5px !important;
-     color: #b8b9ba;
-     padding: 10px 15px;
-     height: 150px !important;
-     width: 100% !important;
-     width: -moz-available !important;
-     width: -webkit-stretch !important;
-     margin: 0px 0 0 0px !important;
-     margin: 0 !important;
-     border: 1px solid #ececec !important;
-    /* float: right;
-     */
+.imgPreview{
+    background: rgba(255, 255, 255, 1);
+    display: inline-block;
+    border-radius: 5px !important;
+    color: #b8b9ba;
+    padding: 10px 15px;
+    height: 150px !important;
+    width: 100% !important;
+    width: -moz-available !important;
+    width: -webkit-stretch !important;
+    margin: 0px 0 0 0px !important;
+    margin: 0 !important;
+    border: 1px solid #ececec !important;
+   /* float: right;
+    */
 }
 
 
 .nvoicesCon{
-    height: 360px;
+   height: 360px;
 }
 
 #car-logo img{
 
-    width: 120px;
+   width: 120px;
+   height: auto;
+   }
+.imgPreview img{
+    width: 130px;
     height: auto;
-    }
- .imgPreview img{
-     width: 130px;
-     height: auto;
 
 }
 .marIcon{
-    padding-right: 5px;
+   padding-right: 5px;
 }
 
 .tablepadBot{
 
 }
 .contentCon{
-    padding: 0 3px;
-    height: 430px;
-    background: rgba(255, 255, 255, .3);
-    border-radius: 30px;
-    margin: 0 5px;
+   padding: 0 3px;
+   height: 430px;
+   background: rgba(255, 255, 255, .3);
+   border-radius: 30px;
+   margin: 0 5px;
 }
- .form-input-containers label{
-     margin-bottom: 10px !important;
-     display: inline-block;
-     width: 100%;
-     width: -moz-available;
-     width: -webkit-stretch;
+.form-input-containers label{
+    margin-bottom: 10px !important;
+    display: inline-block;
+    width: 100%;
+    width: -moz-available;
+    width: -webkit-stretch;
 }
- .form-row-container{
-     display: block;
-     text-align: center;
-     padding-right: 0 !important;
-     padding-left: 0 !important;
-     padding-top: 20px
+.form-row-container{
+    display: block;
+    text-align: center;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    padding-top: 20px
 }
- .form-row-container.btn{
-     display: block;
+.form-row-container.btn{
+    display: block;
 }
 
 .carCon{
-    /* margin-bottom: 10px ; */
-    border: 1px solid hsla(216,3%,30%,.8);
-    background-color:rgba(255,255,255,0.3);  /* saket changes */
-    /* border: 3px solid rgba(255, 215, 0, 0);
-    background: rgba(255, 255, 255, .3); */    
-    padding: 10px 0;
-    border-radius: 25px;
-    display: inline-block;
-    margin-bottom: 10px;
-    width: 295px;
+   /* margin-bottom: 10px ; */
+   border: 1px solid hsla(216,3%,30%,.8);
+   background-color:rgba(255,255,255,0.3);  /* saket changes */
+   /* border: 3px solid rgba(255, 215, 0, 0);
+   background: rgba(255, 255, 255, .3); */    
+   padding: 10px 0;
+   border-radius: 25px;
+   display: inline-block;
+   margin-bottom: 10px;
+   width: 295px;
 }
 .carcol{
-    width: 44%;
-    padding: 3%;
-    text-align: left;
-    font-size: 18px;
-    line-height: 20px;
-    float: left;
+   width: 44%;
+   padding: 3%;
+   text-align: left;
+   font-size: 18px;
+   line-height: 20px;
+   float: left;
 }
 .carCon.active .carcol{
-    width: 70%;
-    float: right;
-    padding: 0;
-    
+   width: 70%;
+   float: right;
+   padding: 0;
+   
 }
 
 .carCon.active .carcol.img{
-    width: 30%;
-    float: left;
-    text-align: center;
+   width: 30%;
+   float: left;
+   text-align: center;
 }
 .carCon.active .carcol.img img{
-    width: 35px;
-    height: auto;
-    padding-top: 7px;
+   width: 35px;
+   height: auto;
+   padding-top: 7px;
 }
 
 
 .carCon.active .carTitle {
-    display: inline-block;
-    width: 100%;
-    line-height: 25px;
+   display: inline-block;
+   width: 100%;
+   line-height: 25px;
 }
 
 .carCon.active .carPrice{
-    float: right;
-    margin-right: 15px;
-    width: 58px;
-    text-align: center;
+   float: right;
+   margin-right: 15px;
+   width: 58px;
+   text-align: center;
 }
 .carCon.active .carTitle .membership-input{
-    padding: 2px 3px;
-    margin-left: 15px;
+   padding: 2px 3px;
+   margin-left: 15px;
 }
 .carPrice img{
-    width: 35px;
-    margin-top: 10px;
-    margin-left: 40px;
+   width: 35px;
+   margin-top: 10px;
+   margin-left: 40px;
 }
 
 
 .carcol.reg{
-    width: 100%;
+   width: 100%;
 }
 
 .carcol.reg.text{
-    margin-bottom: 20px;
+   margin-bottom: 20px;
 }
 
 .carcol.reg img{
-    border-radius: 20px;
+   border-radius: 20px;
 }
 .carEth{
-    /* font-weight: bold; */
+   /* font-weight: bold; */
 }
- .tableCon th{
-     color: #ffffff;
-     background-color: rgba(0, 0, 0, 0);
-     font-size: 15px;
-     padding: 0;
-     text-align: left;
-     font-weight: 400;
+.tableCon th{
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0);
+    font-size: 15px;
+    padding: 0;
+    text-align: left;
+    font-weight: 400;
 }
- .tableCon td{
-     text-align: left;
+.tableCon td{
+    text-align: left;
 }
- .tableCon tbody tr{
-     background: rgba(255, 255, 255, 0.3);
-  
-     color: #fff;
-     
+.tableCon tbody tr{
+    background: rgba(255, 255, 255, 0.3);
+ 
+    color: #fff;
+    
 }
 
 .tableCon thead th:nth-last-child(2){
-    padding: 0 10px;
-    width: 135px;
+   padding: 0 10px;
+   width: 135px;
 }
 
 .tableCon thead th:last-child{
-    text-align: center;
-    width: 82px;
+   text-align: center;
+   width: 82px;
 }
 
 .tableCon thead th:first-child{
-    width: 71px;
+   width: 71px;
 }
 
 .tableCon p{
-    font-size: 13px;
-    margin: 0;
+   font-size: 13px;
+   margin: 0;
 }
 .tableCon tbody td:first-child{
-    border-top-left-radius: 30px;
-    border-bottom-left-radius: 30px;
-    text-align: right;
+   border-top-left-radius: 30px;
+   border-bottom-left-radius: 30px;
+   text-align: right;
 
 }
 .tableCon tbody td:last-child{
-    border-bottom-right-radius: 30px;
-    border-top-right-radius: 30px;
-    text-align: right;
+   border-bottom-right-radius: 30px;
+   border-top-right-radius: 30px;
+   text-align: right;
 
 }
 
- .login.contentBtn{
-     margin-top: 20px;
+.login.contentBtn{
+    margin-top: 20px;
 }
- a{
-     color: #fff;
+a{
+    color: #fff;
 }
- .content-wrapper{
-     margin: 0 !important;
+.content-wrapper{
+    margin: 0 !important;
 }
 
 .float-right{
-  float:right;
-  margin: 0px 25px;
+ float:right;
+ margin: 0px 25px;
 }
 .fl{
-    float: left;
+   float: left;
 }
 .fr{
-    float: right;
+   float: right;
 }
 .tableCon td img{
-    width: 60px;
-    height: auto;
+   width: 60px;
+   height: auto;
 } 
 
 table{
-    margin: 0 0px;
+   margin: 0 0px;
 }
 
 table tr td {
-    padding: 0;
+   padding: 0;
 }
 
 .memberSelect{
-    width: 80%;
+   width: 80%;
 }
 
 .memberMesCon{
-    text-align: left;
-    font-size: 12px;
-    width: 70%;
-    float: left
+   text-align: left;
+   font-size: 12px;
+   width: 70%;
+   float: left
 }
 .membersBtn{
-    display: inline-block;
-    width: 30%;
+   display: inline-block;
+   width: 30%;
 
 }
 .membersBtn .arrowBtn{
-    left: 0;
+   left: 0;
 }
 .membersBtn .arrowBtn img{
-    width: 22px !important;
+   width: 22px !important;
 }
 
 .membersBtn a{
-    text-decoration: none;
-    display: inline-block;
+   text-decoration: none;
+   display: inline-block;
 }
 
 .membersBtn p{
-    line-height: 20px;
-    font-size: 14px;
-    float: right;
-    text-align: center;
-    margin: 0;
+   line-height: 20px;
+   font-size: 14px;
+   float: right;
+   text-align: center;
+   margin: 0;
 }
 
 .memberMesBtns{
-    text-align: center;
-    width: 30%;
-    float: right;
+   text-align: center;
+   width: 30%;
+   float: right;
 }
 
 .membersBtn img{
-    width: 30px !important;
+   width: 30px !important;
 }
 
 .leaseCarCon{
-    background: rgba(255, 255, 255, .3);
-    border: 3px solid rgba(255, 215, 0, 0);
-    border-radius: 12px;
-    margin-bottom: 10px;
-    padding-left: 5px;
-    padding-right: 5px;
+   background: rgba(255, 255, 255, .3);
+   border: 3px solid rgba(255, 215, 0, 0);
+   border-radius: 12px;
+   margin-bottom: 10px;
+   padding-left: 5px;
+   padding-right: 5px;
 }
 .leaseCarCon:hover, .leaseCarCon:active, .leaseCarCon:focus{
-    border: 3px solid rgba(255, 215, 0, .3);
+   border: 3px solid rgba(255, 215, 0, .3);
 }
 
 .contentCon.bg-none{
-    background: rgba(0, 0, 0, 0);
-    border-radius: 0;
+   background: rgba(0, 0, 0, 0);
+   border-radius: 0;
 }
 
 .overflow{
-    /* overflow: hidden; */
-    overflow-y: scroll;
+   /* overflow: hidden; */
+   overflow-y: scroll;
 }
 .tableCon.members tr{
-    border: 3px solid rgba(255, 215, 0, .3);
+   border: 3px solid rgba(255, 215, 0, .3);
 }
 
 .searchBtn{
-    background: rgba(255, 255, 255, .8);
-    border-radius: 30px;
-    padding: 10px 0;
-    font-size: 17px;
-    margin-top: 20px;
-    text-align: center;
-    color: #fff;
-    width: 100%;
-    border: 3px solid rgba(255, 215, 0, .0);
+   background: rgba(255, 255, 255, .8);
+   border-radius: 30px;
+   padding: 10px 0;
+   font-size: 17px;
+   margin-top: 20px;
+   text-align: center;
+   color: #fff;
+   width: 100%;
+   border: 3px solid rgba(255, 215, 0, .0);
 
 }
 
 .carCon.active{
-    border: 3px solid rgba(255, 215, 0, .3);
-    background: rgba(255, 255, 255, .3);
-    width: 98%;
+   border: 3px solid rgba(255, 215, 0, .3);
+   background: rgba(255, 255, 255, .3);
+   width: 98%;
 }
 
 
 .searchBtn:focus, .searchBtn:active, .searchBtn:hover{
-    outline: none;
-    border: 3px solid rgba(255, 215, 0, .3);
+   outline: none;
+   border: 3px solid rgba(255, 215, 0, .3);
 }
 .membership-input::placeholder {
-    color: #d2d2d2;
+   color: #d2d2d2;
 }
 
 .searchBtn::placeholder {
-    color: #fff;
+   color: #fff;
 }
 .flagMargin{
-    margin-bottom: 10px;
+   margin-bottom: 10px;
 }
 .htableTitle{
-    padding: 10px 0
+   padding: 10px 0
 }
 .htableTitle td{
-    font-weight: bold;
-    padding: 5px 0;
-    font-size: 12px;
+   font-weight: bold;
+   padding: 5px 0;
+   font-size: 12px;
 }
 .tablepadBot{
-    margin-top: 50px;
+   margin-top: 50px;
 }
 .htablecar td{
-    padding: 0px 5px;
+   padding: 0px 5px;
 }
 .htablecar button{
-    padding: 0;
+   padding: 0;
 }
 .mtableCon{
-    display: block;
-    width: 100%;
+   display: block;
+   width: 100%;
 }
 
 .mtableTitle{
-    display: inline-block;
-    width: 100%;
-    padding: 5px 0;
+   display: inline-block;
+   width: 100%;
+   padding: 5px 0;
 }
 .mtableTokens{
-    width: 60px;
-    float: left;
-    padding-right: 10px;
-    text-align: right;
-    cursor: default;
-    font-size: 18px;
+   width: 60px;
+   float: left;
+   padding-right: 10px;
+   text-align: right;
+   cursor: default;
+   font-size: 18px;
 }
 
 .mtableUser{
-    width: 100px;
-    float: left;
-    padding: 0 10px;
-    font-size: 18px;
-    cursor: default;
+   width: 100px;
+   float: left;
+   padding: 0 10px;
+   font-size: 18px;
+   cursor: default;
 }
 .mtableUser p{
 margin: 0;
 }
 .mtableCar{
-    float: right;
-    text-align: right;
-    width: 119px;
+   float: right;
+   text-align: right;
+   width: 119px;
 
 }
 
 .mtableCar img{
-    /* width: 75px; */
-    height: auto;
+   /* width: 75px; */
+   height: auto;
 }
 
 .mtableTokens p{
-    font-size: 12px;
-    margin: 0;
+   font-size: 12px;
+   margin: 0;
 
 }
 
@@ -782,58 +783,58 @@ border-radius: 30px;
 
 }
 .nvoicesCon .mtableLink{
-    background-color: rgba(255, 255, 255, .3);
-    border: 5px solid rgba(204, 204, 204, .3);
-    border-radius: 15px;
-    padding: 10px 0;
-    margin-bottom: 8px;
+   background-color: rgba(255, 255, 255, .3);
+   border: 5px solid rgba(204, 204, 204, .3);
+   border-radius: 15px;
+   padding: 10px 0;
+   margin-bottom: 8px;
 }
 
 .mtableLink:hover, .mtableLink:visited, .mtableLink:active, .mtableLink:focus{
 }
 
 span.inLeft{
-    width: 40%;
-    display: inline-block;
-    text-align: right;
-    padding-right: 5%;
+   width: 40%;
+   display: inline-block;
+   text-align: right;
+   padding-right: 5%;
 }
 span.inLeft input{
-    width: 100%;
-    text-align: center;
-    border: 2px solid #999999;
-    border-radius: 10px;
-    font-size: 18px;
-    color: #656262;
+   width: 100%;
+   text-align: center;
+   border: 2px solid #999999;
+   border-radius: 10px;
+   font-size: 18px;
+   color: #656262;
 }
 .mtableInvoices p{
-    margin: 0;
-    font-weight: 500;
-    line-height: 20px;
+   margin: 0;
+   font-weight: 500;
+   line-height: 20px;
 }
 
 
 .mtableInvoices{
-    width: 73%;
-    padding-left: 10px;
-    font-size: 18px;
+   width: 73%;
+   padding-left: 10px;
+   font-size: 18px;
 
 }
 .flaticon-back{
-    float: left;
+   float: left;
 }
 #center-btn-container img{
-    float: left;
-    /*margin: 0 auto;*/
+   float: left;
+   /*margin: 0 auto;*/
 }
 
 .mtableInvoicesIcon{
-    width: 15%;
-    text-align: center;
+   width: 15%;
+   text-align: center;
 }
 .mtableInvoicesIcon img{
-    width: 40px;
-    height: auto;
+   width: 40px;
+   height: auto;
 }
 .mtableInvoicesIcon .arrowBtn{
 left: 0;
@@ -841,220 +842,220 @@ margin-top: 10px;
 position: inherit;
 }
 .mtableInvoicesIcon .arrowBtn img{
-    padding: 9px;
+   padding: 9px;
 }
 
 .contentBtn.addMe, .contentBtn.selectCar{
-    background: none;
-    border: 0;
-    margin: 0 auto;
-    padding: 0;
+   background: none;
+   border: 0;
+   margin: 0 auto;
+   padding: 0;
 }
 .contentBtn.addMe a, .contentBtn.selectCar a{
-    background: rgba(0, 0, 0, 0);
-    border: 0;
+   background: rgba(0, 0, 0, 0);
+   border: 0;
 }
 .contentBtn.addMe img, .contentBtn.selectCar img{
-    display: inline-block;
-    margin: 20px 0 0 0;
-    width: 30px;
-    height: initial;
+   display: inline-block;
+   margin: 20px 0 0 0;
+   width: 30px;
+   height: initial;
 }
 
 .contentBtn.addMe p, .contentBtn.selectCar p{
-    margin: 0;
-    font-size: 18px;
+   margin: 0;
+   font-size: 18px;
 }
 
 .contentBtn.selectCar{
-    margin-bottom: 20px;
+   margin-bottom: 20px;
 }
 
 .inputAddbtn div{
-    float: left;
-    width: 80px !important;
-    text-align: right;
+   float: left;
+   width: 80px !important;
+   text-align: right;
 
 }
 
 .inputAddbtn label{
-    float: left;
-    width: 110px;
-    margin-bottom: 0 !important;
-    line-height: 45px;
+   float: left;
+   width: 110px;
+   margin-bottom: 0 !important;
+   line-height: 45px;
 }
 
 .form-input-containers.inputAddbtn{
-    display: inline-block;
+   display: inline-block;
 }
 
 .inputAddbtn div img{
-    width: 45px;
-    height: auto;
+   width: 45px;
+   height: auto;
 }
 
 .inputAddbtn img.inputImg{
-    float: left;
-    width: 90px;
-    border-radius: 10px;
-    height: auto;
-    overflow: hidden;
+   float: left;
+   width: 90px;
+   border-radius: 10px;
+   height: auto;
+   overflow: hidden;
 }
 
 .image-upload > input
 {
-    display: none;
+   display: none;
 }
 
 .image-upload img
 {
-    width: 80px;
-    cursor: pointer;
+   width: 80px;
+   cursor: pointer;
 }
 
 
 .image-upload label{
-    text-align: right;
-    line-height: 0;
-    float: none;
-    width: initial;
+   text-align: right;
+   line-height: 0;
+   float: none;
+   width: initial;
 }
 
 .carCon.active .mtableLink{
-    background: rgba(255, 255, 255, 0);
-    margin-bottom: 0;
-    border-radius: 0px;
-    border: 0;
-    padding: 5px 0;
+   background: rgba(255, 255, 255, 0);
+   margin-bottom: 0;
+   border-radius: 0px;
+   border: 0;
+   padding: 5px 0;
 }
 
 .carCon.active .mtableTokens{
-    width: 45px;
+   width: 45px;
 }
 
 .carCon.active .mtableCar{
-    width: 80px;
+   width: 80px;
 }
 
 .carCon.active .mtableCar img{
-    width: 100px;
+   width: 100px;
 }
 .b-member-con{
-    border: 1px solid #808080;
-    background-color: rgba(255, 255, 255, .3);
-    border-radius: 25px;
-    padding: 10px;
-    border: 5px solid rgba(255, 215, 0, 0);
-    display: inline-block;
-    margin-bottom: 5px;
+   border: 1px solid #808080;
+   background-color: rgba(255, 255, 255, .3);
+   border-radius: 25px;
+   padding: 10px;
+   border: 5px solid rgba(255, 215, 0, 0);
+   display: inline-block;
+   margin-bottom: 5px;
 }
 .b-member-con:hover{
-    border: 5px solid rgba(255, 215, 0, .3);
+   border: 5px solid rgba(255, 215, 0, .3);
 }
 .b-member-con.active{
-    border: 5px solid rgba(255, 215, 0, .3);
+   border: 5px solid rgba(255, 215, 0, .3);
 }
 .b-member-left{
-    width: 50%;
-    text-align: left;
-    float: left;
+   width: 50%;
+   text-align: left;
+   float: left;
 }
 
 .b-member-left .model{
-    font-size: 18px;
-    text-align: left;
-    width: 100%;
-    display: block;
+   font-size: 18px;
+   text-align: left;
+   width: 100%;
+   display: block;
 }
 
 .b-member-left .speed{
-    font-size: 12px;
-    text-align: left;
+   font-size: 12px;
+   text-align: left;
 }
 .b-member-left img{
-    width: 120px;
-    float: none;
+   width: 120px;
+   float: none;
 }
 .b-member-right{
-    width: 50%;
-    text-align: right;
-    float: right;
+   width: 50%;
+   text-align: right;
+   float: right;
 }
 .b-member-right .months, .b-member-right .price{
-    font-size: 15px;
-    text-align: right;
+   font-size: 15px;
+   text-align: right;
 }
 
 .b-member-right .monred{
-   font-size: 32px;
-   display: inline-block;
+  font-size: 32px;
+  display: inline-block;
 }
 
 .b-member-right .monred .per{
-    font-size: 13px;
+   font-size: 13px;
 }
 
 .investInput .membership-input{
-    width: 80px !important;
-    height: 40px;
-    font-size: 18px;
-    border: 2px solid #999999 !important;
-    padding: 0 !important;
-    margin-right: 10px;
+   width: 80px !important;
+   height: 40px;
+   font-size: 18px;
+   border: 2px solid #999999 !important;
+   padding: 0 !important;
+   margin-right: 10px;
 }
 .investInput p{
-    position: absolute;
-    font-size: 12px;
-    font-weight: bold;
-    line-height: 14px;
+   position: absolute;
+   font-size: 12px;
+   font-weight: bold;
+   line-height: 14px;
 }
 
 
 
 .investInput .arrowBtn{
-    float: left;
-    left: 0;
-    margin: 0 5px;
+   float: left;
+   left: 0;
+   margin: 0 5px;
 }
 .investInput .arrowBtn img{
 padding: 8px;
 }
 
 .mad1{
-    width: 140px;
-    float: left;
-    padding-left: 50px;
+   width: 140px;
+   float: left;
+   padding-left: 50px;
 }
 .mad3, .mad4{
-    padding-left: 50px;
-    display: inline-block;
+   padding-left: 50px;
+   display: inline-block;
 }
 
 
 .investInput {
-    display: inline-block;
-    font-size: 18px;
+   display: inline-block;
+   font-size: 18px;
 }
 
 .claim-euroCon.investInput{
-    margin-left: -55px;
-    position: relative;
-    top: -14px;
+   margin-left: -55px;
+   position: relative;
+   top: -14px;
 }
 .claim-euroCon.investInput .arrowBtn{
-    position: relative;
-    left: -65px;
-    top: 0;
+   position: relative;
+   left: -65px;
+   top: 0;
 }
 
 .claim-euro{
-    display: inline-block;
-    position: relative;
-    left: -55px;
-    top: 15px;
+   display: inline-block;
+   position: relative;
+   left: -55px;
+   top: 15px;
 }
 .carCon.active .investInput{
-    line-height: 45px;
-    margin-bottom: 10px;
+   line-height: 45px;
+   margin-bottom: 10px;
 }
 
