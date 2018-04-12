@@ -90,8 +90,8 @@ export const _contractDataResponse = (account, response) => {
             response.membersdev.map(member => {
                 console.log("MEMBERS: ", member);
                 dispatch(_lcAuthorization(member.account))
-                dispatch(_lcLeaseObjectCycle(0))
-                dispatch(_lcLeaseObjectRedemption(0))
+                // dispatch(_lcLeaseObjectCycle(0))
+                // dispatch(_lcLeaseObjectRedemption(0))
                 if (member.carID) {
                     dispatch(_lcLeaseObject(member.carID))
                     dispatch(_lcLeaseObjectCycle(member.carID))

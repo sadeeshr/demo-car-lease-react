@@ -107,7 +107,6 @@ const rootReducer = (state = initialState, action) => {
         case 'CLAIM_DIVIDEND_RESULT':
         case 'ALLOWANCE':
         case 'INVEST_IN_OBJECT_RESULT':
-        case 'AUTHORIZATION_RESULT':
         case 'APPROVE':
             return {
                 ...state,
@@ -146,7 +145,7 @@ const rootReducer = (state = initialState, action) => {
 
         case 'EV_MYTOKENS':
             {
-                let members = state.members.map(member => {
+                let members = state.membersdev.map(member => {
                     if (member.carID === action.payload.id)
                         member["evTokens"] = action.payload.result
                     return member
@@ -157,13 +156,13 @@ const rootReducer = (state = initialState, action) => {
 
                 return {
                     ...state,
-                    members: members
+                    membersdev: members
                 }
             }
 
         case 'LEASE_OBJECT_RESULT':
             {
-                let members = state.members.map(member => {
+                let members = state.membersdev.map(member => {
                     if (member.carID === action.payload.id)
                         member["car"] = action.payload.result
                     return member
@@ -174,41 +173,42 @@ const rootReducer = (state = initialState, action) => {
 
                 return {
                     ...state,
-                    members: members
+                    membersdev: members
                 }
             }
 
         case 'LEASE_OBJECT_CYCLE_RESULT':
+        case 'LEASE_OBJECT_REDEMPTION_RESULT':
             {
-                let members = state.members.map(member => {
+                let members = state.membersdev.map(member => {
                     if (member.carID === action.payload.id)
-                        member["objectCycle"] = action.payload.result
+                        member = { ...member, ...action.payload.id }
                     return member
                 })
 
                 if (state.member && (state.member.carID === action.payload.id))
-                    state.member["objectCycle"] = action.payload.result
+                    state.member = { ...state.member, ...action.payload.id }
 
                 return {
                     ...state,
-                    members: members
+                    membersdev: members
                 }
             }
 
-        case 'LEASE_OBJECT_REDEMPTION_RESULT':
+        case 'AUTHORIZATION_RESULT':
             {
-                let members = state.members.map(member => {
-                    if (member.carID === action.payload.id)
-                        member["objectRedemption"] = action.payload.result
+                let members = state.membersdev.map(member => {
+                    if (member.account === action.payload.account)
+                        member["authorized"] = action.payload.result
                     return member
                 })
 
-                if (state.member && (state.member.carID === action.payload.id))
-                    state.member["objectRedemption"] = action.payload.result
+                if (state.member && (state.member.account === action.payload.account))
+                    state.member["authorized"] = action.payload.result
 
                 return {
                     ...state,
-                    members: members
+                    membersdev: members
                 }
             }
 

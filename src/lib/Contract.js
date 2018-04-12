@@ -370,7 +370,7 @@ class Contract {
         return this.LeaseTokenContract.authorization(account)
             .then(result => {
                 console.log(`Authorization RESULT: ${result[0]}`);
-                return { authorization: result[0], progress: false }
+                return { account: account, result: result[0] }
             })
     }
 

@@ -107,17 +107,17 @@ class Members extends Component {
         // if (this.props.account)
         // if (!(this.props.evTokens && this.props.evTokens[member.carID]) || this.props.addNewObjectTxID || this.props.raiseFundsForCarTxID) this.props._evMyTokens(this.props.account, member.carID)
         // this.evTokenMyTokens(member.carID)
-        const selected = (this.props.member && !this.props.member.car.crowdsaleClosed) ? (this.props.member.username === member.username ? true : false) : false
+        const selected = (this.props.member && !this.props.member.crowdsaleClosed) ? (this.props.member.username === member.username ? true : false) : false
         let memberRows = [
-            <div className="mtableLink" ref={divRef => this[member.carID] = divRef} key={i} onClick={() => this.props._memberSelected(member, this.props.location.state.module)}>
+            <div className="mtableLink" ref={divRef => this[member.carID] = divRef} key={i} onClick={() => member.authorized ? this.props._memberSelected(member, this.props.location.state.module) : console.log("MEMBER NOT AUTHORIZED")}>
                 <div className="membersBtn">
                     {!member.authorized && <button title="Authorize" className="arrowBtn" onClick={() => console.log("AUTHORIZED USER")}>
                         <img src={require('../assets/arrow.jpg')} alt="addM" />
                     </button>}
                 </div>
-                <div className="mtableTokens">{member.car ? (member.car.crowdsaleClosed ? <span style={{ color: "green", fontSize: "12px" }}>Closed</span> : "0") : "0" || ""} <p>{member.evTokens}</p></div>
+                <div className="mtableTokens">{member.car ? (member.crowdsaleClosed ? <span style={{ color: "green", fontSize: "12px" }}>Closed</span> : "0") : "0" || ""} <p>{member.evTokens}</p></div>
                 <div className="mtableUser">{member.username || ""} <p>{member.town || ""}</p></div>
-                <div className="mtableCar"><img style={img} src={member.carPic || ""} alt="carImage" /><span title="Car Raised" style={{ fontSize: "12px" }}>Euro {member.carPrice}</span></div>
+                {member.carPic && <div className="mtableCar"><img style={img} src={member.carPic || ""} alt="carImage" /><span title="Car Raised" style={{ fontSize: "12px" }}>Euro {member.carPrice}</span></div>}
             </div>
         ]
 
@@ -158,6 +158,8 @@ class Members extends Component {
     }
 
     render() {
+        console.log("Members State: ", this.state);
+        console.log("Members Props: ", this.props);
 
         // const members = this.state.members ? this.state.members.filter(member => (member.username.startsWith(this.state.filter) || member.carID === parseInt(this.state.filter, 10))) : []
         const members = this.props.membersdev ? this.props.membersdev.filter(member => (member.username.startsWith(this.state.filter) || member.carID === parseInt(this.state.filter, 10))) : []
