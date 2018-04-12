@@ -34,6 +34,12 @@ export const _initContract = (props, web3) => {
     }
 }
 
+export const _registered = () => {
+    return {
+        type: "REGISTERED"
+    }
+}
+
 export const _fetchContractData = (account, data) => {
     return (dispatch) => {
         dispatch({
@@ -84,6 +90,8 @@ export const _contractDataResponse = (account, response) => {
             response.membersdev.map(member => {
                 console.log("MEMBERS: ", member);
                 dispatch(_lcAuthorization(member.account))
+                dispatch(_lcLeaseObjectCycle(0))
+                dispatch(_lcLeaseObjectRedemption(0))
                 if (member.carID) {
                     dispatch(_lcLeaseObject(member.carID))
                     dispatch(_lcLeaseObjectCycle(member.carID))

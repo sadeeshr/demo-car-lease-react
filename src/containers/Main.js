@@ -10,6 +10,7 @@ const mapStateToProps = (state) => {
     // console.log("State: ", state)
     return {
         account: state.account,
+        usernames: state.usernames,
         socket: state.socket,
         initRoute: state.initRoute
     }

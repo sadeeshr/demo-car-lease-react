@@ -28,20 +28,7 @@ class AddMember extends Component {
             }
         }
 
-        let data2 = {
-            module: "membersdev",
-            result: "usernames",
-            query: {
-                module: this.props.location.state.module
-            },
-            filter: {
-                _id: 0,
-                username: 1
-            }
-        }
-
         if (!this.props.cars && this.props.socket) this.props._fetchContractData(this.props.account, data)
-        if (!this.props.membersdev && this.props.socket) this.props._fetchContractData(this.props.account, data2)
 
     }
 

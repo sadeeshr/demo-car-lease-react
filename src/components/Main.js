@@ -37,11 +37,6 @@ class Main extends Component {
         console.log("MAIN: ", this.props, window.location.hostname);
         if (!this.props.socketConnection) this.props._connectSocket(this.props, window.location.hostname)
 
-        window.onbeforeunload = (e) => this.props.history.replace("/", null)  // Page Refresh, route to HOME
-
-    }
-
-    componentDidMount() {
         const { web3 } = window
         // Check if Web3 has been injected by the browser:
         if (typeof web3 !== 'undefined') {
@@ -57,18 +52,56 @@ class Main extends Component {
             this.setState({ alert: "Please Install Metamask plugin", url: "https://metamask.io/" })
         }
 
+        window.onbeforeunload = (e) => this.props.history.replace("/", null)  // Page Refresh, route to HOME
+        this.fetchUserData()
+    }
+
+    componentDidMount() {
+
         // window.addEventListener("beforeunload", this.onUnload.bind(this))
+        setTimeout(() => {
+            this.fetchUserData()
+        }, 1000);
 
         // add viewer to DOM
         let container = document.getElementById('metamask-logo')
         if (container) container.appendChild(this.viewer.container)
     }
 
+    fetchUserData = () => {
+        let data = {
+            module: "membersdev",
+            result: "usernames",
+            query: {
+                module: "westland"
+            },
+            filter: {
+                _id: 0,
+                username: 1,
+                account: 1
+            }
+        }
+        if (!this.props.membersdev && this.props.socket) this.props._fetchContractData(this.props.account, data)
+        this.checkRegistered()
+    }
 
+    checkRegistered = () => {
+        if (this.props.usernames) {
+            const accounts = this.props.usernames ? this.props.usernames.map(user => user.account) : []
+            console.log(accounts, this.props.account, accounts.indexOf(this.props.account));
+            this.setState({
+                registered: (accounts.indexOf(this.props.account) !== -1) ? true : false
+            })
+
+        }
+    }
 
     componentWillReceiveProps(nextProps) {
         this.props = nextProps
+        this.checkRegistered()
+        if (nextProps.socket && !nextProps.usernames) this.fetchUserData()
         if (nextProps.location.state) this.renderComponent()
+
     }
 
     renderMain = () => {
@@ -110,12 +143,11 @@ class Main extends Component {
                 </div>
                 <div className="footCon">
                     <div className="contentBtn "><div hidden={!disabled} id="metamask-logo" style={{ textAlign: "center" }}><span hidden={!disabled} style={{ cursor: this.state.url ? "pointer" : "default" }} onClick={() => this.state.url ? window.open(this.state.url, "_blank") : ""}>{this.state.alert}</span></div></div>
-                    <div>
+                    {this.props.usernames && <div>
                         {/*<span>Your town here</span><button className="arrowBtn" hidden={disabled} disabled={disabled} onClick={() => this.props.history.push("/", { module: "AddMember", path: "home" })}><img src={require('../assets/arrow.jpg')} alt="addM" /></button>*/}
                         <button style={{ backgroundColor: "blue" }}>.........</button>
-                        <button style={{ backgroundColor: "red" }} onClick={() => this.props.history.push("/", { module: "westland", path: "addmember" })}>.........</button>
-                    </div>
-                    <button onClick={() => this.props.history.push("/", { module: "westland", path: "members" })}>Members</button>
+                        <button style={{ backgroundColor: "red" }} onClick={() => this.props.history.push("/", { module: "westland", path: this.state.registered ? "members" : "addmember" })}>.........</button>
+                    </div>}
                 </div>
             </div>
         </div>
@@ -145,6 +177,7 @@ class Main extends Component {
     }
 
     render() {
+        console.log("Main State: ", this.state);
         return (
             <div>
                 {this.renderComponent()}
