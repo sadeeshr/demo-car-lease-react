@@ -146,6 +146,79 @@ margin-top: -13px;
     margin-left: -20px;
     margin-top: 0px;
 }
+.text-center{
+    text-align: center;
+}
+
+.lrBtn{
+    background: none;
+    border: 0;
+    padding: 0 15px;
+}
+.lrBtn:hover{
+    border: 0 !important;
+    outline: 0;
+}
+.lrBtn img{
+    width: 80px !important;
+
+}
+.image-upload-selfie{
+    padding-top: 5px;
+    width: auto !important;
+}
+.inputAddbtn div.upload-selfieCon{
+    display: flex;
+    width: 100% !important;
+    text-align: center;
+    color: #000000;
+    font-size: 18px;
+    border-radius: 10px !important;
+    background: rgba(255, 255, 255, 1) !important;
+    border: 1px solid #808080 !important;
+}
+.inputAddbtn div.upload-selfieCon label{
+    line-height: 30px;
+}
+.newlifeImage{
+    text-align: center;
+    margin: 0 auto 10px;
+    width: 200px;
+}
+.newlifeImage img{
+    width: 80%;
+}
+.nl-con{
+    display: block;
+    width: 200px;
+    margin: 0 auto 10px;
+}
+.nl-label{
+    display: inline-block;
+    font-weight: 600;
+    width: 20%;
+    text-align: right;
+    padding-right: 10px;
+    font-size: 9px;
+}
+.nl-inp{
+    display: inline-block;
+    border: 3px solid #fff;
+    width: 50%;
+    padding: 3px;
+    border-radius: 5px;
+    font-size: 9px;
+    text-align: center;
+}
+.coverflow__figure__zEOhf{
+    box-shadow: none !important;
+}
+.coverflow__cover__3uJrO{
+    height: 240px;
+    box-shadow: none !important;
+}
+
+
 
  #header{
      font-family: Tahoma, Verdana, Segoe, sans-serif;
@@ -255,7 +328,7 @@ margin-top: -13px;
     width: -webkit-stretch !important;
     margin: 0 auto !important;
      padding: 0px 0px !important;
-     display: block;
+     display: flex;
 }
  .membership-input{
      width: 90% !important;
