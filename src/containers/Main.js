@@ -9,7 +9,8 @@ import Main from '../components/Main';
 const mapStateToProps = (state) => {
     // console.log("State: ", state)
     return {
-        account : state.account,
+        account: state.account,
+        socket: state.socket,
         initRoute: state.initRoute
     }
 }

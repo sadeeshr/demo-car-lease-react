@@ -10,7 +10,7 @@ class AddMember extends Component {
         }
         this.mandatory = [
             "username",
-            "municipality"
+            "town"
         ]
         this.carType = 1
     }
@@ -29,7 +29,7 @@ class AddMember extends Component {
         }
 
         let data2 = {
-            module: "members",
+            module: "membersdev",
             result: "usernames",
             query: {
                 module: this.props.location.state.module
@@ -41,7 +41,7 @@ class AddMember extends Component {
         }
 
         if (!this.props.cars && this.props.socket) this.props._fetchContractData(this.props.account, data)
-        if (!this.props.members && this.props.socket) this.props._fetchContractData(this.props.account, data2)
+        if (!this.props.membersdev && this.props.socket) this.props._fetchContractData(this.props.account, data2)
 
     }
 
@@ -70,37 +70,41 @@ class AddMember extends Component {
     createAccount = () => {
         this.setState({ progress: true })
         const self = this.state
-        // let membersList = this.props.members
+        // let membersList = this.props.membersdev
 
-        const carHash = '0x' + md5(self.username + self.municipality)
+        const carHash = '0x' + md5(self.username + self.town)
 
         let newMember = {
             username: self.username || '',
             fullname: self.fullname || '',
             address: self.address || '',
-            municipality: self.municipality || '',
+            town: self.town || '',
             zip: self.zip || '',
             iban: self.iban || '',
             email: self.email || '',
             message: self.message || '',
-            carPic: self.carPic || '',
-            carPrice: self.carPrice || '',
-            carMonRedemption: self.carMonRedemption || '',
-            carMonths: self.carMonths || '',
-            module: this.props.location.state.module
+            // carPic: self.carPic || '',
+            // carPrice: self.carPrice || '',
+            account: self.account || this.props.account,
+            profilePic: self.profilePic || '',
+            // carMonRedemption: self.carMonRedemption || '',
+            // carMonths: self.carMonths || '',
+            module: this.props.location.state.module || 'westland'
         }
 
         let data = {
-            module: "members",
+            module: "membersdev",
             data: newMember
         }
-        this.props._setNewContractData(data)
-        this.props._lcAddNewObject(self.carPrice, carHash, this.carType, self.carDealer, self.carMonRedemption, this.props.account, this.props.location.state.module)
+        // this.props._setNewContractData(data)
+        // this.props._lcAddNewObject(self.carPrice, carHash, this.carType, self.carDealer, self.carMonRedemption, this.props.account, this.props.location.state.module)
+
+        this.props._writeNewContractData(data)
     }
 
 
     render() {
-        // if (this.props.members_new) this.props.history.goBack()
+        if (this.props.membersdev_new) this.props.history.push("/", { module: this.props.location.state.module, path: "members" })
         const cars = this.props.cars || []
         console.log("CARS: ", cars);
         const img = { "maxHeight": "50px", "maxWidth": "118px", "display": "block", "width": "auto", "height": "auto" }
@@ -206,7 +210,7 @@ class AddMember extends Component {
                                         <input className="membership-input" maxLength="20" value={this.state.address || ""} onChange={(e) => this.setState({ address: e.target.value })} type="text" id="address" name="address" placeholder="Address" />
                                     </span>
                                     <span className="form-input-containers">
-                                        <input maxLength="30" className="membership-input" value={this.state.municipality || ""} onChange={(e) => this.setState({ municipality: e.target.value })} type="text" id="municipality" name="municipality" placeholder="Town *" />
+                                        <input maxLength="30" className="membership-input" value={this.state.town || ""} onChange={(e) => this.setState({ town: e.target.value })} type="text" id="town" name="town" placeholder="Town *" />
                                     </span>
                                     <span className="form-input-containers">
                                         <input maxLength="30" className="membership-input m-b-10" value={this.state.zip || ""} onChange={(e) => this.setState({ zip: e.target.value })} type="text" placeholder="Zip Code" />
@@ -215,7 +219,21 @@ class AddMember extends Component {
                                         <input pattern="\d*" maxLength="30" className="membership-input m-b-10" value={this.state.iban || ""} onChange={(e) => this.setState({ iban: e.target.value })} type="text" placeholder="IBAN" />
                                     </span>
                                     <span className="form-input-containers">
+                                        <input pattern="\d*" maxLength="30" className="membership-input m-b-10" value={this.state.account || this.props.account || ""} onChange={(e) => this.setState({ account: e.target.value || this.props.account })} type="text" placeholder="Ether address" />
+                                    </span>
+                                    <span className="form-input-containers">
                                         <input pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" maxLength="30" className="membership-input m-b-10" value={this.state.email || ""} onChange={(e) => this.setState({ email: e.target.value })} type="text" placeholder="Email" />
+                                    </span>
+                                    <span className="form-input-containers marginBttm inputAddbtn">
+                                        <div className="image-upload" htmlFor="imageUpload">
+                                            <label style={{ "textAlign": "center", }} htmlFor="prPicIn">
+                                                <img src={require('../assets/add.png')} alt="prPic" />
+                                            </label>
+                                            <input type="file" id="prPicIn" onChange={(e) => { this.fileUploadHandler(e.target.files[0], "profilePic") }} />
+                                        </div>
+                                        <label >Upload Selfie</label>
+
+                                        {this.state.profilePic && <img className="inputImg" src={this.state.profilePic} alt="intI" />}
                                     </span>
                                     <span className="form-input-containers">
                                         <textarea className="membership-input" rows="5" value={this.state.message || ""} onChange={(e) => this.setState({ message: e.target.value })} name="message" placeholder="Your message"></textarea>
@@ -273,16 +291,15 @@ class AddMember extends Component {
                         </div>
                         <div className="footCon">
                             <div>
-                                <span>Select a car</span>
+                                <span>Confirm & Publish</span>
                                 {console.log(`Usernames: ${usernames}, ${usernames.indexOf(this.state.username)}`)}
-                                <button disabled={!this.checkMandatory() || (usernames.indexOf(this.state.username) !== -1)} title={!this.checkMandatory() ? "Please fill mandatory fields" : (usernames.indexOf(this.state.username) !== -1 ? "Username already exists" : "Select Car")} className="arrowBtn" onClick={() => { this.setState({ seeCars: true }) }}>
+                                <button disabled={!this.checkMandatory() || (usernames.indexOf(this.state.username) !== -1)} title={!this.checkMandatory() ? "Please fill mandatory fields" : (usernames.indexOf(this.state.username) !== -1 ? "Username already exists" : "Select Car")} className="arrowBtn" onClick={this.createAccount.bind(this)}>
                                     <img src={require('../assets/arrow.jpg')} alt="addM" />
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
-
         )
     }
 }

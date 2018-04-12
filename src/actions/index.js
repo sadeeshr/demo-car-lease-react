@@ -7,11 +7,11 @@ import socApi from '../lib/Socket';
 import contract from '../lib/Contract';
 import { push } from 'react-router-redux'
 
-export const _connectSocket = (props) => {
+export const _connectSocket = (props, domain) => {
     return (dispatch) => {
         dispatch({
             type: "CONNECT_SOCKET",
-            payload: socApi.connectSocket(props)
+            payload: socApi.connectSocket(props, domain)
         })
     }
 }
@@ -80,11 +80,17 @@ export const _updateContractData = (data) => {
 
 export const _contractDataResponse = (account, response) => {
     return (dispatch) => {
-        if (response.members)
-            response.members.map(member => {
-                dispatch(_lcLeaseObjects(member.carID))
-                dispatch(_evMyTokens(account, member.carID))
-                return 1
+        if (response.membersdev)
+            response.membersdev.map(member => {
+                console.log("MEMBERS: ", member);
+                dispatch(_lcAuthorization(member.account))
+                if (member.carID) {
+                    dispatch(_lcLeaseObject(member.carID))
+                    dispatch(_lcLeaseObjectCycle(member.carID))
+                    dispatch(_lcLeaseObjectRedemption(member.carID))
+                    dispatch(_evMyTokens(account, member.carID))
+                }
+                // return 1
             })
 
         return dispatch({
@@ -94,8 +100,11 @@ export const _contractDataResponse = (account, response) => {
     }
 }
 
-export const _memberSelected = (member) => {
+export const _memberSelected = (member, module) => {
     return (dispatch) => {
+        if (!member.carID) {
+            dispatch(push("/", { module: module, path: "addnewlife" }))
+        }
         dispatch({
             type: "SELECT_MEMBER",
             payload: member
@@ -246,13 +255,41 @@ export const _euroAllowance = (account) => {
     }
 }
 
-export const _lcLeaseObjects = (objectID) => {
+export const _lcLeaseObject = (objectID) => {
     return (dispatch) => {
-        return contract.lcLeaseObjects(objectID)
+        return contract.lcLeaseObject(objectID)
             .then(result => {
                 return dispatch(
                     {
                         type: "LEASE_OBJECT_RESULT",
+                        payload: result
+                    }
+                )
+            })
+    }
+}
+
+export const _lcLeaseObjectCycle = (objectID) => {
+    return (dispatch) => {
+        return contract.lcLeaseObjectCycle(objectID)
+            .then(result => {
+                return dispatch(
+                    {
+                        type: "LEASE_OBJECT_CYCLE_RESULT",
+                        payload: result
+                    }
+                )
+            })
+    }
+}
+
+export const _lcLeaseObjectRedemption = (objectID) => {
+    return (dispatch) => {
+        return contract.lcLeaseObjectRedemption(objectID)
+            .then(result => {
+                return dispatch(
+                    {
+                        type: "LEASE_OBJECT_REDEMPTION_RESULT",
                         payload: result
                     }
                 )
@@ -274,9 +311,9 @@ export const _lcAmountObjects = () => {
     }
 }
 
-export const _lcAddNewObject = (objectPrice, objectHash, objectType, objectDealer, objectFee, account, module) => {
+export const _lcAddNewObject = (objectPrice, objectHash, objectType, objectDealer, objectFee, objectTerm, mileagesAvg, account, module) => {
     return (dispatch) => {
-        return contract.lcaddNewobject(objectPrice, objectHash, objectType, objectDealer, objectFee, account)
+        return contract.lcaddNewobject(objectPrice, objectHash, objectType, objectDealer, objectFee, objectTerm, mileagesAvg, account)
             .then(result => {
                 dispatch(push("/", { module: module, path: "members" }))
                 return dispatch(
@@ -296,6 +333,20 @@ export const _lcSumBalanceOf = (account) => {
                 return dispatch(
                     {
                         type: "SUM_BALANCE_OF_RESULT",
+                        payload: result
+                    }
+                )
+            })
+    }
+}
+
+export const _lcAuthorization = (account) => {
+    return (dispatch) => {
+        return contract.lcAuthorization(account)
+            .then(result => {
+                return dispatch(
+                    {
+                        type: "AUTHORIZATION_RESULT",
                         payload: result
                     }
                 )

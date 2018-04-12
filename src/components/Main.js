@@ -5,6 +5,7 @@ import AddMember from '../containers/AddMember';
 import Invest from '../containers/Invest';
 import Invoices from '../containers/Invoices';
 import ModelViewer from 'metamask-logo'
+import AddNewLifeConfigurator from '../containers/AddNewLifeConfigurator';
 
 class Main extends Component {
 
@@ -33,9 +34,11 @@ class Main extends Component {
     }
 
     componentWillMount() {
-        console.log("MAIN: ", this.props);
-        // if (this.props.initRoute)
-        //     this.props.history.replace("/", {})
+        console.log("MAIN: ", this.props, window.location.hostname);
+        if (!this.props.socketConnection) this.props._connectSocket(this.props, window.location.hostname)
+
+        window.onbeforeunload = (e) => this.props.history.replace("/", null)  // Page Refresh, route to HOME
+
     }
 
     componentDidMount() {
@@ -61,26 +64,11 @@ class Main extends Component {
         if (container) container.appendChild(this.viewer.container)
     }
 
-    onUnload(event) { // the method that will be used for both add and remove event
-        console.log("hellooww")
-        event.returnValue = "Hellooww"
-        return event
-    }
+
 
     componentWillReceiveProps(nextProps) {
         this.props = nextProps
         if (nextProps.location.state) this.renderComponent()
-    }
-
-    componentWillUnmount() {
-        // window.removeEventListener("beforeunload", this.onUnload.bind(this))
-
-        // window.onbeforeunload = (e) => {
-        //     console.log("################AM I HERE######################");
-        //     console.log(e);
-        //     alert("No!!")
-        //     return 'Stop this event';
-        // };
     }
 
     renderMain = () => {
@@ -91,9 +79,9 @@ class Main extends Component {
 
         return <div className="content-border">
             <div className="mainContentCon">
-                <div className="navCon">
+                {/* <div className="navCon">
                     <h1 id="header">ENERGY NEUTRAL 2030</h1>
-                </div>
+    </div>*/}
                 <div className="contentCon overflow bg-none">
 
 
@@ -108,15 +96,26 @@ class Main extends Component {
                             </tr>
                         </tbody>
                     </table>
-                    <div className="contentBtn ">
+                    <p>This is your last chance.</p>
+                    <p>Afer this, there is no turning back</p>
+                    <p>You press the blue pull--the story ends, you wake up in your bed and believe whatever you want to believe.</p>
+                    <p>You press the red pill--you stay in Wonderland, and I show you how deep the rabbit hole goes.</p>
+
+                    {/*<div className="contentBtn ">
                         <div hidden={!disabled} id="metamask-logo" style={{ textAlign: "center" }}><span hidden={!disabled} style={{ cursor: this.state.url ? "pointer" : "default" }} onClick={() => this.state.url ? window.open(this.state.url, "_blank") : ""}>{this.state.alert}</span></div>
                         <button style={{ cursor: cursor }} disabled={disabled} onClick={() => this.props.history.push("/", { module: "westland", path: "home" })} >Westland</button>
                         <button style={{ cursor: cursor }} disabled={disabled} onClick={() => this.props.history.push("/", { module: "middendelftland", path: "home" })}>Midden Delftland</button>
 
-                    </div>
+                        </div>*/}
                 </div>
                 <div className="footCon">
-                    <div><span>Your town here</span><button className="arrowBtn" hidden={disabled} disabled={disabled} onClick={() => this.props.history.push("/", { module: "AddMember", path: "home" })}><img src={require('../assets/arrow.jpg')} alt="addM" /></button></div>
+                    <div className="contentBtn "><div hidden={!disabled} id="metamask-logo" style={{ textAlign: "center" }}><span hidden={!disabled} style={{ cursor: this.state.url ? "pointer" : "default" }} onClick={() => this.state.url ? window.open(this.state.url, "_blank") : ""}>{this.state.alert}</span></div></div>
+                    <div>
+                        {/*<span>Your town here</span><button className="arrowBtn" hidden={disabled} disabled={disabled} onClick={() => this.props.history.push("/", { module: "AddMember", path: "home" })}><img src={require('../assets/arrow.jpg')} alt="addM" /></button>*/}
+                        <button style={{ backgroundColor: "blue" }}>.........</button>
+                        <button style={{ backgroundColor: "red" }} onClick={() => this.props.history.push("/", { module: "westland", path: "addmember" })}>.........</button>
+                    </div>
+                    <button onClick={() => this.props.history.push("/", { module: "westland", path: "members" })}>Members</button>
                 </div>
             </div>
         </div>
@@ -132,6 +131,8 @@ class Main extends Component {
                     return <Members />
                 case "addmember":
                     return <AddMember />
+                case "addnewlife":
+                    return <AddNewLifeConfigurator />
                 case "invest":
                     return <Invest />
                 case "invoices":
@@ -144,7 +145,6 @@ class Main extends Component {
     }
 
     render() {
-
         return (
             <div>
                 {this.renderComponent()}

@@ -107,6 +107,7 @@ const rootReducer = (state = initialState, action) => {
         case 'CLAIM_DIVIDEND_RESULT':
         case 'ALLOWANCE':
         case 'INVEST_IN_OBJECT_RESULT':
+        case 'AUTHORIZATION_RESULT':
         case 'APPROVE':
             return {
                 ...state,
@@ -150,7 +151,7 @@ const rootReducer = (state = initialState, action) => {
                         member["evTokens"] = action.payload.result
                     return member
                 })
-                
+
                 if (state.member && (state.member.carID === action.payload.id))
                     state.member["evTokens"] = action.payload.result
 
@@ -177,6 +178,40 @@ const rootReducer = (state = initialState, action) => {
                 }
             }
 
+        case 'LEASE_OBJECT_CYCLE_RESULT':
+            {
+                let members = state.members.map(member => {
+                    if (member.carID === action.payload.id)
+                        member["objectCycle"] = action.payload.result
+                    return member
+                })
+
+                if (state.member && (state.member.carID === action.payload.id))
+                    state.member["objectCycle"] = action.payload.result
+
+                return {
+                    ...state,
+                    members: members
+                }
+            }
+
+        case 'LEASE_OBJECT_REDEMPTION_RESULT':
+            {
+                let members = state.members.map(member => {
+                    if (member.carID === action.payload.id)
+                        member["objectRedemption"] = action.payload.result
+                    return member
+                })
+
+                if (state.member && (state.member.carID === action.payload.id))
+                    state.member["objectRedemption"] = action.payload.result
+
+                return {
+                    ...state,
+                    members: members
+                }
+            }
+
         case 'RESET_TX_IDS':
             return {
                 ...state,
@@ -190,9 +225,10 @@ const rootReducer = (state = initialState, action) => {
         case 'RESET_EVENT':
             return {
                 ...state,
-                eventTransfer: false,
-                eventApprove: false,
-                eventClaim: false
+                eventTransfer: null,
+                eventApprove: null,
+                eventClaim: null,
+                eventSubscription: null
             }
 
         default:

@@ -31,9 +31,14 @@ strong{
     height: 615px;
     /* overflow-y: auto; */
     overflow: hidden;
-    background: rgba(255, 255, 255, .5);
+
+    /* border: 1px; */
+    background-color:rgba(255,255,255,0.3);
+    border: 2px solid gray; 
+    /* background: rgba(255, 255, 255, .5); */  
+    /* border: 5px solid #808080; */
+
     border-radius: 35px;
-    border: 5px solid #808080;
     display: block;
 }
 
@@ -372,8 +377,10 @@ textarea.membership-input{
 
 .carCon{
     /* margin-bottom: 10px ; */
-    border: 3px solid rgba(255, 215, 0, 0);
-    background: rgba(255, 255, 255, .3);
+    border: 1px solid hsla(216,3%,30%,.8);
+    background-color:rgba(255,255,255,0.3);  /* saket changes */
+    /* border: 3px solid rgba(255, 215, 0, 0);
+    background: rgba(255, 255, 255, .3); */    
     padding: 10px 0;
     border-radius: 25px;
     display: inline-block;

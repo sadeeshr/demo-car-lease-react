@@ -3,8 +3,6 @@ import BlockUi from 'react-block-ui';
 import 'react-block-ui/style.css';
 import { Link } from 'react-router-dom'
 
-// import scrollToComponent from 'react-scroll-to-component';
-
 class Members extends Component {
 
     constructor(props) {
@@ -20,30 +18,31 @@ class Members extends Component {
     componentWillMount() {
         console.log("Members Props", this.props);
         this.setState({ eventAddNewObject: this.props.eventAddNewObject === "pending" ? this.props.eventAddNewObject : null })
-        if (this.props.reloadTokens) this.fetchMembers()
+        if (this.props.reloadTokens || this.props.membersdev_new) this.fetchMembers()
     }
 
     componentDidMount() {
-        if (!this.props.members) {
+        if (!this.props.membersdev) {
             this.fetchMembers()
         }
     }
 
     fetchMembers = () => {
         let data = {
-            module: "members",
+            module: "membersdev",
             query: {
                 module: this.props.location.state.module
             },
             filter: {
                 _id: 0,
                 username: 1,
-                state: 1,
+                town: 1,
                 message: 1,
                 carID: 1,
                 carPic: 1,
                 carPrice: 1,
-                module: 1
+                module: 1,
+                account: 1
             }
         }
         this.props._fetchContractData(this.props.account, data)
@@ -52,7 +51,7 @@ class Members extends Component {
     componentWillReceiveProps(nextProps) {
         this.props = nextProps
         console.log("Members Update Props", nextProps);
-        // if (this.props.members && ) this.props._reloadTokens()
+        // if (this.props.membersdev && ) this.props._reloadTokens()
         if (this.props.reloadTokens) this.fetchMembers()
         if (this.props.eventAddNewObject && this.props.objectID && this.props.newObject) {
             let objectID = this.props.objectID
@@ -62,7 +61,7 @@ class Members extends Component {
         }
         if (this.props.eventAddNewObject && !this.state.eventAddNewObject) this.setState({ eventAddNewObject: this.props.eventAddNewObject })
 
-        if (this.props.members) {
+        if (this.props.membersdev) {
             let members = this.sortMembers()
             console.log("######## SORTED MEMBERS ###########", members);
             // if (members.length >= 3) {
@@ -72,12 +71,12 @@ class Members extends Component {
             // }
             this.setState({ members })
             // if (!this.props.lcCars)
-            // for (let i = 1; i <= this.props.members.length; i++) {
+            // for (let i = 1; i <= this.props.membersdev.length; i++) {
             //     // this.fetchCar(i)
             //     this.props._lcCars(i)
             //     this.props._evMyTokens(this.props.account, i)
             // }
-            // this.props.members.map(member => {
+            // this.props.membersdev.map(member => {
             //     if (!member.car) this.props._lcCars(member.carID)
             //     if (!member.evTokens) this.props._evMyTokens(this.props.account, member.carID)
 
@@ -96,7 +95,7 @@ class Members extends Component {
     // }
 
     fetchEvTokens = () => {
-        for (let i = 1; i <= this.props.members.length; i++) {
+        for (let i = 1; i <= this.props.membersdev.length; i++) {
             this.props._evMyTokens(this.props.account, i)
         }
     }
@@ -110,9 +109,14 @@ class Members extends Component {
         // this.evTokenMyTokens(member.carID)
         const selected = (this.props.member && !this.props.member.car.crowdsaleClosed) ? (this.props.member.username === member.username ? true : false) : false
         let memberRows = [
-            <div className="mtableLink" ref={divRef => this[member.carID] = divRef} key={i} onClick={() => this.props._memberSelected(member)}>
-                <div className="mtableTokens">{member.car ? (member.car.crowdsaleClosed ? <span style={{ color: "green", fontSize: "12px" }}>Closed</span> : member.car.totalRaised.toNumber()) : "0" || ""} <p>{member.evTokens}</p></div>
-                <div className="mtableUser">{member.username || ""} <p>{member.state || ""}</p></div>
+            <div className="mtableLink" ref={divRef => this[member.carID] = divRef} key={i} onClick={() => this.props._memberSelected(member, this.props.location.state.module)}>
+                <div className="membersBtn">
+                    {!member.authorized && <button title="Authorize" className="arrowBtn" onClick={() => console.log("AUTHORIZED USER")}>
+                        <img src={require('../assets/arrow.jpg')} alt="addM" />
+                    </button>}
+                </div>
+                <div className="mtableTokens">{member.car ? (member.car.crowdsaleClosed ? <span style={{ color: "green", fontSize: "12px" }}>Closed</span> : "0") : "0" || ""} <p>{member.evTokens}</p></div>
+                <div className="mtableUser">{member.username || ""} <p>{member.town || ""}</p></div>
                 <div className="mtableCar"><img style={img} src={member.carPic || ""} alt="carImage" /><span title="Car Raised" style={{ fontSize: "12px" }}>Euro {member.carPrice}</span></div>
             </div>
         ]
@@ -137,8 +141,8 @@ class Members extends Component {
     }
 
     sortMembers = () => {
-        if (this.props.members) {
-            const members = this.props.members.sort((a, b) => {
+        if (this.props.membersdev) {
+            const members = this.props.membersdev.sort((a, b) => {
                 if (a.car && a.car.crowdsaleClosed)
                     return 0
                 else if ((a.car && a.car.totalRaised) && (b.car && b.car.totalRaised)) {
@@ -156,7 +160,7 @@ class Members extends Component {
     render() {
 
         // const members = this.state.members ? this.state.members.filter(member => (member.username.startsWith(this.state.filter) || member.carID === parseInt(this.state.filter, 10))) : []
-        const members = this.props.members ? this.props.members.filter(member => (member.username.startsWith(this.state.filter) || member.carID === parseInt(this.state.filter, 10))) : []
+        const members = this.props.membersdev ? this.props.membersdev.filter(member => (member.username.startsWith(this.state.filter) || member.carID === parseInt(this.state.filter, 10))) : []
 
         // TESTING DIV FOCUS
         // if (members && members[4] && members[4].car) members[4].car.crowdsaleClosed = true
@@ -179,7 +183,7 @@ class Members extends Component {
                         <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
                     </div> */}
                     <div className="navCon">
-                        <h1 id="header"><div className="fl"><i className="flaticon-back" onClick={() => this.props.history.goBack()}></i></div>Leasecars<div className="fr"><i onClick={() => this.fetchMembers()} className="flaticon-rotate marIcon"></i><i onClick={() => this.props.history.push("/")} className="flaticon-home"></i></div></h1>
+                        <h1 id="header"><div className="fl"><i className="flaticon-back" onClick={() => this.props.history.goBack()}></i></div>Members<div className="fr"><i onClick={() => this.fetchMembers()} className="flaticon-rotate marIcon"></i><i onClick={() => this.props.history.push("/")} className="flaticon-home"></i></div></h1>
                     </div>
                     <div className="contentCon overflow bg-none">
                         <BlockUi tag="div" blocking={this.props.progress}>

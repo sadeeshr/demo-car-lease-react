@@ -19,7 +19,8 @@ class Socket {
         this.account = null;
     }
 
-    connectSocket = (props) => {
+    connectSocket = (props, DOMAIN) => {
+        // let SOCKET_URL = "https://" + DOMAIN + ":3456"
         this.socket = io.connect(SOCKET_URL, SOCKET_OPTIONS);
         this.props = props
         this.bindSocket(this.socket)

@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 import * as Actions from '../actions'
-import AddMember from '../components/AddMember';
+import AddNewLifeConfigurator from '../components/AddNewLifeConfigurator';
 /**
  * map state, actions to props
  */
@@ -14,8 +14,9 @@ const mapStateToProps = (state) => {
         account: state.account,
         module: state.module,
         cars: state.cars,
-        membersdev: state.membersdev,
-        membersdev_new: state.membersdev_new,
+        member: state.member,
+        members: state.members,
+        members_new: state.members_new,
         eventAddNewObject: state.eventAddNewObject,
         objectID: state.objectID,
         newObject: state.newObject,
@@ -26,4 +27,4 @@ const mapStateToProps = (state) => {
 }
 const mapActionsToProps = (dispatch) => { return bindActionCreators(Actions, dispatch) }
 
-export default withRouter(connect(mapStateToProps, mapActionsToProps)(AddMember))
+export default withRouter(connect(mapStateToProps, mapActionsToProps)(AddNewLifeConfigurator))

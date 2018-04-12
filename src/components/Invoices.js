@@ -11,7 +11,6 @@ class Invoices extends Component {
             progress: false,
             month: null,
             year: null,
-            eventSubscription: null
         }
         this.rinkebyStatsURL = "https://rinkeby.etherscan.io/tx/"
         this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -20,6 +19,7 @@ class Invoices extends Component {
 
     componentWillMount() {
         this.fetchInvoices()
+        this.setState({ eventSubscription: null })
         console.log("Object Fees: ", this.props.member.car.objectFee.toNumber())
         console.log("Object Price: ", this.props.member.car.objectPrice.toNumber())
         console.log("Object Type: ", this.props.member.car.objectType.toNumber())
@@ -27,8 +27,14 @@ class Invoices extends Component {
         console.log("Object milages: ", this.props.member.car.milages.toNumber())
         console.log("Object totalDividends: ", this.props.member.car.totalDividends.toNumber())
 
-        this.props._lcLeaseObjects(this.props.member.carID)
+        this.props._lcLeaseObject(this.props.member.carID)
+        this.props._lcLeaseObjectCycle(this.props.member.carID)
+        this.props._lcLeaseObjectRedemption(this.props.member.carID)
 
+    }
+
+    componentWillUnmount() {
+        this.props._resetTxIds()
     }
 
     componentDidMount() {

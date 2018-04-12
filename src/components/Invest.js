@@ -28,7 +28,6 @@ class Invest extends Component {
         this.props._resetTxIds()
     }
 
-
     componentDidMount() {
         this.refreshValues()
     }
@@ -73,7 +72,13 @@ class Invest extends Component {
         this.props._lcToClaimDividend(this.props.member.carID, this.props.account)
 
         // fetch Object ID's Values
-        this.props._lcLeaseObjects(this.props.member.carID)
+        this.props._lcLeaseObject(this.props.member.carID)
+
+        // fetch Object ID Cycle's Values
+        this.props._lcLeaseObjectCycle(this.props.member.carID)
+
+        // fetch Object ID Redemption's Values
+        this.props._lcLeaseObjectRedemption(this.props.member.carID)
 
         // fetch Object ID's EVTokens
         this.props._evMyTokens(this.props.account, this.props.member.carID)
@@ -188,7 +193,7 @@ class Invest extends Component {
 
                                 <div className="mtableLink">
                                     <div className="mtableTokens" title="Car ID">{this.props.member.car.totalRaised.toNumber() || ""} <p title="EVTokens">{this.props.member.evTokens}</p></div>
-                                    <div className="mtableUser">{this.props.member.username || ""}<p>{this.props.member.municipality || ""}</p></div>
+                                    <div className="mtableUser">{this.props.member.username || ""}<p>{this.props.member.town || ""}</p></div>
                                     <div className="mtableCar">
                                         <img src={this.props.member.carPic || ""} alt="carImage" />
                                         <span title="Price" style={{ fontSize: "12px" }}>Euro {this.props.member.carPrice || "0"}</span>
