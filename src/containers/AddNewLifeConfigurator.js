@@ -7,7 +7,7 @@ import AddNewLifeConfigurator from '../components/AddNewLifeConfigurator';
  * map state, actions to props
  */
 const mapStateToProps = (state) => {
-    // console.log("State: ", state)
+    console.log("ADD NEW LIFE State: ", state)
     return {
         socket: state.socket,
         LeaseContract: state.LeaseContract,

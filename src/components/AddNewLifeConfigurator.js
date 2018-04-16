@@ -96,7 +96,7 @@ class AddNewLifeConfigurator extends Component {
         //     data: newMember
         // }
         // this.props._setNewContractData(data)
-        this.state.carSelected && this.props._lcAddNewObject(car.price, carHash, this.carType, car.dealer, car.fee, car.term, car.mileage, member.account, this.props.location.state.module)
+        this.state.carSelected && this.props._lcAddNewObject(member["_id"], car.price, carHash, this.carType, car.dealer, car.fee, car.term, car.mileage, member.account, this.props.location.state.module)
 
         // this.props._writeNewContractData(data)
     }
@@ -203,12 +203,12 @@ class AddNewLifeConfigurator extends Component {
                     </div>
 
                     <div className="footCon">
-                        <div>
+                        {this.state.carSelected && <div>
                             <span>Confirm & Publish</span>
                             <button title={!this.state.carSelected ? "Select a Car" : "Confirm"} disabled={!this.state.carSelected} className="arrowBtn" onClick={this.createAccount.bind(this)}>
                                 <img src={require('../assets/add.jpg')} alt="addM" />
                             </button>
-                        </div>
+                        </div>}
                     </div>
                 </div>
             </div>

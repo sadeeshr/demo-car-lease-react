@@ -36,6 +36,8 @@ class Contract {
         this.eth = null
         this.props = null
         this.addNewObjectTxID = null
+        this.addNewObjectID = null
+        this.addNewObject = null
         this.investInObjectTxID = null
         this.claimDividendTxID = null
         this.paySubscriptionTxID = null
@@ -286,8 +288,19 @@ class Contract {
             if (err || result.length > 0) {
                 if (!err)
                     result.map(res => {
-                        if (res.transactionHash === this.addNewObjectTxID)
-                            this.props._setEventStatus({ eventAddNewObject: true, objectID: (result[0].data.objectID.toNumber()) }); setTimeout(() => { this.lcEventAddNewObjectUnsubscribe(); this.props._reloadTokens() }, 1000);
+                        if (res.transactionHash === this.addNewObjectTxID) {
+                            let objectID = result[0].data.objectID.toNumber()
+                            let newObjData = this.addNewObject
+                            newObjData["carID"] = objectID
+                            let data = {
+                                module: "membersdev",
+                                query: { "_id": this.addNewObjectID },
+                                data: this.addNewObject
+                            }
+                            console.log(data)
+                            this.props._updateContractData(data)
+                            this.props._setEventStatus({ eventAddNewObject: true, objectID: objectID }); setTimeout(() => { this.lcEventAddNewObjectUnsubscribe(); this.props._reloadTokens() }, 1000);
+                        }
                         return res
                     })
                 else
@@ -300,6 +313,8 @@ class Contract {
         this.filters.ElcAddNewObject.uninstall((err, result) => {
             console.log("LeaseTokenContract Event AddNewObject() Unsubscribe: ", err, result);
             this.addNewObjectTxID = null
+            this.addNewObjectID = null
+            this.addNewObject = null
         })
     }
 
@@ -336,13 +351,23 @@ class Contract {
      * Lease Contract Methods
      */
 
-    lcaddNewobject = (objectPrice, objectHash, objectType, objectDealer, objectFee, objectTerm, mileagesAvg, account) => {
+    lcaddNewobject = (objectid, objectPrice, objectHash, objectType, objectDealer, objectFee, objectTerm, mileagesAvg, account) => {
         console.log(`Adding New object for: ${objectPrice}, ${objectHash}, ${objectType}, ${objectDealer}, ${objectFee}, ${objectTerm}, ${mileagesAvg}, ${account}`);
         return this.LeaseTokenContract.createObject(objectPrice, objectHash, objectType, objectDealer, objectFee, objectTerm, mileagesAvg, { from: account })
             .then(result => {
                 console.log(`ADD NEW object RESULT: ${result}`);
                 this.lcEventAddNewObjectSubscribe()
                 this.addNewObjectTxID = result
+                this.addNewObjectID = objectid
+                this.addNewObject = {
+                    carPrice: objectPrice,
+                    carHash: objectHash,
+                    carDealer: objectDealer,
+                    carFee: objectFee,
+                    carTerm: objectTerm,
+                    carMileagesAvg: mileagesAvg,
+                    account: account
+                }
                 return { addNewObjectTxID: result, progress: false }
             })
     }

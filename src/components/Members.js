@@ -18,7 +18,7 @@ class Members extends Component {
     componentWillMount() {
         console.log("Members Props", this.props);
         this.setState({ eventAddNewObject: this.props.eventAddNewObject === "pending" ? this.props.eventAddNewObject : null })
-        if (this.props.reloadTokens || this.props.membersdev_new) this.fetchMembers()
+        if (this.props.reloadTokens || this.props.membersdev_new || this.props.AddNewUser) this.fetchMembers()
     }
 
     componentDidMount() {
@@ -34,7 +34,7 @@ class Members extends Component {
                 module: this.props.location.state.module
             },
             filter: {
-                _id: 0,
+                _id: 1,
                 username: 1,
                 town: 1,
                 message: 1,
@@ -111,7 +111,7 @@ class Members extends Component {
         let memberRows = [
             <div className="mtableLink" ref={divRef => this[member.carID] = divRef} key={i} onClick={() => member.authorized ? this.props._memberSelected(member, this.props.location.state.module) : console.log("MEMBER NOT AUTHORIZED")}>
                 <div className="membersBtn">
-                    {!member.authorized && <button title="Authorize" className="arrowBtn" onClick={() => this.props._lcAddUser(member.account, this.props.account)}>
+                    {!member.authorized && <button title="Authorize" className="arrowBtn" onClick={() => member.account !== this.props.account ? this.props._lcAddUser(member.account, this.props.account) : console.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
                         <img src={require('../assets/arrow.jpg')} alt="addM" />
                     </button>}
                 </div>
@@ -145,9 +145,9 @@ class Members extends Component {
             const members = this.props.membersdev.sort((a, b) => {
                 if (a.car && a.car.crowdsaleClosed)
                     return 0
-                else if ((a.car && a.car.totalRaised) && (b.car && b.car.totalRaised)) {
-                    console.log(`Car Raised-${b.carID}=> ${b.car.totalRaised.toNumber()} - Car Raised-${a.carID}=> ${a.car.totalRaised.toNumber()}`);
-                    return b.car.totalRaised.toNumber() - a.car.totalRaised.toNumber()
+                else if (a.totalRaised && b.totalRaised) {
+                    console.log(`Car Raised-${b.carID}=> ${b.totalRaised} - Car Raised-${a.carID}=> ${a.totalRaised}`);
+                    return b.totalRaised - a.totalRaised
                 } else
                     return 0
             })
@@ -227,6 +227,7 @@ class Members extends Component {
                     </div>
                     <div className="footCon">
                         <div>
+                            {this.props.AddNewUser && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.AddNewUser}>{!this.state.eventAddNewUser ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>} </Link>)}
                             {this.props.addNewObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.addNewObjectTxID}>{!this.state.eventAddNewObject ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>} </Link>)}
                             <input className="searchBtn" type="text" name="filterMembers" value={this.state.filter || ""} placeholder="Search" onChange={(e) => { console.log("SEARCH: ", e.target.value); this.setState({ filter: e.target.value }) }} />
                         </div>

@@ -319,9 +319,9 @@ export const _lcAmountObjects = () => {
     }
 }
 
-export const _lcAddNewObject = (objectPrice, objectHash, objectType, objectDealer, objectFee, objectTerm, mileagesAvg, account, module) => {
+export const _lcAddNewObject = (id, objectPrice, objectHash, objectType, objectDealer, objectFee, objectTerm, mileagesAvg, account, module) => {
     return (dispatch) => {
-        return contract.lcaddNewobject(objectPrice, objectHash, objectType, objectDealer, objectFee, objectTerm, mileagesAvg, account)
+        return contract.lcaddNewobject(id, objectPrice, objectHash, objectType, objectDealer, objectFee, objectTerm, mileagesAvg, account)
             .then(result => {
                 dispatch(push("/", { module: module, path: "members" }))
                 return dispatch(

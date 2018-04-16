@@ -11,6 +11,7 @@ const mapStateToProps = (state) => {
 
     return {
         lcCars: state.lcCars,
+        AddNewUser: state.AddNewUser,
         evTokens: state.evTokens,
         reloadTokens: state.reloadTokens,
         account: state.account,

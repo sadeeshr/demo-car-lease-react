@@ -183,12 +183,12 @@ const rootReducer = (state = initialState, action) => {
             {
                 let members = state.membersdev.map(member => {
                     if (member.carID === action.payload.id)
-                        member = { ...member, ...action.payload.id }
+                        member = { ...member, ...action.payload.result }
                     return member
                 })
 
                 if (state.member && (state.member.carID === action.payload.id))
-                    state.member = { ...state.member, ...action.payload.id }
+                    state.member = { ...state.member, ...action.payload.result }
 
                 return {
                     ...state,
