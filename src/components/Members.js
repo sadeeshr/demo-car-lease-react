@@ -111,7 +111,7 @@ class Members extends Component {
         let memberRows = [
             <div className="mtableLink" ref={divRef => this[member.carID] = divRef} key={i} onClick={() => member.authorized ? this.props._memberSelected(member, this.props.location.state.module) : console.log("MEMBER NOT AUTHORIZED")}>
                 <div className="membersBtn">
-                    {!member.authorized && <button title="Authorize" className="arrowBtn" onClick={() => console.log("AUTHORIZED USER")}>
+                    {!member.authorized && <button title="Authorize" className="arrowBtn" onClick={() => this.props._lcAddUser(member.account, this.props.account)}>
                         <img src={require('../assets/arrow.jpg')} alt="addM" />
                     </button>}
                 </div>

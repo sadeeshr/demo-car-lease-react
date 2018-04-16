@@ -108,6 +108,7 @@ const rootReducer = (state = initialState, action) => {
         case 'ALLOWANCE':
         case 'INVEST_IN_OBJECT_RESULT':
         case 'APPROVE':
+        case 'ADD_NEW_USER':
             return {
                 ...state,
                 ...action.payload
@@ -195,7 +196,7 @@ const rootReducer = (state = initialState, action) => {
                 }
             }
 
-        case 'AUTHORIZATION_RESULT':
+        case 'AUTHORIZATION':
             {
                 let members = state.membersdev.map(member => {
                     if (member.account === action.payload.account)

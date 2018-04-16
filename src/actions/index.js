@@ -354,13 +354,28 @@ export const _lcAuthorization = (account) => {
             .then(result => {
                 return dispatch(
                     {
-                        type: "AUTHORIZATION_RESULT",
+                        type: "AUTHORIZATION",
                         payload: result
                     }
                 )
             })
     }
 }
+
+export const _lcAddUser = (user, account) => {
+    return (dispatch) => {
+        return contract.lcAddUser(user, account)
+            .then(result => {
+                return dispatch(
+                    {
+                        type: "ADD_NEW_USER",
+                        payload: result
+                    }
+                )
+            })
+    }
+}
+
 
 export const _lcTotalSupply = () => {
     return (dispatch) => {

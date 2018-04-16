@@ -5,7 +5,6 @@ import BlockUi from 'react-block-ui';
 import ReactDOM from 'react-dom';
 import Coverflow from 'react-coverflow';
 
-
 const fn = function () {
     /* do your action */
 }
@@ -18,6 +17,12 @@ class AddNewLifeConfigurator extends Component {
         }
 
         this.carType = 1
+    }
+
+    componentDidMount() {
+        setTimeout(() => {
+            this.setState({ active: 0 })
+        }, 1500);
     }
 
 
@@ -62,26 +67,27 @@ class AddNewLifeConfigurator extends Component {
 
     createAccount = () => {
         this.setState({ progress: true })
-        const self = this.state
+        const car = this.props.cars[this.state.active]
+        const member = this.props.member
         // let membersList = this.props.members
 
-        const carHash = '0x' + md5(self.username + self.town)
+        const carHash = '0x' + md5(member.username + member.town)
 
         // let newMember = {
-        //     username: self.username || '',
-        //     fullname: self.fullname || '',
-        //     address: self.address || '',
-        //     town: self.town || '',
-        //     zip: self.zip || '',
-        //     iban: self.iban || '',
-        //     email: self.email || '',
-        //     message: self.message || '',
-        //     // carPic: self.carPic || '',
-        //     // carPrice: self.carPrice || '',
-        //     account: self.account || this.props.account,
-        //     profilePic: self.profilePic || '',
-        //     // carFee: self.carFee || '',
-        //     // carMonths: self.carMonths || '',
+        //     username: car.username || '',
+        //     fullname: car.fullname || '',
+        //     address: car.address || '',
+        //     town: car.town || '',
+        //     zip: car.zip || '',
+        //     iban: car.iban || '',
+        //     email: car.email || '',
+        //     message: car.message || '',
+        //     // carPic: car.carPic || '',
+        //     // carPrice: car.carPrice || '',
+        //     account: car.account || this.props.account,
+        //     profilePic: car.profilePic || '',
+        //     // carFee: car.carFee || '',
+        //     // carMonths: car.carMonths || '',
         //     module: this.props.location.state.module || 'westland'
         // }
 
@@ -90,7 +96,7 @@ class AddNewLifeConfigurator extends Component {
         //     data: newMember
         // }
         // this.props._setNewContractData(data)
-        this.props._lcAddNewObject(self.carPrice, carHash, this.carType, self.carDealer, self.carFee, self.carTerm, self.carMileage, this.props.account, this.props.location.state.module)
+        this.state.carSelected && this.props._lcAddNewObject(car.price, carHash, this.carType, car.dealer, car.fee, car.term, car.mileage, member.account, this.props.location.state.module)
 
         // this.props._writeNewContractData(data)
     }
@@ -98,7 +104,7 @@ class AddNewLifeConfigurator extends Component {
 
     render() {
         // if (this.props.members_new) this.props.history.goBack()
-        console.log(this.props.member);
+        console.log(this.props.member, `ACTIVE: ${this.state.active}`);
         const cars = this.props.cars || []
         console.log("CARS: ", cars);
         const img = { "maxHeight": "50px", "maxWidth": "118px", "display": "block", "width": "auto", "height": "auto" }
@@ -148,12 +154,12 @@ class AddNewLifeConfigurator extends Component {
                                     displayQuantityOfSide={0}
                                     navigation={false}
                                     enableHeading={false}
-                                    active={0}
+                                    active={this.state.active}
                                 >
                                     {
                                         cars.map((car, i) => {
                                             return (
-                                                <div key={i} className="newLifeItem">
+                                                <div key={i} className="newLifeItem" onClick={() => this.setState({ active: i, carSelected: true })}>
                                                     <div className="newlifeImage">
                                                         <img src={car.image} alt={car.model} />
                                                     </div>
@@ -199,7 +205,7 @@ class AddNewLifeConfigurator extends Component {
                     <div className="footCon">
                         <div>
                             <span>Confirm & Publish</span>
-                            <button className="arrowBtn" onClick={this.createAccount.bind(this)}>
+                            <button title={!this.state.carSelected ? "Select a Car" : "Confirm"} disabled={!this.state.carSelected} className="arrowBtn" onClick={this.createAccount.bind(this)}>
                                 <img src={require('../assets/add.jpg')} alt="addM" />
                             </button>
                         </div>

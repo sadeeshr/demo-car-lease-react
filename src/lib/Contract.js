@@ -287,7 +287,7 @@ class Contract {
                 if (!err)
                     result.map(res => {
                         if (res.transactionHash === this.addNewObjectTxID)
-                            this.props._setEventStatus({ eventAddNewObject: true, objectID: (result[0].data.objectID.toNumber() - 1) }); setTimeout(() => { this.lcEventAddNewObjectUnsubscribe(); this.props._reloadTokens() }, 1000);
+                            this.props._setEventStatus({ eventAddNewObject: true, objectID: (result[0].data.objectID.toNumber()) }); setTimeout(() => { this.lcEventAddNewObjectUnsubscribe(); this.props._reloadTokens() }, 1000);
                         return res
                     })
                 else
@@ -371,6 +371,15 @@ class Contract {
             .then(result => {
                 console.log(`Authorization RESULT: ${result[0]}`);
                 return { account: account, result: result[0] }
+            })
+    }
+
+    lcAddUser = (user, account) => {
+        console.log(`Add New User: ${account}`);
+        return this.LeaseTokenContract.addUser(user, { from: account })
+            .then(result => {
+                console.log(`Add New User RESULT: ${result}`);
+                return { AddNewUser: result }
             })
     }
 
