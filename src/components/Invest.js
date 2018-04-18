@@ -131,11 +131,10 @@ class Invest extends Component {
                             <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
                         </div></h1>
                 </div>
-                <div className="contentCon bg-none">
+                <div className="contentCon bg-none overflow">
                     <BlockUi tag="div" blocking={this.props.progress}>
                         <div className="carIntestCon">
-                            <div className="carCon">
-
+                            <div className="carCon" style={{ display: 'none' }}>
                                 <div className="carcol img">
                                     <img src={require('../assets/TeslaRoadster.png')} alt="cars" />
                                 </div>
@@ -146,7 +145,8 @@ class Invest extends Component {
                                     {<div className="carPrice"><strong>{this.props.crowdsaleClosed || "0"}</strong> cars</div>}
                                 </div>
                             </div>
-                            <div className="carCon">
+
+                            <div className="carCon"  style={{ display: 'none' }}>
 
                                 <div className="myaccount">
                                     {/*!this.state.eths && <div className="carTitle">"Click On Device"</div>*/}
@@ -196,7 +196,51 @@ class Invest extends Component {
                                     </div>
                                 </div> */}
                             </div>
-                            <div className="carCon active">
+
+
+                            <div className="membersCon">
+                                <div className="leaseCarCon invest">
+                                    <div className="balance">
+                                        <div className="balanceName">My Balance</div>
+                                        <div className="balanceNum">5.320.000 <span>Euro</span></div>
+                                    </div>
+                                    <div className="mtableLink">
+                                        <div className="mtableCar">
+                                            <img src={require('../assets/NotNeeded/car.png')} alt="carImage" />
+                                        </div>
+                                        <div className="mtableTokens">12550
+                                                        <p>150</p>
+                                        </div>
+                                        <div className="mtableUser">Yerontour
+                                                        <p>Monster</p>
+                                        </div>
+                                        <div className="mtableMnd">60 mnd
+                                                        <p>40.000 euro</p>
+                                        </div>
+                                    </div>
+                                    <div className="investAddCon">
+                                        <div class="arrowBtn">
+                                            <img src={require('../assets/add.jpg')} alt="add2" />
+                                        </div>
+                                        <div className="investAddInput">
+                                            <input maxLength="20" type="text" placeholder="Euro Token" />
+                                        </div>
+                                        <div className="investAddStatus">
+                                            <p>invest Euro</p>
+                                            <span className="pending">pending</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+
+                            <div className="carCon active" style={{ display: 'none' }}>
 
                                 <div className="mtableLink">
                                     <div className="mtableTokens" title="Car ID">{this.props.member.totalRaised || ""} <p title="EVTokens">{this.props.member.evTokens}</p></div>
@@ -243,6 +287,11 @@ class Invest extends Component {
 
                         </div>
                     </BlockUi>
+                </div>
+                <div className="footCon">
+                    <div className="arrowBtn back">
+                        <img src={require('../assets/back.jpg')} alt="back" />
+                    </div>
                 </div>
             </div>
         </div>

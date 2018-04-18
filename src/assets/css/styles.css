@@ -108,9 +108,13 @@ img.addBtn {
    width: 93%;
    background: rgba(255,255,255, .5);
    border-radius: 10px;
-   padding: 10px;
+   padding: 0px 10px;
    margin-bottom: 5px;
    display: inline-block;
+   -webkit-transition: all .2s ease;
+   -moz-transition: all .2s ease;
+   -o-transition: all .2s ease;
+   transition: all .2s ease;
    
 }
 
@@ -660,6 +664,76 @@ table tr td {
    padding-left: 5px;
    padding-right: 5px;
 }
+
+.invest .balance {
+    height: initial;
+    padding: 10px;
+    opacity: 1;
+}
+.invest .mtableLink{
+    display: inline-block;
+    padding: 5px 0;
+    border-radius: 30px;
+}
+.invest .mtableUser {
+    padding: 0 15px;
+    width: 100px;
+    float: left;
+    font-size: 18px;
+    cursor: default;
+}
+.mtableMnd{
+    text-align: right;
+}
+.mtableMnd p{
+    margin: 0;
+}
+.invest .mtableMnd {
+    -webkit-transition: all .2s ease;
+    -moz-transition: all .2s ease;
+    -o-transition: all .2s ease;
+    transition: all .2s ease;
+    opacity: 1;
+    height: initial;
+}
+.balance {
+    background: rgba(255,255,255, .3);
+    border-radius: 10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding: 0;
+    opacity: 0;
+    text-align: center;
+    height: 0;
+    -webkit-transition: all .2s ease;
+    -moz-transition: all .2s ease;
+    -o-transition: all .2s ease;
+    transition: all .2s ease;
+}
+.invest .mtableCar {
+    width: 100%;
+    margin-bottom: 10px;
+    float: right;
+    text-align: right;
+    -webkit-transition: all .2s ease;
+    -moz-transition: all .2s ease;
+    -o-transition: all .2s ease;
+    transition: all .2s ease;
+}
+
+.invest .mtableCar img{
+    display: block;
+    height: auto;
+}
+
+.balanceNum {
+    font-weight: 800;
+    font-size: 18px;
+}
+.balanceNum span {
+    font-weight: normal;
+}
+
 .leaseCarCon:hover, .leaseCarCon:active, .leaseCarCon:focus{
    border: 3px solid rgba(255, 215, 0, .3);
 }
@@ -741,7 +815,7 @@ table tr td {
 .mtableTokens{
    width: 60px;
    float: left;
-   padding-right: 10px;
+   padding-right: 5px;
    text-align: right;
    cursor: default;
    font-size: 18px;
@@ -755,6 +829,7 @@ table tr td {
    cursor: default;
 }
 .mtableUser p{
+    font-size: 12px;
 margin: 0;
 }
 .mtableCar{
@@ -1059,3 +1134,63 @@ padding: 8px;
    margin-bottom: 10px;
 }
 
+.investAddCon{
+    background: rgba(255,255,255, .3);
+    border-radius: 10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    display: inline-block;
+    width: 90%;
+    padding: 5%;
+}
+
+.investAddCon .arrowBtn{
+    margin-right: 20px;
+    float: left;
+    left: initial;
+    text-align: center;
+    position: initial;
+}
+
+.investAddCon .arrowBtn img{
+    padding: 8px 0;
+}
+
+.investAddInput{
+    float: left;
+    margin-right: 10px;
+    text-align: right;
+}
+
+.investAddInput input{
+    width: 70px;
+    border-radius: 10px;
+    border: 3px solid #808080;
+    padding: 10px 10px;
+}
+
+.investAddStatus{
+    float: left;
+}
+
+.investAddStatus p{
+    margin: 0;
+}
+
+.investAddStatus span{
+    font-size: 12px;
+
+}
+
+.investAddStatus span.pending{
+    color: red;
+}
+
+.arrowBtn.back{
+    position: initial;
+    left: initial;
+}
+
+.arrowBtn.back img{
+    padding: 13px 0;
+}
