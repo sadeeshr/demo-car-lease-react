@@ -29,6 +29,7 @@ class Contract {
             EevTransfer: null,
             ElcAddNewObject: null
         }
+        this.timer = null
         this.filter = null
         this.watcher = null
         this.account = null
@@ -54,6 +55,7 @@ class Contract {
                 this.eth.coinbase().then(account => {
                     if (account) {
                         console.log("ACCOUNT: ", account);
+                        // this.getConfirmationsHash("0xf290b3e19ad0dc1bed93831bb04781af173f4643c55b270efb82235c55088150")
                         this.account = account;
                         this.props._setAccount({ account })
                         clearInterval(accountTimer)
@@ -106,6 +108,36 @@ class Contract {
             // evToken: this.LeaseTokenContract,
             // LeaseTokenContract: this.LeaseTokenContract
         }
+    }
+
+    getConfirmationsHash = (hash) => {
+        console.log("HASH: ", hash);
+        let blockStart, blockEnd;
+        this.timer = setInterval(() => {
+            console.log("CHECKING HASH CONFIRMATIONS:");
+            this.eth.getTransactionReceipt(hash)
+                .then(res => {
+                    if (res && res.blockNumber) {
+                        console.log("START BLOCK: ", res.blockNumber.toNumber())
+                        blockStart = res.blockNumber.toNumber()
+                    }
+                })
+                .then(
+                    blockStart && this.eth.blockNumber()
+                        .then(res => {
+                            blockEnd = res
+                            let confirmations = (blockEnd - blockStart)
+                            console.log("CURRENT BLOCK: ", res.toNumber())
+                            console.log("No. CONFs: ", confirmations, (confirmations > 0), this.timer)
+
+                            if (confirmations > 0) {
+                                this.props._hashConfirmations({ hashConfirmations: confirmations })
+                                clearInterval(this.timer)
+                            }
+                        })
+                )
+        }, 1000)
+
     }
 
     /**
@@ -351,7 +383,7 @@ class Contract {
      * Lease Contract Methods
      */
 
-    lcaddNewobject = (objectid, objectPrice, objectHash, objectType, objectDealer, objectFee, objectTerm, mileagesAvg, account) => {
+    lcCreateObject = (objectid, objectImage, objectPrice, objectHash, objectType, objectDealer, objectFee, objectTerm, mileagesAvg, account) => {
         console.log(`Adding New object for: ${objectPrice}, ${objectHash}, ${objectType}, ${objectDealer}, ${objectFee}, ${objectTerm}, ${mileagesAvg}, ${account}`);
         return this.LeaseTokenContract.createObject(objectPrice, objectHash, objectType, objectDealer, objectFee, objectTerm, mileagesAvg, { from: account })
             .then(result => {
@@ -360,6 +392,7 @@ class Contract {
                 this.addNewObjectTxID = result
                 this.addNewObjectID = objectid
                 this.addNewObject = {
+                    carPic: objectImage,
                     carPrice: objectPrice,
                     carHash: objectHash,
                     carDealer: objectDealer,

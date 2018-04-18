@@ -626,7 +626,7 @@ table tr td {
    left: 0;
 }
 .membersBtn .arrowBtn img{
-   width: 22px !important;
+   width: 18px !important; /*sadeesh changed from 22 to 18*/
 }
 
 .membersBtn a{

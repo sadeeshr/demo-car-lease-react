@@ -8,6 +8,7 @@ class Invest extends Component {
     constructor(props) {
         super(props)
         this.state = {}
+        this.confTimer = null
         this.rinkebyStatsURL = "https://rinkeby.etherscan.io/tx/"
     }
 
@@ -41,14 +42,20 @@ class Invest extends Component {
         if (nextProps.eventApprove && !this.state.eventApprove) { this.setState({ eventApprove: nextProps.eventApprove, ethInvest: null }) }
 
         // this.setState({ refreshValues: !this.state.refreshValues })
-        console.log("#### TOTAL SUPPLY: ######", nextProps.eventTransfer, this.props.totalSupply, nextProps.totalSupply);
+        console.log("#### TOTAL SUPPLY: ######", nextProps.eventTransfer, this.props.totalSupply, nextProps.totalSupply, this.props.hashConfirmations);
         if (nextProps.eventTransfer || nextProps.eventApprove || nextProps.eventClaim)
-            setTimeout(this.refreshValues, timeOut)
+            if (!this.props.hashConfirmations) this.props._getConfirmationsHash(this.props.investInObjectTxID)
 
-        if (this.props.totalSupply !== nextProps.totalSupply || this.props.allowance !== nextProps.allowance || this.props.unClaimedRedemption !== nextProps.unClaimedRedemption) {
-            // this.props._resetEvent() //temporary
-            if (nextProps.eventTransfer && !this.state.eventTransfer) { this.setState({ eventTransfer: nextProps.eventTransfer, ethInvest: null }) }
+        if (this.props.hashConfirmations && this.props.hashConfirmations > 0) {
+            // clearInterval(this.confTimer)
+            console.log("HASH CONFIRMS: ", this.props.hashConfirmations);
+            this.refreshValues()
         }
+
+        // if (this.props.totalSupply !== nextProps.totalSupply || this.props.allowance !== nextProps.allowance || this.props.unClaimedRedemption !== nextProps.unClaimedRedemption) {
+        // this.props._resetEvent() //temporary
+        if (nextProps.eventTransfer && !this.state.eventTransfer) { this.setState({ eventTransfer: nextProps.eventTransfer, ethInvest: undefined }) }
+        // }
         this.props = nextProps
     }
 

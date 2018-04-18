@@ -108,12 +108,12 @@ export const _contractDataResponse = (account, response) => {
     }
 }
 
-export const _memberSelected = (member, module) => {
+export const _memberSelected = (member, account, module) => {
     return (dispatch) => {
-        if (!member.carID) {
+        if (!member.carID && member.account === account) {
             dispatch(push("/", { module: module, path: "addnewlife" }))
         }
-        dispatch({
+        return dispatch({
             type: "SELECT_MEMBER",
             payload: member
         })
@@ -137,14 +137,21 @@ export const _resetMemberSelection = () => {
     }
 }
 
-// export const _getAccount = () => {
-//     return (dispatch) => {
-//         dispatch({
-//             type: "BASE_ACCOUNT",
-//             payload: contract.getAccount()
-//         })
-//     }
-// }
+export const _getConfirmationsHash = (hash) => {
+    return (dispatch) => {
+        dispatch({
+            type: "HASH_CONFIRMATIONS",
+            payload: contract.getConfirmationsHash(hash)
+        })
+    }
+}
+
+export const _hashConfirmations = (number) => {
+    return {
+        type: "HASH_CONFIRMATIONS",
+        payload: number
+    }
+}
 
 export const _setAccount = (account) => {
     return (dispatch) => {
@@ -319,9 +326,9 @@ export const _lcAmountObjects = () => {
     }
 }
 
-export const _lcAddNewObject = (id, objectPrice, objectHash, objectType, objectDealer, objectFee, objectTerm, mileagesAvg, account, module) => {
+export const _lcCreateObject = (id, objectImage, objectPrice, objectHash, objectType, objectDealer, objectFee, objectTerm, mileagesAvg, account, module) => {
     return (dispatch) => {
-        return contract.lcaddNewobject(id, objectPrice, objectHash, objectType, objectDealer, objectFee, objectTerm, mileagesAvg, account)
+        return contract.lcCreateObject(id, objectImage, objectPrice, objectHash, objectType, objectDealer, objectFee, objectTerm, mileagesAvg, account)
             .then(result => {
                 dispatch(push("/", { module: module, path: "members" }))
                 return dispatch(

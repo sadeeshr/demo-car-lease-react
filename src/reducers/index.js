@@ -109,6 +109,7 @@ const rootReducer = (state = initialState, action) => {
         case 'INVEST_IN_OBJECT_RESULT':
         case 'APPROVE':
         case 'ADD_NEW_USER':
+        case 'HASH_CONFIRMATIONS':
             return {
                 ...state,
                 ...action.payload

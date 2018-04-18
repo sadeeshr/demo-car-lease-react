@@ -109,12 +109,12 @@ class Members extends Component {
         // this.evTokenMyTokens(member.carID)
         const selected = (this.props.member && !this.props.member.crowdsaleClosed) ? (this.props.member.username === member.username ? true : false) : false
         let memberRows = [
-            <div className="mtableLink" ref={divRef => this[member.carID] = divRef} key={i} onClick={() => member.authorized ? this.props._memberSelected(member, this.props.location.state.module) : console.log("MEMBER NOT AUTHORIZED")}>
-                <div className="membersBtn">
-                    {!member.authorized && <button title="Authorize" className="arrowBtn" onClick={() => member.account !== this.props.account ? this.props._lcAddUser(member.account, this.props.account) : console.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
-                        <img src={require('../assets/arrow.jpg')} alt="addM" />
-                    </button>}
-                </div>
+            <div className="mtableLink" ref={divRef => this[member.carID] = divRef} key={i} onClick={() => member.authorized ? this.props._memberSelected(member, this.props.account, this.props.location.state.module) : console.log("MEMBER NOT AUTHORIZED")}>
+                {!member.authorized && <div className="membersBtn">
+                    <button title="Authorize" className="arrowBtn" onClick={() => member.account !== this.props.account ? this.props._lcAddUser(member.account, this.props.account) : console.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
+                        <img src={require('../assets/add.jpg')} alt="addM" />
+                    </button>
+                </div>}
                 <div className="mtableTokens">{member.car ? (member.crowdsaleClosed ? <span style={{ color: "green", fontSize: "12px" }}>Closed</span> : "0") : "0" || ""} <p>{member.evTokens}</p></div>
                 <div className="mtableUser">{member.username || ""} <p>{member.town || ""}</p></div>
                 {member.carPic && <div className="mtableCar"><img style={img} src={member.carPic || ""} alt="carImage" /><span title="Car Raised" style={{ fontSize: "12px" }}>Euro {member.carPrice}</span></div>}
@@ -125,14 +125,14 @@ class Members extends Component {
             memberRows.push(
 
                 <div className="rowSelect" key={'invest-' + i}>
-                    <div className="memberMesCon">{member.message}</div>
-                    <div className="memberMesBtns">
+                    <div style={{ cursor: member.carID ? "pointer" : "not-allowed" }} className="memberMesCon">{member.carID ? member.message : "Not Allowed to Add New Life Configurator"}</div>
+                    {member.carID && <div className="memberMesBtns">
                         <div className="membersBtn">
-                            <button className="arrowBtn" onClick={() => { this.props.history.push("/", { module: this.props.location.state.module, path: "invest" }) }}>
+                            <button className="arrowBtn" onClick={() => { member.authorized ? this.props.history.push("/", { module: this.props.location.state.module, path: "invest" }) : console.log("NO OBJECT CONFIGURED") }}>
                                 <img src={require('../assets/arrow.jpg')} alt="addM" />
                             </button>
                         </div>
-                    </div>
+                    </div>}
                 </div>
             )
         }
@@ -227,7 +227,7 @@ class Members extends Component {
                     </div>
                     <div className="footCon">
                         <div>
-                            {this.props.AddNewUser && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.AddNewUser}>{!this.state.eventAddNewUser ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>} </Link>)}
+                            {/*this.props.AddNewUser && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.AddNewUser}>{!this.state.eventAddNewUser ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>} </Link>)*/}
                             {this.props.addNewObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.addNewObjectTxID}>{!this.state.eventAddNewObject ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>} </Link>)}
                             <input className="searchBtn" type="text" name="filterMembers" value={this.state.filter || ""} placeholder="Search" onChange={(e) => { console.log("SEARCH: ", e.target.value); this.setState({ filter: e.target.value }) }} />
                         </div>

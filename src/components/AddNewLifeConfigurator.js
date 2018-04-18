@@ -96,7 +96,7 @@ class AddNewLifeConfigurator extends Component {
         //     data: newMember
         // }
         // this.props._setNewContractData(data)
-        this.state.carSelected && this.props._lcAddNewObject(member["_id"], car.price, carHash, this.carType, car.dealer, car.fee, car.term, car.mileage, member.account, this.props.location.state.module)
+        this.state.carSelected && this.props._lcCreateObject(member["_id"], car.image, car.price, carHash, this.carType, car.dealer, (this.state.carFee || car.fee), (this.state.carTerm || car.term), car.mileage, member.account, this.props.location.state.module)
 
         // this.props._writeNewContractData(data)
     }
@@ -170,11 +170,12 @@ class AddNewLifeConfigurator extends Component {
                                                         </span>
                                                         <span className="nl-con">
                                                             <label className="nl-label">Fee</label>
-                                                            <div className="nl-inp">{car.fee}</div>
+                                                            <input className="nl-inp" value={this.state.carFee || car.fee} onChange={(e) => this.setState({ carFee: e.target.value })} type="text" />
                                                         </span>
                                                         <span className="nl-con">
                                                             <label className="nl-label">Mnd</label>
-                                                            <div className="nl-inp">{car.term}</div>
+                                                            {/*<div className="nl-inp">{car.term}</div>*/}
+                                                            <input className="nl-inp" value={this.state.carTerm || car.term} onChange={(e) => this.setState({ carTerm: e.target.value })} type="text" />
                                                         </span>
                                                         <span className="nl-con">
                                                             <label className="nl-label">Price</label>

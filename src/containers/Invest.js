@@ -31,6 +31,7 @@ const mapStateToProps = (state) => {
         eventApprove: state.eventApprove,
         eventClaim: state.eventClaim,
         allowance: state.allowance,
+        hashConfirmations: state.hashConfirmations,
         [state.module]: state[state.module],
         [state.account]: state[state.account]
     }

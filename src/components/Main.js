@@ -6,6 +6,7 @@ import Invest from '../containers/Invest';
 import Invoices from '../containers/Invoices';
 import ModelViewer from 'metamask-logo'
 import AddNewLifeConfigurator from '../containers/AddNewLifeConfigurator';
+import { Link } from 'react-router-dom'
 
 class Main extends Component {
 
@@ -14,6 +15,7 @@ class Main extends Component {
         this.state = {
             alert: "Please Unlock Your Metamask"
         }
+        this.redirectURL = "http://www.1112.net/lastpage.html"
         this.viewer = ModelViewer({
 
             // Dictates whether width & height are px or multiplied
@@ -145,7 +147,7 @@ class Main extends Component {
                     <div className="contentBtn "><div hidden={!disabled} id="metamask-logo" style={{ textAlign: "center" }}><span hidden={!disabled} style={{ cursor: this.state.url ? "pointer" : "default" }} onClick={() => this.state.url ? window.open(this.state.url, "_blank") : ""}>{this.state.alert}</span></div></div>
                     {this.props.usernames && <div>
                         {/*<span>Your town here</span><button className="arrowBtn" hidden={disabled} disabled={disabled} onClick={() => this.props.history.push("/", { module: "AddMember", path: "home" })}><img src={require('../assets/arrow.jpg')} alt="addM" /></button>*/}
-                        <button className="lrBtn"><img src={require('../assets/blue-light.png')} /></button>
+                        <button className="lrBtn"><Link style={{ border: "none" }} target="_blank" to={this.redirectURL}><img src={require('../assets/blue-light.png')} /></Link></button>
                         <button className="lrBtn" onClick={() => this.props.history.push("/", { module: "westland", path: this.state.registered ? "members" : "addmember" })}><img src={require('../assets/red-light.png')} /></button>
                     </div>}
                     {/*<button onClick={() => this.props.history.push("/", { module: "westland", path: "members" })}>Members</button>*/}
