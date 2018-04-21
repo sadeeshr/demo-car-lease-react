@@ -390,7 +390,7 @@ class Contract {
         return this.LeaseTokenContract.createObject(objectPrice, objectHash, objectType, objectDealer, objectFee, objectTerm, mileagesAvg, { from: account })
             .then(result => {
                 console.log(`ADD NEW object RESULT: ${result}`);
-                this.lcEventAddNewObjectSubscribe()
+                // this.lcEventAddNewObjectSubscribe() // development
                 this.addNewObjectTxID = result
                 this.addNewObjectID = objectid
                 this.addNewObject = {
@@ -504,7 +504,7 @@ class Contract {
                 console.log(`Invest In Object RESULT: ${result}`);
                 // this.lcEventAddNewObjectSubscribe()    // contract missing event call, not calling this 
                 // this.startPendingTranscationWatcher()
-                this.euroEventTransferSubscribe()
+                // this.euroEventTransferSubscribe() // development
                 this.investInObjectTxID = result
                 return { investInObjectTxID: result, progress: false }
             })
@@ -516,7 +516,7 @@ class Contract {
         return this.LeaseTokenContract.paySubscription(objectID, month, milege, { from: account })
             .then(result => {
                 console.log(`paySubscription RESULT: ${result}`);
-                this.euroEventTransferSubscribe()
+                // this.euroEventTransferSubscribe() //development
                 this.paySubscriptionTxID = result
                 return { paySubscriptionTxID: result, progress: false }
             })
@@ -546,7 +546,7 @@ class Contract {
         return this.LeaseTokenContract.claimDividend(objectID, { from: account })
             .then(result => {
                 console.log(`claimDividend RESULT: ${result}`);
-                this.lcEventClaimSubscribe()
+                // this.lcEventClaimSubscribe() //development
                 this.claimDividendTxID = result
                 return { claimDividendTxID: result, progress: false }
             })

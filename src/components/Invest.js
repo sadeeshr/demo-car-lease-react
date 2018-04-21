@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import BigNumber from 'bignumber.js';
 import BlockUi from 'react-block-ui';
 import { Link } from 'react-router-dom'
+import Fade from 'react-reveal/Fade';
 
 class Invest extends Component {
 
@@ -31,14 +32,14 @@ class Invest extends Component {
 
     componentDidMount() {
         this.refreshValues()
-        setTimeout(() => this.props._lcInvestInObject(this.props.member.carID, "10", this.props.account), 5000);
+        // setTimeout(() => this.props._lcInvestInObject(this.props.member.carID, "10", this.props.account), 5000);
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.paySubscriptionTxID)
             nextProps._lcToClaimDividend(nextProps.member.carID, nextProps.account)
 
-        let timeOut = 1000
+        // let timeOut = 1000
         if (nextProps.eventClaim && !this.state.eventClaim) { this.setState({ eventClaim: nextProps.eventClaim, ethInvest: null }) }
         if (nextProps.eventApprove && !this.state.eventApprove) { this.setState({ eventApprove: nextProps.eventApprove, ethInvest: null }) }
 
@@ -105,7 +106,7 @@ class Invest extends Component {
         if (this.props.account && !this.props[this.props.account]) this.props._getBalance(this.props.account);
 
         const amountRemaining = this.props.member.carPrice - this.props.member.totalRaised
-        const allowedAmountToInvest = Math.min(Math.min(amountRemaining, this.props.allowance), this.props.euroTokenBalance)
+        // const allowedAmountToInvest = Math.min(Math.min(amountRemaining, this.props.allowance), this.props.euroTokenBalance)
         // const euroTokenBalance = this.props.euroTokenBalance ? (this.props.euroTokenBalance.length > 5 ? this.props.euroTokenBalance.substring(0, 5) + "..." : this.props.euroTokenBalance) : ""
         // (this.state.euroTokenBalance || "").substring(0, 8) + "..."
         const account = this.props.account ? this.props.account.substring(0, 7) + '.....' + this.props.account.substring(this.props.account.length - 5) : ""
@@ -132,61 +133,62 @@ class Invest extends Component {
                             <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
                         </div></h1>
                 </div>
-                <div className="contentCon bg-none overflow">
-                    <BlockUi tag="div" blocking={this.props.progress}>
-                        <div className="carIntestCon">
-                            <div className="carCon" style={{ display: 'none' }}>
-                                <div className="carcol img">
-                                    <img src={require('../assets/TeslaRoadster.png')} alt="cars" />
+                <Fade left>
+                    <div className="contentCon bg-none overflow">
+                        <BlockUi tag="div" blocking={this.props.progress}>
+                            <div className="carIntestCon">
+                                <div className="carCon" style={{ display: 'none' }}>
+                                    <div className="carcol img">
+                                        <img src={require('../assets/TeslaRoadster.png')} alt="cars" />
+                                    </div>
+                                    <div className="carcol">
+                                        <div className="carTitle"><strong>Total raised: </strong></div>
+                                        {/*<div className="carEth">{this.state.totalEthRaised || "0"} ETH</div>*/}
+                                        <div className="carEth"><strong>{this.props.totalSupply || "0"}</strong> Euro</div>
+                                        {<div className="carPrice"><strong>{this.props.crowdsaleClosed || "0"}</strong> cars</div>}
+                                    </div>
                                 </div>
-                                <div className="carcol">
-                                    <div className="carTitle"><strong>Total raised: </strong></div>
-                                    {/*<div className="carEth">{this.state.totalEthRaised || "0"} ETH</div>*/}
-                                    <div className="carEth"><strong>{this.props.totalSupply || "0"}</strong> Euro</div>
-                                    {<div className="carPrice"><strong>{this.props.crowdsaleClosed || "0"}</strong> cars</div>}
-                                </div>
-                            </div>
 
-                            <div className="carCon" style={{ display: 'none' }}>
+                                <div className="carCon" style={{ display: 'none' }}>
 
-                                <div className="myaccount">
-                                    {/*!this.state.eths && <div className="carTitle">"Click On Device"</div>*/}
-                                    {!this.props.account && <div className="carTitle">Please Unlock Your Metamask Account.</div>}
-                                    {this.state.eth && <div className="carTitle">{this.state.eth}</div>}
-                                    {this.state.ethBal && <div className="carEth">{this.state.ethBal} ETH</div>}
-                                    {this.props.account &&
-                                        <div>
+                                    <div className="myaccount">
+                                        {/*!this.state.eths && <div className="carTitle">"Click On Device"</div>*/}
+                                        {!this.props.account && <div className="carTitle">Please Unlock Your Metamask Account.</div>}
+                                        {this.state.eth && <div className="carTitle">{this.state.eth}</div>}
+                                        {this.state.ethBal && <div className="carEth">{this.state.ethBal} ETH</div>}
+                                        {this.props.account &&
+                                            <div>
 
-                                            <div className="mad1">
-                                                <div className="carTitle"><strong>My Account: </strong></div>
-                                                <div className="carPrice"><u>{account || ""}</u></div>
+                                                <div className="mad1">
+                                                    <div className="carTitle"><strong>My Account: </strong></div>
+                                                    <div className="carPrice"><u>{account || ""}</u></div>
+                                                </div>
+                                                <div className="mad2 ledgerImg">
+                                                    <img hidden={Array.isArray(this.state.eths) ? true : false} onClick={() => {/*this.connectLedger.bind(this)*/ }} src={require('../assets/ledgernanos2.png')} alt="ledger" />
+                                                </div>
+
+
+
+                                                {/*<div className="carPrice">{this.props[this.props.account] || ""} ETH</div>*/}
+                                                <div className="mad3 carPrice"><strong>{this.props.evTokenBalance || "0"}</strong> LeaseTokens</div>
+                                                <div className="mad4 carPrice"><strong>{this.props.euroTokenBalance || "0"}</strong> EuroTokens</div>
                                             </div>
-                                            <div className="mad2 ledgerImg">
-                                                <img hidden={Array.isArray(this.state.eths) ? true : false} onClick={() => {/*this.connectLedger.bind(this)*/ }} src={require('../assets/ledgernanos2.png')} alt="ledger" />
-                                            </div>
+                                        }
+                                        {
+                                            Array.isArray(this.state.eths) ?
+                                                <select onChange={(e) => e.target.value !== "" && this.setState({ eth: this.state.eths[e.target.value].account, ethBal: new BigNumber(this.state.eths[e.target.value].balance, 10).mul(1).round(0, BigNumber.ROUND_DOWN).div(1000000000000000000).toString(10) })}>
+                                                    <option value="" >Select</option>
+                                                    {
+                                                        this.state.eths.map((eth, i) => {
+                                                            return <option key={i} value={i}>{eth.account.substring(0, 7) + '.....' + eth.account.substring(eth.account.length - 5)} Balance: {new BigNumber(eth.balance, 10).mul(1).round(0, BigNumber.ROUND_DOWN).div(1000000000000000000).toString(10)}</option>
+                                                        })
+                                                    }
+                                                </select> :
+                                                this.state.eths ? this.state.eths + ".  Please check your device." : ""
+                                        }
+                                    </div>
 
-
-
-                                            {/*<div className="carPrice">{this.props[this.props.account] || ""} ETH</div>*/}
-                                            <div className="mad3 carPrice"><strong>{this.props.evTokenBalance || "0"}</strong> LeaseTokens</div>
-                                            <div className="mad4 carPrice"><strong>{this.props.euroTokenBalance || "0"}</strong> EuroTokens</div>
-                                        </div>
-                                    }
-                                    {
-                                        Array.isArray(this.state.eths) ?
-                                            <select onChange={(e) => e.target.value !== "" && this.setState({ eth: this.state.eths[e.target.value].account, ethBal: new BigNumber(this.state.eths[e.target.value].balance, 10).mul(1).round(0, BigNumber.ROUND_DOWN).div(1000000000000000000).toString(10) })}>
-                                                <option value="" >Select</option>
-                                                {
-                                                    this.state.eths.map((eth, i) => {
-                                                        return <option key={i} value={i}>{eth.account.substring(0, 7) + '.....' + eth.account.substring(eth.account.length - 5)} Balance: {new BigNumber(eth.balance, 10).mul(1).round(0, BigNumber.ROUND_DOWN).div(1000000000000000000).toString(10)}</option>
-                                                    })
-                                                }
-                                            </select> :
-                                            this.state.eths ? this.state.eths + ".  Please check your device." : ""
-                                    }
-                                </div>
-
-                                {/*  <div hidden={hideInvest} className="">
+                                    {/*  <div hidden={hideInvest} className="">
                                     <div className="carTitle investInput">
                                         <div className="arrowBtn">
                                             <img onClick={() => { this.state.authValue && this.props._euroApprove(this.state.authValue, this.props.account) }} src={require('../assets/add.jpg')} alt="add2" />
@@ -196,41 +198,41 @@ class Invest extends Component {
                                         {this.props.approveTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.approveTxID}>{!this.state.eventApprove ? <p className="p-authorized" style={{ color: "red" }}>pending</p> : <p className="p-authorized" style={{ color: "green" }}><i>Confirmed</i></p>}</Link>)}
                                     </div>
                                 </div> */}
-                            </div>
+                                </div>
 
 
-                            <div className="membersCon">
-                                <div className="leaseCarCon invest">
-                                    <div className="balance">
-                                        <div className="balanceName">My Balance</div>
-                                        <div className="balanceNum">{(this.props.euroTokenBalance + this.props.unClaimedRedemption)}<span> Euro</span></div>
-                                    </div>
-                                    <div className="mtableLink">
-                                        <div className="mtableCar">
-                                            <img src={this.props.member.carPic} alt="carImage" />
+                                <div className="membersCon">
+                                    <div className="leaseCarCon invest">
+                                        <div className="balance">
+                                            <div className="balanceName">My Balance</div>
+                                            <div className="balanceNum">{(this.props.euroTokenBalance + this.props.unClaimedRedemption)}<span> Euro</span></div>
                                         </div>
-                                        <div className="mtableTokens">{this.props.member.totalRaised}
-                                            <p>{this.props.member.evTokens}</p>
-                                        </div>
-                                        <div className="mtableUser">{this.props.member.username}
-                                            <p>{this.props.member.town}</p>
-                                        </div>
-                                        <div className="mtableMnd">{this.props.member.car.objectTerm.toNumber()} mnd
+                                        <div className="mtableLink">
+                                            <div className="mtableCar">
+                                                <img src={this.props.member.carPic} alt="carImage" />
+                                            </div>
+                                            <div className="mtableTokens">{this.props.member.totalRaised}
+                                                <p>{this.props.member.evTokens}</p>
+                                            </div>
+                                            <div className="mtableUser">{this.props.member.username}
+                                                <p>{this.props.member.town}</p>
+                                            </div>
+                                            <div className="mtableMnd">{this.props.member.car.objectTerm.toNumber()} mnd
                                                         <p>{this.props.member.car.objectPrice.toNumber()} euro</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="investAddCon">
-                                        <div class="arrowBtn">
-                                            <img onClick={() => this.props._lcInvestInObject(this.props.member.carID, this.state.ethInvest || "0", this.props.account)} src={require('../assets/add.jpg')} alt="add2" />
-                                        </div>
-                                        <div className="investAddInput">
-                                            <input value={(typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest} onChange={(e) => this.setState({ ethInvest: e.target.value })} maxLength="20" type="text" placeholder="Euro Token" />
-                                        </div>
-                                        <div className="investAddStatus">
-                                            <p>Invest Euro</p>
-                                            {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{!this.props.hashConfirmations ? <p className="p-euro" style={{ color: "red" }}>pending</p> : <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p>}</Link>)}
-                                        </div> {/*!this.state.eventTransfer &&*/}
-                                        {/*<div className="carTitle investInput">
+                                        <div className="investAddCon">
+                                            <div class="arrowBtn">
+                                                <img onClick={() => this.props._lcInvestInObject(this.props.member.carID, this.state.ethInvest || "0", this.props.account)} src={require('../assets/add.jpg')} alt="add2" />
+                                            </div>
+                                            <div className="investAddInput">
+                                                <input value={(typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest} onChange={(e) => this.setState({ ethInvest: e.target.value })} maxLength="20" type="text" placeholder="Euro Token" />
+                                            </div>
+                                            <div className="investAddStatus">
+                                                <p>Invest Euro</p>
+                                                {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.investInObjectTxID)) ? <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red" }}>pending</p>}</Link>)}
+                                            </div> {/*!this.state.eventTransfer &&*/}
+                                            {/*<div className="carTitle investInput">
                                             <div className="arrowBtn">
                                                 <img style={{ cursor: enableInvest ? "pointer" : "pointer" }} onClick={() => this.props._lcInvestInObject(this.props.member.carID, this.state.ethInvest || "0", this.props.account)} src={require('../assets/add.jpg')} alt="add2" />
                                             </div>
@@ -238,42 +240,42 @@ class Invest extends Component {
                                         <input className="membership-input" maxLength="20" value={(typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest} onChange={(e) => this.setState({ ethInvest: e.target.value })} type="text" placeholder="Euro Token" />
                                             {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{!this.state.eventTransfer ? <p className="p-euro" style={{ color: "red" }}>pending</p> : <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p>}</Link>)}
                             </div>*/}
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-
-
-
-
-                            <div className="carCon active" style={{ display: 'none' }}>
-
-                                <div className="mtableLink">
-                                    <div className="mtableTokens" title="Car ID">{this.props.member.totalRaised || ""} <p title="EVTokens">{this.props.member.evTokens}</p></div>
-                                    <div className="mtableUser">{this.props.member.username || ""}<p>{this.props.member.town || ""}</p></div>
-                                    <div className="mtableCar">
-                                        <img src={this.props.member.carPic || ""} alt="carImage" />
-                                        <span title="Price" style={{ fontSize: "12px" }}>Euro {this.props.member.carPrice || "0"}</span>
+                                        </div>
                                     </div>
                                 </div>
 
-                                {/* <div hidden={hideInvest} className="carcol img arrowBtn">
+
+
+
+
+
+
+
+                                <div className="carCon active" style={{ display: 'none' }}>
+
+                                    <div className="mtableLink">
+                                        <div className="mtableTokens" title="Car ID">{this.props.member.totalRaised || ""} <p title="EVTokens">{this.props.member.evTokens}</p></div>
+                                        <div className="mtableUser">{this.props.member.username || ""}<p>{this.props.member.town || ""}</p></div>
+                                        <div className="mtableCar">
+                                            <img src={this.props.member.carPic || ""} alt="carImage" />
+                                            <span title="Price" style={{ fontSize: "12px" }}>Euro {this.props.member.carPrice || "0"}</span>
+                                        </div>
+                                    </div>
+
+                                    {/* <div hidden={hideInvest} className="carcol img arrowBtn">
                                     <img onClick={() => this.props._lcInvestInObject(this.props.member.carID, this.state.ethInvest || "0", this.props.account)} src={require('../assets/add.jpg')} alt="add" />
                                 </div> */}
-                                <div hidden={hideInvest} className="">
-                                    <div className="carTitle investInput">
-                                        <div className="arrowBtn">
-                                            <img style={{ cursor: enableInvest ? "pointer" : "pointer" }} onClick={() => this.props._lcInvestInObject(this.props.member.carID, this.state.ethInvest || "0", this.props.account)} src={require('../assets/add.jpg')} alt="add2" />
-                                        </div>
-                                        Invest Euro:
+                                    <div hidden={hideInvest} className="">
+                                        <div className="carTitle investInput">
+                                            <div className="arrowBtn">
+                                                <img style={{ cursor: enableInvest ? "pointer" : "pointer" }} onClick={() => this.props._lcInvestInObject(this.props.member.carID, this.state.ethInvest || "0", this.props.account)} src={require('../assets/add.jpg')} alt="add2" />
+                                            </div>
+                                            Invest Euro:
                                         <input className="membership-input" maxLength="20" value={(typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest} onChange={(e) => this.setState({ ethInvest: e.target.value })} type="text" placeholder="Euro Token" />
-                                        {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{!this.state.eventTransfer ? <p className="p-euro" style={{ color: "red" }}>pending</p> : <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p>}</Link>)}
+                                            {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{!this.state.eventTransfer ? <p className="p-euro" style={{ color: "red" }}>pending</p> : <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p>}</Link>)}
+                                        </div>
                                     </div>
-                                </div>
-                                {/*<div className="carTitle investInput">
+                                    {/*<div className="carTitle investInput">
                                     <div className="arrowBtn">
                                         <img style={{ cursor: (this.props.unClaimedRedemption > 0) ? "pointer" : "not-allowed" }} onClick={() => { (this.props.unClaimedRedemption > 0) && this.props._lcClaimDividend(this.props.member.carID, this.props.account) }} src={require('../assets/add.jpg')} alt="add2" />
                                     </div>
@@ -282,21 +284,23 @@ class Invest extends Component {
                                         {this.props.claimDividendTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.claimDividendTxID}>{!this.state.eventClaim ? <p className="p-claim" style={{ color: "red" }}>pending</p> : <p className="p-claim" style={{ color: "green" }}><i>Confirmed</i></p>} </Link>)}
                                     </div>
                             </div>*/}
-                            </div>
-
-
-
-                            {this.state.txId && <div className="carCon">
-                                <div className="carcol">
-                                    <div className="carTitle">Transaction ID:</div>
-                                    <div className="carEth">{this.state.txId}</div>
-                                    <div className="carPrice"><a target="_blank" href={"https://rinkbey.etherscan.io/tx/" + this.state.txId}>Check Transaction </a></div>
                                 </div>
-                            </div>}
 
-                        </div>
-                    </BlockUi>
-                </div>
+
+
+
+                                {this.state.txId && <div className="carCon">
+                                    <div className="carcol">
+                                        <div className="carTitle">Transaction ID:</div>
+                                        <div className="carEth">{this.state.txId}</div>
+                                        <div className="carPrice"><a target="_blank" href={"https://rinkbey.etherscan.io/tx/" + this.state.txId}>Check Transaction </a></div>
+                                    </div>
+                                </div>}
+
+                            </div>
+                        </BlockUi>
+                    </div>
+                </Fade>
                 {/*<div className="footCon">
                     <div className="arrowBtn back">
                         <img src={require('../assets/back.jpg')} alt="back" />

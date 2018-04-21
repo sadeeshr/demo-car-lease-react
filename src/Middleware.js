@@ -33,6 +33,9 @@ io.on('connection', (socket) => {
     console.log(`Online Connections: ${online}`);
     socket.emit('response', "You are Online now");
 
+    // setTimeout(() => {
+    web3.subscribeEvents(socket) // subscribe to events
+    // }, 3000);
     // socket.on('user', data => user.handleUser(socket, data));
     // socket.on('admin', data => admin.handleAdmin(socket, data));
 
@@ -67,7 +70,7 @@ handleNew = (socket, request) => {
             if (err || !result) {
                 console.log(err);
             } else {
-                socket.emit('data', { module: request.result || request.module + "_new", result: true })
+                socket.emit('data', { module: ((request.result || request.module) + "_new"), result: true })
             }
         })
 }
@@ -80,11 +83,9 @@ handleUpdate = (socket, data) => {
             update: { $set: data.data },
             new: true
         },
-        (err, result) => { console.log("RESULT: ", result); socket.emit('data', { module: data.result || data.module + "_edit", result: true }) });
+        (err, result) => { console.log("RESULT: ", result); socket.emit('data', { module: ((data.result || data.module) + "_edit"), result: true }) });
 }
 
-setTimeout(() => {
-    web3.test()
-}, 3000);
+
 
 

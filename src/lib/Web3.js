@@ -3,7 +3,7 @@ const RINKEBY_NODE_URL = "wss://rinkeby.infura.io/ws" //infura for testing webso
 
 const web3 = new Web3(new Web3.providers.WebsocketProvider(RINKEBY_NODE_URL));
 
-console.log("WSS WEB3: ", web3)
+// console.log("WSS WEB3: ", web3)
 
 const spender = "0x4ad12Ef400a68Fa431F3908e8df2E51E95BAb113" // Lease Token Contract address as spender for Approve / Allowance methods
 const contracts = {
@@ -24,7 +24,7 @@ const euroToken = new web3.eth.Contract(contracts.euroToken.abi, contracts.euroT
 const LeaseTokenContract = new web3.eth.Contract(contracts.LeaseTokenContract.abi, contracts.LeaseTokenContract.address)
 
 // console.log("Euro Token: ", euroToken);
-console.log("Lease Token Contract: ", LeaseTokenContract);
+// console.log("Lease Token Contract: ", LeaseTokenContract);
 
 // euroToken.methods.balanceOf("0x423b7b8da5ec685130670a978a1a680dfa27c879")
 //     // .on('transactionHash', function (hash) {
@@ -52,14 +52,28 @@ console.log("Lease Token Contract: ", LeaseTokenContract);
 //     })
 //     .on('error', console.error);
 
-test = () => {
+subscribeEvents = (socket) => {
     console.log("!!! Subscribing to all events !!!");
     // euroToken.events.allEvents("latest", (error, event) => error ? console.error("euroToken EVENT ERROR: ", error) : console.log("euroToken EVENT: ", event))
-    LeaseTokenContract.events.allEvents("latest", (error, event) => error ? console.error("LeaseTokenContract EVENT ERROR: ", error) : console.log("LeaseTokenContract EVENT: ", event))
+    LeaseTokenContract.events.allEvents("latest", (error, event) => error ? console.error("LeaseTokenContract EVENT ERROR: ", error) : handleEvent(socket, event))
+}
+
+handleEvent = (socket, event) => {
+    console.log("LeaseTokenContract EVENT: ", event)
+    // console.log(event.event);
+    // switch (event.event) {
+    //     case value:
+
+    //         break;
+
+    //     default:
+    //         break;
+    // }
+    socket.emit('event', event);
 }
 
 
 
 module.exports = {
-    test: test
+    subscribeEvents: subscribeEvents
 }

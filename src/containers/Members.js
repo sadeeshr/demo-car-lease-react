@@ -15,6 +15,7 @@ const mapStateToProps = (state) => {
         evTokens: state.evTokens,
         reloadTokens: state.reloadTokens,
         account: state.account,
+        event: state.event,
         member: state.member,
         members: state.members,
         members_new: state.members_new,

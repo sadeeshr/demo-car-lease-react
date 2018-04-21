@@ -14,6 +14,7 @@ const mapStateToProps = (state) => {
         euroTokenBalance: state.euroTokenBalance,
         evTokens: state.evTokens,
         account: state.account,
+        event: state.event,
         module: state.module,
         member: state.member,
         cars: state.cars,

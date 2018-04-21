@@ -53,7 +53,7 @@ class Members extends Component {
         this.props = nextProps
         console.log("Members Update Props", nextProps);
         // if (this.props.members && ) this.props._reloadTokens()
-        if (this.props.reloadTokens) this.fetchMembers()
+        if (this.props.reloadTokens || (this.props.event && (this.props.event.event === "Transfer"))) this.fetchMembers()
         if (this.props.eventAddNewObject && this.props.objectID && this.props.newObject) {
             let objectID = this.props.objectID
             let newObject = this.props.newObject

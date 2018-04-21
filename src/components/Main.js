@@ -7,6 +7,7 @@ import Invoices from '../containers/Invoices';
 import ModelViewer from 'metamask-logo'
 import AddNewLifeConfigurator from '../containers/AddNewLifeConfigurator';
 import { Link } from 'react-router-dom'
+import NotificationSystem from 'react-notification-system';
 
 class Main extends Component {
 
@@ -99,10 +100,40 @@ class Main extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.props = nextProps
+        console.log("Main Update Props: ", nextProps);
+
+        if (nextProps.event && this.props.event !== nextProps.event) {
+            switch (nextProps.event.event) {
+                case "Transfer":
+                    {
+                        const txFrom = this.props.members.find(member => member.account.toLowerCase() === nextProps.event.returnValues.to.toLowerCase())
+                        const txTo = this.props.members.find(member => member.carID && (member.carID.toString() === nextProps.event.returnValues.objectId))
+                        const value = nextProps.event.returnValues.value
+                        console.log(txFrom, txTo, value);
+                        let event = {
+                            title: "Investment Update",
+                            message: `Awesome, ${txFrom.username} ${txFrom.town} has just invested ${value} euros on ${txTo.username} ${txTo.town}'s Car`,
+                            level: "info",
+                            position: "tr",
+                            autoDismiss: 5
+                        }
+                        this.props._setEventAlert(event)
+                        break;
+                    }
+
+                default:
+                    break;
+            }
+        }
+        if (nextProps.eventAlert && (this.props.eventAlert !== nextProps.eventAlert)) {
+            console.log(this.refs)
+            this.refs.notificationSystem.addNotification(nextProps.eventAlert);
+        }
+
         this.checkRegistered()
         if (nextProps.socket && !nextProps.usernames) this.fetchUserData()
         if (nextProps.location.state) this.renderComponent()
+        this.props = nextProps
 
     }
 
@@ -110,7 +141,7 @@ class Main extends Component {
         const img = { "maxHeight": "95px", "maxWidth": "180px", "display": "block", "width": "auto", "height": "auto" }
         // const thumbImg = { "maxHeight": "40px", "maxWidth": "40px", "display": "block", "width": "auto", "height": "auto" }
         const disabled = this.props.account ? false : true
-        const cursor = this.props.account ? "pointer" : "not-allowed"
+        // const cursor = this.props.account ? "pointer" : "not-allowed"
 
         return <div className="content-border">
             <div className="mainContentCon">
@@ -147,8 +178,8 @@ class Main extends Component {
                     <div className="contentBtn "><div hidden={!disabled} id="metamask-logo" style={{ textAlign: "center" }}><span hidden={!disabled} style={{ cursor: this.state.url ? "pointer" : "default" }} onClick={() => this.state.url ? window.open(this.state.url, "_blank") : ""}>{this.state.alert}</span></div></div>
                     {this.props.usernames && <div>
                         {/*<span>Your town here</span><button className="arrowBtn" hidden={disabled} disabled={disabled} onClick={() => this.props.history.push("/", { module: "AddMember", path: "home" })}><img src={require('../assets/arrow.jpg')} alt="addM" /></button>*/}
-                        <button className="lrBtn"><Link style={{ border: "none" }} target="_blank" to={this.redirectURL}><img src={require('../assets/blue-light.png')} /></Link></button>
-                        <button className="lrBtn" onClick={() => this.props.history.push("/", { module: "westland", path: this.state.registered ? "members" : "addmember" })}><img src={require('../assets/red-light.png')} /></button>
+                        <button className="lrBtn"><Link style={{ border: "none" }} target="_blank" to={this.redirectURL}><img alt="blue" src={require('../assets/blue-light.png')} /></Link></button>
+                        <button className="lrBtn" onClick={() => this.props.history.push("/", { module: "westland", path: this.state.registered ? "members" : "addmember" })}><img alt="red" src={require('../assets/red-light.png')} /></button>
                     </div>}
                     {/*<button onClick={() => this.props.history.push("/", { module: "westland", path: "members" })}>Members</button>*/}
                 </div>
@@ -183,6 +214,7 @@ class Main extends Component {
         console.log("Main State: ", this.state);
         return (
             <div>
+                <NotificationSystem ref="notificationSystem" />
                 {this.renderComponent()}
             </div>
         )

@@ -25,6 +25,20 @@ export const _socketStatus = (status) => {
     }
 }
 
+export const _setEvent = (event) => {
+    return {
+        type: "SET_EVENT",
+        payload: event
+    }
+}
+
+export const _setEventAlert = (alert) => {
+    return {
+        type: "SET_EVENT_ALERT",
+        payload: alert
+    }
+}
+
 export const _initContract = (props, web3) => {
     return (dispatch) => {
         dispatch({

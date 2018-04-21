@@ -60,6 +60,18 @@ const rootReducer = (state = initialState, action) => {
                 // usernames: null
             }
 
+        case 'SET_EVENT':
+            return {
+                ...state,
+                event: action.payload
+            }
+
+        case 'SET_EVENT_ALERT':
+            return {
+                ...state,
+                eventAlert: action.payload
+            }
+
         case 'RELOAD_TOKENS':
             return {
                 ...state,

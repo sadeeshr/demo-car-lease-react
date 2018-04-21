@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import md5 from 'md5';
+// import md5 from 'md5';
 import BlockUi from 'react-block-ui';
 
 class AddMember extends Component {
@@ -59,7 +59,7 @@ class AddMember extends Component {
         const self = this.state
         // let membersList = this.props.members
 
-        const carHash = '0x' + md5(self.username + self.town)
+        // const carHash = '0x' + md5(self.username + self.town)
 
         let newMember = {
             username: self.username || '',

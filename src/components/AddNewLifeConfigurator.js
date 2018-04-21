@@ -2,12 +2,7 @@ import React, { Component } from 'react'
 import md5 from 'md5';
 import BlockUi from 'react-block-ui';
 
-import ReactDOM from 'react-dom';
 import Coverflow from 'react-coverflow';
-
-const fn = function () {
-    /* do your action */
-}
 
 class AddNewLifeConfigurator extends Component {
     constructor(props) {

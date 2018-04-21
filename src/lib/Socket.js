@@ -57,6 +57,10 @@ class Socket {
             console.log("DATA: ", data, this.account);
             if (data) this.props._contractDataResponse(this.account, { [data.module]: data.result });
         })
+        this.socket.on('event', (data) => {
+            console.log("EVENT: ", data)
+            if (data) this.props._setEvent(data)
+        })
     }
 
     disconnectSocket = () => this.socket.disconnect()
