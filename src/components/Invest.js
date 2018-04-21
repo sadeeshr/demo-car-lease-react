@@ -31,6 +31,7 @@ class Invest extends Component {
 
     componentDidMount() {
         this.refreshValues()
+        setTimeout(() => this.props._lcInvestInObject(this.props.member.carID, "10", this.props.account), 5000);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -146,7 +147,7 @@ class Invest extends Component {
                                 </div>
                             </div>
 
-                            <div className="carCon"  style={{ display: 'none' }}>
+                            <div className="carCon" style={{ display: 'none' }}>
 
                                 <div className="myaccount">
                                     {/*!this.state.eths && <div className="carTitle">"Click On Device"</div>*/}

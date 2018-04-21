@@ -83,7 +83,7 @@ class Main extends Component {
                 account: 1
             }
         }
-        if (!this.props.membersdev && this.props.socket) this.props._fetchContractData(this.props.account, data)
+        if (!this.props.members && this.props.socket) this.props._fetchContractData(this.props.account, data)
         this.checkRegistered()
     }
 

@@ -86,8 +86,8 @@ export const _updateContractData = (data) => {
 
 export const _contractDataResponse = (account, response) => {
     return (dispatch) => {
-        if (response.membersdev)
-            response.membersdev.map(member => {
+        if (response.members)
+            response.members.map(member => {
                 console.log("MEMBERS: ", member);
                 dispatch(_lcAuthorization(member.account))
                 // dispatch(_lcLeaseObjectCycle(0))

@@ -1,6 +1,7 @@
 const mongo = require('./lib/Mongo')
 const fs = require('fs')
 // const sharp = require('sharp')
+const web3 = require('./lib/Web3')
 
 var options = {
     key: fs.readFileSync('./certs/blockchain.techiearea.com/key.pem'),   //relative path to package json run script
@@ -66,7 +67,7 @@ handleNew = (socket, request) => {
             if (err || !result) {
                 console.log(err);
             } else {
-                socket.emit('data', { module: request.module + "_new", result: true })
+                socket.emit('data', { module: request.result || request.module + "_new", result: true })
             }
         })
 }
@@ -79,5 +80,11 @@ handleUpdate = (socket, data) => {
             update: { $set: data.data },
             new: true
         },
-        (err, result) => { console.log("RESULT: ", result); socket.emit('data', { module: data.module + "_edit", result: true }) });
+        (err, result) => { console.log("RESULT: ", result); socket.emit('data', { module: data.result || data.module + "_edit", result: true }) });
 }
+
+setTimeout(() => {
+    web3.test()
+}, 3000);
+
+

@@ -57,7 +57,7 @@ class AddMember extends Component {
     createAccount = () => {
         this.setState({ progress: true })
         const self = this.state
-        // let membersList = this.props.membersdev
+        // let membersList = this.props.members
 
         const carHash = '0x' + md5(self.username + self.town)
 
@@ -81,6 +81,7 @@ class AddMember extends Component {
 
         let data = {
             module: "membersdev",
+            result: "members",
             data: newMember
         }
         // this.props._setNewContractData(data)
@@ -91,7 +92,7 @@ class AddMember extends Component {
 
 
     render() {
-        if (this.props.membersdev_new) this.props.history.push("/", { module: this.props.location.state.module, path: "members" })
+        if (this.props.members_new) this.props.history.push("/", { module: this.props.location.state.module, path: "members" })
         const cars = this.props.cars || []
         console.log("CARS: ", cars);
         const img = { "maxHeight": "50px", "maxWidth": "118px", "display": "block", "width": "auto", "height": "auto" }
@@ -214,7 +215,7 @@ class AddMember extends Component {
                                     <span className="form-input-containers marginBttm inputAddbtn">
                                         <div className="upload-selfieCon">
                                             <div className="image-upload" htmlFor="imageUpload">
-                                                <label className="image-upload-selfieCon"style={{ "textAlign": "center", }} htmlFor="prPicIn">
+                                                <label className="image-upload-selfieCon" style={{ "textAlign": "center", }} htmlFor="prPicIn">
                                                     <img className="image-upload-selfie" src={require('../assets/upload.jpg')} alt="prPic" />
                                                 </label>
                                                 <input type="file" id="prPicIn" onChange={(e) => { this.fileUploadHandler(e.target.files[0], "profilePic") }} />
