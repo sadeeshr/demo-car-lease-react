@@ -105,6 +105,7 @@ const rootReducer = (state = initialState, action) => {
         case 'SUM_BALANCE_OF_RESULT':
         case 'PAY_SUBSCRIPTION_RESULT':
         case 'CLAIM_DIVIDEND_RESULT':
+        case 'TO_CLAIM_TOTAL_RESULT':
         case 'ALLOWANCE':
         case 'INVEST_IN_OBJECT_RESULT':
         case 'APPROVE':

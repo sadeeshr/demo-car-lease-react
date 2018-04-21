@@ -113,8 +113,10 @@ class Contract {
     getConfirmationsHash = (hash) => {
         console.log("HASH: ", hash);
         let blockStart, blockEnd;
-        this.timer = setInterval(() => {
+        let timer = setInterval(() => {
             console.log("CHECKING HASH CONFIRMATIONS:");
+            if ((blockEnd - blockStart) > 0)
+                clearInterval(timer)
             this.eth.getTransactionReceipt(hash)
                 .then(res => {
                     if (res && res.blockNumber) {
@@ -128,15 +130,14 @@ class Contract {
                             blockEnd = res
                             let confirmations = (blockEnd - blockStart)
                             console.log("CURRENT BLOCK: ", res.toNumber())
-                            console.log("No. CONFs: ", confirmations, (confirmations > 0), this.timer)
+                            console.log("No. CONFs: ", confirmations, (confirmations > 0))
 
                             if (confirmations > 0) {
                                 this.props._hashConfirmations({ hashConfirmations: confirmations })
-                                clearInterval(this.timer)
                             }
                         })
                 )
-        }, 1000)
+        }, 5000)
 
     }
 
@@ -528,6 +529,16 @@ class Contract {
                 return { unClaimedRedemption: result[0].toString(), progress: false }
             })
     }
+
+    lcToClaimTotal = (account) => {
+        console.log(`Calling To Claim Total.`);
+        return this.LeaseTokenContract.toClaimTotal(account)
+            .then(result => {
+                console.log(`ToClaimTotal RESULT: ${result[0].toNumber()}`);
+                return { unClaimedRedemption: result[0].toNumber() }
+            })
+    }
+
 
     lcClaimDividend = (objectID, account) => {
         console.log(`Calling Claim Interest And Redemption.`);

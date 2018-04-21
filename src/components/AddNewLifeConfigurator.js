@@ -96,7 +96,7 @@ class AddNewLifeConfigurator extends Component {
         //     data: newMember
         // }
         // this.props._setNewContractData(data)
-        this.state.carSelected && this.props._lcCreateObject(member["_id"], car.image, car.price, carHash, this.carType, car.dealer, (this.state.carFee || car.fee), (this.state.carTerm || car.term), car.mileage, member.account, this.props.location.state.module)
+        this.state.carSelected && this.props._lcCreateObject(member["_id"], car.image, car.price, carHash, this.carType, car.dealer, (this.state.carFee || car.fee), (this.state.carTerm || car.term), (this.state.carMileage || car.mileage), member.account, this.props.location.state.module)
 
         // this.props._writeNewContractData(data)
     }
@@ -113,7 +113,7 @@ class AddNewLifeConfigurator extends Component {
                 <div className="mainContentCon">
 
                     <div className="navCon">
-                        <h1 id="header"><div className="fl"><i className="flaticon-back" onClick={() => this.props.history.goBack()}></i></div>Select Car<div className="fr"><i onClick={() => this.props.history.push("/")} className="flaticon-home"></i></div></h1>
+                        <h1 id="header"><div className="fl"><i className="flaticon-back" onClick={() => this.props.history.goBack()}></i></div>New Life Configurator<div className="fr"><i onClick={() => this.props.history.push("/")} className="flaticon-home"></i></div></h1>
                     </div>
 
                     <div className="contentCon overflow bg-none">
@@ -182,7 +182,11 @@ class AddNewLifeConfigurator extends Component {
                                                             <div className="nl-inp">{car.price}</div>
                                                         </span>
                                                         <span className="nl-con">
-                                                            <label className="nl-label">Price</label>
+                                                            <label className="nl-label">km p/j</label>
+                                                            <input className="nl-inp" value={this.state.carMileage || car.mileage} onChange={(e) => this.setState({ carMileage: e.target.value })} type="text" />
+                                                        </span>
+                                                        <span className="nl-con">
+                                                            <label className="nl-label">Upload</label>
                                                             <div className="nl-inp">Reservation</div>
                                                         </span>
                                                     </div>

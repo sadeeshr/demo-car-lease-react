@@ -49,7 +49,7 @@ class Invest extends Component {
         if (this.props.hashConfirmations && this.props.hashConfirmations > 0) {
             // clearInterval(this.confTimer)
             console.log("HASH CONFIRMS: ", this.props.hashConfirmations);
-            this.refreshValues()
+            // this.refreshValues()
         }
 
         // if (this.props.totalSupply !== nextProps.totalSupply || this.props.allowance !== nextProps.allowance || this.props.unClaimedRedemption !== nextProps.unClaimedRedemption) {
@@ -76,7 +76,7 @@ class Invest extends Component {
         this.props._euroAllowance(this.props.account)
 
         // fetch Object ID's To Claim Dividend Value
-        // this.props._lcToClaimDividend(this.props.member.carID, this.props.account)
+        this.props._lcToClaimTotal(this.props.account)
 
         // fetch Object ID's Values
         this.props._lcLeaseObject(this.props.member.carID)
@@ -90,7 +90,7 @@ class Invest extends Component {
         // fetch Object ID's EVTokens
         this.props._evMyTokens(this.props.account, this.props.member.carID)
 
-        // if (!this.props.unClaimedRedemption) this.props._lcToClaimDividend(this.props.member.carID, this.props.account)
+        if (!this.props.unClaimedRedemption) this.props._lcToClaimTotal(this.props.account)
         if (!this.props.totalSupply) this.props._lcTotalSupply()
         if (!this.props.euroTokenBalance) this.props._euroBalanceOf(this.props.account)
         if (!this.props.evTokenBalance) this.props._evBalanceOf(this.props.account)
@@ -127,7 +127,7 @@ class Invest extends Component {
                         </div>
                         Invest
                         <div className="fr">
-                            <i title="Invoices" className="flaticon-invoice marIcon" onClick={() => this.props.history.push("/", { path: "invoices" })}></i>
+                            {/*<i title="Invoices" className="flaticon-invoice marIcon" onClick={() => this.props.history.push("/", { path: "invoices" })}></i>*/}
                             <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
                         </div></h1>
                 </div>
@@ -146,7 +146,7 @@ class Invest extends Component {
                                 </div>
                             </div>
 
-                            <div className="carCon"  style={{ display: 'none' }}>
+                            <div className="carCon" style={{ display: 'none' }}>
 
                                 <div className="myaccount">
                                     {/*!this.state.eths && <div className="carTitle">"Click On Device"</div>*/}
@@ -202,33 +202,41 @@ class Invest extends Component {
                                 <div className="leaseCarCon invest">
                                     <div className="balance">
                                         <div className="balanceName">My Balance</div>
-                                        <div className="balanceNum">5.320.000 <span>Euro</span></div>
+                                        <div className="balanceNum">{(this.props.euroTokenBalance + this.props.unClaimedRedemption)}<span> Euro</span></div>
                                     </div>
                                     <div className="mtableLink">
                                         <div className="mtableCar">
-                                            <img src={require('../assets/NotNeeded/car.png')} alt="carImage" />
+                                            <img src={this.props.member.carPic} alt="carImage" />
                                         </div>
-                                        <div className="mtableTokens">12550
-                                                        <p>150</p>
+                                        <div className="mtableTokens">{this.props.member.totalRaised}
+                                            <p>{this.props.member.evTokens}</p>
                                         </div>
-                                        <div className="mtableUser">Yerontour
-                                                        <p>Monster</p>
+                                        <div className="mtableUser">{this.props.member.username}
+                                            <p>{this.props.member.town}</p>
                                         </div>
-                                        <div className="mtableMnd">60 mnd
-                                                        <p>40.000 euro</p>
+                                        <div className="mtableMnd">{this.props.member.car.objectTerm.toNumber()} mnd
+                                                        <p>{this.props.member.car.objectPrice.toNumber()} euro</p>
                                         </div>
                                     </div>
                                     <div className="investAddCon">
                                         <div class="arrowBtn">
-                                            <img src={require('../assets/add.jpg')} alt="add2" />
+                                            <img onClick={() => this.props._lcInvestInObject(this.props.member.carID, this.state.ethInvest || "0", this.props.account)} src={require('../assets/add.jpg')} alt="add2" />
                                         </div>
                                         <div className="investAddInput">
-                                            <input maxLength="20" type="text" placeholder="Euro Token" />
+                                            <input value={(typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest} onChange={(e) => this.setState({ ethInvest: e.target.value })} maxLength="20" type="text" placeholder="Euro Token" />
                                         </div>
                                         <div className="investAddStatus">
-                                            <p>invest Euro</p>
-                                            <span className="pending">pending</span>
-                                        </div>
+                                            <p>Invest Euro</p>
+                                            {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{!this.props.hashConfirmations ? <p className="p-euro" style={{ color: "red" }}>pending</p> : <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p>}</Link>)}
+                                        </div> {/*!this.state.eventTransfer &&*/}
+                                        {/*<div className="carTitle investInput">
+                                            <div className="arrowBtn">
+                                                <img style={{ cursor: enableInvest ? "pointer" : "pointer" }} onClick={() => this.props._lcInvestInObject(this.props.member.carID, this.state.ethInvest || "0", this.props.account)} src={require('../assets/add.jpg')} alt="add2" />
+                                            </div>
+                                            Invest Euro:
+                                        <input className="membership-input" maxLength="20" value={(typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest} onChange={(e) => this.setState({ ethInvest: e.target.value })} type="text" placeholder="Euro Token" />
+                                            {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{!this.state.eventTransfer ? <p className="p-euro" style={{ color: "red" }}>pending</p> : <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p>}</Link>)}
+                            </div>*/}
                                     </div>
                                 </div>
                             </div>
@@ -288,11 +296,11 @@ class Invest extends Component {
                         </div>
                     </BlockUi>
                 </div>
-                <div className="footCon">
+                {/*<div className="footCon">
                     <div className="arrowBtn back">
                         <img src={require('../assets/back.jpg')} alt="back" />
                     </div>
-                </div>
+                        </div>*/}
             </div>
         </div>
         )

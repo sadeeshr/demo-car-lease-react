@@ -115,7 +115,7 @@ class Members extends Component {
                         <img src={require('../assets/add.jpg')} alt="addM" />
                     </button>
                 </div>}
-                <div className="mtableTokens">{member.car ? (member.crowdsaleClosed ? <span style={{ color: "green", fontSize: "12px" }}>Closed</span> : "0") : "0" || ""} <p>{member.evTokens}</p></div>
+                <div className="mtableTokens">{member.crowdsaleClosed ? <span style={{ color: "green", fontSize: "12px" }}>Closed</span> : member.totalRaised || "0"} <p>{member.evTokens}</p></div>
                 <div className="mtableUser">{member.username || ""} <p>{member.town || ""}</p></div>
                 {member.carPic && <div className="mtableCar"><img style={img} src={member.carPic || ""} alt="carImage" /><span title="Car Raised" style={{ fontSize: "12px" }}>Euro {member.carPrice}</span></div>}
             </div>

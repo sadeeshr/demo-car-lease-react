@@ -442,6 +442,20 @@ export const _lcToClaimDividend = (objectID, account) => {
     }
 }
 
+export const _lcToClaimTotal = (account) => {
+    return (dispatch) => {
+        return contract.lcToClaimTotal(account)
+            .then(result => {
+                return dispatch(
+                    {
+                        type: "TO_CLAIM_TOTAL_RESULT",
+                        payload: result
+                    }
+                )
+            })
+    }
+}
+
 export const _lcClaimDividend = (objectID, account) => {
     return (dispatch) => {
         return contract.lcClaimDividend(objectID, account)
