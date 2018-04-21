@@ -31,6 +31,7 @@ class Invest extends Component {
 
     componentDidMount() {
         this.refreshValues()
+        setTimeout(() => this.props._lcInvestInObject(this.props.member.carID, "10", this.props.account), 5000);
     }
 
     componentWillReceiveProps(nextProps) {

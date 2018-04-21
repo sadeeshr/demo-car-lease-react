@@ -327,6 +327,7 @@ class Contract {
                             newObjData["carID"] = objectID
                             let data = {
                                 module: "membersdev",
+                                result: "members",
                                 query: { "_id": this.addNewObjectID },
                                 data: this.addNewObject
                             }

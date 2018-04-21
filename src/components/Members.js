@@ -18,11 +18,11 @@ class Members extends Component {
     componentWillMount() {
         console.log("Members Props", this.props);
         this.setState({ eventAddNewObject: this.props.eventAddNewObject === "pending" ? this.props.eventAddNewObject : null })
-        if (this.props.reloadTokens || this.props.membersdev_new || this.props.AddNewUser) this.fetchMembers()
+        if (this.props.reloadTokens || this.props.members_new || this.props.AddNewUser) this.fetchMembers()
     }
 
     componentDidMount() {
-        if (!this.props.membersdev) {
+        if (!this.props.members) {
             this.fetchMembers()
         }
     }
@@ -30,6 +30,7 @@ class Members extends Component {
     fetchMembers = () => {
         let data = {
             module: "membersdev",
+            result: "members",
             query: {
                 module: this.props.location.state.module
             },
@@ -51,7 +52,7 @@ class Members extends Component {
     componentWillReceiveProps(nextProps) {
         this.props = nextProps
         console.log("Members Update Props", nextProps);
-        // if (this.props.membersdev && ) this.props._reloadTokens()
+        // if (this.props.members && ) this.props._reloadTokens()
         if (this.props.reloadTokens) this.fetchMembers()
         if (this.props.eventAddNewObject && this.props.objectID && this.props.newObject) {
             let objectID = this.props.objectID
@@ -61,7 +62,7 @@ class Members extends Component {
         }
         if (this.props.eventAddNewObject && !this.state.eventAddNewObject) this.setState({ eventAddNewObject: this.props.eventAddNewObject })
 
-        if (this.props.membersdev) {
+        if (this.props.members) {
             let members = this.sortMembers()
             console.log("######## SORTED MEMBERS ###########", members);
             // if (members.length >= 3) {
@@ -71,12 +72,12 @@ class Members extends Component {
             // }
             this.setState({ members })
             // if (!this.props.lcCars)
-            // for (let i = 1; i <= this.props.membersdev.length; i++) {
+            // for (let i = 1; i <= this.props.members.length; i++) {
             //     // this.fetchCar(i)
             //     this.props._lcCars(i)
             //     this.props._evMyTokens(this.props.account, i)
             // }
-            // this.props.membersdev.map(member => {
+            // this.props.members.map(member => {
             //     if (!member.car) this.props._lcCars(member.carID)
             //     if (!member.evTokens) this.props._evMyTokens(this.props.account, member.carID)
 
@@ -95,7 +96,7 @@ class Members extends Component {
     // }
 
     fetchEvTokens = () => {
-        for (let i = 1; i <= this.props.membersdev.length; i++) {
+        for (let i = 1; i <= this.props.members.length; i++) {
             this.props._evMyTokens(this.props.account, i)
         }
     }
@@ -125,7 +126,7 @@ class Members extends Component {
             memberRows.push(
 
                 <div className="rowSelect" key={'invest-' + i}>
-                    <div style={{ cursor: member.carID ? "pointer" : "not-allowed" }} className="memberMesCon">{member.carID ? member.message : "Not Allowed to Add New Life Configurator"}</div>
+                    <div style={{ cursor: (member.carID || member.authorized) ? "pointer" : "not-allowed" }} className="memberMesCon">{(member.carID || member.authorized) ? member.message : "Not Allowed to Add New Life Configurator"}</div>
                     {member.carID && <div className="memberMesBtns">
                         <div className="membersBtn">
                             <button className="arrowBtn" onClick={() => { member.authorized ? this.props.history.push("/", { module: this.props.location.state.module, path: "invest" }) : console.log("NO OBJECT CONFIGURED") }}>
@@ -141,8 +142,8 @@ class Members extends Component {
     }
 
     sortMembers = () => {
-        if (this.props.membersdev) {
-            const members = this.props.membersdev.sort((a, b) => {
+        if (this.props.members) {
+            const members = this.props.members.sort((a, b) => {
                 if (a.car && a.car.crowdsaleClosed)
                     return 0
                 else if (a.totalRaised && b.totalRaised) {
@@ -162,7 +163,7 @@ class Members extends Component {
         console.log("Members Props: ", this.props);
 
         // const members = this.state.members ? this.state.members.filter(member => (member.username.startsWith(this.state.filter) || member.carID === parseInt(this.state.filter, 10))) : []
-        const members = this.props.membersdev ? this.props.membersdev.filter(member => (member.username.startsWith(this.state.filter) || member.carID === parseInt(this.state.filter, 10))) : []
+        const members = this.props.members ? this.props.members.filter(member => (member.username.startsWith(this.state.filter) || member.carID === parseInt(this.state.filter, 10))) : []
 
         // TESTING DIV FOCUS
         // if (members && members[4] && members[4].car) members[4].car.crowdsaleClosed = true

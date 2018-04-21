@@ -148,7 +148,7 @@ const rootReducer = (state = initialState, action) => {
 
         case 'EV_MYTOKENS':
             {
-                let members = state.membersdev.map(member => {
+                let members = state.members.map(member => {
                     if (member.carID === action.payload.id)
                         member["evTokens"] = action.payload.result
                     return member
@@ -159,13 +159,13 @@ const rootReducer = (state = initialState, action) => {
 
                 return {
                     ...state,
-                    membersdev: members
+                    members: members
                 }
             }
 
         case 'LEASE_OBJECT_RESULT':
             {
-                let members = state.membersdev.map(member => {
+                let members = state.members.map(member => {
                     if (member.carID === action.payload.id)
                         member["car"] = action.payload.result
                     return member
@@ -176,14 +176,14 @@ const rootReducer = (state = initialState, action) => {
 
                 return {
                     ...state,
-                    membersdev: members
+                    members: members
                 }
             }
 
         case 'LEASE_OBJECT_CYCLE_RESULT':
         case 'LEASE_OBJECT_REDEMPTION_RESULT':
             {
-                let members = state.membersdev.map(member => {
+                let members = state.members.map(member => {
                     if (member.carID === action.payload.id)
                         member = { ...member, ...action.payload.result }
                     return member
@@ -194,13 +194,13 @@ const rootReducer = (state = initialState, action) => {
 
                 return {
                     ...state,
-                    membersdev: members
+                    members: members
                 }
             }
 
         case 'AUTHORIZATION':
             {
-                let members = state.membersdev.map(member => {
+                let members = state.members.map(member => {
                     if (member.account === action.payload.account)
                         member["authorized"] = action.payload.result
                     return member
@@ -211,7 +211,7 @@ const rootReducer = (state = initialState, action) => {
 
                 return {
                     ...state,
-                    membersdev: members
+                    members: members
                 }
             }
 
