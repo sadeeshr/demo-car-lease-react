@@ -58,8 +58,11 @@ class Socket {
             if (data) this.props._contractDataResponse(this.account, { [data.module]: data.result });
         })
         this.socket.on('event', (data) => {
-            console.log("EVENT: ", data)
-            if (data) this.props._setEvent(data)
+            console.log("EVENT: ", data, this.props.module, this.account)
+            if (data) {
+                if (data.event === "Transfer") this.props._fetchMembers(this.props.module, this.account)
+                this.props._setEvent(data)
+            }
         })
     }
 

@@ -17,7 +17,7 @@ class AddMember extends Component {
 
 
     componentWillMount() {
-        console.log("ADD MEMBER:", this.props);
+        // console.log("ADD MEMBER:", this.props);
         let data = {
             module: "cars",
             query: {
@@ -94,9 +94,9 @@ class AddMember extends Component {
     render() {
         if (this.props.members_new) this.props.history.push("/", { module: this.props.location.state.module, path: "members" })
         const cars = this.props.cars || []
-        console.log("CARS: ", cars);
+        // console.log("CARS: ", cars);
         const img = { "maxHeight": "50px", "maxWidth": "118px", "display": "block", "width": "auto", "height": "auto" }
-        console.log("Add Member State: ", this.state);
+        // console.log("Add Member State: ", this.state);
         const usernames = this.props.usernames ? this.props.usernames.map(user => user.username) : []
         return (
             this.state.seeCars ?
@@ -281,7 +281,7 @@ class AddMember extends Component {
                         <div className="footCon">
                             <div>
                                 <span>Confirm & Publish</span>
-                                {console.log(`Usernames: ${usernames}, ${usernames.indexOf(this.state.username)}`)}
+                                {/*console.log(`Usernames: ${usernames}, ${usernames.indexOf(this.state.username)}`)*/}
                                 <button disabled={!this.checkMandatory() || (usernames.indexOf(this.state.username) !== -1)} title={!this.checkMandatory() ? "Please fill mandatory fields" : (usernames.indexOf(this.state.username) !== -1 ? "Username already exists" : "Select Car")} className="arrowBtn" onClick={this.createAccount.bind(this)}>
                                     <img src={require('../assets/add.jpg')} alt="addM" />
                                 </button>

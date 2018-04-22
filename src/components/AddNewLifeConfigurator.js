@@ -22,7 +22,7 @@ class AddNewLifeConfigurator extends Component {
 
 
     componentWillMount() {
-        console.log("ADD OBJECT:", this.props);
+        // console.log("ADD OBJECT:", this.props);
         let data = {
             module: "carsdev",
             result: "cars",
@@ -99,9 +99,9 @@ class AddNewLifeConfigurator extends Component {
 
     render() {
         // if (this.props.members_new) this.props.history.goBack()
-        console.log(this.props.member, `ACTIVE: ${this.state.active}`);
+        // console.log(this.props.member, `ACTIVE: ${this.state.active}`);
         const cars = this.props.cars || []
-        console.log("CARS: ", cars);
+        // console.log("CARS: ", cars);
         const img = { "maxHeight": "50px", "maxWidth": "118px", "display": "block", "width": "auto", "height": "auto" }
         return (
             <div className="content-border">

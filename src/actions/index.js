@@ -16,6 +16,28 @@ export const _connectSocket = (props, domain) => {
     }
 }
 
+export const _fetchMembers = (module, account) => {
+    let data = {
+        module: "membersdev",
+        result: "members",
+        query: {
+            module: module
+        },
+        filter: {
+            _id: 1,
+            username: 1,
+            town: 1,
+            message: 1,
+            carID: 1,
+            carPic: 1,
+            carPrice: 1,
+            module: 1,
+            account: 1
+        }
+    }
+    return (_fetchContractData(account, data))
+}
+
 export const _socketStatus = (status) => {
     return (dispatch) => {
         dispatch({
@@ -102,7 +124,7 @@ export const _contractDataResponse = (account, response) => {
     return (dispatch) => {
         if (response.members)
             response.members.map(member => {
-                console.log("MEMBERS: ", member);
+                // console.log("MEMBERS: ", member);
                 dispatch(_lcAuthorization(member.account))
                 // dispatch(_lcLeaseObjectCycle(0))
                 // dispatch(_lcLeaseObjectRedemption(0))

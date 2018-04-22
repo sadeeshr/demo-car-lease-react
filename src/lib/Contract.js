@@ -78,9 +78,9 @@ class Contract {
     }
 
     initContract = (props, web3) => {
-        console.log("WEB3: ", web3);
+        // console.log("WEB3: ", web3);
         this.props = props
-        console.log("ETH: ", Eth);
+        // console.log("ETH: ", Eth);
         //let newWeb3 = new Eth.HttpProvider('https://smartjuice.apayaa.com:8545')
         //console.log("WEB 3 ####", newWeb3);
         //const eth = new Eth(newWeb3)
@@ -99,8 +99,8 @@ class Contract {
         this.euroToken = contract(this.contracts.euroToken.abi).at(this.contracts.euroToken.address)
         this.LeaseTokenContract = contract(this.contracts.LeaseTokenContract.abi).at(this.contracts.LeaseTokenContract.address)
 
-        console.log("Euro Token: ", this.euroToken);
-        console.log("Lease Token Contract: ", this.LeaseTokenContract);
+        // console.log("Euro Token: ", this.euroToken);
+        // console.log("Lease Token Contract: ", this.LeaseTokenContract);
         // this.evEventTransfer()
 
         return {

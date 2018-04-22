@@ -7,7 +7,7 @@ import Invoices from '../components/Invoices';
  * map state, actions to props
  */
 const mapStateToProps = (state) => {
-    console.log("Invoices Container Props: ", state)
+    // console.log("Invoices Container Props: ", state)
     return {
         account: state.account,
         member: state.member,
@@ -16,7 +16,9 @@ const mapStateToProps = (state) => {
         invoices: state.invoices,
         invoices_new: state.invoices_new,
         paySubscriptionTxID: state.paySubscriptionTxID,
-        eventSubscription: state.eventSubscription
+        eventSubscription: state.eventSubscription,
+        unClaimedRedemption: state.unClaimedRedemption,
+        euroTokenBalance: state.euroTokenBalance
     }
 }
 const mapActionsToProps = (dispatch) => { return bindActionCreators(Actions, dispatch) }

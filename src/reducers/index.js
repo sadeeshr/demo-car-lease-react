@@ -5,7 +5,7 @@
 */
 const initialState = {}
 const rootReducer = (state = initialState, action) => {
-    console.log(action)
+    console.log(action.type)
     switch (action.type) {
         // case '@@redux/INIT':
         //     return {

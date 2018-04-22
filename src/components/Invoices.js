@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import BlockUi from 'react-block-ui';
 import { Link } from 'react-router-dom'
+import Fade from 'react-reveal/Fade';
 
 class Invoices extends Component {
     constructor(props) {
@@ -20,16 +21,19 @@ class Invoices extends Component {
     componentWillMount() {
         this.fetchInvoices()
         this.setState({ eventSubscription: null })
-        console.log("Object Fees: ", this.props.member.car.objectFee.toNumber())
-        console.log("Object Price: ", this.props.member.car.objectPrice.toNumber())
-        console.log("Object Type: ", this.props.member.car.objectType.toNumber())
-        console.log("Object paymonth: ", this.props.member.car.paymonth.toNumber())
-        console.log("Object milages: ", this.props.member.car.milages.toNumber())
-        console.log("Object totalDividends: ", this.props.member.car.totalDividends.toNumber())
+        // console.log("Object Fees: ", this.props.member.car.objectFee.toNumber())
+        // console.log("Object Price: ", this.props.member.car.objectPrice.toNumber())
+        // console.log("Object Type: ", this.props.member.car.objectType.toNumber())
+        // console.log("Object paymonth: ", this.props.member.paymonth)
+        // console.log("Object milages: ", this.props.member.mileagesTotal)
+        // console.log("Object totalDividends: ", this.props.member.totalDividends)
 
         this.props._lcLeaseObject(this.props.member.carID)
         this.props._lcLeaseObjectCycle(this.props.member.carID)
         this.props._lcLeaseObjectRedemption(this.props.member.carID)
+
+        if (!this.props.unClaimedRedemption) this.props._lcToClaimTotal(this.props.account)
+        if (!this.props.euroTokenBalance) this.props._euroBalanceOf(this.props.account)
 
     }
 
@@ -45,6 +49,7 @@ class Invoices extends Component {
     fetchInvoices = () => {
         let data = {
             module: "invoices",
+            result: "invoicesdev",
             query: {
                 module: this.props.location.state.module,
                 carID: this.props.member.carID
@@ -59,6 +64,7 @@ class Invoices extends Component {
     createInvoice = () => {
         let data = {
             module: "invoices",
+            result: "invoicesdev",
             data: {
                 // module: this.props.location.state.module,
                 carID: this.props.member.carID,
@@ -75,6 +81,7 @@ class Invoices extends Component {
     updateInvoice = (invoice, mileage, amount) => {
         let data = {
             module: "invoices",
+            result: "invoicesdev",
             query: { "_id": invoice["_id"] },
             data: {
                 // module: invoice.module,
@@ -95,7 +102,7 @@ class Invoices extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log("new props", nextProps);
+        // console.log("new props", nextProps);
         if (nextProps.invoices_new || nextProps.invoices_edit)
             this.fetchInvoices()
         if (nextProps.invoices && nextProps.invoices.length > 0) {
@@ -103,13 +110,16 @@ class Invoices extends Component {
         }
         if (nextProps.eventSubscription && !this.state.eventSubscription) { this.setState({ eventSubscription: nextProps.eventSubscription }) }
 
+        if (!this.props.unClaimedRedemption) this.props._lcToClaimTotal(this.props.account)
+        if (!this.props.euroTokenBalance) this.props._euroBalanceOf(this.props.account)
+
         if (nextProps.member && nextProps.member.car) {
-            console.log("Object Fees: ", this.props.member.car.objectFee.toNumber())
-            console.log("Object Price: ", this.props.member.car.objectPrice.toNumber())
-            console.log("Object Type: ", this.props.member.car.objectType.toNumber())
-            console.log("Object paymonth: ", this.props.member.car.paymonth.toNumber())
-            console.log("Object milages: ", this.props.member.car.milages.toNumber())
-            console.log("Object totalDividends: ", this.props.member.car.totalDividends.toNumber())
+            // console.log("Object Fees: ", this.props.member.car.objectFee.toNumber())
+            // console.log("Object Price: ", this.props.member.car.objectPrice.toNumber())
+            // console.log("Object Type: ", this.props.member.car.objectType.toNumber())
+            // console.log("Object paymonth: ", this.props.member.paymonth)
+            // console.log("Object milages: ", this.props.member.mileagesTotal)
+            // console.log("Object totalDividends: ", this.props.member.totalDividends)
         }
     }
 
@@ -123,14 +133,14 @@ class Invoices extends Component {
     }
 
     render() {
-        console.log("INVOICE STATE: ", this.state, this.props);
+        // console.log("INVOICE STATE: ", this.state, this.props);
         const invoices = this.props.invoices ? this.props.invoices.filter(invoice => (this.months[invoice.month].toLowerCase().startsWith(this.state.filter) || invoice.year === parseInt(this.state.filter, 10))) : []
         invoices.sort((a, b) => parseFloat(b.month) - parseFloat(a.month))
         // const invoices = this.props.invoices
-        let amount = (this.props.member.car.objectFee.toNumber()) + (((this.state.mileage || this.props.member.car.milages.toNumber()) - this.props.member.car.milages.toNumber()) * 0.10)
-        console.log(amount, ' <= ', this.props.allowance, (amount <= this.props.allowance), this.state.mileage, ' >= ', this.props.member.car.milages.toNumber(), (this.state.mileage >= this.props.member.car.milages.toNumber()));
-        const enableInvoice = ((this.state.mileage >= this.props.member.car.milages.toNumber()) && (amount <= this.props.allowance)) ? true : false
-        console.log("Invoice Enabled: ", enableInvoice);
+        let amount = (this.props.member.car.objectFee.toNumber()) + (((this.state.mileage || this.props.member.mileagesTotal) - this.props.member.mileagesTotal) * 0.10)
+        // console.log(amount, ' <= ', this.props.allowance, (amount <= this.props.allowance), this.state.mileage, ' >= ', this.props.member.mileagesTotal, (this.state.mileage >= this.props.member.mileagesTotal));
+        const enableInvoice = ((this.state.mileage >= this.props.member.mileagesTotal) && (amount <= this.props.allowance)) ? true : false
+        // console.log("Invoice Enabled: ", enableInvoice);
         return (<div className="content-border">
             <div className="mainContentCon">
                 {/* <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
@@ -139,10 +149,59 @@ class Invoices extends Component {
                     <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
                 </div> */}
                 <div className="navCon">
-                    <h1 id="header"><div className="fl"><i className="flaticon-back" onClick={() => this.props.history.goBack()}></i></div>Invoices
-                    <div className="fr">
+                    <h1 id="header">
+                        <div hidden className="fl"><i className="flaticon-back" onClick={() => this.props.history.goBack()}></i></div>
+                        Invoices
+                        <div hidden className="fr">
                             <i title="Add Invoice" className="flaticon-invoice marIcon" onClick={this.createInvoice.bind(this)}></i>
-                            <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i></div></h1>
+                            <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
+                        </div>
+                    </h1>
+                </div>
+                <Fade right>
+                    <div className="contentCon bg-none overflow">
+                        <BlockUi tag="div" blocking={this.props.progress}>
+                            <div className="carIntestCon">
+                                <div className="membersCon">
+                                    <div className="leaseCarCon invest">
+                                        <div className="balance">
+                                            <div className="balanceName">My Balance</div>
+                                            <div className="balanceNum">{(this.props.euroTokenBalance + this.props.unClaimedRedemption)}<span> Euro</span></div>
+                                        </div>
+                                        <div className="mtableLink">
+                                            <div className="mtableCar">
+                                                <img src={this.props.member.carPic} alt="carImage" />
+                                            </div>
+                                            <div className="mtableTokens">{this.props.member.totalRaised}
+                                                <p>{this.props.member.evTokens}</p>
+                                            </div>
+                                            <div className="mtableUser">{this.props.member.username}
+                                                <p>{this.props.member.town}</p>
+                                            </div>
+                                        </div>
+                                        <div className="investAddCon">
+                                            <div class="arrowBtn">
+                                                <img onClick={() => { }} src={require('../assets/add.jpg')} alt="add2" />
+                                            </div>
+                                            <div className="investAddInput">
+                                                <p>2018 February</p>
+                                                <p>1000 km stand</p>
+                                                <p>550 Euro</p>
+                                            </div>
+                                            <div className="investAddStatus">
+                                                {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.investInObjectTxID)) ? <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red" }}>pending</p>}</Link>)}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </BlockUi>
+                    </div>
+                </Fade>
+                <div className="footCon">
+                    <div className="arrowBtn back">
+                        <img src={require('../assets/back.jpg')} onClick={() => this.props.history.goBack()} alt="back" />
+                    </div>
                 </div>
                 <div className="contentCon overflow bg-none">
                     <BlockUi tag="div" blocking={this.props.progress}>
@@ -155,7 +214,7 @@ class Invoices extends Component {
                                             <div className="inKm">
                                                 {
                                                     invoice.mileage === 0 ?
-                                                        <span className="inLeft"><input style={{ width: "80px", textAlign: "center" }} maxLength="20" value={this.state.mileage || this.props.member.car.milages.toNumber()} onChange={(e) => this.setState({ mileage: e.target.value })} type="text" placeholder="Mileage" /></span>
+                                                        <span className="inLeft"><input style={{ width: "80px", textAlign: "center" }} maxLength="20" value={this.state.mileage || this.props.member.mileagesTotal} onChange={(e) => this.setState({ mileage: e.target.value })} type="text" placeholder="Mileage" /></span>
                                                         : <span className="inLeft">{invoice.mileage}</span>
                                                 }
                                                 <span className="inRight">km stand</span></div>
@@ -165,10 +224,10 @@ class Invoices extends Component {
                                             {
                                                 invoice.status ?
                                                     <div className="arrowBtn"><img src={require('../assets/check.jpg')} alt="Payed" /></div>
-                                                    : <div title={!(amount <= this.props.allowance) ? "Less Allowance Set" : (!(this.state.mileage >= this.props.member.car.milages.toNumber()) ? "Mileage Too Low" : "Pay Invoice")} className="arrowBtn">
+                                                    : <div title={!(amount <= this.props.allowance) ? "Less Allowance Set" : (!(this.state.mileage >= this.props.member.mileagesTotal) ? "Mileage Too Low" : "Pay Invoice")} className="arrowBtn">
                                                         <img style={{ cursor: enableInvoice ? "pointer" : "not-allowed" }}
                                                             onClick={() => {
-                                                                enableInvoice && this.props._lcPaySubscription(this.props.member.carID, (this.props.member.car.paymonth.toNumber() + 1), parseInt(this.state.mileage, 10), this.props.account)
+                                                                enableInvoice && this.props._lcPaySubscription(this.props.member.carID, (this.props.member.paymonth + 1), parseInt(this.state.mileage, 10), this.props.account)
                                                                 enableInvoice && this.updateInvoice(invoice, this.state.mileage, amount || 0)
                                                             }}
                                                             src={require('../assets/add.jpg')}
@@ -207,7 +266,7 @@ class Invoices extends Component {
                 </div>
                 <div className="footCon">
                     <div>
-                        <input className="searchBtn" type="text" name="filterMembers" value={this.state.filter || ""} placeholder="Search" onChange={(e) => { console.log("SEARCH: ", e.target.value); this.setState({ filter: e.target.value }) }} />
+                        <input className="searchBtn" type="text" name="filterMembers" value={this.state.filter || ""} placeholder="Search" onChange={(e) => { this.setState({ filter: e.target.value }) }} />
                     </div>
                 </div>
             </div>

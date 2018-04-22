@@ -16,7 +16,7 @@ class Members extends Component {
 
 
     componentWillMount() {
-        console.log("Members Props", this.props);
+        // console.log("Members Props", this.props);
         this.setState({ eventAddNewObject: this.props.eventAddNewObject === "pending" ? this.props.eventAddNewObject : null })
         if (this.props.reloadTokens || this.props.members_new || this.props.AddNewUser) this.fetchMembers()
     }
@@ -51,7 +51,7 @@ class Members extends Component {
 
     componentWillReceiveProps(nextProps) {
         this.props = nextProps
-        console.log("Members Update Props", nextProps);
+        // console.log("Members Update Props", nextProps);
         // if (this.props.members && ) this.props._reloadTokens()
         if (this.props.reloadTokens || (this.props.event && (this.props.event.event === "Transfer"))) this.fetchMembers()
         if (this.props.eventAddNewObject && this.props.objectID && this.props.newObject) {
@@ -64,7 +64,7 @@ class Members extends Component {
 
         if (this.props.members) {
             let members = this.sortMembers()
-            console.log("######## SORTED MEMBERS ###########", members);
+            // console.log("######## SORTED MEMBERS ###########", members);
             // if (members.length >= 3) {
             // members[0].car ? members[0].car.crowdsaleClosed = true : ""
             // members[1].car ? members[1].car.crowdsaleClosed = true : ""
@@ -103,7 +103,7 @@ class Members extends Component {
 
     renderMember = (member, i) => {
 
-        console.log("Member: ", member);
+        // console.log("Member: ", member);
         const img = { "display": "block" }
         // if (this.props.account)
         // if (!(this.props.evTokens && this.props.evTokens[member.carID]) || this.props.addNewObjectTxID || this.props.raiseFundsForCarTxID) this.props._evMyTokens(this.props.account, member.carID)
@@ -132,6 +132,9 @@ class Members extends Component {
                             <button className="arrowBtn" onClick={() => { member.authorized ? this.props.history.push("/", { module: this.props.location.state.module, path: "invest" }) : console.log("NO OBJECT CONFIGURED") }}>
                                 <img src={require('../assets/arrow.jpg')} alt="addM" />
                             </button>
+                            <button title="Invoices (testing)" className="arrowBtn" onClick={() => { member.authorized ? this.props.history.push("/", { module: this.props.location.state.module, path: "invoices" }) : console.log("NO OBJECT CONFIGURED") }}>
+                                <img src={require('../assets/add.jpg')} alt="addI" />
+                            </button>
                         </div>
                     </div>}
                 </div>
@@ -147,20 +150,20 @@ class Members extends Component {
                 if (a.car && a.car.crowdsaleClosed)
                     return 0
                 else if (a.totalRaised && b.totalRaised) {
-                    console.log(`Car Raised-${b.carID}=> ${b.totalRaised} - Car Raised-${a.carID}=> ${a.totalRaised}`);
+                    // console.log(`Car Raised-${b.carID}=> ${b.totalRaised} - Car Raised-${a.carID}=> ${a.totalRaised}`);
                     return b.totalRaised - a.totalRaised
                 } else
                     return 0
             })
-            console.log("$$$$$$$$$ sorted members: $$$$$$$$$$$$$", members);
+            // console.log("$$$$$$$$$ sorted members: $$$$$$$$$$$$$", members);
             return members
         } else
             return []
     }
 
     render() {
-        console.log("Members State: ", this.state);
-        console.log("Members Props: ", this.props);
+        // console.log("Members State: ", this.state);
+        // console.log("Members Props: ", this.props);
 
         // const members = this.state.members ? this.state.members.filter(member => (member.username.startsWith(this.state.filter) || member.carID === parseInt(this.state.filter, 10))) : []
         const members = this.props.members ? this.props.members.filter(member => (member.username.startsWith(this.state.filter) || member.carID === parseInt(this.state.filter, 10))) : []

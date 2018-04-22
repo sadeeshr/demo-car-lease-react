@@ -37,7 +37,7 @@ class Main extends Component {
     }
 
     componentWillMount() {
-        console.log("MAIN: ", this.props, window.location.hostname);
+        // console.log("MAIN: ", this.props, window.location.hostname);
         if (!this.props.socketConnection) this.props._connectSocket(this.props, window.location.hostname)
 
         const { web3 } = window
@@ -91,7 +91,7 @@ class Main extends Component {
     checkRegistered = () => {
         if (this.props.usernames) {
             const accounts = this.props.usernames ? this.props.usernames.map(user => user.account) : []
-            console.log(accounts, this.props.account, accounts.indexOf(this.props.account));
+            // console.log(accounts, this.props.account, accounts.indexOf(this.props.account));
             this.setState({
                 registered: (accounts.indexOf(this.props.account) !== -1) ? true : false
             })
@@ -100,7 +100,7 @@ class Main extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log("Main Update Props: ", nextProps);
+        // console.log("Main Update Props: ", nextProps);
 
         if (nextProps.event && this.props.event !== nextProps.event) {
             switch (nextProps.event.event) {
@@ -109,7 +109,7 @@ class Main extends Component {
                         const txFrom = this.props.members.find(member => member.account.toLowerCase() === nextProps.event.returnValues.to.toLowerCase())
                         const txTo = this.props.members.find(member => member.carID && (member.carID.toString() === nextProps.event.returnValues.objectId))
                         const value = nextProps.event.returnValues.value
-                        console.log(txFrom, txTo, value);
+                        // console.log(txFrom, txTo, value);
                         let event = {
                             title: "Investment Update",
                             message: `Awesome, ${txFrom.username} ${txFrom.town} has just invested ${value} euros on ${txTo.username} ${txTo.town}'s Car`,
@@ -126,7 +126,7 @@ class Main extends Component {
             }
         }
         if (nextProps.eventAlert && (this.props.eventAlert !== nextProps.eventAlert)) {
-            console.log(this.refs)
+            // console.log(this.refs)
             this.refs.notificationSystem.addNotification(nextProps.eventAlert);
         }
 
@@ -211,7 +211,7 @@ class Main extends Component {
     }
 
     render() {
-        console.log("Main State: ", this.state);
+        // console.log("Main State: ", this.state);
         return (
             <div>
                 <NotificationSystem ref="notificationSystem" />
