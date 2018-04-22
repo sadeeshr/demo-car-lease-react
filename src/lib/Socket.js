@@ -2,8 +2,8 @@ import io from 'socket.io-client';
 
 // let agent = new https.Agent();
 
-const SOCKET_URL = "https://blockchain.techiearea.com:3456";
-// const SOCKET_URL = "https://smartjuice.apayaa.com:3456"; // for development
+// const SOCKET_URL = "https://blockchain.techiearea.com:3456"; // for development
+const SOCKET_URL = "https://smartjuice.apayaa.com:3456"; 
 const SOCKET_OPTIONS = {
     // secure: true,
     // rejectUnauthorized: false
