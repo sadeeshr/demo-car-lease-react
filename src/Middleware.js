@@ -6,7 +6,7 @@ const web3 = require('./lib/Web3')
 var options = {
     // key: fs.readFileSync('./certs/blockchain.techiearea.com/key.pem'),   //relative path to package json run script
     // cert: fs.readFileSync('./certs/blockchain.techiearea.com/cert.pem'),
-    key: fs.readFileSync('./certs/smartjuice.apayaa.com/key.pem'),  
+    key: fs.readFileSync('./certs/smartjuice.apayaa.com/key.pem'),
     cert: fs.readFileSync('./certs/smartjuice.apayaa.com/cert.pem'),
     requestCert: false,
     rejectUnauthorized: false
@@ -19,8 +19,9 @@ var app = require('https').createServer(options);
 var io = require('socket.io').listen(app);
 app.listen(3456);
 
-console.log("Mongo", mongo.db);
+// console.log("Mongo", mongo.db);
 
+web3.subscribeEvents(io) // subscribe to events
 
 /**
  * socket io handler
@@ -34,7 +35,7 @@ io.on('connection', (socket) => {
     socket.emit('response', "You are Online now");
 
     // setTimeout(() => {
-    web3.subscribeEvents(socket) // subscribe to events
+    // subscribe to events
     // }, 3000);
     // socket.on('user', data => user.handleUser(socket, data));
     // socket.on('admin', data => admin.handleAdmin(socket, data));

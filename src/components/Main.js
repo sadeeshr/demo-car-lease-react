@@ -45,6 +45,9 @@ class Main extends Component {
         if (typeof web3 !== 'undefined') {
             // You have a web3 browser! Initiate Contract Object!
             if (!this.props.LeaseContract) this.props._initContract(this.props, web3)
+
+            this.fetchUserData()
+
             // this.setState({ alert: "Please Install Metamask plugin", url: "https://metamask.io/" })
 
             // if (!this.props.account) this.props._getAccount();
@@ -56,7 +59,6 @@ class Main extends Component {
         }
 
         window.onbeforeunload = (e) => this.props.history.replace("/", null)  // Page Refresh, route to HOME
-        this.fetchUserData()
     }
 
     componentDidMount() {
@@ -140,7 +142,7 @@ class Main extends Component {
     renderMain = () => {
         const img = { "maxHeight": "95px", "maxWidth": "180px", "display": "block", "width": "auto", "height": "auto" }
         // const thumbImg = { "maxHeight": "40px", "maxWidth": "40px", "display": "block", "width": "auto", "height": "auto" }
-        const disabled = this.props.account ? false : true
+        const disabled = (this.props.account && (typeof this.state.registered !== "undefined") )? false : true
         // const cursor = this.props.account ? "pointer" : "not-allowed"
 
         return <div className="content-border">

@@ -52,13 +52,13 @@ const LeaseTokenContract = new web3.eth.Contract(contracts.LeaseTokenContract.ab
 //     })
 //     .on('error', console.error);
 
-subscribeEvents = (socket) => {
+subscribeEvents = (io) => {
     console.log("!!! Subscribing to all events !!!");
     // euroToken.events.allEvents("latest", (error, event) => error ? console.error("euroToken EVENT ERROR: ", error) : console.log("euroToken EVENT: ", event))
-    LeaseTokenContract.events.allEvents("latest", (error, event) => error ? console.error("LeaseTokenContract EVENT ERROR: ", error) : handleEvent(socket, event))
+    LeaseTokenContract.events.allEvents("latest", (error, event) => error ? console.error("LeaseTokenContract EVENT ERROR: ", error) : handleEvent(io, event))
 }
 
-handleEvent = (socket, event) => {
+handleEvent = (io, event) => {
     console.log("LeaseTokenContract EVENT: ", event)
     // console.log(event.event);
     // switch (event.event) {
@@ -69,7 +69,7 @@ handleEvent = (socket, event) => {
     //     default:
     //         break;
     // }
-    socket.emit('event', event);
+    io.sockets.emit('event', event);
 }
 
 
