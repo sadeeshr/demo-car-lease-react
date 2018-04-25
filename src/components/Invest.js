@@ -2,13 +2,13 @@ import React, { Component } from 'react'
 import BigNumber from 'bignumber.js';
 import BlockUi from 'react-block-ui';
 import { Link } from 'react-router-dom'
-import Fade from 'react-reveal/Fade';
+import Slide from 'react-reveal/Slide';
 
 class Invest extends Component {
 
     constructor(props) {
         super(props)
-        this.state = {}
+        this.state = { reveal: false }
         this.confTimer = null
         this.rinkebyStatsURL = "https://rinkeby.etherscan.io/tx/"
     }
@@ -32,6 +32,7 @@ class Invest extends Component {
 
     componentDidMount() {
         this.refreshValues()
+        this.setState({ reveal: true })
         // setTimeout(() => this.props._lcInvestInObject(this.props.member.carID, "10", this.props.account), 5000);
     }
 
@@ -62,6 +63,13 @@ class Invest extends Component {
         if (nextProps.eventTransfer && !this.state.eventTransfer) { this.setState({ eventTransfer: nextProps.eventTransfer, ethInvest: undefined }) }
         // }
         this.props = nextProps
+    }
+
+    doExit = () => {
+        this.setState({ reveal: false })
+        setTimeout(() => {
+            this.props.history.goBack()
+        }, 500);
     }
 
     refreshValues = () => {
@@ -136,7 +144,7 @@ class Invest extends Component {
                             <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
                         </div></h1>
                 </div>
-                <Fade left>
+                <Slide top opposite when={this.state.reveal}>
                     <div className="contentCon bg-none overflow">
                         <BlockUi tag="div" blocking={this.props.progress}>
                             <div className="carIntestCon">
@@ -177,10 +185,10 @@ class Invest extends Component {
                             </div>
                         </BlockUi>
                     </div>
-                </Fade>
+                </Slide>
                 <div className="footCon">
                     <div className="arrowBtn back">
-                        <img src={require('../assets/back.jpg')} onClick={() => this.props.history.goBack()} alt="back" />
+                        <img src={require('../assets/back.jpg')} onClick={this.doExit.bind(this)} alt="back" />
                     </div>
                 </div>
             </div>

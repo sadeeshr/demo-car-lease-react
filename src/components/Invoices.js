@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import BlockUi from 'react-block-ui';
 import { Link } from 'react-router-dom'
-import Fade from 'react-reveal/Fade';
+import Slide from 'react-reveal/Slide';
 
 class Invoices extends Component {
     constructor(props) {
@@ -12,6 +12,7 @@ class Invoices extends Component {
             progress: false,
             month: null,
             year: null,
+            reveal: false
         }
         this.rinkebyStatsURL = "https://rinkeby.etherscan.io/tx/"
         this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -44,6 +45,7 @@ class Invoices extends Component {
     componentDidMount() {
         this.carID = this.props.member.carID
         if (this.props.car) this.fetchCarMileagesRedemption()
+        this.setState({ reveal: true })
     }
 
     fetchInvoices = () => {
@@ -132,6 +134,13 @@ class Invoices extends Component {
         return max
     }
 
+    doExit = () => {
+        this.setState({ reveal: false })
+        setTimeout(() => {
+            this.props.history.goBack()
+        }, 500);
+    }
+
     render() {
         // console.log("INVOICE STATE: ", this.state, this.props);
         const invoices = this.props.invoices ? this.props.invoices.filter(invoice => (this.months[invoice.month].toLowerCase().startsWith(this.state.filter) || invoice.year === parseInt(this.state.filter, 10))) : []
@@ -158,7 +167,7 @@ class Invoices extends Component {
                         </div>
                     </h1>
                 </div>
-                <Fade right>
+                <Slide top opposite when={this.state.reveal}>
                     <div className="contentCon bg-none overflow">
                         <BlockUi tag="div" blocking={this.props.progress}>
                             <div className="carIntestCon">
@@ -197,10 +206,10 @@ class Invoices extends Component {
                             </div>
                         </BlockUi>
                     </div>
-                </Fade>
+                </Slide>
                 <div className="footCon">
                     <div className="arrowBtn back">
-                        <img src={require('../assets/back.jpg')} onClick={() => this.props.history.goBack()} alt="back" />
+                        <img src={require('../assets/back.jpg')} onClick={this.doExit.bind(this)} alt="back" />
                     </div>
                 </div>
                 <div className="contentCon overflow bg-none">
