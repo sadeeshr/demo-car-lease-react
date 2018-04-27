@@ -3,6 +3,7 @@ import md5 from 'md5';
 import BlockUi from 'react-block-ui';
 
 import Coverflow from 'react-coverflow';
+import cc from '../lib/utils';
 
 class AddNewLifeConfigurator extends Component {
     constructor(props) {
@@ -22,7 +23,7 @@ class AddNewLifeConfigurator extends Component {
 
 
     componentWillMount() {
-        // console.log("ADD OBJECT:", this.props);
+        // cc.log("ADD OBJECT:", this.props);
         let data = {
             module: "carsdev",
             result: "cars",
@@ -51,7 +52,7 @@ class AddNewLifeConfigurator extends Component {
             //         // outputBuffer contains JPEG image data no wider than 200 pixels and no higher
             //         // than 200 pixels regardless of the inputBuffer image dimensions
             //         let resizeImage = outputBuffer.toString('base64')
-            //         console.log("Resized Image Base64: ", resizeImage);
+            //         cc.log("Resized Image Base64: ", resizeImage);
             //         this.setState({ [name]: resizeImage })
             //     });
             this.setState({ [name]: reader.result })
@@ -99,9 +100,9 @@ class AddNewLifeConfigurator extends Component {
 
     render() {
         // if (this.props.members_new) this.props.history.goBack()
-        // console.log(this.props.member, `ACTIVE: ${this.state.active}`);
+        cc.log(this.props.member, `ACTIVE: ${this.state.active}`);
         const cars = this.props.cars || []
-        // console.log("CARS: ", cars);
+        cc.log("CARS: ", cars);
         const img = { "maxHeight": "50px", "maxWidth": "118px", "display": "block", "width": "auto", "height": "auto" }
         return (
             <div className="content-border">

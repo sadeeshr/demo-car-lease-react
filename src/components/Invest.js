@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import BigNumber from 'bignumber.js';
+// import BigNumber from 'bignumber.js';
 import BlockUi from 'react-block-ui';
 import { Link } from 'react-router-dom'
 import Slide from 'react-reveal/Slide';
+import cc from '../lib/utils';
 
 class Invest extends Component {
 
@@ -15,7 +16,7 @@ class Invest extends Component {
 
 
     componentWillMount() {
-        // console.log("Invest Props: ", this.props);
+        // cc.log("Invest Props: ", this.props);
         this.setState({
             carID: this.props.member ? this.props.member.carID : null,
             car: this.props.member ? this.props.member.car : null,
@@ -48,13 +49,13 @@ class Invest extends Component {
         if (!this.props.euroTokenBalance) this.props._euroBalanceOf(this.props.account)
 
         // this.setState({ refreshValues: !this.state.refreshValues })
-        // console.log("#### TOTAL SUPPLY: ######", nextProps.eventTransfer, this.props.totalSupply, nextProps.totalSupply, this.props.hashConfirmations);
+        // cc.log("#### TOTAL SUPPLY: ######", nextProps.eventTransfer, this.props.totalSupply, nextProps.totalSupply, this.props.hashConfirmations);
         if (nextProps.eventTransfer || nextProps.eventApprove || nextProps.eventClaim)
             if (!this.props.hashConfirmations) this.props._getConfirmationsHash(this.props.investInObjectTxID)
 
         if (this.props.hashConfirmations && this.props.hashConfirmations > 0) {
             // clearInterval(this.confTimer)
-            // console.log("HASH CONFIRMS: ", this.props.hashConfirmations);
+            // cc.log("HASH CONFIRMS: ", this.props.hashConfirmations);
             // this.refreshValues()
         }
 
@@ -112,19 +113,19 @@ class Invest extends Component {
     }
 
     render() {
-        // console.log("#####", this.state, this.props);
-        // console.log("##### EVT", this.props.member ? this.props.member.evTokens : "no evtokens");
+        cc.log("Invest State Props", this.state, this.props);
+        // cc.log("##### EVT", this.props.member ? this.props.member.evTokens : "no evtokens");
         if (this.props.account && !this.props[this.props.account]) this.props._getBalance(this.props.account);
 
-        const amountRemaining = this.props.member.carPrice - this.props.member.totalRaised
+        // const amountRemaining = this.props.member.carPrice - this.props.member.totalRaised
         // const allowedAmountToInvest = Math.min(Math.min(amountRemaining, this.props.allowance), this.props.euroTokenBalance)
         // const euroTokenBalance = this.props.euroTokenBalance ? (this.props.euroTokenBalance.length > 5 ? this.props.euroTokenBalance.substring(0, 5) + "..." : this.props.euroTokenBalance) : ""
         // (this.state.euroTokenBalance || "").substring(0, 8) + "..."
-        const account = this.props.account ? this.props.account.substring(0, 7) + '.....' + this.props.account.substring(this.props.account.length - 5) : ""
-        const hideInvest = (this.props.member && this.props.member.totalRaised >= this.props.member.carPrice) ? true : false
-        const ethInvest = parseInt((this.state.ethInvest || "0"), 10)
-        const enableInvest = ((ethInvest <= amountRemaining) && (ethInvest <= this.props.allowance) && (ethInvest <= this.props.euroTokenBalance) && (this.state.ethInvest !== "") && (this.state.ethInvest !== "0"))
-        // console.log("Enable Invest: ", ethInvest, enableInvest, (ethInvest <= amountRemaining), (ethInvest <= this.props.allowance), (ethInvest <= this.props.euroTokenBalance), (this.state.ethInvest !== ""));
+        // const account = this.props.account ? this.props.account.substring(0, 7) + '.....' + this.props.account.substring(this.props.account.length - 5) : ""
+        // const hideInvest = (this.props.member && this.props.member.totalRaised >= this.props.member.carPrice) ? true : false
+        // const ethInvest = parseInt((this.state.ethInvest || "0"), 10)
+        // const enableInvest = ((ethInvest <= amountRemaining) && (ethInvest <= this.props.allowance) && (ethInvest <= this.props.euroTokenBalance) && (this.state.ethInvest !== "") && (this.state.ethInvest !== "0"))
+        // cc.log("Enable Invest: ", ethInvest, enableInvest, (ethInvest <= amountRemaining), (ethInvest <= this.props.allowance), (ethInvest <= this.props.euroTokenBalance), (this.state.ethInvest !== ""));
         // (this.props.account || "").substring(0, 8) + "..."
         return (<div className="content-border">
             <div className="mainContentCon">

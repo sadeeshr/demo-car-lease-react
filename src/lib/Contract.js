@@ -4,10 +4,12 @@
 | Author: Sadeesh Radhakrishnan
 |--------------------------------------------------
 */
-import Eth from 'ethjs';
+// import Eth from 'ethjs';
 import EthJs from 'ethjs-query';
 import EthJsContract from 'ethjs-contract';
 import unit from 'ethjs-unit';
+import cc from './utils';
+
 // import EthFilter from 'ethjs-filter';
 
 class Contract {
@@ -50,11 +52,11 @@ class Contract {
     getAccount = () => {
         // const self = this
         let accountTimer = setInterval(() => {
-            // console.log("Checking Metamask Account");
+            // cc.log("Checking Metamask Account");
             if (!this.account) {
                 this.eth.coinbase().then(account => {
                     if (account) {
-                        console.log("ACCOUNT: ", account);
+                        cc.log("ACCOUNT: ", account);
                         // this.getConfirmationsHash("0xf290b3e19ad0dc1bed93831bb04781af173f4643c55b270efb82235c55088150")
                         this.account = account;
                         this.props._setAccount({ account })
@@ -68,28 +70,28 @@ class Contract {
     }
 
     getBalance = (address) => {
-        console.log("Fetching Balance for ", address);
+        cc.log("Fetching Balance for ", address);
         this.eth.getBalance(address, "latest")
             .then(balance => {
                 let ethBal = unit.fromWei(balance, 'ether')
-                console.log({ [address]: ethBal });
+                cc.log({ [address]: ethBal });
                 this.props._setBalance({ [address]: ethBal })
             })
     }
 
     initContract = (props, web3) => {
-        // console.log("WEB3: ", web3);
+        // cc.log("WEB3: ", web3);
         this.props = props
-        // console.log("ETH: ", Eth);
+        // cc.log("ETH: ", Eth);
         //let newWeb3 = new Eth.HttpProvider('https://smartjuice.apayaa.com:8545')
-        //console.log("WEB 3 ####", newWeb3);
+        //cc.log("WEB 3 ####", newWeb3);
         //const eth = new Eth(newWeb3)
         const eth = new EthJs(web3.currentProvider)
         this.eth = eth
         // let account = eth.coinbase()
         this.getAccount()
         //this.props._setAccount({ account: "0x423B7B8Da5ec685130670A978a1A680dFa27c879" })
-        // console.log("ACC: ", account);
+        // cc.log("ACC: ", account);
         // const filters = new EthFilter(eth)
         // this.filter = new filters.PendingTransactionFilter()
         // this.filter.new()
@@ -99,8 +101,8 @@ class Contract {
         this.euroToken = contract(this.contracts.euroToken.abi).at(this.contracts.euroToken.address)
         this.LeaseTokenContract = contract(this.contracts.LeaseTokenContract.abi).at(this.contracts.LeaseTokenContract.address)
 
-        // console.log("Euro Token: ", this.euroToken);
-        // console.log("Lease Token Contract: ", this.LeaseTokenContract);
+        // cc.log("Euro Token: ", this.euroToken);
+        // cc.log("Lease Token Contract: ", this.LeaseTokenContract);
         // this.evEventTransfer()
 
         return {
@@ -111,16 +113,16 @@ class Contract {
     }
 
     getConfirmationsHash = (hash) => {
-        console.log("HASH: ", hash);
+        cc.log("HASH: ", hash);
         let blockStart, blockEnd;
         let timer = setInterval(() => {
-            console.log("CHECKING HASH CONFIRMATIONS:");
+            cc.log("CHECKING HASH CONFIRMATIONS:");
             if ((blockEnd - blockStart) > 0)
                 clearInterval(timer)
             this.eth.getTransactionReceipt(hash)
                 .then(res => {
                     if (res && res.blockNumber) {
-                        console.log("START BLOCK: ", res.blockNumber.toNumber())
+                        cc.log("START BLOCK: ", res.blockNumber.toNumber())
                         blockStart = res.blockNumber.toNumber()
                     }
                 })
@@ -129,8 +131,8 @@ class Contract {
                         .then(res => {
                             blockEnd = res
                             let confirmations = (blockEnd - blockStart)
-                            console.log("CURRENT BLOCK: ", res.toNumber())
-                            console.log("No. CONFs: ", confirmations, (confirmations > 0))
+                            cc.log("CURRENT BLOCK: ", res.toNumber())
+                            cc.log("No. CONFs: ", confirmations, (confirmations > 0))
 
                             if (confirmations > 0) {
                                 this.props._hashConfirmations({ hashConfirmations: confirmations })
@@ -146,14 +148,14 @@ class Contract {
      */
     startPendingTranscationWatcher = () => {
         this.watcher = this.filter.watch((err, result) => {
-            console.log("Pending Transaction Result: ", err, result);
+            cc.log("Pending Transaction Result: ", err, result);
             // if (err || result.length > 0) setTimeout(this.stopPendingTranscationWatcher, 1000);
         })
     }
 
     stopPendingTranscationWatcher = () => {
         this.watcher.stopWatching((err, result) => {
-            console.log("Stopped Pending Transcation Watching: ", err, result);
+            cc.log("Stopped Pending Transcation Watching: ", err, result);
         })
     }
 
@@ -166,7 +168,7 @@ class Contract {
         this.filters.EeuroTransfer = this.euroToken.Transfer()
         this.filters.EeuroTransfer.new()
         this.filters.EeuroTransfer.watch((err, result) => {
-            console.log("EuroToken Event Transfer() Result: ", err, result);
+            cc.log("EuroToken Event Transfer() Result: ", err, result);
             if (err || result.length > 0) {
                 let resultObj = { eventTransfer: true }
 
@@ -197,7 +199,7 @@ class Contract {
 
     euroEventTransferUnsubscribe = () => {
         this.filters.EeuroTransfer.uninstall((err, result) => {
-            console.log("EuroToken Event Transfer() Unsubscribe: ", err, result);
+            cc.log("EuroToken Event Transfer() Unsubscribe: ", err, result);
             this.investInObjectTxID = null
         })
     }
@@ -206,7 +208,7 @@ class Contract {
         this.filters.EeuroApproval = this.euroToken.Approval()
         this.filters.EeuroApproval.new()
         this.filters.EeuroApproval.watch((err, result) => {
-            console.log("EuroToken Event Approval() Result: ", err, result);
+            cc.log("EuroToken Event Approval() Result: ", err, result);
             if (err || result.length > 0) { this.props._setEventStatus({ eventApprove: true }); setTimeout(() => { this.euroEventApprovalUnsubscribe(); }, 1000) };
 
             // if (err || result.length > 0) {
@@ -226,7 +228,7 @@ class Contract {
 
     euroEventApprovalUnsubscribe = () => {
         this.filters.EeuroApproval.uninstall((err, result) => {
-            console.log("EuroToken Event Approval() Unsubscribe: ", err, result);
+            cc.log("EuroToken Event Approval() Unsubscribe: ", err, result);
             this.approveTxID = null
         })
     }
@@ -235,20 +237,20 @@ class Contract {
      * Euro Token Methods
      */
     euroBalanceOf = (account) => {
-        console.log(`Fetching EURO Tokens Balance for: ${account}`);
+        cc.log(`Fetching EURO Tokens Balance for: ${account}`);
         return this.euroToken.balanceOf(account)
             .then(result => {
-                console.log(`EURO TOKENS BALANCE: ${result[0].toString() / 1000000}`);
+                cc.log(`EURO TOKENS BALANCE: ${result[0].toString() / 1000000}`);
                 return { euroTokenBalance: (result[0].toString() / 1000000) }
             })
     }
 
     euroApprove = (value, account) => {
 
-        console.log(`Approve value: ${value * 1000000} to spend by: ${this.spender} from: ${account}`);
+        cc.log(`Approve value: ${value * 1000000} to spend by: ${this.spender} from: ${account}`);
         return this.euroToken.approve(this.spender, (value * 1000000), { from: account })
             .then(result => {
-                console.log(`Approval Result: ${result}`);
+                cc.log(`Approval Result: ${result}`);
                 this.euroEventApprovalSubscribe()
                 this.approveTxID = result
                 return { approveTxID: result }
@@ -256,10 +258,10 @@ class Contract {
     }
 
     euroAllowance = (account) => {
-        console.log(`Fetching Allowance for: ${account}`);
+        cc.log(`Fetching Allowance for: ${account}`);
         return this.euroToken.allowance(account, this.spender)
             .then(result => {
-                console.log(`Allowance Result: ${result[0].toString() / 1000000}`);
+                cc.log(`Allowance Result: ${result[0].toString() / 1000000}`);
                 return { allowance: (result[0].toString() / 1000000) }
             })
     }
@@ -275,7 +277,7 @@ class Contract {
         this.filters.EevTransfer = this.LeaseTokenContract.Transfer()
         this.filters.EevTransfer.new()
         this.filters.EevTransfer.watch((err, result) => {
-            console.log("EVToken Event Transfer() Result: ", err, result);
+            cc.log("EVToken Event Transfer() Result: ", err, result);
             if (err || result.length > 0) { this.props._setEventStatus({ eventTransfer: true }); setTimeout(() => { this.evEventTransferUnsubscribe(); this.props._reloadTokens() }, 1000); }
 
         })
@@ -283,7 +285,7 @@ class Contract {
 
     evEventTransferUnsubscribe = () => {
         this.filters.EevTransfer.uninstall((err, result) => {
-            console.log("EVToken Event Transfer() Unsubscribe: ", err, result);
+            cc.log("EVToken Event Transfer() Unsubscribe: ", err, result);
         })
     }
 
@@ -291,20 +293,20 @@ class Contract {
      * Lease Token Methods
      */
     evMyTokens = (account, objectID) => {
-        console.log(`Fetching EV Tokens for: ${account}, objectID: ${objectID}`);
+        cc.log(`Fetching EV Tokens for: ${account}, objectID: ${objectID}`);
         return this.LeaseTokenContract.objectBalanceOf(account, objectID)
             .then(result => {
-                console.log(`EV TOKENS: ${result[0].toString()}`);
+                cc.log(`EV TOKENS: ${result[0].toString()}`);
                 // this.setState({ ["evToken_" + objectID]: result[0].toString() })
                 return { id: objectID, result: result[0].toString() }
             })
     }
 
     evBalanceOf = (account) => {
-        console.log(`Fetching EV Tokens Balance for: ${account}`);
+        cc.log(`Fetching EV Tokens Balance for: ${account}`);
         return this.LeaseTokenContract.balanceOf(account)
             .then(result => {
-                console.log(`EV TOKENS BALANCE: ${result[0].toString()}`);
+                cc.log(`EV TOKENS BALANCE: ${result[0].toString()}`);
                 return { evTokenBalance: result[0].toString() }
             })
     }
@@ -317,7 +319,7 @@ class Contract {
         this.filters.ElcAddNewObject = this.LeaseTokenContract.AddNewObject()
         this.filters.ElcAddNewObject.new()
         this.filters.ElcAddNewObject.watch((err, result) => {
-            console.log("LeaseTokenContract Event AddNewObject() Result: ", err, result);
+            cc.log("LeaseTokenContract Event AddNewObject() Result: ", err, result);
             if (err || result.length > 0) {
                 if (!err)
                     result.map(res => {
@@ -331,21 +333,21 @@ class Contract {
                                 query: { "_id": this.addNewObjectID },
                                 data: this.addNewObject
                             }
-                            console.log(data)
+                            cc.log(data)
                             this.props._updateContractData(data)
                             this.props._setEventStatus({ eventAddNewObject: true, objectID: objectID }); setTimeout(() => { this.lcEventAddNewObjectUnsubscribe(); this.props._reloadTokens() }, 1000);
                         }
                         return res
                     })
                 else
-                    console.log(err)
+                    cc.log(err)
             }
         })
     }
 
     lcEventAddNewObjectUnsubscribe = () => {
         this.filters.ElcAddNewObject.uninstall((err, result) => {
-            console.log("LeaseTokenContract Event AddNewObject() Unsubscribe: ", err, result);
+            cc.log("LeaseTokenContract Event AddNewObject() Unsubscribe: ", err, result);
             this.addNewObjectTxID = null
             this.addNewObjectID = null
             this.addNewObject = null
@@ -356,7 +358,7 @@ class Contract {
         this.filters.lcClaim = this.LeaseTokenContract.Claim()
         this.filters.lcClaim.new()
         this.filters.lcClaim.watch((err, result) => {
-            console.log("LeaseTokenContract Event Claim() Result: ", err, result);
+            cc.log("LeaseTokenContract Event Claim() Result: ", err, result);
             if (err || result.length > 0) { this.props._setEventStatus({ eventClaim: true }); setTimeout(this.lcEventClaimUnsubscribe, 1000); }
 
             // if (err || result.length > 0) {
@@ -376,7 +378,7 @@ class Contract {
 
     lcEventClaimUnsubscribe = () => {
         this.filters.lcClaim.uninstall((err, result) => {
-            console.log("LeaseTokenContract Event Claim() Unsubscribe: ", err, result);
+            cc.log("LeaseTokenContract Event Claim() Unsubscribe: ", err, result);
             this.claimDividendTxID = null
         })
     }
@@ -386,77 +388,93 @@ class Contract {
      */
 
     lcCreateObject = (objectid, objectImage, objectPrice, objectHash, objectType, objectDealer, objectFee, objectTerm, mileagesAvg, account) => {
-        console.log(`Adding New object for: ${objectPrice}, ${objectHash}, ${objectType}, ${objectDealer}, ${objectFee}, ${objectTerm}, ${mileagesAvg}, ${account}`);
+        cc.log(`Adding New object for: ${objectPrice}, ${objectHash}, ${objectType}, ${objectDealer}, ${objectFee}, ${objectTerm}, ${mileagesAvg}, ${account}`);
         return this.LeaseTokenContract.createObject(objectPrice, objectHash, objectType, objectDealer, objectFee, objectTerm, mileagesAvg, { from: account })
             .then(result => {
-                console.log(`ADD NEW object RESULT: ${result}`);
+                cc.log(`ADD NEW object RESULT: ${result}`);
                 // this.lcEventAddNewObjectSubscribe() // development
-                this.addNewObjectTxID = result
-                this.addNewObjectID = objectid
-                this.addNewObject = {
-                    carPic: objectImage,
-                    carPrice: objectPrice,
-                    carHash: objectHash,
-                    carDealer: objectDealer,
-                    carFee: objectFee,
-                    carTerm: objectTerm,
-                    carMileagesAvg: mileagesAvg,
-                    account: account
+                // this.addNewObjectTxID = result
+                // this.addNewObjectID = objectid
+                // this.addNewObject = {
+                //     carPic: objectImage,
+                //     carPrice: objectPrice,
+                //     carHash: objectHash,
+                //     carDealer: objectDealer,
+                //     carFee: objectFee,
+                //     carTerm: objectTerm,
+                //     carMileagesAvg: mileagesAvg,
+                //     account: account
+                // }
+                // return { addNewObjectTxID: result, addNewObjectHash: objectHash, progress: false }
+                return {
+                    newObject: {
+                        id: objectid,
+                        txID: result,
+                        data: {
+                            carPic: objectImage,
+                            carPrice: objectPrice,
+                            carHash: objectHash,
+                            carDealer: objectDealer,
+                            carFee: objectFee,
+                            carTerm: objectTerm,
+                            carMileagesAvg: mileagesAvg,
+                            account: account
+                        }
+                    }
                 }
-                return { addNewObjectTxID: result, progress: false }
             })
     }
 
     lcSumBalanceOf = (account) => {
-        console.log(`Fetching Sum Balance Of: `);
+        cc.log(`Fetching Sum Balance Of: `);
         return this.LeaseTokenContract.sumBalanceOf(account)
             .then(result => {
-                console.log(`sumBalanceOf RESULT: ${result[0].toNumber()}`);
+                cc.log(`sumBalanceOf RESULT: ${result[0].toNumber()}`);
                 return { sumBalanceOf: result[0].toNumber(), progress: false }
             })
     }
 
     lcTotalSupply = () => {
-        console.log(`Fetching Total Amount Raised.`);
+        cc.log(`Fetching Total Amount Raised.`);
         return this.LeaseTokenContract.totalSupply()
             .then(result => {
-                console.log(`Total Supply RESULT: ${result[0].toNumber()}`);
+                cc.log(`Total Supply RESULT: ${result[0].toNumber()}`);
                 return { totalSupply: result[0].toNumber(), progress: false }
             })
     }
 
     lcAuthorization = (account) => {
-        console.log(`Checking Authorization for: ${account}`);
+        cc.log(`Checking Authorization for: ${account}`);
         return this.LeaseTokenContract.authorization(account)
             .then(result => {
-                console.log(`Authorization RESULT: ${result[0]}`);
+                cc.log(`Authorization RESULT: ${result[0]}`);
                 return { account: account, result: result[0] }
             })
     }
 
     lcAddUser = (user, account) => {
-        console.log(`Add New User: ${account}`);
+        cc.log(`Add New User: ${account}`);
         return this.LeaseTokenContract.addUser(user, { from: account })
             .then(result => {
-                console.log(`Add New User RESULT: ${result}`);
+                cc.log(`Add New User RESULT: ${result}`);
                 return { AddNewUser: result }
             })
     }
 
     lcLeaseObject = (objectID) => {
-        console.log(`Fetch object Details for ID: ${objectID}`);
+        cc.log(`Fetch object Details for ID: ${objectID}`);
         return this.LeaseTokenContract.leaseobject(objectID)
             .then(result => {
-                console.log(`Details of object ID ${objectID} => `, result);
+                cc.log(`Details of object ID ${objectID} => `, result);
                 return { id: objectID, result: result }
             })
     }
 
     lcLeaseObjectCycle = (objectID) => {
-        console.log(`Fetch object Cycle Details for ID: ${objectID}`);
+        cc.log(`Fetch object Cycle Details for ID: ${objectID}`);
         return this.LeaseTokenContract.leasecbjectcycle(objectID)
             .then(result => {
-                console.log(`Details of object cycle ID ${objectID} => `, result);
+                cc.log(`Details of object cycle ID ${objectID} => `, result);
                 return {
                     id: objectID,
                     result: {
@@ -470,10 +488,10 @@ class Contract {
     }
 
     lcLeaseObjectRedemption = (objectID) => {
-        console.log(`Fetch object Redemption Details for ID: ${objectID}`);
+        cc.log(`Fetch object Redemption Details for ID: ${objectID}`);
         return this.LeaseTokenContract.leaseobjectredemption(objectID)
             .then(result => {
-                console.log(`Details of object redemption ID ${objectID} => `, result);
+                cc.log(`Details of object redemption ID ${objectID} => `, result);
                 return {
                     id: objectID,
                     result: {
@@ -489,19 +507,19 @@ class Contract {
     }
 
     lcAmountObjects = () => {
-        console.log(`Fetch Crowd Sale Closed Objects Count:`);
+        cc.log(`Fetch Crowd Sale Closed Objects Count:`);
         return this.LeaseTokenContract.amountObjects()
             .then(result => {
-                console.log(`Crowd Sale Closed Objects Count => `, result, result[0].toNumber());
+                cc.log(`Crowd Sale Closed Objects Count => `, result, result[0].toNumber());
                 return { crowdsaleClosed: result[0].toNumber() }
             })
     }
 
     lcInvestInObject = (objectID, amount, account) => {
-        console.log(`Calling Raise Funds For object ID: ${objectID}, ${amount}, ${account}`);
+        cc.log(`Calling Raise Funds For object ID: ${objectID}, ${amount}, ${account}`);
         return this.LeaseTokenContract.investInObject(objectID, amount || "0", { from: account })
             .then(result => {
-                console.log(`Invest In Object RESULT: ${result}`);
+                cc.log(`Invest In Object RESULT: ${result}`);
                 // this.lcEventAddNewObjectSubscribe()    // contract missing event call, not calling this 
                 // this.startPendingTranscationWatcher()
                 // this.euroEventTransferSubscribe() // development
@@ -512,10 +530,10 @@ class Contract {
 
     lcPaySubscription = (objectID, month, milege, account) => {
         // account = "0xA30b6a96D652E99AA25162B2b9165f2c3f683ACc"
-        console.log(`Calling Pay Interest And Redemption: ${objectID}, ${month}, ${milege}, ${account}`);
+        cc.log(`Calling Pay Interest And Redemption: ${objectID}, ${month}, ${milege}, ${account}`);
         return this.LeaseTokenContract.paySubscription(objectID, month, milege, { from: account })
             .then(result => {
-                console.log(`paySubscription RESULT: ${result}`);
+                cc.log(`paySubscription RESULT: ${result}`);
                 // this.euroEventTransferSubscribe() //development
                 this.paySubscriptionTxID = result
                 return { paySubscriptionTxID: result, progress: false }
@@ -523,29 +541,29 @@ class Contract {
     }
 
     lcToClaimDividend = (objectID, account) => {
-        console.log(`Calling Read Investor To Claim.`);
+        cc.log(`Calling Read Investor To Claim.`);
         return this.LeaseTokenContract.toClaimDividend(account, objectID)
             .then(result => {
-                console.log(`ToClaimDividend RESULT: ${result[0].toString()}`);
+                cc.log(`ToClaimDividend RESULT: ${result[0].toString()}`);
                 return { unClaimedRedemption: result[0].toString(), progress: false }
             })
     }
 
     lcToClaimTotal = (account) => {
-        console.log(`Calling To Claim Total.`);
+        cc.log(`Calling To Claim Total.`);
         return this.LeaseTokenContract.toClaimTotal(account)
             .then(result => {
-                console.log(`ToClaimTotal RESULT: ${result[0].toNumber()}`);
+                cc.log(`ToClaimTotal RESULT: ${result[0].toNumber()}`);
                 return { unClaimedRedemption: result[0].toNumber() }
             })
     }
 
 
     lcClaimDividend = (objectID, account) => {
-        console.log(`Calling Claim Interest And Redemption.`);
+        cc.log(`Calling Claim Interest And Redemption.`);
         return this.LeaseTokenContract.claimDividend(objectID, { from: account })
             .then(result => {
-                console.log(`claimDividend RESULT: ${result}`);
+                cc.log(`claimDividend RESULT: ${result}`);
                 // this.lcEventClaimSubscribe() //development
                 this.claimDividendTxID = result
                 return { claimDividendTxID: result, progress: false }

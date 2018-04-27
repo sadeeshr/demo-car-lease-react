@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
+// import cc from '../lib/utils';
 
 class Home extends Component {
 
     componentWillMount() {
-        // console.log(this.props);
+        // cc.log(this.props);
     }
 
     componentDidMount() {

@@ -8,6 +8,7 @@ import ModelViewer from 'metamask-logo'
 import AddNewLifeConfigurator from '../containers/AddNewLifeConfigurator';
 import { Link } from 'react-router-dom'
 import NotificationSystem from 'react-notification-system';
+import cc from '../lib/utils';
 
 class Main extends Component {
 
@@ -37,7 +38,7 @@ class Main extends Component {
     }
 
     componentWillMount() {
-        // console.log("MAIN: ", this.props, window.location.hostname);
+        // cc.log("MAIN: ", this.props, window.location.hostname);
         if (!this.props.socketConnection) this.props._connectSocket(this.props, window.location.hostname)
 
         const { web3 } = window
@@ -46,15 +47,13 @@ class Main extends Component {
             // You have a web3 browser! Initiate Contract Object!
             if (!this.props.LeaseContract) this.props._initContract(this.props, web3)
 
-            this.fetchUserData()
-
             // this.setState({ alert: "Please Install Metamask plugin", url: "https://metamask.io/" })
 
             // if (!this.props.account) this.props._getAccount();
         } else {
             // Warn the user that they need to get a web3 browser
             // Or install MetaMask, maybe with a nice graphic.
-            console.log("NO WEB3");
+            cc.log("NO WEB3");
             this.setState({ alert: "Please Install Metamask plugin", url: "https://metamask.io/" })
         }
 
@@ -93,7 +92,7 @@ class Main extends Component {
     checkRegistered = () => {
         if (this.props.usernames) {
             const accounts = this.props.usernames ? this.props.usernames.map(user => user.account) : []
-            // console.log(accounts, this.props.account, accounts.indexOf(this.props.account));
+            // cc.log(accounts, this.props.account, accounts.indexOf(this.props.account));
             this.setState({
                 registered: (accounts.indexOf(this.props.account) !== -1) ? true : false
             })
@@ -102,8 +101,9 @@ class Main extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        // console.log("Main Update Props: ", nextProps);
-
+        cc.log("Main Update Props: ", nextProps, nextProps.socket, !nextProps.usernames);
+        if (nextProps.account && nextProps.socket && !nextProps.usernames) this.fetchUserData()
+        
         if (nextProps.event && this.props.event !== nextProps.event) {
             switch (nextProps.event.event) {
                 case "Transfer":
@@ -111,7 +111,7 @@ class Main extends Component {
                         const txFrom = this.props.members.find(member => member.account.toLowerCase() === nextProps.event.returnValues.to.toLowerCase())
                         const txTo = this.props.members.find(member => member.carID && (member.carID.toString() === nextProps.event.returnValues.objectId))
                         const value = nextProps.event.returnValues.value
-                        // console.log(txFrom, txTo, value);
+                        // cc.log(txFrom, txTo, value);
                         let event = {
                             title: "Investment Update",
                             message: `Awesome, ${txFrom.username} ${txFrom.town} has just invested ${value} euros on ${txTo.username} ${txTo.town}'s Car`,
@@ -122,27 +122,55 @@ class Main extends Component {
                         this.props._setEventAlert(event)
                         break;
                     }
+                case "AddNewObject":
+                    {
+                        const event = nextProps.event
+                        const newObject = this.props.newObject || ""
+                        if (newObject && event.transactionHash === newObject.txID) {
+                            let objectID = event.returnValues.objectID
+                            let newObjData = newObject.data
+                            newObjData["carID"] = objectID
+                            let data = {
+                                module: "membersdev",
+                                result: "members",
+                                query: { "_id": newObject.id },
+                                data: newObjData
+                            }
+                            cc.log(data)
+                            this.props._updateContractData(data)
+                            setTimeout(() => this.props._fetchMembers("westland", this.props.account), 1000)
+                            // this.props._setEventStatus({ eventAddNewObject: true, objectID: objectID }); setTimeout(() => { this.lcEventAddNewObjectUnsubscribe(); this.props._reloadTokens() }, 1000);
+                        }
 
+                        let alert = {
+                            title: "Awesome, A New Car has been added !!",
+                            message: ``,
+                            level: "info",
+                            position: "tr",
+                            autoDismiss: 3
+                        }
+                        this.props._setEventAlert(alert)
+                        break;
+
+                    }
                 default:
                     break;
             }
         }
         if (nextProps.eventAlert && (this.props.eventAlert !== nextProps.eventAlert)) {
-            // console.log(this.refs)
+            // cc.log(this.refs)
             this.refs.notificationSystem.addNotification(nextProps.eventAlert);
         }
 
         this.checkRegistered()
-        if (nextProps.socket && !nextProps.usernames) this.fetchUserData()
         if (nextProps.location.state) this.renderComponent()
         this.props = nextProps
-
     }
 
     renderMain = () => {
         const img = { "maxHeight": "95px", "maxWidth": "180px", "display": "block", "width": "auto", "height": "auto" }
         // const thumbImg = { "maxHeight": "40px", "maxWidth": "40px", "display": "block", "width": "auto", "height": "auto" }
-        const disabled = (this.props.account && (typeof this.state.registered !== "undefined") )? false : true
+        // const disabled = (this.props.account && (typeof this.state.registered !== "undefined")) ? false : true
         // const cursor = this.props.account ? "pointer" : "not-allowed"
 
         return <div className="content-border">
@@ -177,12 +205,15 @@ class Main extends Component {
                         </div>*/}
                 </div>
                 <div className="footCon">
-                    <div className="contentBtn "><div hidden={!disabled} id="metamask-logo" style={{ textAlign: "center" }}><span hidden={!disabled} style={{ cursor: this.state.url ? "pointer" : "default" }} onClick={() => this.state.url ? window.open(this.state.url, "_blank") : ""}>{this.state.alert}</span></div></div>
-                    {this.props.usernames && <div>
-                        {/*<span>Your town here</span><button className="arrowBtn" hidden={disabled} disabled={disabled} onClick={() => this.props.history.push("/", { module: "AddMember", path: "home" })}><img src={require('../assets/arrow.jpg')} alt="addM" /></button>*/}
-                        <button className="lrBtn"><Link style={{ border: "none" }} target="_blank" to={this.redirectURL}><img alt="blue" src={require('../assets/blue-light.png')} /></Link></button>
-                        <button className="lrBtn" onClick={() => this.props.history.push("/", { module: "westland", path: this.state.registered ? "members" : "addmember" })}><img alt="red" src={require('../assets/red-light.png')} /></button>
-                    </div>}
+                    <div className="contentBtn">
+                        <div hidden={this.props.account} id="metamask-logo" style={{ textAlign: "center" }}><span hidden={this.props.account} style={{ cursor: this.state.url ? "pointer" : "default" }} onClick={() => this.state.url ? window.open(this.state.url, "_blank") : ""}>{this.state.alert}</span></div></div>
+                    {
+                        (this.props.usernames && this.props.account) &&
+                        <div>
+                            <button className="lrBtn"><Link style={{ border: "none" }} target="_blank" to={this.redirectURL}><img alt="blue" src={require('../assets/blue-light.png')} /></Link></button>
+                            <button className="lrBtn" onClick={() => this.props.history.push("/", { module: "westland", path: this.state.registered ? "members" : "addmember" })}><img alt="red" src={require('../assets/red-light.png')} /></button>
+                        </div>
+                    }
                     {/*<button onClick={() => this.props.history.push("/", { module: "westland", path: "members" })}>Members</button>*/}
                 </div>
             </div>
@@ -213,7 +244,7 @@ class Main extends Component {
     }
 
     render() {
-        // console.log("Main State: ", this.state);
+        // cc.log("Main State: ", this.state);
         return (
             <div>
                 <NotificationSystem ref="notificationSystem" />

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import BlockUi from 'react-block-ui';
 import { Link } from 'react-router-dom'
 import Slide from 'react-reveal/Slide';
+import cc from '../lib/utils';
 
 class Invoices extends Component {
     constructor(props) {
@@ -22,12 +23,12 @@ class Invoices extends Component {
     componentWillMount() {
         this.fetchInvoices()
         this.setState({ eventSubscription: null })
-        // console.log("Object Fees: ", this.props.member.car.objectFee.toNumber())
-        // console.log("Object Price: ", this.props.member.car.objectPrice.toNumber())
-        // console.log("Object Type: ", this.props.member.car.objectType.toNumber())
-        // console.log("Object paymonth: ", this.props.member.paymonth)
-        // console.log("Object milages: ", this.props.member.mileagesTotal)
-        // console.log("Object totalDividends: ", this.props.member.totalDividends)
+        // cc.log("Object Fees: ", this.props.member.car.objectFee.toNumber())
+        // cc.log("Object Price: ", this.props.member.car.objectPrice.toNumber())
+        // cc.log("Object Type: ", this.props.member.car.objectType.toNumber())
+        // cc.log("Object paymonth: ", this.props.member.paymonth)
+        // cc.log("Object milages: ", this.props.member.mileagesTotal)
+        // cc.log("Object totalDividends: ", this.props.member.totalDividends)
 
         this.props._lcLeaseObject(this.props.member.carID)
         this.props._lcLeaseObjectCycle(this.props.member.carID)
@@ -104,7 +105,7 @@ class Invoices extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        // console.log("new props", nextProps);
+        // cc.log("new props", nextProps);
         if (nextProps.invoices_new || nextProps.invoices_edit)
             this.fetchInvoices()
         if (nextProps.invoices && nextProps.invoices.length > 0) {
@@ -116,12 +117,12 @@ class Invoices extends Component {
         if (!this.props.euroTokenBalance) this.props._euroBalanceOf(this.props.account)
 
         if (nextProps.member && nextProps.member.car) {
-            // console.log("Object Fees: ", this.props.member.car.objectFee.toNumber())
-            // console.log("Object Price: ", this.props.member.car.objectPrice.toNumber())
-            // console.log("Object Type: ", this.props.member.car.objectType.toNumber())
-            // console.log("Object paymonth: ", this.props.member.paymonth)
-            // console.log("Object milages: ", this.props.member.mileagesTotal)
-            // console.log("Object totalDividends: ", this.props.member.totalDividends)
+            // cc.log("Object Fees: ", this.props.member.car.objectFee.toNumber())
+            // cc.log("Object Price: ", this.props.member.car.objectPrice.toNumber())
+            // cc.log("Object Type: ", this.props.member.car.objectType.toNumber())
+            // cc.log("Object paymonth: ", this.props.member.paymonth)
+            // cc.log("Object milages: ", this.props.member.mileagesTotal)
+            // cc.log("Object totalDividends: ", this.props.member.totalDividends)
         }
     }
 
@@ -142,14 +143,14 @@ class Invoices extends Component {
     }
 
     render() {
-        // console.log("INVOICE STATE: ", this.state, this.props);
+        cc.log("INVOICE State Props: ", this.state, this.props);
         const invoices = this.props.invoices ? this.props.invoices.filter(invoice => (this.months[invoice.month].toLowerCase().startsWith(this.state.filter) || invoice.year === parseInt(this.state.filter, 10))) : []
         invoices.sort((a, b) => parseFloat(b.month) - parseFloat(a.month))
         // const invoices = this.props.invoices
         let amount = (this.props.member.car.objectFee.toNumber()) + (((this.state.mileage || this.props.member.mileagesTotal) - this.props.member.mileagesTotal) * 0.10)
-        // console.log(amount, ' <= ', this.props.allowance, (amount <= this.props.allowance), this.state.mileage, ' >= ', this.props.member.mileagesTotal, (this.state.mileage >= this.props.member.mileagesTotal));
+        // cc.log(amount, ' <= ', this.props.allowance, (amount <= this.props.allowance), this.state.mileage, ' >= ', this.props.member.mileagesTotal, (this.state.mileage >= this.props.member.mileagesTotal));
         const enableInvoice = ((this.state.mileage >= this.props.member.mileagesTotal) && (amount <= this.props.allowance)) ? true : false
-        // console.log("Invoice Enabled: ", enableInvoice);
+        // cc.log("Invoice Enabled: ", enableInvoice);
         return (<div className="content-border">
             <div className="mainContentCon">
                 {/* <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
@@ -269,7 +270,7 @@ class Invoices extends Component {
 
 
                         {/* <div className="contentBtn">
-                            <input className="searchBtn" type="text" name="filterMembers" value={this.state.filter || ""} placeholder="Search" onChange={(e) => { console.log("SEARCH: ", e.target.value); this.setState({ filter: e.target.value }) }} />
+                            <input className="searchBtn" type="text" name="filterMembers" value={this.state.filter || ""} placeholder="Search" onChange={(e) => { cc.log("SEARCH: ", e.target.value); this.setState({ filter: e.target.value }) }} />
                         </div> */}
                     </BlockUi>
                 </div>

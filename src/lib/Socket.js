@@ -1,4 +1,5 @@
 import io from 'socket.io-client';
+import cc from './utils';
 
 // let agent = new https.Agent();
 
@@ -50,15 +51,15 @@ class Socket {
     }
 
     bindSocket = (socket) => {
-        this.socket.on('response', (data) => console.log(data))
-        this.socket.on('connect', () => { console.log("Online now, Socket ID: ", socket.id); this.props._socketStatus(true) })
-        this.socket.on('disconnect', () => { console.log("Offline now"); this.props._socketStatus(true) })
+        this.socket.on('response', (data) => cc.log(data))
+        this.socket.on('connect', () => { cc.log("Online now, Socket ID: ", socket.id); this.props._socketStatus(true) })
+        this.socket.on('disconnect', () => { cc.log("Offline now"); this.props._socketStatus(true) })
         this.socket.on('data', data => {
-            console.log("DATA: ", data, this.account);
+            cc.log("DATA: ", data, this.account);
             if (data) this.props._contractDataResponse(this.account, { [data.module]: data.result });
         })
         this.socket.on('event', (data) => {
-            console.log("EVENT: ", data, this.props.module, this.account)
+            cc.log("EVENT: ", data, this.props.module, this.account)
             if (data) {
                 if (data.event === "Transfer") this.props._fetchMembers(this.props.module, this.account)
                 this.props._setEvent(data)

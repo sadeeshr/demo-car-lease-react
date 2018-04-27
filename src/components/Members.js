@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import BlockUi from 'react-block-ui';
 import 'react-block-ui/style.css';
 import { Link } from 'react-router-dom'
+import cc from '../lib/utils';
 
 class Members extends Component {
 
@@ -16,8 +17,8 @@ class Members extends Component {
 
 
     componentWillMount() {
-        // console.log("Members Props", this.props);
-        this.setState({ eventAddNewObject: this.props.eventAddNewObject === "pending" ? this.props.eventAddNewObject : null })
+        // cc.log("Members Props", this.props);
+        // this.setState({ eventAddNewObject: this.props.eventAddNewObject === "pending" ? this.props.eventAddNewObject : null })
         // if (this.props.reloadTokens || this.props.members_new || this.props.AddNewUser) this.fetchMembers()
     }
 
@@ -51,20 +52,20 @@ class Members extends Component {
 
     componentWillReceiveProps(nextProps) {
         this.props = nextProps
-        // console.log("Members Update Props", nextProps);
+        // cc.log("Members Update Props", nextProps);
         // if (this.props.members && ) this.props._reloadTokens()
         // if (this.props.reloadTokens) this.fetchMembers()
-        if (this.props.eventAddNewObject && this.props.objectID && this.props.newObject) {
-            let objectID = this.props.objectID
-            let newObject = this.props.newObject
-            newObject.data["carID"] = objectID
-            this.props._writeNewContractData(newObject)
-        }
-        if (this.props.eventAddNewObject && !this.state.eventAddNewObject) this.setState({ eventAddNewObject: this.props.eventAddNewObject })
+        // if (this.props.eventAddNewObject && this.props.objectID && this.props.newObject) {
+        //     let objectID = this.props.objectID
+        //     let newObject = this.props.newObject
+        //     newObject.data["carID"] = objectID
+        //     this.props._writeNewContractData(newObject)
+        // }
+        // if (this.props.eventAddNewObject && !this.state.eventAddNewObject) this.setState({ eventAddNewObject: this.props.eventAddNewObject })
 
         if (this.props.members) {
             let members = this.sortMembers()
-            // console.log("######## SORTED MEMBERS ###########", members);
+            // cc.log("######## SORTED MEMBERS ###########", members);
             // if (members.length >= 3) {
             // members[0].car ? members[0].car.crowdsaleClosed = true : ""
             // members[1].car ? members[1].car.crowdsaleClosed = true : ""
@@ -103,22 +104,24 @@ class Members extends Component {
 
     renderMember = (member, i) => {
 
-        // console.log("Member: ", member);
-        const img = { "display": "block" }
+        cc.log("Member: ", member);
+        const img = member.carPic ? { "display": "block" } : { height: "auto", width: "auto" }
         // if (this.props.account)
         // if (!(this.props.evTokens && this.props.evTokens[member.carID]) || this.props.addNewObjectTxID || this.props.raiseFundsForCarTxID) this.props._evMyTokens(this.props.account, member.carID)
         // this.evTokenMyTokens(member.carID)
         const selected = (this.props.member && !this.props.member.crowdsaleClosed) ? (this.props.member.username === member.username ? true : false) : false
         let memberRows = [
-            <div className="mtableLink" ref={divRef => this[member.carID] = divRef} key={i} onClick={() => member.authorized ? this.props._memberSelected(member, this.props.account, this.props.location.state.module) : console.log("MEMBER NOT AUTHORIZED")}>
+            <div className="mtableLink" ref={divRef => this[member.carID] = divRef} key={i} onClick={() => member.authorized ? this.props._memberSelected(member, this.props.account, this.props.location.state.module) : cc.log("MEMBER NOT AUTHORIZED")}>
                 {!member.authorized && <div className="membersBtn">
-                    <button title="Authorize" className="arrowBtn" onClick={() => member.account !== this.props.account ? this.props._lcAddUser(member.account, this.props.account) : console.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
+                    <button title="Authorize" className="arrowBtn" onClick={() => member.account !== this.props.account ? this.props._lcAddUser(member.account, this.props.account) : cc.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
                         <img src={require('../assets/add.jpg')} alt="addM" />
                     </button>
                 </div>}
                 <div className="mtableTokens">{member.crowdsaleClosed ? <span style={{ color: "green", fontSize: "12px" }}>Closed</span> : member.totalRaised || "0"} <p>{member.evTokens}</p></div>
                 <div className="mtableUser">{member.username || ""} <p>{member.town || ""}</p></div>
-                {member.carPic && <div className="mtableCar"><img style={img} src={member.carPic || ""} alt="carImage" /><span title="Car Raised" style={{ fontSize: "12px" }}>Euro {member.carPrice}</span></div>}
+                {<div className="mtableCar"><img style={img} src={member.carPic || require('../assets/noimage.png')} alt="carImage" /><span title="Car Raised" style={{ fontSize: "12px" }}>Euro {member.carPrice || "0"}</span></div>}
+                {(this.props.newObject && this.props.newObject.id === member["_id"]) &&
+                    (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newObject.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red" }}>pending</p>}</Link>)}
             </div>
         ]
 
@@ -129,10 +132,10 @@ class Members extends Component {
                     <div style={{ cursor: (member.carID || member.authorized) ? "pointer" : "not-allowed" }} className="memberMesCon">{(member.carID || member.authorized) ? member.message : "Not Allowed to Add New Life Configurator"}</div>
                     {member.carID && <div className="memberMesBtns">
                         <div className="membersBtn">
-                            <button className="arrowBtn" onClick={() => { member.authorized ? this.props.history.push("/", { module: this.props.location.state.module, path: "invest" }) : console.log("NO OBJECT CONFIGURED") }}>
+                            <button className="arrowBtn" onClick={() => { member.authorized ? this.props.history.push("/", { module: this.props.location.state.module, path: "invest" }) : cc.log("NO OBJECT CONFIGURED") }}>
                                 <img src={require('../assets/arrow.jpg')} alt="addM" />
                             </button>
-                            <button title="Invoices (testing)" className="arrowBtn" onClick={() => { member.authorized ? this.props.history.push("/", { module: this.props.location.state.module, path: "invoices" }) : console.log("NO OBJECT CONFIGURED") }}>
+                            <button title="Invoices (testing)" className="arrowBtn" onClick={() => { member.authorized ? this.props.history.push("/", { module: this.props.location.state.module, path: "invoices" }) : cc.log("NO OBJECT CONFIGURED") }}>
                                 <img src={require('../assets/add.jpg')} alt="addI" />
                             </button>
                         </div>
@@ -150,28 +153,28 @@ class Members extends Component {
                 if (a.car && a.car.crowdsaleClosed)
                     return 0
                 else if (a.totalRaised && b.totalRaised) {
-                    // console.log(`Car Raised-${b.carID}=> ${b.totalRaised} - Car Raised-${a.carID}=> ${a.totalRaised}`);
+                    // cc.log(`Car Raised-${b.carID}=> ${b.totalRaised} - Car Raised-${a.carID}=> ${a.totalRaised}`);
                     return b.totalRaised - a.totalRaised
                 } else
                     return 0
             })
-            // console.log("$$$$$$$$$ sorted members: $$$$$$$$$$$$$", members);
+            // cc.log("$$$$$$$$$ sorted members: $$$$$$$$$$$$$", members);
             return members
         } else
             return []
     }
 
     render() {
-        // console.log("Members State: ", this.state);
-        // console.log("Members Props: ", this.props);
+        // cc.log("Members State: ", this.state);
+        // cc.log("Members Props: ", this.props);
 
         // const members = this.state.members ? this.state.members.filter(member => (member.username.startsWith(this.state.filter) || member.carID === parseInt(this.state.filter, 10))) : []
         const members = this.props.members ? this.props.members.filter(member => (member.username.startsWith(this.state.filter) || member.carID === parseInt(this.state.filter, 10))) : []
 
         // TESTING DIV FOCUS
         // if (members && members[4] && members[4].car) members[4].car.crowdsaleClosed = true
-        // const divFocus = members.length > 0 ? members.find(member => { console.log(member, member.car && !member.car.crowdsaleClosed); if (member.car && !member.car.crowdsaleClosed) return member }) : 1
-        // divFocus && console.log("div Focus: ", divFocus.carID, this[divFocus.carID]);
+        // const divFocus = members.length > 0 ? members.find(member => { cc.log(member, member.car && !member.car.crowdsaleClosed); if (member.car && !member.car.crowdsaleClosed) return member }) : 1
+        // divFocus && cc.log("div Focus: ", divFocus.carID, this[divFocus.carID]);
         // if (divFocus) setTimeout(() => {
         //     scrollToComponent(this[divFocus.carID], {
         //         offset: 1000,
@@ -189,32 +192,10 @@ class Members extends Component {
                         <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
                     </div> */}
                     <div className="navCon">
-                        <h1 id="header"><div className="fl"><i className="flaticon-back" onClick={() => this.props.history.goBack()}></i></div>Members<div className="fr"><i onClick={() => this.fetchMembers()} className="flaticon-rotate marIcon"></i><i onClick={() => this.props.history.push("/")} className="flaticon-home"></i></div></h1>
+                        <h1 id="header"><div className="fl"><i className="flaticon-back" onClick={() => this.props.history.push("/", { module: "westland", path: "main" })}></i></div>Members<div className="fr"><i onClick={() => this.fetchMembers()} className="flaticon-rotate marIcon"></i><i onClick={() => this.props.history.push("/")} className="flaticon-home"></i></div></h1>
                     </div>
                     <div className="contentCon overflow bg-none">
                         <BlockUi tag="div" blocking={this.props.progress}>
-
-                            {
-                                this.props.location.state && this.props.location.state.addNewObjectTxID &&
-                                <div className="carCon">
-                                    <div className="carcol">
-                                        <div className="carTitle">Transaction ID:</div>
-                                        <div className="carEth">{this.props.location.state.addNewObjectTxID}</div>
-                                        <div className="carPrice"><a target="_blank" href={"https://rinkbey.etherscan.io/tx/" + this.props.location.state.addNewObjectTxID}>Check Transaction </a></div>
-                                    </div>
-                                </div>
-                            }
-                            {
-                                /*
-                                    <div className="mtableCon">
-                                        <div className="mtableTitle">
-                                            <div className="mtableTokens">EVTokens</div>
-                                            <div className="mtableUser">User Town</div>
-                                            <div className="mtableCar">Car</div>
-                                        </div>
-                                    </div>
-                                */
-                            }
                             <div className="membersCon">
                                 {
                                     members && members.map((member, i) => {
@@ -224,7 +205,7 @@ class Members extends Component {
                             </div>
                             {/* <div className="contentBtn">
                             {this.props.addNewObjectTxID && (!this.state.eventAddNewObject ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>)}
-                            <input className="searchBtn" type="text" name="filterMembers" value={this.state.filter || ""} placeholder="Search" onChange={(e) => { console.log("SEARCH: ", e.target.value); this.setState({ filter: e.target.value }) }} />
+                            <input className="searchBtn" type="text" name="filterMembers" value={this.state.filter || ""} placeholder="Search" onChange={(e) => { cc.log("SEARCH: ", e.target.value); this.setState({ filter: e.target.value }) }} />
                         </div> */}
 
                         </BlockUi>
@@ -232,8 +213,7 @@ class Members extends Component {
                     <div className="footCon">
                         <div>
                             {/*this.props.AddNewUser && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.AddNewUser}>{!this.state.eventAddNewUser ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>} </Link>)*/}
-                            {this.props.addNewObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.addNewObjectTxID}>{!this.state.eventAddNewObject ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>} </Link>)}
-                            <input className="searchBtn" type="text" name="filterMembers" value={this.state.filter || ""} placeholder="Search" onChange={(e) => { console.log("SEARCH: ", e.target.value); this.setState({ filter: e.target.value }) }} />
+                            <input className="searchBtn" type="text" name="filterMembers" value={this.state.filter || ""} placeholder="Search" onChange={(e) => { cc.log("SEARCH: ", e.target.value); this.setState({ filter: e.target.value }) }} />
                         </div>
                     </div>
                 </div>

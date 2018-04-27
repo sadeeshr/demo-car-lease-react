@@ -15,7 +15,8 @@ const mapStateToProps = (state) => {
         socket: state.socket,
         event: state.event,
         eventAlert: state.eventAlert,
-        initRoute: state.initRoute
+        initRoute: state.initRoute,
+        newObject: state.newObject
     }
 }
 const mapActionsToProps = (dispatch) => { return bindActionCreators(Actions, dispatch) }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 // import md5 from 'md5';
 import BlockUi from 'react-block-ui';
+import cc from '../lib/utils';
 
 class AddMember extends Component {
     constructor(props) {
@@ -17,7 +18,7 @@ class AddMember extends Component {
 
 
     componentWillMount() {
-        // console.log("ADD MEMBER:", this.props);
+        // cc.log("ADD MEMBER:", this.props);
         let data = {
             module: "cars",
             query: {
@@ -45,7 +46,7 @@ class AddMember extends Component {
             //         // outputBuffer contains JPEG image data no wider than 200 pixels and no higher
             //         // than 200 pixels regardless of the inputBuffer image dimensions
             //         let resizeImage = outputBuffer.toString('base64')
-            //         console.log("Resized Image Base64: ", resizeImage);
+            //         cc.log("Resized Image Base64: ", resizeImage);
             //         this.setState({ [name]: resizeImage })
             //     });
             this.setState({ [name]: reader.result })
@@ -94,9 +95,9 @@ class AddMember extends Component {
     render() {
         if (this.props.members_new) this.props.history.push("/", { module: this.props.location.state.module, path: "members" })
         const cars = this.props.cars || []
-        // console.log("CARS: ", cars);
+        cc.log("CARS: ", cars);
         const img = { "maxHeight": "50px", "maxWidth": "118px", "display": "block", "width": "auto", "height": "auto" }
-        // console.log("Add Member State: ", this.state);
+        cc.log("Add Member State: ", this.state);
         const usernames = this.props.usernames ? this.props.usernames.map(user => user.username) : []
         return (
             this.state.seeCars ?
@@ -281,7 +282,7 @@ class AddMember extends Component {
                         <div className="footCon">
                             <div>
                                 <span>Confirm & Publish</span>
-                                {/*console.log(`Usernames: ${usernames}, ${usernames.indexOf(this.state.username)}`)*/}
+                                {/*cc.log(`Usernames: ${usernames}, ${usernames.indexOf(this.state.username)}`)*/}
                                 <button disabled={!this.checkMandatory() || (usernames.indexOf(this.state.username) !== -1)} title={!this.checkMandatory() ? "Please fill mandatory fields" : (usernames.indexOf(this.state.username) !== -1 ? "Username already exists" : "Select Car")} className="arrowBtn" onClick={this.createAccount.bind(this)}>
                                     <img src={require('../assets/add.jpg')} alt="addM" />
                                 </button>

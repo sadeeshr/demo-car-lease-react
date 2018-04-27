@@ -3,9 +3,11 @@
 | Redux Reducers
 |--------------------------------------------------
 */
+import cc from '../lib/utils';
+
 const initialState = {}
 const rootReducer = (state = initialState, action) => {
-    console.log(action.type)
+    cc.log(action)
     switch (action.type) {
         // case '@@redux/INIT':
         //     return {
@@ -29,12 +31,12 @@ const rootReducer = (state = initialState, action) => {
                 ...action.payload
             }
 
-        case 'SET_NEW_CONTRACT_DATA':
-            return {
-                ...state,
-                newObject: action.payload,
-                progress: true
-            }
+        // case 'SET_NEW_CONTRACT_DATA':
+        //     return {
+        //         ...state,
+        //         newObject: action.payload,
+        //         progress: true
+        //     }
 
         case 'WRITE_NEW_CONTRACT_DATA':
             return {

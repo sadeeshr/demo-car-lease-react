@@ -7,8 +7,7 @@ import Members from '../components/Members';
  * map state, actions to props
  */
 const mapStateToProps = (state) => {
-    // console.log("State: ", state)
-
+    // console.log("Members Container State: ", state)
     return {
         lcCars: state.lcCars,
         AddNewUser: state.AddNewUser,
@@ -20,6 +19,7 @@ const mapStateToProps = (state) => {
         members: state.members,
         members_new: state.members_new,
         addNewObjectTxID: state.addNewObjectTxID,
+        addNewObjectHash: state.addNewObjectHash,
         eventAddNewObject: state.eventAddNewObject,
         objectID: state.objectID,
         newObject: state.newObject,
