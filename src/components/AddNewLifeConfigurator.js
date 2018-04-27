@@ -91,7 +91,7 @@ class AddNewLifeConfigurator extends Component {
         //     data: newMember
         // }
         // this.props._setNewContractData(data)
-        this.state.carSelected && this.props._lcCreateObject(member["_id"], car.image, car.price, carHash, this.carType, car.dealer, (this.state.carFee || car.fee), (this.state.carTerm || car.term), (this.state.carMileage || car.mileage), member.account, this.props.location.state.module)
+        this.state.carSelected && this.props._lcCreateObject(member["_id"], car.image, car.price, carHash, this.carType, car.dealer, (this.state.carFee || car.fee), (this.state.carTerm || car.term), Math.round((this.state.carMileage || car.mileage) / 12), member.account, this.props.location.state.module)
 
         // this.props._writeNewContractData(data)
     }
