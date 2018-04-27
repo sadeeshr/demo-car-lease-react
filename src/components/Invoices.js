@@ -180,7 +180,7 @@ class Invoices extends Component {
                                             </div>
                                         </div>
                                         <div className="investAddCon">
-                                            <div class="arrowBtn">
+                                            <div className="arrowBtn">
                                                 <img onClick={() => { }} src={require('../assets/add.jpg')} alt="add2" />
                                             </div>
                                             <div className="investAddInput">
