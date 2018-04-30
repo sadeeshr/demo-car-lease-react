@@ -54,9 +54,9 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 progress: true,
                 module: action.payload,
-                addNewObjectTxID: null,
+                // addNewObjectTxID: null,
                 approveTxID: null,
-                investInObjectTxID: null,
+                // investInObjectTxID: null,
                 invoices_new: false,
                 invoices_edit: false,
                 // usernames: null

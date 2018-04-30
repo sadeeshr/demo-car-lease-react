@@ -24,6 +24,7 @@ const mapStateToProps = (state) => {
         objectID: state.objectID,
         newObject: state.newObject,
         investInObjectTxID: state.investInObjectTxID,
+        hashConfirmations: state.hashConfirmations,
         progress: state.progress ? state.progress : false,
         [state.module]: state[state.module]
     }

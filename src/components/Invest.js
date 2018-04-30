@@ -10,7 +10,7 @@ class Invest extends Component {
     constructor(props) {
         super(props)
         this.state = { reveal: false }
-        this.confTimer = null
+        // this.confTimer = null
         this.rinkebyStatsURL = "https://rinkeby.etherscan.io/tx/"
     }
 

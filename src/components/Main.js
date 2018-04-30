@@ -103,18 +103,19 @@ class Main extends Component {
     componentWillReceiveProps(nextProps) {
         cc.log("Main Update Props: ", nextProps, nextProps.socket, !nextProps.usernames);
         if (nextProps.account && nextProps.socket && !nextProps.usernames) this.fetchUserData()
-        
+
         if (nextProps.event && this.props.event !== nextProps.event) {
             switch (nextProps.event.event) {
                 case "Transfer":
                     {
-                        const txFrom = this.props.members.find(member => member.account.toLowerCase() === nextProps.event.returnValues.to.toLowerCase())
+                        const txFrom = this.props.members.find(member => member.account && (member.account.toLowerCase() === nextProps.event.returnValues.to.toLowerCase()))
                         const txTo = this.props.members.find(member => member.carID && (member.carID.toString() === nextProps.event.returnValues.objectId))
                         const value = nextProps.event.returnValues.value
                         // cc.log(txFrom, txTo, value);
+                        const message = (txFrom && txTo) ? `Awesome, ${txFrom.username} ${txFrom.town} has just invested ${value} euros on ${txTo.username} ${txTo.town}'s Car` : `Awesome, an investment made just now !`
                         let event = {
                             title: "Investment Update",
-                            message: `Awesome, ${txFrom.username} ${txFrom.town} has just invested ${value} euros on ${txTo.username} ${txTo.town}'s Car`,
+                            message: message,
                             level: "info",
                             position: "tr",
                             autoDismiss: 5
