@@ -86,15 +86,15 @@ class Main extends Component {
             }
         }
         if (!this.props.members && this.props.socket) this.props._fetchContractData(this.props.account, data)
-        this.checkRegistered()
+        if (this.props.account) this.checkRegistered(this.props.account)
     }
 
-    checkRegistered = () => {
+    checkRegistered = (account) => {
         if (this.props.usernames) {
             const accounts = this.props.usernames ? this.props.usernames.map(user => user.account) : []
-            // cc.log(accounts, this.props.account, accounts.indexOf(this.props.account));
+            cc.log(accounts, account, accounts.indexOf(account));
             this.setState({
-                registered: (accounts.indexOf(this.props.account) !== -1) ? true : false
+                registered: (accounts.indexOf(account) !== -1) ? true : false
             })
 
         }
@@ -144,15 +144,27 @@ class Main extends Component {
                         }
 
                         let alert = {
-                            title: "Awesome, A New Car has been added !!",
+                            title: "Great, A New Car has been added !!",
                             message: ``,
                             level: "info",
                             position: "tr",
-                            autoDismiss: 3
+                            autoDismiss: 5
                         }
                         this.props._setEventAlert(alert)
                         break;
 
+                    }
+                case "Claim":
+                    {
+                        let alert = {
+                            title: "A New Claim has been made !!",
+                            message: ``,
+                            level: "info",
+                            position: "tr",
+                            autoDismiss: 5
+                        }
+                        this.props._setEventAlert(alert)
+                        break;
                     }
                 default:
                     break;
@@ -163,12 +175,13 @@ class Main extends Component {
             this.refs.notificationSystem.addNotification(nextProps.eventAlert);
         }
 
-        this.checkRegistered()
+        if (nextProps.account) this.checkRegistered(nextProps.account)
         if (nextProps.location.state) this.renderComponent()
         this.props = nextProps
     }
 
     renderMain = () => {
+        cc.log("REGISTRATION STATUS: ", this.state.registered)
         const img = { "maxHeight": "95px", "maxWidth": "180px", "display": "block", "width": "auto", "height": "auto" }
         // const thumbImg = { "maxHeight": "40px", "maxWidth": "40px", "display": "block", "width": "auto", "height": "auto" }
         // const disabled = (this.props.account && (typeof this.state.registered !== "undefined")) ? false : true

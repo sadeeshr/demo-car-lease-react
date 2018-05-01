@@ -45,8 +45,8 @@ class Invoices extends Component {
 
     componentDidMount() {
         this.carID = this.props.member.carID
-        if (this.props.car) this.fetchCarMileagesRedemption()
-        this.setState({ reveal: true })
+        // if (this.props.car) this.fetchCarMileagesRedemption()
+        setTimeout(() => this.setState({ reveal: true }), 200);
     }
 
     fetchInvoices = () => {
@@ -105,12 +105,12 @@ class Invoices extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        // cc.log("new props", nextProps);
+        cc.log("new props", nextProps);
         if (nextProps.invoices_new || nextProps.invoices_edit)
             this.fetchInvoices()
-        if (nextProps.invoices && nextProps.invoices.length > 0) {
-            this.setState({ month: this.getMaxMonth(nextProps.invoices), year: (new Date()).getFullYear() })
-        }
+        // if (nextProps.invoices && nextProps.invoices.length > 0) {
+        //     this.setState({ month: this.getMaxMonth(nextProps.invoices), year: (new Date()).getFullYear() })
+        // }
         if (nextProps.eventSubscription && !this.state.eventSubscription) { this.setState({ eventSubscription: nextProps.eventSubscription }) }
 
         if (!this.props.unClaimedRedemption) this.props._lcToClaimTotal(this.props.account)
@@ -139,7 +139,7 @@ class Invoices extends Component {
         this.setState({ reveal: false })
         setTimeout(() => {
             this.props.history.goBack()
-        }, 500);
+        }, 300);
     }
 
     render() {
@@ -151,6 +151,29 @@ class Invoices extends Component {
         // cc.log(amount, ' <= ', this.props.allowance, (amount <= this.props.allowance), this.state.mileage, ' >= ', this.props.member.mileagesTotal, (this.state.mileage >= this.props.member.mileagesTotal));
         const enableInvoice = ((this.state.mileage >= this.props.member.mileagesTotal) && (amount <= this.props.allowance)) ? true : false
         // cc.log("Invoice Enabled: ", enableInvoice);
+
+        let invoicesRow = []
+
+        // this.props.member.paymonth = 3
+        for (var i = 0; i <= this.props.member.paymonth; i++) {
+            invoicesRow.push(
+                <div key={i} className="investAddCon">
+                    <div className="arrowBtn" style={{ marginTop: "15%" }}>
+                        <img onClick={() => this.props._lcPayFee(this.props.member.carID, this.props.account)} src={require('../assets/add.jpg')} alt="add2" />
+                    </div>
+                    <div className="investAddInput">
+                        <p>{(new Date()).getUTCFullYear()} {this.months[(new Date()).getMonth()]}</p>
+                        <p>{this.props.member.mileagesAverage} km stand</p>
+                        <p>{this.props.member.car.objectFee.toNumber()} Euro</p>
+                    </div>
+                    <div className="investAddStatus">
+                        {this.props.payFeeTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.payFeeTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.payFeeTxID)) ? <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red" }}>pending</p>}</Link>)}
+                    </div>
+                </div>
+            )
+        }
+
+
         return (<div className="content-border">
             <div className="mainContentCon">
                 {/* <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
@@ -189,19 +212,7 @@ class Invoices extends Component {
                                                 <p>{this.props.member.town}</p>
                                             </div>
                                         </div>
-                                        <div className="investAddCon">
-                                            <div className="arrowBtn">
-                                                <img onClick={() => { }} src={require('../assets/add.jpg')} alt="add2" />
-                                            </div>
-                                            <div className="investAddInput">
-                                                <p>2018 February</p>
-                                                <p>1000 km stand</p>
-                                                <p>550 Euro</p>
-                                            </div>
-                                            <div className="investAddStatus">
-                                                {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.investInObjectTxID)) ? <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red" }}>pending</p>}</Link>)}
-                                            </div>
-                                        </div>
+                                        {invoicesRow}
                                     </div>
                                 </div>
                             </div>
@@ -213,72 +224,6 @@ class Invoices extends Component {
                         <img src={require('../assets/back.jpg')} onClick={this.doExit.bind(this)} alt="back" />
                     </div>
                 </div>
-                <div className="contentCon overflow bg-none">
-                    <BlockUi tag="div" blocking={this.props.progress}>
-                        <div className="nvoicesCon">
-                            {
-                                invoices && invoices.map((invoice, i) => {
-                                    return <div key={i} className="mtableLink">
-                                        <div className="mtableInvoices">
-                                            <div className="inDate"><span className="inLeft">{invoice.year}</span><span className="inRight">{this.months[invoice.month]}</span></div>
-                                            <div className="inKm">
-                                                {
-                                                    invoice.mileage === 0 ?
-                                                        <span className="inLeft"><input style={{ width: "80px", textAlign: "center" }} maxLength="20" value={this.state.mileage || this.props.member.mileagesTotal} onChange={(e) => this.setState({ mileage: e.target.value })} type="text" placeholder="Mileage" /></span>
-                                                        : <span className="inLeft">{invoice.mileage}</span>
-                                                }
-                                                <span className="inRight">km stand</span></div>
-                                            <div className="inCost"><span className="inLeft" title="Includes Monthy-Fee and Running-Cost">{invoice.amount > 0 ? invoice.amount : (amount > 0 ? amount : 0)} </span><span className="inRight">Euro</span></div>
-                                        </div>
-                                        <div className="mtableInvoicesIcon">
-                                            {
-                                                invoice.status ?
-                                                    <div className="arrowBtn"><img src={require('../assets/check.jpg')} alt="Payed" /></div>
-                                                    : <div title={!(amount <= this.props.allowance) ? "Less Allowance Set" : (!(this.state.mileage >= this.props.member.mileagesTotal) ? "Mileage Too Low" : "Pay Invoice")} className="arrowBtn">
-                                                        <img style={{ cursor: enableInvoice ? "pointer" : "not-allowed" }}
-                                                            onClick={() => {
-                                                                enableInvoice && this.props._lcPaySubscription(this.props.member.carID, (this.props.member.paymonth + 1), parseInt(this.state.mileage, 10), this.props.account)
-                                                                enableInvoice && this.updateInvoice(invoice, this.state.mileage, amount || 0)
-                                                            }}
-                                                            src={require('../assets/add.jpg')}
-                                                            alt="Ether" />
-                                                        {this.props.paySubscriptionTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.paySubscriptionTxID}>{!this.state.eventSubscription ? <p className="p-ip" style={{ color: "red" }}>pending</p> : <p className="p-ic" style={{ color: "green" }}><i>Confirmed</i></p>}</Link>)}
-                                                    </div>}
-                                        </div>
-                                    </div>
-                                })
-                            }
-                        </div>
-                        {/*
-                            <div className="mtableInvoices">
-                                <p>2017 Oktober</p>
-                                <p>2500 km stand 550 Euro</p>
-                            </div>
-                            <div className="mtableInvoicesIcon">
-                                <img src={require('../assets/Payed.png')} alt="Payed" />
-                            </div>
-                        </div>
-                        <div className="mtableLink">
-                            <div className="mtableInvoices">
-                                <p>2017 November</p>
-                                <p>5000 km stand 550 Euro</p>
-                            </div>
-                            <div className="mtableInvoicesIcon">
-                                <img src={require('../assets/Payed.png')} alt="Payed" />
-                            </div>
-                       </div>*/}
-
-
-                        {/* <div className="contentBtn">
-                            <input className="searchBtn" type="text" name="filterMembers" value={this.state.filter || ""} placeholder="Search" onChange={(e) => { cc.log("SEARCH: ", e.target.value); this.setState({ filter: e.target.value }) }} />
-                        </div> */}
-                    </BlockUi>
-                </div>
-                <div className="footCon">
-                    <div>
-                        <input className="searchBtn" type="text" name="filterMembers" value={this.state.filter || ""} placeholder="Search" onChange={(e) => { this.setState({ filter: e.target.value }) }} />
-                    </div>
-                </div>
             </div>
         </div>
         )
@@ -286,3 +231,70 @@ class Invoices extends Component {
 }
 
 export default Invoices
+
+// <div className="contentCon overflow bg-none">
+//                     <BlockUi tag="div" blocking={this.props.progress}>
+//                         <div className="nvoicesCon">
+//                             {
+//                                 invoices && invoices.map((invoice, i) => {
+//                                     return <div key={i} className="mtableLink">
+//                                         <div className="mtableInvoices">
+//                                             <div className="inDate"><span className="inLeft">{invoice.year}</span><span className="inRight">{this.months[invoice.month]}</span></div>
+//                                             <div className="inKm">
+//                                                 {
+//                                                     invoice.mileage === 0 ?
+//                                                         <span className="inLeft"><input style={{ width: "80px", textAlign: "center" }} maxLength="20" value={this.state.mileage || this.props.member.mileagesTotal} onChange={(e) => this.setState({ mileage: e.target.value })} type="text" placeholder="Mileage" /></span>
+//                                                         : <span className="inLeft">{invoice.mileage}</span>
+//                                                 }
+//                                                 <span className="inRight">km stand</span></div>
+//                                             <div className="inCost"><span className="inLeft" title="Includes Monthy-Fee and Running-Cost">{invoice.amount > 0 ? invoice.amount : (amount > 0 ? amount : 0)} </span><span className="inRight">Euro</span></div>
+//                                         </div>
+//                                         <div className="mtableInvoicesIcon">
+//                                             {
+//                                                 invoice.status ?
+//                                                     <div className="arrowBtn"><img src={require('../assets/check.jpg')} alt="Payed" /></div>
+//                                                     : <div title={!(amount <= this.props.allowance) ? "Less Allowance Set" : (!(this.state.mileage >= this.props.member.mileagesTotal) ? "Mileage Too Low" : "Pay Invoice")} className="arrowBtn">
+//                                                         <img style={{ cursor: enableInvoice ? "pointer" : "not-allowed" }}
+//                                                             onClick={() => {
+//                                                                 enableInvoice && this.props._lcPaySubscription(this.props.member.carID, (this.props.member.paymonth + 1), parseInt(this.state.mileage, 10), this.props.account)
+//                                                                 enableInvoice && this.updateInvoice(invoice, this.state.mileage, amount || 0)
+//                                                             }}
+//                                                             src={require('../assets/add.jpg')}
+//                                                             alt="Ether" />
+//                                                         {this.props.paySubscriptionTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.paySubscriptionTxID}>{!this.state.eventSubscription ? <p className="p-ip" style={{ color: "red" }}>pending</p> : <p className="p-ic" style={{ color: "green" }}><i>Confirmed</i></p>}</Link>)}
+//                                                     </div>}
+//                                         </div>
+//                                     </div>
+//                                 })
+//                             }
+//                         </div>
+//                         {/*
+//                             <div className="mtableInvoices">
+//                                 <p>2017 Oktober</p>
+//                                 <p>2500 km stand 550 Euro</p>
+//                             </div>
+//                             <div className="mtableInvoicesIcon">
+//                                 <img src={require('../assets/Payed.png')} alt="Payed" />
+//                             </div>
+//                         </div>
+//                         <div className="mtableLink">
+//                             <div className="mtableInvoices">
+//                                 <p>2017 November</p>
+//                                 <p>5000 km stand 550 Euro</p>
+//                             </div>
+//                             <div className="mtableInvoicesIcon">
+//                                 <img src={require('../assets/Payed.png')} alt="Payed" />
+//                             </div>
+//                        </div>*/}
+
+
+//                         {/* <div className="contentBtn">
+//                             <input className="searchBtn" type="text" name="filterMembers" value={this.state.filter || ""} placeholder="Search" onChange={(e) => { cc.log("SEARCH: ", e.target.value); this.setState({ filter: e.target.value }) }} />
+//                         </div> */}
+//                     </BlockUi>
+//                 </div>
+//                 <div className="footCon">
+//                     <div>
+//                         <input className="searchBtn" type="text" name="filterMembers" value={this.state.filter || ""} placeholder="Search" onChange={(e) => { this.setState({ filter: e.target.value }) }} />
+//                     </div>
+//                 </div>

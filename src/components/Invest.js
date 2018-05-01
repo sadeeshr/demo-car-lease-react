@@ -38,7 +38,7 @@ class Invest extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.paySubscriptionTxID)
+        if (nextProps.payFeeTxID)
             nextProps._lcToClaimDividend(nextProps.member.carID, nextProps.account)
 
         // let timeOut = 1000
@@ -50,14 +50,14 @@ class Invest extends Component {
 
         // this.setState({ refreshValues: !this.state.refreshValues })
         // cc.log("#### TOTAL SUPPLY: ######", nextProps.eventTransfer, this.props.totalSupply, nextProps.totalSupply, this.props.hashConfirmations);
-        if (nextProps.eventTransfer || nextProps.eventApprove || nextProps.eventClaim)
-            if (!this.props.hashConfirmations) this.props._getConfirmationsHash(this.props.investInObjectTxID)
+        // if (nextProps.eventTransfer || nextProps.eventApprove || nextProps.eventClaim)
+        //     if (!this.props.hashConfirmations) this.props._getConfirmationsHash(this.props.investInObjectTxID)
 
-        if (this.props.hashConfirmations && this.props.hashConfirmations > 0) {
-            // clearInterval(this.confTimer)
-            // cc.log("HASH CONFIRMS: ", this.props.hashConfirmations);
-            // this.refreshValues()
-        }
+        // if (this.props.hashConfirmations && this.props.hashConfirmations > 0) {
+        //     // clearInterval(this.confTimer)
+        //     // cc.log("HASH CONFIRMS: ", this.props.hashConfirmations);
+        //     // this.refreshValues()
+        // }
 
         // if (this.props.totalSupply !== nextProps.totalSupply || this.props.allowance !== nextProps.allowance || this.props.unClaimedRedemption !== nextProps.unClaimedRedemption) {
         // this.props._resetEvent() //temporary

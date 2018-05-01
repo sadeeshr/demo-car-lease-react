@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
         totalSupply: state.totalSupply,
         unClaimedRedemption: state.unClaimedRedemption,
         crowdsaleClosed: state.crowdsaleClosed,
-        paySubscriptionTxID: state.paySubscriptionTxID,
+        payFeeTxID: state.payFeeTxID,
         progress: state.progress ? state.progress : false,
         investInObjectTxID: state.investInObjectTxID,
         eventTransfer: state.eventTransfer,

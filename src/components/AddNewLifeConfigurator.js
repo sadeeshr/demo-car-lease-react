@@ -103,7 +103,7 @@ class AddNewLifeConfigurator extends Component {
         cc.log(this.props.member, `ACTIVE: ${this.state.active}`);
         const cars = this.props.cars || []
         cc.log("CARS: ", cars);
-        const img = { "maxHeight": "50px", "maxWidth": "118px", "display": "block", "width": "auto", "height": "auto" }
+        const img = { "maxHeight": "25px", "maxWidth": "59px", "marginLeft": "60%", "display": "block", "width": "auto", "height": "auto" }
         return (
             <div className="content-border">
                 <div className="mainContentCon">
@@ -155,7 +155,7 @@ class AddNewLifeConfigurator extends Component {
                                     {
                                         cars.map((car, i) => {
                                             return (
-                                                <div key={i} className="newLifeItem" onClick={() => this.setState({ active: i, carSelected: true })}>
+                                                <div key={i} className="newLifeItem" onWheel={() => cc.log("KEY DOWN: ", i)} onClick={() => this.setState({ active: i, carSelected: true })} tabIndex="0">
                                                     <div className="newlifeImage">
                                                         <img src={car.image} alt={car.model} />
                                                     </div>
@@ -209,6 +209,7 @@ class AddNewLifeConfigurator extends Component {
                             <button title={!this.state.carSelected ? "Select a Car" : "Confirm"} disabled={!this.state.carSelected} className="arrowBtn" onClick={this.createAccount.bind(this)}>
                                 <img src={require('../assets/add.jpg')} alt="addM" />
                             </button>
+                            <img style={img} src={this.state.active ? this.props.cars[this.state.active]["image"] : require('../assets/noimage.png')} alt="carImage" />
                         </div>}
                     </div>
                 </div>

@@ -449,14 +449,14 @@ export const _lcInvestInObject = (objectID, amount, account) => {
     }
 }
 
-export const _lcPaySubscription = (objectID, month, milege, account) => {
+export const _lcPayFee = (objectID, account) => {
     return (dispatch) => {
-        return contract.lcPaySubscription(objectID, month, milege, account)
+        return contract.lcPayFee(objectID, account)
             .then(result => {
                 // dispatch(goBack())
                 return dispatch(
                     {
-                        type: "PAY_SUBSCRIPTION_RESULT",
+                        type: "PAY_FEE_RESULT",
                         payload: result
                     }
                 )

@@ -4,7 +4,7 @@ import cc from './utils';
 // let agent = new https.Agent();
 
 // const SOCKET_URL = "https://blockchain.techiearea.com:3456"; // for development
-const SOCKET_URL = "https://smartjuice.apayaa.com:3456"; 
+const SOCKET_URL = "https://smartjuice.apayaa.com:3456";
 const SOCKET_OPTIONS = {
     // secure: true,
     // rejectUnauthorized: false
@@ -61,7 +61,8 @@ class Socket {
         this.socket.on('event', (data) => {
             cc.log("EVENT: ", data, this.props.module, this.account)
             if (data) {
-                if (data.event === "Transfer") this.props._fetchMembers(this.props.module, this.account)
+                // if (data.event === "Transfer" || data.event === "Claim" || data.event) 
+                this.props._fetchMembers(this.props.module, this.account)
                 this.props._setEvent(data)
             }
         })

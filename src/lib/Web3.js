@@ -1,5 +1,5 @@
 const Web3 = require('web3');
-// const RINKEBY_NODE_URL = "wss://rinkeby.infura.io/ws" //infura for testing websockets, can use our socket also
+// const RINKEBY_NODE_URL = "wss://rinkeby.infura.io/_ws" //infura for testing websockets, can use our socket also
 const RINKEBY_NODE_URL = "ws://localhost:8546"
 
 const web3 = new Web3(new Web3.providers.WebsocketProvider(RINKEBY_NODE_URL));
@@ -57,6 +57,10 @@ subscribeEvents = (io) => {
     console.log("!!! Subscribing to all events !!!");
     // euroToken.events.allEvents("latest", (error, event) => error ? console.error("euroToken EVENT ERROR: ", error) : console.log("euroToken EVENT: ", event))
     LeaseTokenContract.events.allEvents("latest", (error, event) => error ? console.error("LeaseTokenContract EVENT ERROR: ", error) : handleEvent(io, event))
+
+    // setTimeout(() => {
+    //     getConfirmationsHash("0xbc624a81a059d0a412961e8867d1e8bec1e0d50a0edf15073ecd3cd9123a81b4", res => console.log(res))
+    // }, 2000);
 }
 
 handleEvent = (io, event) => {
@@ -70,9 +74,41 @@ handleEvent = (io, event) => {
     //     default:
     //         break;
     // }
-    io.sockets.emit('event', event);
+    getConfirmationsHash(event, resEvent => io.sockets.emit('event', resEvent))
 }
 
+getConfirmationsHash = (event, cb) => {
+    let hash = event["transactionHash"]
+    console.log("HASH: ", hash);
+    let blockStart, blockEnd;
+    let timer = setInterval(() => {
+        console.log("CHECKING HASH CONFIRMATIONS:");
+
+        web3.eth.getTransactionReceipt(hash)
+            .then(res => {
+                if (res && res.blockNumber) {
+                    console.log("START BLOCK: ", res.blockNumber)
+                    blockStart = res.blockNumber
+                }
+            })
+            .then(
+                blockStart && web3.eth.getBlockNumber()
+                    .then(res => {
+                        blockEnd = res
+                        let confirmations = (blockEnd - blockStart)
+                        console.log("CURRENT BLOCK: ", res)
+                        console.log("No. CONFs: ", confirmations, (confirmations > 0))
+
+                        if (confirmations > 0) {
+                            // this.props._hashConfirmations({ hashConfirmations: confirmations })
+                            clearInterval(timer)
+                            cb(event)
+                        }
+                    })
+            )
+    }, 5000)
+
+}
 
 
 module.exports = {

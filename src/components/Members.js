@@ -90,14 +90,15 @@ class Members extends Component {
             // if (!this.props.evTokens) this.props._reloadTokens()
         }
 
-        if (this.props.event && this.props.addNewObjectTxID && !this.props.hashConfirmations)
-            this.props._getConfirmationsHash(this.props.addNewObjectTxID)
+        // if (this.props.event && this.props.addNewObjectTxID && !this.props.hashConfirmations)
+        //     this.props._getConfirmationsHash(this.props.addNewObjectTxID)
 
-        if (this.props.hashConfirmations && this.props.hashConfirmations > 0) {
-            // clearInterval(this.confTimer)
-            cc.log("HASH CONFIRMS: ", this.props.hashConfirmations);
-            this.fetchMembers()
-        }
+        // if (this.props.hashConfirmations && this.props.hashConfirmations > 0) {
+        //     // clearInterval(this.confTimer)
+        //     cc.log("HASH CONFIRMS: ", this.props.hashConfirmations);
+        //     this.fetchMembers()
+        // }
+
         // if (this.props.addNewObjectTxID || this.props.raiseFundsForCarTxID) this.fetchMembers()
     }
 
@@ -133,7 +134,7 @@ class Members extends Component {
                 <div className="mtableUser">{member.username || ""} <p>{member.town || ""}</p></div>
                 {<div className="mtableCar"><img style={img} src={member.carPic || require('../assets/noimage.png')} alt="carImage" /><span title="Car Raised" style={{ fontSize: "12px" }}>Euro {member.carPrice || "0"}</span></div>}
                 {(this.props.newObject && this.props.newObject.id === member["_id"]) &&
-                    (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{(this.props.event && this.props.hashConfirmations && (this.props.event.transactionHash === this.props.newObject.txID) && (this.props.hashConfirmations > 0)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red" }}>pending</p>}</Link>)}
+                    (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newObject.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red", marginLeft: "0px", marginTop: "15px" }}>pending</p>}</Link>)}
             </div>
         ]
 

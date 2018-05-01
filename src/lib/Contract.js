@@ -43,7 +43,7 @@ class Contract {
         this.addNewObject = null
         this.investInObjectTxID = null
         this.claimDividendTxID = null
-        this.paySubscriptionTxID = null
+        this.payFeeTxID = null
         this.LeaseTokenContract = null
         this.euroToken = null
         this.LeaseTokenContract = null
@@ -172,28 +172,11 @@ class Contract {
             if (err || result.length > 0) {
                 let resultObj = { eventTransfer: true }
 
-                if (this.paySubscriptionTxID)
+                if (this.payFeeTxID)
                     resultObj = { eventSubscription: true }
 
-                this.props._setEventStatus(resultObj); setTimeout(() => { this.paySubscriptionTxID = null; this.investInObjectTxID = null; this.euroEventTransferUnsubscribe(); this.props._reloadTokens() }, 1000);
+                this.props._setEventStatus(resultObj); setTimeout(() => { this.payFeeTxID = null; this.investInObjectTxID = null; this.euroEventTransferUnsubscribe(); this.props._reloadTokens() }, 1000);
             }
-
-            // if (err || result.length > 0) {
-            //     if (!err)
-            //         result.map(res => {
-            //             if (res.transactionHash === this.investInObjectTxID)
-            //                 this.props._setEventStatus({ eventTransfer: true }); setTimeout(() => { this.investInObjectTxID = null; this.euroEventTransferUnsubscribe(); this.props._reloadTokens() }, 1000);
-            //             if (res.transactionHash === this.paySubscriptionTxID)
-            //                 this.props._setEventStatus({ eventSubscription: true }); setTimeout(() => { this.paySubscriptionTxID = null; this.euroEventTransferUnsubscribe(); }, 1000);
-            //         })
-            //     else
-            //         err.map(res => {
-            //             if (res.transactionHash === this.investInObjectTxID)
-            //                 this.props._setEventStatus({ eventTransfer: true }); setTimeout(() => { this.euroEventTransferUnsubscribe(); this.props._reloadTokens() }, 1000);
-            //             if (res.transactionHash === this.paySubscriptionTxID)
-            //                 this.props._setEventStatus({ eventSubscription: true }); setTimeout(() => { this.paySubscriptionTxID = null; this.euroEventTransferUnsubscribe(); }, 1000);
-            //         })
-            // }
         })
     }
 
@@ -528,15 +511,15 @@ class Contract {
             })
     }
 
-    lcPaySubscription = (objectID, month, milege, account) => {
+    lcPayFee = (objectID, account) => {
         // account = "0xA30b6a96D652E99AA25162B2b9165f2c3f683ACc"
-        cc.log(`Calling Pay Interest And Redemption: ${objectID}, ${month}, ${milege}, ${account}`);
-        return this.LeaseTokenContract.paySubscription(objectID, month, milege, { from: account })
+        cc.log(`Calling Pay Fee: ${objectID}, ${account}`);
+        return this.LeaseTokenContract.payFee(objectID, { from: account })
             .then(result => {
-                cc.log(`paySubscription RESULT: ${result}`);
+                cc.log(`payFee RESULT: ${result}`);
                 // this.euroEventTransferSubscribe() //development
-                this.paySubscriptionTxID = result
-                return { paySubscriptionTxID: result, progress: false }
+                this.payFeeTxID = result
+                return { payFeeTxID: result, progress: false }
             })
     }
 

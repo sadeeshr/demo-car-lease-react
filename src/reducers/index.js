@@ -117,7 +117,7 @@ const rootReducer = (state = initialState, action) => {
         case 'EURO_BALANCE':
         case 'ADD_NEW_OBJECT_RESULT':
         case 'SUM_BALANCE_OF_RESULT':
-        case 'PAY_SUBSCRIPTION_RESULT':
+        case 'PAY_FEE_RESULT':
         case 'CLAIM_DIVIDEND_RESULT':
         case 'TO_CLAIM_TOTAL_RESULT':
         case 'ALLOWANCE':
@@ -157,7 +157,7 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ...action.payload,
-                paySubscriptionTxID: null
+                // payFeeTxID: null
             }
 
         case 'EV_MYTOKENS':
@@ -235,7 +235,7 @@ const rootReducer = (state = initialState, action) => {
                 addNewObjectTxID: null,
                 approveTxID: null,
                 investInObjectTxID: null,
-                paySubscriptionTxID: null,
+                payFeeTxID: null,
                 claimDividendTxID: null
             }
 
