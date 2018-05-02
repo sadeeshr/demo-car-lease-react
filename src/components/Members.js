@@ -169,7 +169,7 @@ class Members extends Component {
                     cc.log(`Car Raised-${b.carID}=> ${b.totalRaised} - Car Raised-${a.carID}=> ${a.totalRaised}`);
                     return b.totalRaised - a.totalRaised
                 } else
-                    return 0
+                    return -1
             })
             // cc.log("$$$$$$$$$ sorted members: $$$$$$$$$$$$$", members);
             return members
