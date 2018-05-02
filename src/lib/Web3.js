@@ -1,6 +1,6 @@
 const Web3 = require('web3');
-// const RINKEBY_NODE_URL = "wss://rinkeby.infura.io/_ws" //infura for testing websockets, can use our socket also
-const RINKEBY_NODE_URL = "ws://localhost:8546"
+const RINKEBY_NODE_URL = "wss://rinkeby.infura.io/_ws" //infura for testing websockets, can use our socket also
+// const RINKEBY_NODE_URL = "ws://localhost:8546"
 
 const web3 = new Web3(new Web3.providers.WebsocketProvider(RINKEBY_NODE_URL));
 

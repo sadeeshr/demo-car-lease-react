@@ -166,7 +166,7 @@ class Members extends Component {
                 if (a.car && a.car.crowdsaleClosed)
                     return 0
                 else if (a.totalRaised && b.totalRaised) {
-                    // cc.log(`Car Raised-${b.carID}=> ${b.totalRaised} - Car Raised-${a.carID}=> ${a.totalRaised}`);
+                    cc.log(`Car Raised-${b.carID}=> ${b.totalRaised} - Car Raised-${a.carID}=> ${a.totalRaised}`);
                     return b.totalRaised - a.totalRaised
                 } else
                     return 0
