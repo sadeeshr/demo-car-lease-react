@@ -47,6 +47,7 @@ class Members extends Component {
                 carID: 1,
                 carPic: 1,
                 carPrice: 1,
+                profilePic: 1,
                 module: 1,
                 account: 1
             }
@@ -68,7 +69,9 @@ class Members extends Component {
         // if (this.props.eventAddNewObject && !this.state.eventAddNewObject) this.setState({ eventAddNewObject: this.props.eventAddNewObject })
 
         if (this.props.members) {
-            let members = this.sortMembers()
+            // let members = this.sortMembers()
+            let members = this.props.members
+
             // cc.log("######## SORTED MEMBERS ###########", members);
             // if (members.length >= 3) {
             // members[0].car ? members[0].car.crowdsaleClosed = true : ""
@@ -117,12 +120,12 @@ class Members extends Component {
 
     renderMember = (member, i) => {
 
-        cc.log("Member: ", member);
-        const img = member.carPic ? { "display": "block" } : { height: "auto", width: "auto" }
+        const img = member.carPic ? { "display": "block" } : { "maxHeight": "50px", "maxWidth": "118px", height: "auto", width: "auto" }
         // if (this.props.account)
         // if (!(this.props.evTokens && this.props.evTokens[member.carID]) || this.props.addNewObjectTxID || this.props.raiseFundsForCarTxID) this.props._evMyTokens(this.props.account, member.carID)
         // this.evTokenMyTokens(member.carID)
-        const selected = (this.props.member && !this.props.member.crowdsaleClosed) ? (this.props.member.username === member.username ? true : false) : false
+        // const selected = (this.props.member && !this.props.member.crowdsaleClosed) ? (this.props.member.username === member.username ? true : false) : false
+        const selected = this.props.member && (this.props.member.username === member.username) ? true : false
         let memberRows = [
             <div className="mtableLink" ref={divRef => this[member.carID] = divRef} key={i} onClick={() => member.authorized ? this.props._memberSelected(member, this.props.account, this.props.location.state.module) : cc.log("MEMBER NOT AUTHORIZED")}>
                 {!member.authorized && <div className="membersBtn">
@@ -131,26 +134,48 @@ class Members extends Component {
                     </button>
                 </div>}
                 <div className="mtableTokens">{member.crowdsaleClosed ? <span style={{ color: "green", fontSize: "12px" }}>Closed</span> : member.totalRaised || "0"} <p>{member.evTokens}</p></div>
-                <div className="mtableUser">{member.username || ""} <p>{member.town || ""}</p></div>
-                {<div className="mtableCar"><img style={img} src={member.carPic || require('../assets/noimage.png')} alt="carImage" /><span title="Car Raised" style={{ fontSize: "12px" }}>Euro {member.carPrice || "0"}</span></div>}
+                <div className="mtableUser"><span style={member.account === this.props.account ? { fontWeight: "bold" } : {}}>{member.username || ""}</span> <p>{member.town || ""}</p></div>
+                {<div className="mtableCar"><img style={img} src={member.carPic || member.profilePic || require('../assets/noimage.png')} alt="carImage" /><span title="Car Raised" style={{ fontSize: "12px" }}>Euro {member.carPrice || "0"}</span></div>}
                 {(this.props.newObject && this.props.newObject.id === member["_id"]) &&
                     (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newObject.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red", marginLeft: "0px", marginTop: "15px" }}>pending</p>}</Link>)}
             </div>
         ]
 
         if (selected) {
+            cc.log("Member: ", member);
+
             memberRows.push(
 
                 <div className="rowSelect" key={'invest-' + i}>
                     <div style={{ cursor: (member.carID || member.authorized) ? "pointer" : "not-allowed" }} className="memberMesCon">{(member.carID || member.authorized) ? member.message : "Not Allowed to Add New Life Configurator"}</div>
                     {member.carID && <div className="memberMesBtns">
                         <div className="membersBtn">
-                            <button className="arrowBtn" onClick={() => { member.authorized ? this.props.history.push("/", { module: this.props.location.state.module, path: "invest" }) : cc.log("NO OBJECT CONFIGURED") }}>
+                            <button className="arrowBtn" onClick={() => {
+                                member.crowdsaleClosed ?
+                                    (member.active ?
+                                        this.props.history.push("/", { module: this.props.location.state.module, path: "invoices" })
+                                        :
+                                        // (member.account === this.props.account) ? this.props._lcActivateDeactivateObject(member.carID, this.props.account) : cc.log("USER CAN ONLY ACTIVATE HIS OBJECT")
+                                        (this.props._setEventAlert({
+                                            title: "Please contact admin for ACTIVATION",
+                                            message: ``,
+                                            level: "error",
+                                            position: "tr",
+                                            autoDismiss: 3
+                                        }))
+                                    )
+                                    :
+                                    (member.authorized ?
+                                        this.props.history.push("/", { module: this.props.location.state.module, path: "invest" })
+                                        :
+                                        cc.log("NO OBJECT CONFIGURED")
+                                    )
+                            }}>
                                 <img src={require('../assets/arrow.jpg')} alt="addM" />
                             </button>
-                            <button title="Invoices (testing)" className="arrowBtn" onClick={() => { member.authorized ? this.props.history.push("/", { module: this.props.location.state.module, path: "invoices" }) : cc.log("NO OBJECT CONFIGURED") }}>
+                            {<button title="Invoices (testing)" className="arrowBtn" onClick={() => { member.authorized ? this.props.history.push("/", { module: this.props.location.state.module, path: "invoices" }) : cc.log("NO OBJECT CONFIGURED") }}>
                                 <img src={require('../assets/add.jpg')} alt="addI" />
-                            </button>
+                            </button>}
                         </div>
                     </div>}
                 </div>
@@ -163,15 +188,16 @@ class Members extends Component {
     sortMembers = () => {
         if (this.props.members) {
             const members = this.props.members.sort((a, b) => {
+                cc.log("Checking A: ", a.car && a.car.crowdsaleClosed, parseFloat(a.totalRaised), "----", "Checking B: ", b.car && b.car.crowdsaleClosed, parseFloat(b.totalRaised))
                 if (a.car && a.car.crowdsaleClosed)
                     return 0
                 else if (a.totalRaised && b.totalRaised) {
-                    cc.log(`Car Raised-${b.carID}=> ${b.totalRaised} - Car Raised-${a.carID}=> ${a.totalRaised}`);
+                    // cc.log(`Car Raised-${b.carID}=> ${b.totalRaised} - Car Raised-${a.carID}=> ${a.totalRaised}`);
                     return b.totalRaised - a.totalRaised
                 } else
-                    return -1
+                    return 0
             })
-            // cc.log("$$$$$$$$$ sorted members: $$$$$$$$$$$$$", members);
+            cc.log("$$$$$$$$$ sorted members: $$$$$$$$$$$$$", members);
             return members
         } else
             return []
@@ -182,7 +208,7 @@ class Members extends Component {
         // cc.log("Members Props: ", this.props);
 
         // const members = this.state.members ? this.state.members.filter(member => (member.username.startsWith(this.state.filter) || member.carID === parseInt(this.state.filter, 10))) : []
-        const members = this.props.members ? this.props.members.filter(member => (member.username.startsWith(this.state.filter) || member.carID === parseInt(this.state.filter, 10))) : []
+        const members = this.props.members ? this.props.members.filter(member => ((member.username && member.username.startsWith(this.state.filter)) || member.carID === parseInt(this.state.filter, 10))) : []
 
         // TESTING DIV FOCUS
         // if (members && members[4] && members[4].car) members[4].car.crowdsaleClosed = true

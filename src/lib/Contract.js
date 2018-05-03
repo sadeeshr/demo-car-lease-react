@@ -102,7 +102,7 @@ class Contract {
         this.LeaseTokenContract = contract(this.contracts.LeaseTokenContract.abi).at(this.contracts.LeaseTokenContract.address)
 
         // cc.log("Euro Token: ", this.euroToken);
-        // cc.log("Lease Token Contract: ", this.LeaseTokenContract);
+        //cc.log("Lease Token Contract: ", this.LeaseTokenContract);
         // this.evEventTransfer()
 
         return {
@@ -520,6 +520,17 @@ class Contract {
                 // this.euroEventTransferSubscribe() //development
                 this.payFeeTxID = result
                 return { payFeeTxID: result, progress: false }
+            })
+    }
+
+
+    lcActivateDeactivateObject = (objectID, account) => {
+        cc.log(`Calling Activate Deactivate Object: ${objectID}, ${account}`);
+        return this.LeaseTokenContract.activateDeactivateObject(objectID, { from: account })
+            .then(result => {
+                cc.log(`Activate Deactivate Object RESULT: ${result}`);
+                this.activateDeactivateObjectTxID = result
+                return { activateDeactivateObjectTxID: result, progress: false }
             })
     }
 

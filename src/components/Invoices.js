@@ -51,8 +51,8 @@ class Invoices extends Component {
 
     fetchInvoices = () => {
         let data = {
-            module: "invoices",
-            result: "invoicesdev",
+            module: "invoicesdev",
+            result: "invoices",
             query: {
                 module: this.props.location.state.module,
                 carID: this.props.member.carID
@@ -66,33 +66,33 @@ class Invoices extends Component {
 
     createInvoice = () => {
         let data = {
-            module: "invoices",
-            result: "invoicesdev",
+            module: "invoicesdev",
+            result: "invoices",
             data: {
-                // module: this.props.location.state.module,
+                module: this.props.location.state.module,
                 carID: this.props.member.carID,
                 year: this.state.year || (new Date()).getFullYear(),
                 month: this.state.month ? this.state.month + 1 : (new Date()).getMonth(),
-                mileage: this.state.mileage || 0,
-                amount: this.state.amount || 0,
+                // mileage: this.state.mileage || 0,
+                // amount: this.state.amount || 0,                
                 status: false
             }
         }
         this.props._writeNewContractData(data)
     }
 
-    updateInvoice = (invoice, mileage, amount) => {
+    updateInvoice = (invoice) => {
         let data = {
-            module: "invoices",
-            result: "invoicesdev",
+            module: "invoicesdev",
+            result: "invoices",
             query: { "_id": invoice["_id"] },
             data: {
                 // module: invoice.module,
                 carID: invoice.carID,
                 year: invoice.year,
                 month: invoice.month,
-                mileage: mileage || 0,
-                amount: amount || 0,
+                // mileage: mileage || 0,
+                // amount: amount || 0,
                 status: true
             }
         }
@@ -108,9 +108,19 @@ class Invoices extends Component {
         cc.log("new props", nextProps);
         if (nextProps.invoices_new || nextProps.invoices_edit)
             this.fetchInvoices()
-        // if (nextProps.invoices && nextProps.invoices.length > 0) {
-        //     this.setState({ month: this.getMaxMonth(nextProps.invoices), year: (new Date()).getFullYear() })
+
+        // if (this.props.event && (this.props.event.transactionHash === this.props.payFeeTxID)) {
+        //     // this.updateInvoice(invoice)
+        //     // this.fetchInvoices()
         // }
+
+
+
+        if (nextProps.invoices) {
+            if (nextProps.invoices.length > 0)
+                this.setState({ month: this.getMaxMonth(nextProps.invoices), year: (new Date()).getFullYear() })
+        }
+
         if (nextProps.eventSubscription && !this.state.eventSubscription) { this.setState({ eventSubscription: nextProps.eventSubscription }) }
 
         if (!this.props.unClaimedRedemption) this.props._lcToClaimTotal(this.props.account)
@@ -144,7 +154,8 @@ class Invoices extends Component {
 
     render() {
         cc.log("INVOICE State Props: ", this.state, this.props);
-        const invoices = this.props.invoices ? this.props.invoices.filter(invoice => (this.months[invoice.month].toLowerCase().startsWith(this.state.filter) || invoice.year === parseInt(this.state.filter, 10))) : []
+        // const invoices = this.props.invoices ? this.props.invoices.filter(invoice => (this.months[invoice.month].toLowerCase().startsWith(this.state.filter) || invoice.year === parseInt(this.state.filter, 10))) : []
+        const invoices = this.props.invoices || []
         invoices.sort((a, b) => parseFloat(b.month) - parseFloat(a.month))
         // const invoices = this.props.invoices
         let amount = (this.props.member.car.objectFee.toNumber()) + (((this.state.mileage || this.props.member.mileagesTotal) - this.props.member.mileagesTotal) * 0.10)
@@ -154,40 +165,43 @@ class Invoices extends Component {
 
         let invoicesRow = []
 
+        cc.log("INVOICES: ", invoices)
+        // if (invoices.length === 0) this.createInvoice(year, month); this.props._lcPayFee(this.props.member.carID, this.props.account)
+
         // this.props.member.paymonth = 3
-        for (var i = 0; i <= this.props.member.paymonth; i++) {
-            invoicesRow.push(
-                <div key={i} className="investAddCon">
-                    <div className="arrowBtn" style={{ marginTop: "15%" }}>
-                        <img onClick={() => this.props._lcPayFee(this.props.member.carID, this.props.account)} src={require('../assets/add.jpg')} alt="add2" />
-                    </div>
-                    <div className="investAddInput">
-                        <p>{(new Date()).getUTCFullYear()} {this.months[(new Date()).getMonth()]}</p>
-                        <p>{this.props.member.mileagesAverage} km stand</p>
-                        <p>{this.props.member.car.objectFee.toNumber()} Euro</p>
-                    </div>
-                    <div className="investAddStatus">
-                        {this.props.payFeeTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.payFeeTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.payFeeTxID)) ? <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red" }}>pending</p>}</Link>)}
-                    </div>
-                </div>
-            )
-        }
+        // for (var i = 0; i <= this.props.member.paymonth; i++) {
+        //     invoicesRow.push(
+        //         <div key={i} className="investAddCon">
+        //             <div className="arrowBtn">
+        //                 <img onClick={() => { this.createInvoice(year, month); this.props._lcPayFee(this.props.member.carID, this.props.account) }} src={require('../assets/add.jpg')} alt="add2" />
+        //             </div>
+        //             <div className="investAddInput">
+        //                 <p style={{ margin: "0" }}>{year} {this.months[month]}</p>
+        //                 <p style={{ margin: "0" }}>{this.props.member.mileagesAverage} km stand</p>
+        //                 <p style={{ margin: "0" }}>{this.props.member.car.objectFee.toNumber()} Euro</p>
+        //             </div>
+        //             <div className="investAddStatus">
+        //                 {this.props.payFeeTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.payFeeTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.payFeeTxID)) ? <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red" }}>pending</p>}</Link>)}
+        //             </div>
+        //         </div>
+        //     )
+        // }
 
 
         return (<div className="content-border">
             <div className="mainContentCon">
-                {/* <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
+                {/* <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i> 
                 <div className="float-right">
-                    <i title="Add Invoice" className="flaticon-invoice" onClick={this.createInvoice.bind(this)}></i>
+                    <i title="Add Invoice" className="flaticon-invoice" onClick={() => this.createInvoice()}></i>
                     <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
                 </div> */}
                 <div className="navCon">
                     <h1 id="header">
                         <div hidden className="fl"><i className="flaticon-back" onClick={() => this.props.history.goBack()}></i></div>
                         Invoices
-                        <div hidden className="fr">
-                            <i title="Add Invoice" className="flaticon-invoice marIcon" onClick={this.createInvoice.bind(this)}></i>
-                            <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
+                        <div className="fr">
+                            {(!invoices || invoices.length <= 0) && <i title="Add Invoice" className="flaticon-invoice marIcon" onClick={() => this.createInvoice()}></i>}
+                            {/*<i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>*/}
                         </div>
                     </h1>
                 </div>
@@ -212,7 +226,24 @@ class Invoices extends Component {
                                                 <p>{this.props.member.town}</p>
                                             </div>
                                         </div>
-                                        {invoicesRow}
+                                        {/*invoicesRow*/}
+                                        {
+                                            invoices && invoices.map((invoice, i) => {
+                                                return <div key={i} className="investAddCon">
+                                                    {!invoice.status && <div hidden={this.props.payFeeTxID} className="arrowBtn">
+                                                        <img onClick={() => { this.props._lcPayFee(this.props.member.carID, this.props.account); this.updateInvoice(invoice) }} src={require('../assets/add.jpg')} alt="add2" />
+                                                    </div>}
+                                                    <div className="investAddInput">
+                                                        <p style={{ margin: "0" }}>{invoice.year} {this.months[invoice.month]}</p>
+                                                        <p style={{ margin: "0" }}>{this.props.member.mileagesAverage} km stand</p>
+                                                        <p style={{ margin: "0" }}>{this.props.member.car.objectFee.toNumber()} Euro</p>
+                                                    </div>
+                                                    <div className="investAddStatus">
+                                                        {this.props.payFeeTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.payFeeTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.payFeeTxID)) ? <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red" }}>pending</p>}</Link>)}
+                                                    </div>
+                                                </div>
+                                            })
+                                        }
                                     </div>
                                 </div>
                             </div>

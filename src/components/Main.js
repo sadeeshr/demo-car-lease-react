@@ -92,7 +92,7 @@ class Main extends Component {
     checkRegistered = (account) => {
         if (this.props.usernames) {
             const accounts = this.props.usernames ? this.props.usernames.map(user => user.account) : []
-            cc.log(accounts, account, accounts.indexOf(account));
+            // cc.log(accounts, account, accounts.indexOf(account));
             this.setState({
                 registered: (accounts.indexOf(account) !== -1) ? true : false
             })
@@ -101,7 +101,7 @@ class Main extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        cc.log("Main Update Props: ", nextProps, nextProps.socket, !nextProps.usernames);
+        // cc.log("Main Update Props: ", nextProps, nextProps.socket, !nextProps.usernames);
         if (nextProps.account && nextProps.socket && !nextProps.usernames) this.fetchUserData()
 
         if (nextProps.event && this.props.event !== nextProps.event) {

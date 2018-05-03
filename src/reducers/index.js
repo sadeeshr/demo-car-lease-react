@@ -58,7 +58,7 @@ const rootReducer = (state = initialState, action) => {
                 approveTxID: null,
                 // investInObjectTxID: null,
                 invoices_new: false,
-                invoices_edit: false,
+                invoices_edit: false
                 // usernames: null
             }
 
@@ -118,6 +118,7 @@ const rootReducer = (state = initialState, action) => {
         case 'ADD_NEW_OBJECT_RESULT':
         case 'SUM_BALANCE_OF_RESULT':
         case 'PAY_FEE_RESULT':
+        case 'ACTIVATE_DEACTIVATE_OBJECT_RESULT':
         case 'CLAIM_DIVIDEND_RESULT':
         case 'TO_CLAIM_TOTAL_RESULT':
         case 'ALLOWANCE':

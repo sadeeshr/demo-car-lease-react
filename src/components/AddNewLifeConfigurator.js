@@ -209,7 +209,7 @@ class AddNewLifeConfigurator extends Component {
                             <button title={!this.state.carSelected ? "Select a Car" : "Confirm"} disabled={!this.state.carSelected} className="arrowBtn" onClick={this.createAccount.bind(this)}>
                                 <img src={require('../assets/add.jpg')} alt="addM" />
                             </button>
-                            <img style={img} src={this.state.active ? this.props.cars[this.state.active]["image"] : require('../assets/noimage.png')} alt="carImage" />
+                            <img style={img} src={this.props.cars[this.state.active || "0"]["image"] || require('../assets/noimage.png')} alt="carImage" />
                         </div>}
                     </div>
                 </div>

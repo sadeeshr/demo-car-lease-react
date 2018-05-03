@@ -113,6 +113,7 @@ export const _writeNewContractData = (data) => {
 
 export const _updateContractData = (data) => {
     return (dispatch) => {
+        // dispatch(_resetTxIds())
         dispatch({
             type: "UPDATE_CONTRACT_DATA",
             payload: socApi.updateData(data)
@@ -457,6 +458,20 @@ export const _lcPayFee = (objectID, account) => {
                 return dispatch(
                     {
                         type: "PAY_FEE_RESULT",
+                        payload: result
+                    }
+                )
+            })
+    }
+}
+
+export const _lcActivateDeactivateObject = (objectID, account) => {
+    return (dispatch) => {
+        return contract.lcActivateDeactivateObject(objectID, account)
+            .then(result => {
+                return dispatch(
+                    {
+                        type: "ACTIVATE_DEACTIVATE_OBJECT_RESULT",
                         payload: result
                     }
                 )
