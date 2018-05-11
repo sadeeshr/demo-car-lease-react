@@ -135,7 +135,7 @@ class Members extends Component {
                 </div>}
                 <div className="mtableTokens">{member.crowdsaleClosed ? <span style={{ color: "green", fontSize: "12px" }}>Closed</span> : member.totalRaised || "0"} <p>{member.evTokens}</p></div>
                 <div className="mtableUser"><span style={member.account === this.props.account ? { fontWeight: "bold" } : {}}>{member.username || ""}</span> <p>{member.town || ""}</p></div>
-                {<div className="mtableCar"><img style={img} src={member.carPic || member.profilePic || require('../assets/noimage.png')} alt="carImage" /><span title="Car Raised" style={{ fontSize: "12px" }}>Euro {member.carPrice || "0"}</span></div>}
+                {<div className="mtableCar"><img style={img} src={member.carPic || member.profilePic || require('../assets/ninja.png')} alt="carImage" /><span title="Car Raised" style={{ fontSize: "12px" }}>Euro {member.carPrice || "0"}</span></div>}
                 {(this.props.newObject && this.props.newObject.id === member["_id"]) &&
                     (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newObject.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red", marginLeft: "0px", marginTop: "15px" }}>pending</p>}</Link>)}
             </div>
@@ -173,9 +173,9 @@ class Members extends Component {
                             }}>
                                 <img src={require('../assets/arrow.jpg')} alt="addM" />
                             </button>
-                            {<button title="Invoices (testing)" className="arrowBtn" onClick={() => { member.authorized ? this.props.history.push("/", { module: this.props.location.state.module, path: "invoices" }) : cc.log("NO OBJECT CONFIGURED") }}>
+                            {/*<button title="Invoices (testing)" className="arrowBtn" onClick={() => { member.authorized ? this.props.history.push("/", { module: this.props.location.state.module, path: "invoices" }) : cc.log("NO OBJECT CONFIGURED") }}>
                                 <img src={require('../assets/add.jpg')} alt="addI" />
-                            </button>}
+                        </button>*/}
                         </div>
                     </div>}
                 </div>
