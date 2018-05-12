@@ -2,9 +2,24 @@ import React, { Component } from 'react'
 // import cc from '../lib/utils';
 
 class Home extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            town: 0
+        }
+    }
+
 
     componentWillMount() {
-        // cc.log(this.props);
+        this.fetchMunicipalityData()
+    }
+
+    fetchMunicipalityData = () => {
+        let data = {
+            module: "municipality",
+            result: "towns",
+        }
+        if (this.props.socket) this.props._fetchContractData(this.props.account, data)
     }
 
     componentDidMount() {
@@ -12,40 +27,46 @@ class Home extends Component {
     }
 
     render() {
-        const img = { "maxHeight": "40px", "maxWidth": "80px", "display": "block", "width": "auto", "height": "auto" }
+
+        const style = {
+            towndropdown: {
+                fontWeight: "800",
+                background: "none",
+                border: "0",
+                fontSize: "16px",
+                WebkitAppearance: "none",
+                textAlign: "center",
+                textAlignLast: "center"
+            }
+        }
 
         return (
             <div className="content-border">
                 <div className="mainContentCon">
                     <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
                     <div className="float-right">
-                        <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
-                    </div>
-                    <div className="navCon">
-                        <h1 id="header">WESTLAND ENERGY NEUTRAL</h1>
-                        {/*  */}
+
                     </div>
                     <div className="contentCon overflow">
                         <div className="contentText">
-                            <p>Westland Energy Neutral is your local energy cooperation that helps you to quit your fossil fuel addiction  by giving you an alternative.</p>
-                            <p>We not only offer you renewable energy but provides you a solution to finance your transition to a sustainable future.</p>
+                            <span>Het{" "}</span>
+                            <select style={style.towndropdown} value={this.props.town && this.props.town[this.state.town]["municipality"]} onChange={e => this.setState({ town: e.target.value })}>
+                                {
+                                    this.props.towns && this.props.towns.map((town, i) => {
+                                        return <option key={i} value={i}>{town.municipality}</option>
+                                    })
+                                }
+                            </select>
+                            <span>{" "}wordt</span>
+                            <p>100% Duurzaam...</p>
                             <div className="contentBtn bg-none">
-                                <table className="tablepadBot" style={{ borderSpacing: "0px", borderCollapse: "collapse" }}>
 
-                                    <tbody>
-                                        <tr className="htableTitle">
-                                            <td>Now available</td>
-                                            <td>Expected</td>
-                                            <td>Expected</td>
-                                        </tr>
-                                        <tr className="htablecar">
-                                            <td><button onClick={() => this.props.history.push("/", { module: this.props.location.state.module, path: "members" })}><img src={require('../assets/TeslaRoadster.png')} style={img} alt="addM1" /></button></td>
-                                            <td disabled><button ><img src={require('../assets/solar.png')} style={img} alt="addM2" /></button></td>
-                                            <td disabled><button ><img src={require('../assets/ac.png')} style={img} alt="addM3" /></button></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
                             </div>
+                            <p>
+                                <span>voor</span>{" "}
+                                <span><strong>{this.props.towns && this.props.towns[this.state.town]["inhabitants"]}</strong></span>{" "}
+                                <span>{this.props.towns && this.props.towns[this.state.town]["name"]}</span>
+                            </p>
                         </div>
                     </div>
                     <div className="footCon">

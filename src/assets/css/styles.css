@@ -4,12 +4,12 @@ html{
     height: 100%;
 }
 body{
-   background-image: url("../cryptocurrency.jpg");
+   background-image: url("");
    background-size: cover;
    background-repeat: no-repeat;
    background-attachment: fixed;
    background-position: center top;
-   color: #fff;
+   /* color: #fff; */
 
 }
 strong{
@@ -33,12 +33,12 @@ a{
    overflow: hidden;
 
    /* border: 1px; */
-   background-color:rgba(255,255,255,0.3);
-   border: 2px solid gray; 
+   /* background-color:rgba(255,255,255,0.3); */
+   /* border: 2px solid gray;  */
    /* background: rgba(255, 255, 255, .5); */  
    /* border: 5px solid #808080; */
 
-   border-radius: 35px;
+   /* border-radius: 35px; */
    display: block;
 }
 
@@ -96,12 +96,12 @@ img.addBtn {
    padding-right: 5%;
 }
 .content-border{
-   border: 3px solid #4D4D4D;
+   /* border: 3px solid #4D4D4D; */
    width: 350px;
    height: 650px;
    margin: 0 auto;
    border-radius: 45px;
-   box-shadow: 3px 3px rgba(0,0,0,.3);
+   /* box-shadow: 3px 3px rgba(0,0,0,.3); */
 }
 
 .rowSelect{

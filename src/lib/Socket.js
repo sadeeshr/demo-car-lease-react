@@ -38,7 +38,7 @@ class Socket {
         this.account = account
         if (this.socket) {
             this.socket.emit("fetch", data)
-            return data.query.module
+            return data.module
         }
 
     }

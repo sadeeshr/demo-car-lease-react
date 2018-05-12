@@ -9,7 +9,8 @@ import Home from '../components/Home';
 const mapStateToProps = (state) => {
     // console.log("State: ", state)
     return {
-        socketConnection: state.socket
+        socket: state.socket,
+        towns: state.towns
     }
 }
 const mapActionsToProps = (dispatch) => { return bindActionCreators(Actions, dispatch) }
