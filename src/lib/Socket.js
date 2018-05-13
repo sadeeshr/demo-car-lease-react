@@ -34,8 +34,8 @@ class Socket {
         }
     }
 
-    fetchData = (account, data) => {
-        this.account = account
+    fetchData = (data, account) => {
+        if (account) this.account = account
         if (this.socket) {
             this.socket.emit("fetch", data)
             return data.module

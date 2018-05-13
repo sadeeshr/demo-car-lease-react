@@ -10,7 +10,8 @@ const mapStateToProps = (state) => {
     // console.log("State: ", state)
     return {
         socket: state.socket,
-        towns: state.towns
+        towns: state.towns,
+        town: state.town
     }
 }
 const mapActionsToProps = (dispatch) => { return bindActionCreators(Actions, dispatch) }

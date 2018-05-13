@@ -115,7 +115,7 @@ img.addBtn {
    -moz-transition: all .2s ease;
    -o-transition: all .2s ease;
    transition: all .2s ease;
-   
+   border: 1px solid #f1f1f1;
 }
 
 
@@ -658,7 +658,7 @@ table tr td {
 
 .leaseCarCon{
    background: rgba(255, 255, 255, .3);
-   border: 3px solid rgba(255, 215, 0, 0);
+   border: 1px solid #f1f1f1;
    border-radius: 12px;
    margin-bottom: 10px;
    padding-left: 5px;
@@ -760,7 +760,7 @@ table tr td {
    text-align: center;
    color: #fff;
    width: 100%;
-   border: 3px solid rgba(255, 215, 0, .0);
+   border: 1px solid #f1f1f1;
 
 }
 

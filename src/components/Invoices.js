@@ -61,7 +61,7 @@ class Invoices extends Component {
                 // _id: 0
             }
         }
-        this.props._fetchContractData(this.props.account, data)
+        this.props._fetchContractData(data, this.props.account)
     }
 
     createInvoice = () => {

@@ -83,11 +83,11 @@ export const _registered = () => {
     }
 }
 
-export const _fetchContractData = (account, data) => {
+export const _fetchContractData = (data, account) => {
     return (dispatch) => {
         dispatch({
             type: "FETCH_CONTRACT_DATA",
-            payload: socApi.fetchData(account, data)
+            payload: socApi.fetchData(data, account)
         })
     }
 }
@@ -140,7 +140,7 @@ export const _contractDataResponse = (account, response) => {
                     dispatch(_lcLeaseObject(member.carID))
                     dispatch(_lcLeaseObjectCycle(member.carID))
                     dispatch(_lcLeaseObjectRedemption(member.carID))
-                    dispatch(_evMyTokens(account, member.carID))
+                    account && dispatch(_evMyTokens(account, member.carID))
                 }
                 // return 1
             })

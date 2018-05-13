@@ -13,7 +13,7 @@ class Home extends Component {
 
 
     componentWillMount() {
-        this.fetchMunicipalityData()
+        if (!this.props.towns) this.fetchMunicipalityData()
     }
 
     fetchMunicipalityData = () => {
@@ -21,16 +21,17 @@ class Home extends Component {
             module: "municipality",
             result: "towns",
         }
-        if (this.props.socket) this.props._fetchContractData(this.props.account, data)
+        if (this.props.socket) this.props._fetchContractData(data, this.props.account)
     }
 
     componentDidMount() {
         // if (!this.props.socketConnection) this.props._connectSocket(this.props)
-        this.props._setObject({ town: this.state.town })
+        if (!this.props.town) this.props._setObject({ town: this.state.town })
     }
 
     render() {
 
+        console.log("state,props: ", this.state, this.props);
         const style = {
             towndropdown: {
                 fontWeight: "800",
@@ -42,7 +43,13 @@ class Home extends Component {
                 textAlignLast: "center"
             }
         }
-        let inhabitants = this.props.towns && this.props.towns[this.state.town]["inhabitants"]
+        const townId = this.props.town || this.state.town
+        const town = this.props.towns && this.props.towns[townId]
+        // const municipality = town && town.municipality
+
+        console.log(town);
+
+        let inhabitants = town && town["inhabitants"]
         inhabitants = formatNumber(parseInt(inhabitants, 10), { precision: 0, thousand: "." });
 
         return (
@@ -55,7 +62,7 @@ class Home extends Component {
                     <div className="contentCon overflow">
                         <div className="contentText">
                             <span>Het{" "}</span>
-                            <select style={style.towndropdown} value={this.props.town && this.props.town[this.state.town]["municipality"]}
+                            {<select style={style.towndropdown} value={townId}
                                 onChange={e => this.setState({ town: e.target.value },
                                     () => this.props._setObject({ town: this.state.town })
                                 )}>
@@ -64,7 +71,7 @@ class Home extends Component {
                                         return <option key={i} value={i}>{town.municipality}</option>
                                     })
                                 }
-                            </select>
+                            </select>}
                             <span>{" "}wordt</span>
                             <p>100% Duurzaam...</p>
                             <div className="contentBtn bg-none">
@@ -72,7 +79,7 @@ class Home extends Component {
                             <p>
                                 <span>voor</span>{" "}
                                 <span><strong>{inhabitants}</strong></span>{" "}
-                                <span>{this.props.towns && this.props.towns[this.state.town]["name"]}</span>
+                                <span>{town && town["name"]}</span>
                             </p>
                             <span><strong>Crowdfunding {" "}</strong>{" met 3-10% Rente"}</span>
                             <p>elk moment Opstapbaar</p>

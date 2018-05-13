@@ -11,7 +11,9 @@ const mapStateToProps = (state) => {
     return {
         socket: state.socket,
         towns: state.towns,
-        town: state.town
+        town: state.town,
+        usernames: state.usernames,
+        account: state.account
     }
 }
 const mapActionsToProps = (dispatch) => { return bindActionCreators(Actions, dispatch) }

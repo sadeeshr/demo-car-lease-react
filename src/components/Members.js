@@ -37,7 +37,7 @@ class Members extends Component {
             module: "membersdev",
             result: "members",
             query: {
-                module: this.props.location.state.module
+                municipalityID: "1"
             },
             filter: {
                 _id: 1,
@@ -48,11 +48,11 @@ class Members extends Component {
                 carPic: 1,
                 carPrice: 1,
                 profilePic: 1,
-                module: 1,
+                municipalityID: 1,
                 account: 1
             }
         }
-        this.props._fetchContractData(this.props.account, data)
+        this.props._fetchContractData(data, this.props.account)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -112,11 +112,11 @@ class Members extends Component {
     //         })
     // }
 
-    fetchEvTokens = () => {
-        for (let i = 1; i <= this.props.members.length; i++) {
-            this.props._evMyTokens(this.props.account, i)
-        }
-    }
+    // fetchEvTokens = () => {
+    //     for (let i = 1; i <= this.props.members.length; i++) {
+    //         this.props._evMyTokens(this.props.account, i)
+    //     }
+    // }
 
     renderMember = (member, i) => {
 
@@ -230,7 +230,7 @@ class Members extends Component {
                         <i onClick={() => this.fetchMembers()} className="flaticon-rotate"></i>
                         <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
                     </div> */}
-                    <div className="navCon">
+                    <div hidden className="navCon">
                         <h1 id="header"><div className="fl"><i className="flaticon-back" onClick={() => this.props.history.push("/", { module: "westland", path: "main" })}></i></div>Members<div className="fr"><i onClick={() => this.fetchMembers()} className="flaticon-rotate marIcon"></i><i onClick={() => this.props.history.push("/")} className="flaticon-home"></i></div></h1>
                     </div>
                     <div className="contentCon overflow bg-none">

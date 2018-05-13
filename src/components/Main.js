@@ -43,17 +43,6 @@ class Main extends Component {
     }
 
 
-    checkRegistered = (account) => {
-        if (this.props.usernames) {
-            const accounts = this.props.usernames ? this.props.usernames.map(user => user.account) : []
-            // cc.log(accounts, account, accounts.indexOf(account));
-            this.setState({
-                registered: (accounts.indexOf(account) !== -1) ? true : false
-            })
-
-        }
-    }
-
     componentWillReceiveProps(nextProps) {
         // cc.log("Main Update Props: ", nextProps, nextProps.socket, !nextProps.usernames);
         // if (nextProps.account && nextProps.socket && !nextProps.usernames) this.fetchUserData()
@@ -129,7 +118,6 @@ class Main extends Component {
             this.refs.notificationSystem.addNotification(nextProps.eventAlert);
         }
 
-        if (nextProps.account) this.checkRegistered(nextProps.account)
         if (nextProps.location.state) this.renderComponent()
         this.props = nextProps
     }
@@ -202,12 +190,13 @@ class Main extends Component {
                 textAlign: "center"
             }
         }
+        const path = (this.props.location && this.props.location.state) ? this.props.location.state.path : "main"
         return (
             <div>
                 <nav style={style.nav}>
-                    <span><strong>HOME</strong></span> {" "}
-                    <span>GA DUURZAAM</span>{" "}
-                    <span>LEDEN</span>{" "}
+                    <span style={{ fontWeight: (["main", "home"].indexOf(path) !== -1) ? "800" : "100" }}>HOME</span> {" "}
+                    <span style={{ fontWeight: (path === "addnewlife") ? "800" : "100" }}>GA DUURZAAM</span>{" "}
+                    <span style={{ fontWeight: (path === "members") ? "800" : "100" }}>LEDEN</span>{" "}
                 </nav>
 
                 <NotificationSystem ref="notificationSystem" />

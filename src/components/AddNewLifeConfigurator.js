@@ -35,7 +35,7 @@ class AddNewLifeConfigurator extends Component {
             }
         }
 
-        if (!this.props.cars && this.props.socket) this.props._fetchContractData(this.props.account, data)
+        if (!this.props.cars && this.props.socket) this.props._fetchContractData(data, this.props.account)
 
     }
 

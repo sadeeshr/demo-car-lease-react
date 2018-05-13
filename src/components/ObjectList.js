@@ -9,11 +9,51 @@ class ObjectList extends Component {
 
 
     componentDidMount() {
+        // if (nextProps.account) this.checkRegistered(nextProps.account)
+        this.fetchUserData()
+    }
 
+    componentWillReceiveProps(nextProps) {
+        // console.log(nextProps);
+        this.props = nextProps
+        if (nextProps.account && nextProps.socket && !nextProps.usernames) this.fetchUserData()
+        if (nextProps.account && nextProps.usernames) this.checkRegistered(nextProps.account)
+    }
+
+    fetchUserData = () => {
+        const town = this.props.towns[this.props.town];
+
+        let data = {
+            module: "membersdev",
+            result: "usernames",
+            query: {
+                municipalityID: town["municipalityID"]
+            },
+            filter: {
+                _id: 0,
+                username: 1,
+                account: 1
+            }
+        }
+        if (!this.props.usernames && this.props.socket) this.props._fetchContractData(data, this.props.account)
+        if (this.props.account) this.checkRegistered(this.props.account)
+    }
+
+    checkRegistered = (account) => {
+        // console.log("REG check: ", account, this.props);
+        if (this.props.usernames) {
+            const accounts = this.props.usernames ? this.props.usernames.map(user => user.account) : []
+            // console.log(accounts, account, accounts.indexOf(account));
+            this.setState({
+                registered: (accounts.indexOf(account) !== -1) ? true : false
+            })
+
+        }
     }
 
     render() {
 
+        console.log("Object List state, props: ", this.state, this.props);
         const style = {
             towndropdown: {
                 fontWeight: "800",
@@ -40,6 +80,9 @@ class ObjectList extends Component {
         solar = formatNumber((parseInt(solar, 10) / 1000), { precision: 0, thousand: "." });
         let wind = town && town["inhabitants"]
         wind = formatNumber((parseInt(wind, 10) / 10000), { precision: 0, thousand: "." });
+
+        const nextScreen = (this.state.registered || !this.props.account) ? "members" : "addmember"
+
         return (
             <div className="content-border">
                 <div className="mainContentCon">
@@ -81,7 +124,7 @@ class ObjectList extends Component {
                     <div className="footCon">
                         <div>
                             <span>Verder</span>
-                            <button className="arrowBtn" onClick={() => this.props.history.push("/", { module: this.props.location.state.module, path: "addmember" })}>
+                            <button className="arrowBtn" onClick={() => this.props.history.push("/", { path: nextScreen })}>
                                 <img src={require('../assets/arrow.jpg')} alt="addM" />
                             </button>
                         </div>
