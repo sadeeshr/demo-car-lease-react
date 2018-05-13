@@ -182,11 +182,11 @@ class AddMember extends Component {
                         {/* <div className="float-right">
                             <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
                         </div> */}
-                        <div className="navCon">
+                        <div hidden className="navCon">
                             <h1 id="header"> <i className="flaticon-back fl" onClick={() => this.props.history.goBack()}></i>Become Member<i onClick={() => this.props.history.push("/")} className="flaticon-home fr"></i></h1>
                             {/*  */}
                         </div>
-                        <div className="contentCon overflow">
+                        <div className="contentCon overflow" style={{ height: "auto" }}>
                             <BlockUi tag="div" blocking={this.props.progress}>
                                 <div className="form-row-container bmemberCon">
                                     <span className="form-input-containers">
@@ -281,10 +281,11 @@ class AddMember extends Component {
                         </div>
                         <div className="footCon">
                             <div>
-                                <span>Confirm & Publish</span>
-                                {/*cc.log(`Usernames: ${usernames}, ${usernames.indexOf(this.state.username)}`)*/}
-                                <button disabled={!this.checkMandatory() || (usernames.indexOf(this.state.username) !== -1)} title={!this.checkMandatory() ? "Please fill mandatory fields" : (usernames.indexOf(this.state.username) !== -1 ? "Username already exists" : "Select Car")} className="arrowBtn" onClick={this.createAccount.bind(this)}>
-                                    <img src={require('../assets/add.jpg')} alt="addM" />
+                                {/*<button disabled={!this.checkMandatory() || (usernames.indexOf(this.state.username) !== -1)} title={!this.checkMandatory() ? "Please fill mandatory fields" : (usernames.indexOf(this.state.username) !== -1 ? "Username already exists" : "Select Car")} className="arrowBtn" onClick={this.createAccount.bind(this)}>
+                                    <img src={require('../assets/arrow.jpg')} alt="addM" />
+                                </button>*/}
+                                <button className="arrowBtn" onClick={() => this.props.history.push("/", { path: "members" })}>
+                                    <img src={require('../assets/arrow.jpg')} alt="addM" />
                                 </button>
                             </div>
                         </div>

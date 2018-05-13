@@ -47,6 +47,13 @@ export const _socketStatus = (status) => {
     }
 }
 
+export const _setObject = (obj) => {
+    return {
+        type: "SET_OBJECT",
+        payload: obj
+    }
+}
+
 export const _setEvent = (event) => {
     return {
         type: "SET_EVENT",

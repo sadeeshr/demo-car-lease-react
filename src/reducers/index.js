@@ -111,6 +111,7 @@ const rootReducer = (state = initialState, action) => {
                 member: null
             }
 
+        case 'SET_OBJECT':
         case 'SET_BASE_ACCOUNT':
         case 'SET_ACCOUNT_BALANCE':
         case 'EV_BALANCE':

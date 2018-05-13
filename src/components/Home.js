@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import formatNumber from 'accounting-js/lib/formatNumber.js'
+
 // import cc from '../lib/utils';
 
 class Home extends Component {
@@ -23,7 +25,8 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        if (!this.props.socketConnection) this.props._connectSocket(this.props)
+        // if (!this.props.socketConnection) this.props._connectSocket(this.props)
+        this.props._setObject({ town: this.state.town })
     }
 
     render() {
@@ -39,6 +42,8 @@ class Home extends Component {
                 textAlignLast: "center"
             }
         }
+        let inhabitants = this.props.towns && this.props.towns[this.state.town]["inhabitants"]
+        inhabitants = formatNumber(parseInt(inhabitants, 10), { precision: 0, thousand: "." });
 
         return (
             <div className="content-border">
@@ -50,7 +55,10 @@ class Home extends Component {
                     <div className="contentCon overflow">
                         <div className="contentText">
                             <span>Het{" "}</span>
-                            <select style={style.towndropdown} value={this.props.town && this.props.town[this.state.town]["municipality"]} onChange={e => this.setState({ town: e.target.value })}>
+                            <select style={style.towndropdown} value={this.props.town && this.props.town[this.state.town]["municipality"]}
+                                onChange={e => this.setState({ town: e.target.value },
+                                    () => this.props._setObject({ town: this.state.town })
+                                )}>
                                 {
                                     this.props.towns && this.props.towns.map((town, i) => {
                                         return <option key={i} value={i}>{town.municipality}</option>
@@ -60,19 +68,20 @@ class Home extends Component {
                             <span>{" "}wordt</span>
                             <p>100% Duurzaam...</p>
                             <div className="contentBtn bg-none">
-
                             </div>
                             <p>
                                 <span>voor</span>{" "}
-                                <span><strong>{this.props.towns && this.props.towns[this.state.town]["inhabitants"]}</strong></span>{" "}
+                                <span><strong>{inhabitants}</strong></span>{" "}
                                 <span>{this.props.towns && this.props.towns[this.state.town]["name"]}</span>
                             </p>
+                            <span><strong>Crowdfunding {" "}</strong>{" met 3-10% Rente"}</span>
+                            <p>elk moment Opstapbaar</p>
                         </div>
                     </div>
                     <div className="footCon">
                         <div>
-                            <span>Subscribe</span>
-                            <button className="arrowBtn" onClick={() => this.props.history.push("/", { module: this.props.location.state.module, path: "addmember" })}>
+                            <span>Verder</span>
+                            <button className="arrowBtn" onClick={() => this.props.history.push("/", { path: "objectlist" })}>
                                 <img src={require('../assets/arrow.jpg')} alt="addM" />
                             </button>
                         </div>

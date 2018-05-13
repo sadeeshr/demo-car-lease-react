@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Home from '../containers/Home';
+import ObjectList from '../containers/ObjectList';
 import Members from '../containers/Members';
 import AddMember from '../containers/AddMember';
 import Invest from '../containers/Invest';
@@ -41,7 +42,7 @@ class Main extends Component {
         // this.fetchUserData()
     }
 
- 
+
     checkRegistered = (account) => {
         if (this.props.usernames) {
             const accounts = this.props.usernames ? this.props.usernames.map(user => user.account) : []
@@ -173,6 +174,8 @@ class Main extends Component {
             switch (historyState.path) {
                 case "home":
                     return <Home />
+                case "objectlist":
+                    return <ObjectList />
                 case "members":
                     return <Members />
                 case "addmember":
