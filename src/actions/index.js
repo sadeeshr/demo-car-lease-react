@@ -16,12 +16,13 @@ export const _connectSocket = (props, domain) => {
     }
 }
 
-export const _fetchMembers = (module, account) => {
+export const _fetchMembers = (municipalityID, account) => {
+
     let data = {
-        module: "membersdev",
+        module: "membersdev2",
         result: "members",
         query: {
-            module: module
+            municipalityID: municipalityID
         },
         filter: {
             _id: 1,
@@ -31,7 +32,8 @@ export const _fetchMembers = (module, account) => {
             carID: 1,
             carPic: 1,
             carPrice: 1,
-            module: 1,
+            profilePic: 1,
+            municipalityID: 1,
             account: 1
         }
     }

@@ -10,6 +10,8 @@ const mapStateToProps = (state) => {
     // console.log("State: ", state)
     return {
         socket: state.socket,
+        towns: state.towns,
+        town: state.town,
         LeaseContract: state.LeaseContract,
         account: state.account,
         module: state.module,

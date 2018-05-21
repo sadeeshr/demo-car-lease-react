@@ -75,7 +75,7 @@ class Main extends Component {
                             let newObjData = newObject.data
                             newObjData["carID"] = objectID
                             let data = {
-                                module: "membersdev",
+                                module: "membersdev2",
                                 result: "members",
                                 query: { "_id": newObject.id },
                                 data: newObjData
@@ -100,8 +100,21 @@ class Main extends Component {
                 case "Claim":
                     {
                         let alert = {
-                            title: "A New Claim has been made !!",
+                            title: "A New Claim made !",
                             message: ``,
+                            level: "info",
+                            position: "tr",
+                            autoDismiss: 5
+                        }
+                        this.props._setEventAlert(alert)
+                        break;
+                    }
+
+                case "NewMember":
+                    {
+                        let alert = {
+                            title: "A New Member added !",
+                            message: "",
                             level: "info",
                             position: "tr",
                             autoDismiss: 5

@@ -34,7 +34,7 @@ class Members extends Component {
 
     fetchMembers = () => {
         let data = {
-            module: "membersdev",
+            module: "membersdev2",
             result: "members",
             query: {
                 municipalityID: "1"
@@ -251,6 +251,10 @@ class Members extends Component {
                     </div>
                     <div className="footCon">
                         <div>
+                            <span>Ga duurzaam</span>
+                            <button className="arrowBtn" onClick={() => this.props.history.push("/", { path: "addnewlife" })}>
+                                <img src={require('../assets/arrow.jpg')} alt="addM" />
+                            </button>
                             {/*this.props.AddNewUser && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.AddNewUser}>{!this.state.eventAddNewUser ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>} </Link>)*/}
                             <input className="searchBtn" type="text" name="filterMembers" value={this.state.filter || ""} placeholder="Search" onChange={(e) => { cc.log("SEARCH: ", e.target.value); this.setState({ filter: e.target.value }) }} />
                         </div>

@@ -72,6 +72,7 @@ handleNew = (socket, request) => {
                 console.log(err);
             } else {
                 socket.emit('data', { module: ((request.result || request.module) + "_new"), result: true })
+                io.sockets.emit('event', { event: "NewMember" })
             }
         })
 }

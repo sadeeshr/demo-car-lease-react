@@ -61,6 +61,8 @@ class AddMember extends Component {
         // let membersList = this.props.members
 
         // const carHash = '0x' + md5(self.username + self.town)
+        const townId = this.props.town
+        const town = townId && this.props.towns && this.props.towns[townId]
 
         let newMember = {
             username: self.username || '',
@@ -77,11 +79,11 @@ class AddMember extends Component {
             profilePic: self.profilePic || '',
             // carMonRedemption: self.carMonRedemption || '',
             // carMonths: self.carMonths || '',
-            module: this.props.location.state.module || 'westland'
+            municipalityID: town ? town["municipalityID"] : ""
         }
 
         let data = {
-            module: "membersdev",
+            module: "membersdev2",
             result: "members",
             data: newMember
         }
@@ -281,12 +283,12 @@ class AddMember extends Component {
                         </div>
                         <div className="footCon">
                             <div>
-                                {/*<button disabled={!this.checkMandatory() || (usernames.indexOf(this.state.username) !== -1)} title={!this.checkMandatory() ? "Please fill mandatory fields" : (usernames.indexOf(this.state.username) !== -1 ? "Username already exists" : "Select Car")} className="arrowBtn" onClick={this.createAccount.bind(this)}>
-                                    <img src={require('../assets/arrow.jpg')} alt="addM" />
-                                </button>*/}
-                                <button className="arrowBtn" onClick={() => this.props.history.push("/", { path: "members" })}>
+                                <button disabled={!this.checkMandatory() || (usernames.indexOf(this.state.username) !== -1)} title={!this.checkMandatory() ? "Please fill mandatory fields" : (usernames.indexOf(this.state.username) !== -1 ? "Username already exists" : "Select Car")} className="arrowBtn" onClick={this.createAccount.bind(this)}>
                                     <img src={require('../assets/arrow.jpg')} alt="addM" />
                                 </button>
+                                {/*<button className="arrowBtn" onClick={() => this.props.history.push("/", { path: "members" })}>
+                                    <img src={require('../assets/arrow.jpg')} alt="addM" />
+                                </button>*/}
                             </div>
                         </div>
                     </div>

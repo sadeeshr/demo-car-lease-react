@@ -4,6 +4,10 @@ import BlockUi from 'react-block-ui';
 
 import Coverflow from 'react-coverflow';
 import cc from '../lib/utils';
+import formatNumber from 'accounting-js/lib/formatNumber.js'
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 
 class AddNewLifeConfigurator extends Component {
     constructor(props) {
@@ -25,17 +29,10 @@ class AddNewLifeConfigurator extends Component {
     componentWillMount() {
         // cc.log("ADD OBJECT:", this.props);
         let data = {
-            module: "carsdev",
-            result: "cars",
-            query: {
-                module: this.props.location.state.module
-            },
-            filter: {
-                _id: 0
-            }
+            module: "leaseobjects"
         }
 
-        if (!this.props.cars && this.props.socket) this.props._fetchContractData(data, this.props.account)
+        if (!this.props.leaseobjects && this.props.socket) this.props._fetchContractData(data, this.props.account)
 
     }
 
@@ -69,30 +66,7 @@ class AddNewLifeConfigurator extends Component {
 
         const carHash = '0x' + md5(member.username + member.town)
 
-        // let newMember = {
-        //     username: car.username || '',
-        //     fullname: car.fullname || '',
-        //     address: car.address || '',
-        //     town: car.town || '',
-        //     zip: car.zip || '',
-        //     iban: car.iban || '',
-        //     email: car.email || '',
-        //     message: car.message || '',
-        //     // carPic: car.carPic || '',
-        //     // carPrice: car.carPrice || '',
-        //     account: car.account || this.props.account,
-        //     profilePic: car.profilePic || '',
-        //     // carFee: car.carFee || '',
-        //     // carMonths: car.carMonths || '',
-        //     module: this.props.location.state.module || 'westland'
-        // }
-
-        // let data = {
-        //     module: "members",
-        //     data: newMember
-        // }
-        // this.props._setNewContractData(data)
-        this.state.carSelected && this.props._lcCreateObject(member["_id"], car.image, car.price, carHash, this.carType, car.dealer, (this.state.carFee || car.fee), (this.state.carTerm || car.term), Math.round((this.state.carMileage || car.mileage) / 12), member.account, this.props.location.state.module)
+        this.state.lobjectSelected && this.props._lcCreateObject(member["_id"], car.image, car.price, carHash, this.carType, car.dealer, (this.state.carFee || car.fee), (this.state.carTerm || car.term), Math.round((this.state.carMileage || car.mileage) / 12), member.account, this.props.location.state.module)
 
         // this.props._writeNewContractData(data)
     }
@@ -101,96 +75,199 @@ class AddNewLifeConfigurator extends Component {
     render() {
         // if (this.props.members_new) this.props.history.goBack()
         cc.log(this.props.member, `ACTIVE: ${this.state.active}`);
-        const cars = this.props.cars || []
-        cc.log("CARS: ", cars);
+        const leaseobjects = this.props.leaseobjects || []
+        cc.log("LEASE OBJECTS: ", leaseobjects);
         const img = { "maxHeight": "25px", "maxWidth": "59px", "marginLeft": "60%", "display": "block", "width": "auto", "height": "auto" }
+        const ltypeId = this.state.leasetypeid || 0
+        let leaseobject = this.props.leaseobjects && this.props.leaseobjects[this.state.active]
+        let leasetype = leaseobject && leaseobject["leasetypes"][ltypeId]
+        let months = this.state.lobjmonths || leasetype && leasetype.months
+        let monthlycapcost = ""
+        if (leasetype) {
+            switch (this.state.active) {
+                case 0:
+                    {
+                        switch (leasetype.type) {
+                            case "Per day":
+                                monthlycapcost = parseFloat(leasetype.price) / 2000
+                                break;
+                            case "Per uur":
+                                monthlycapcost = parseFloat(leasetype.price) / 20000
+                                break;
+                            case "Financial":
+                            case "Operational":
+                            case "Private":
+                                monthlycapcost = (parseFloat(leasetype.price) / 100) + (60 - parseInt(months, 10)) * 2
+                                break;
+
+                            default:
+                                break;
+                        }
+
+                        break;
+                    }
+
+                case 1:
+                    {
+                        switch (leasetype.type) {
+                            case "Financial":
+                            case "Operational":
+                            case "Private":
+                                monthlycapcost = (parseFloat(leasetype.price) / 100) + (60 - parseInt(months, 10)) * 2
+                                break;
+
+                            default:
+                                break;
+                        }
+
+                        break;
+                    }
+
+                case 2:
+                case 3:
+                case 5:
+                    {
+                        switch (leasetype.type) {
+                            case "Financial":
+                            case "Private":
+                                monthlycapcost = parseFloat(leasetype.price) / 100
+                                break;
+
+                            default:
+                                break;
+                        }
+                        break;
+                    }
+
+                case 4:
+                    {
+                        switch (leasetype.type) {
+                            case "Financial":
+                            case "Private":
+                                monthlycapcost = parseFloat(leasetype.price) / 150
+                                break;
+
+                            default:
+                                break;
+                        }
+                        break;
+                    }
+
+                default:
+                    break;
+            }
+        }
+
+        console.log(leaseobject, leasetype, months, monthlycapcost);
+
+        const sliderOpts = {
+            dots: true,
+            infinite: true,
+            speed: 500,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            adaptiveHeight: true,
+            swipeToSlide: true,
+            focusOnSelect: true,
+
+
+        };
+
+
         return (
             <div className="content-border">
                 <div className="mainContentCon">
 
-                    <div className="navCon">
+                    <div hidden className="navCon">
                         <h1 id="header"><div className="fl"><i className="flaticon-back" onClick={() => this.props.history.goBack()}></i></div>New Life Configurator<div className="fr"><i onClick={() => this.props.history.push("/")} className="flaticon-home"></i></div></h1>
                     </div>
 
-                    <div className="contentCon overflow bg-none">
+                    <div style={{ height: "auto" }} className="contentCon overflow bg-none"> {/* */}
                         <BlockUi tag="div" blocking={this.props.progress}>
-                            {/*
-                            <table style={{ borderSpacing: "0px", borderCollapse: "collapse" }}>
-                                <tbody className="membersCon">
-                                    {
-                                        cars.map((car, i) => {
-                                            return (
-                                                <tr style={{ padding: "0px 0px" }} key={i} id="center-btn-container" onClick={() => { this.setState({ carModel: car.model, carPic: car.image, carPrice: car.price, carDealer: car.dealer, carFee: car.fee, carTerm: car.term, carMileage: car.mileage, carSelected: i }) }}>
-                                                    <td>
-                                                        <div className={this.state.carSelected === i ? "b-member-con active" : "b-member-con"}>
-                                                            <div className="b-member-left">
-                                                                <span className="model" title="Model">{car.model || ""}</span>
-                                                                <span className="speed" title="speed">{car.speed || ""}kwh</span>
-                                                                <img src={car.image || ""} alt={"car-" + i} />
-                                                            </div>
-                                                            <div className="b-member-right">
-                                                                <span className="monred" title="monred">{car.monRedemption || ""} <span className="per">Per maand</span></span>
-                                                                <span className="months" title="months">OBV {car.months || ""} MND</span>
-                                                                <span className="price" title="Price">{car.price || ""} Euro</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            )
-                                        })
-                                    }
-                                </tbody>
-                            </table>  */}
-
-
-                            <div className="newLifeCon">
+                            <div className="newLifeCon"> {/**/}
                                 <Coverflow
                                     width={'auto'}
-                                    height={430}
+                                    height={500}
                                     displayQuantityOfSide={0}
                                     navigation={false}
                                     enableHeading={false}
                                     active={this.state.active}
                                 >
+                                    {/*<Slider {...sliderOpts}>*/}
                                     {
-                                        cars.map((car, i) => {
+                                        leaseobjects.map((lobject, i) => {
+                                            let mileageLabel = ""
+                                            switch (lobject.objecttype) {
+                                                case "1":
+                                                case "2":
+                                                    mileageLabel = "KM p/j"
+                                                    break;
+                                                case "3":
+                                                case "4":
+                                                case "6":
+                                                    mileageLabel = "Onderhoud p/m"
+                                                    break;
+                                                case "5":
+                                                    mileageLabel = "Kosten p/m"
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
+                                            // if (lobject.active) {
                                             return (
-                                                <div key={i} className="newLifeItem" onWheel={() => cc.log("KEY DOWN: ", i)} onClick={() => this.setState({ active: i, carSelected: true })} tabIndex="0">
+                                                <div style={{ display: !lobject.active ? "none" : "" }} key={i} className="newLifeItem" onWheel={() => cc.log("KEY DOWN: ", i)} onClick={() => this.setState({ active: i, lobjectSelected: true })} tabIndex="0">
+                                                    <span>{lobject.name.toUpperCase()}</span>
                                                     <div className="newlifeImage">
-                                                        <img src={car.image} alt={car.model} />
+                                                        <img src={lobject.image} alt={lobject.name} />
                                                     </div>
                                                     <div className="newLifeDetails">
                                                         <span className="nl-con">
-                                                            <label className="nl-label">Color</label>
-                                                            <div className="nl-inp">{car.color}</div>
+                                                            <label className="nl-label">Lease type</label>
+                                                            <div className="nl-inp">
+                                                                <select value={ltypeId}
+                                                                    onChange={e => {
+
+                                                                        this.setState({ leasetypeid: e.target.value })
+                                                                    }}>
+                                                                    {
+                                                                        lobject.leasetypes.map((lobj, j) => {
+                                                                            return <option key={j} value={j}>{lobj.type}</option>
+                                                                        })
+                                                                    }
+                                                                </select>
+                                                            </div>
                                                         </span>
                                                         <span className="nl-con">
-                                                            <label className="nl-label">Fee</label>
-                                                            <input className="nl-inp" value={this.state.carFee || car.fee} onChange={(e) => this.setState({ carFee: e.target.value })} type="text" />
+                                                            <label className="nl-label">Euro per maand</label>
+                                                            {/*<input className="nl-inp" value={this.state.carFee || car.fee} onChange={(e) => this.setState({ carFee: e.target.value })} type="text" />*/}
+                                                            <div className="nl-inp">{formatNumber(parseInt(monthlycapcost, 10), { precision: 0, thousand: "." })}</div>
                                                         </span>
                                                         <span className="nl-con">
-                                                            <label className="nl-label">Mnd</label>
-                                                            {/*<div className="nl-inp">{car.term}</div>*/}
-                                                            <input className="nl-inp" value={this.state.carTerm || car.term} onChange={(e) => this.setState({ carTerm: e.target.value })} type="text" />
+                                                            <label className="nl-label">Maanden</label>
+                                                            {/*<div className="nl-inp">{leasetype.months}</div>*/}
+                                                            <input className="nl-inp" value={this.state.lobjmonths || leasetype && leasetype.months} onChange={(e) => this.setState({ lobjmonths: e.target.value })} type="text" />
                                                         </span>
                                                         <span className="nl-con">
-                                                            <label className="nl-label">Price</label>
-                                                            <div className="nl-inp">{car.price}</div>
+                                                            <label className="nl-label">Prijs</label>
+                                                            <div className="nl-inp">{formatNumber(parseInt(leasetype && leasetype.price, 10), { precision: 0, thousand: "." })}</div>
                                                         </span>
                                                         <span className="nl-con">
-                                                            <label className="nl-label">km p/j</label>
-                                                            <input className="nl-inp" value={this.state.carMileage || car.mileage} onChange={(e) => this.setState({ carMileage: e.target.value })} type="text" />
+                                                            <label className="nl-label">{mileageLabel}</label>
+                                                            <input className="nl-inp" value={this.state.lobjMileage} onChange={(e) => this.setState({ lobjMileage: e.target.value })} type="text" />
                                                         </span>
                                                         <span className="nl-con">
-                                                            <label className="nl-label">Upload</label>
-                                                            <div className="nl-inp">Reservation</div>
+                                                            <label className="nl-label">Upload contract</label>
+                                                            <div className="nl-inp"></div>
                                                         </span>
                                                     </div>
                                                 </div>
                                             )
+                                            // }
+                                            // else return <div key={i} />
                                         })
                                     }
                                 </Coverflow>
+                                {/*</Slider>*/}
                             </div>
 
 
@@ -204,12 +281,12 @@ class AddNewLifeConfigurator extends Component {
                     </div>
 
                     <div className="footCon">
-                        {this.state.carSelected && <div>
+                        {this.state.lobjectSelected && <div>
                             <span>Confirm & Publish</span>
-                            <button title={!this.state.carSelected ? "Select a Car" : "Confirm"} disabled={!this.state.carSelected} className="arrowBtn" onClick={this.createAccount.bind(this)}>
+                            <button title={!this.state.lobjectSelected ? "Select a Car" : "Confirm"} disabled={!this.state.lobjectSelected} className="arrowBtn" onClick={this.createAccount.bind(this)}>
                                 <img src={require('../assets/add.jpg')} alt="addM" />
                             </button>
-                            <img style={img} src={this.props.cars[this.state.active || "0"]["image"] || require('../assets/ninja.png')} alt="carImage" />
+                            <img style={img} src={this.props.leaseobjects[this.state.active || "0"]["image"] || require('../assets/ninja.png')} alt="objectImage" />
                         </div>}
                     </div>
                 </div>
@@ -220,93 +297,3 @@ class AddNewLifeConfigurator extends Component {
 }
 
 export default AddNewLifeConfigurator
-
-
-//     < div
-// onClick = {() => fn()}
-// onKeyDown = {() => fn()}
-// role = "menuitem"
-// tabIndex = "0"
-//     >
-//     <div className="newLifeItem">
-//         <div className="newlifeImage">
-//             <img src={require('../assets/NotNeeded/car.png')} alt="" />
-//         </div>
-//         <div className="newLifeDetails">
-//             <span className="nl-con">
-//                 <label className="nl-label">Color</label>
-//                 <div className="nl-inp">red</div>
-//             </span>
-//             <span className="nl-con">
-//                 <label className="nl-label">Fee</label>
-//                 <div className="nl-inp">300</div>
-//             </span>
-//             <span className="nl-con">
-//                 <label className="nl-label">Mnd</label>
-//                 <div className="nl-inp">60</div>
-//             </span>
-//             <span className="nl-con">
-//                 <label className="nl-label">Price</label>
-//                 <div className="nl-inp">25000</div>
-//             </span>
-//             <span className="nl-con">
-//                 <label className="nl-label">Price</label>
-//                 <div className="nl-inp">Reservation</div>
-//             </span>
-//         </div>
-//     </div>
-// </div >
-//     <div className="newLifeItem">
-//         <div className="newlifeImage">
-//             <img src={require('../assets/NotNeeded/car.png')} alt="" />
-//         </div>
-//         <div className="newLifeDetails">
-//             <span className="nl-con">
-//                 <label className="nl-label">Color</label>
-//                 <div className="nl-inp">Blue</div>
-//             </span>
-//             <span className="nl-con">
-//                 <label className="nl-label">Fee</label>
-//                 <div className="nl-inp">300</div>
-//             </span>
-//             <span className="nl-con">
-//                 <label className="nl-label">Mnd</label>
-//                 <div className="nl-inp">60</div>
-//             </span>
-//             <span className="nl-con">
-//                 <label className="nl-label">Price</label>
-//                 <div className="nl-inp">25000</div>
-//             </span>
-//             <span className="nl-con">
-//                 <label className="nl-label">Price</label>
-//                 <div className="nl-inp">Reservation</div>
-//             </span>
-//         </div>
-//     </div>
-//     <div className="newLifeItem">
-//         <div className="newlifeImage">
-//             <img src={require('../assets/NotNeeded/car.png')} alt="" />
-//         </div>
-//         <div className="newLifeDetails">
-//             <span className="nl-con">
-//                 <label className="nl-label">Color</label>
-//                 <div className="nl-inp">green</div>
-//             </span>
-//             <span className="nl-con">
-//                 <label className="nl-label">Fee</label>
-//                 <div className="nl-inp">300</div>
-//             </span>
-//             <span className="nl-con">
-//                 <label className="nl-label">Mnd</label>
-//                 <div className="nl-inp">60</div>
-//             </span>
-//             <span className="nl-con">
-//                 <label className="nl-label">Price</label>
-//                 <div className="nl-inp">25000</div>
-//             </span>
-//             <span className="nl-con">
-//                 <label className="nl-label">Price</label>
-//                 <div className="nl-inp">Reservation</div>
-//             </span>
-//         </div>
-//     </div>

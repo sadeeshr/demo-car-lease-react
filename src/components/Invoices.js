@@ -51,7 +51,7 @@ class Invoices extends Component {
 
     fetchInvoices = () => {
         let data = {
-            module: "invoicesdev",
+            module: "invoicesdev2",
             result: "invoices",
             query: {
                 module: this.props.location.state.module,
@@ -66,7 +66,7 @@ class Invoices extends Component {
 
     createInvoice = () => {
         let data = {
-            module: "invoicesdev",
+            module: "invoicesdev2",
             result: "invoices",
             data: {
                 module: this.props.location.state.module,
@@ -83,7 +83,7 @@ class Invoices extends Component {
 
     updateInvoice = (invoice) => {
         let data = {
-            module: "invoicesdev",
+            module: "invoicesdev2",
             result: "invoices",
             query: { "_id": invoice["_id"] },
             data: {
