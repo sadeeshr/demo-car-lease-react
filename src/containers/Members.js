@@ -9,6 +9,8 @@ import Members from '../components/Members';
 const mapStateToProps = (state) => {
     // console.log("Members Container State: ", state)
     return {
+        towns: state.towns,
+        town: state.town,
         lcCars: state.lcCars,
         AddNewUser: state.AddNewUser,
         evTokens: state.evTokens,

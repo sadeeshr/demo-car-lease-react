@@ -19,19 +19,22 @@ class AddMember extends Component {
 
     componentWillMount() {
         // cc.log("ADD MEMBER:", this.props);
-        let data = {
-            module: "cars",
-            query: {
-                module: this.props.location.state.module
-            },
-            filter: {
-                _id: 0
-            }
-        }
+        // let data = {
+        //     module: "cars",
+        //     query: {
+        //         module: this.props.location.state.module
+        //     },
+        //     filter: {
+        //         _id: 0
+        //     }
+        // }
 
-        if (!this.props.cars && this.props.socket) this.props._fetchContractData(data, this.props.account)
+        // if (!this.props.cars && this.props.socket) this.props._fetchContractData(data, this.props.account)
 
     }
+    componentDidMount() {
+    }
+
 
     fileUploadHandler = (file, name) => {
         let reader = new FileReader();
@@ -61,8 +64,8 @@ class AddMember extends Component {
         // let membersList = this.props.members
 
         // const carHash = '0x' + md5(self.username + self.town)
-        const townId = this.props.town
-        const town = townId && this.props.towns && this.props.towns[townId]
+
+        const townSelected = this.props.towns[this.props.town]
 
         let newMember = {
             username: self.username || '',
@@ -79,7 +82,7 @@ class AddMember extends Component {
             profilePic: self.profilePic || '',
             // carMonRedemption: self.carMonRedemption || '',
             // carMonths: self.carMonths || '',
-            municipalityID: town ? town["municipalityID"] : ""
+            municipalityID: townSelected ? townSelected["municipalityID"] : ""
         }
 
         let data = {
@@ -88,18 +91,18 @@ class AddMember extends Component {
             data: newMember
         }
         // this.props._setNewContractData(data)
-        // this.props._lcAddNewObject(self.carPrice, carHash, this.carType, self.carDealer, self.carMonRedemption, this.props.account, this.props.location.state.module)
 
-        this.props._writeNewContractData(data)
+        this.props._writeNewContractData(this.props, data)
+
     }
 
 
     render() {
-        if (this.props.members_new) this.props.history.push("/", { module: this.props.location.state.module, path: "members" })
+        if (this.props.members_new) this.props.history.push("/", { path: "members" })
         const cars = this.props.cars || []
         cc.log("CARS: ", cars);
         const img = { "maxHeight": "50px", "maxWidth": "118px", "display": "block", "width": "auto", "height": "auto" }
-        cc.log("Add Member State: ", this.state);
+        cc.log("Add Member State: ", this.state, this.props);
         const usernames = this.props.usernames ? this.props.usernames.map(user => user.username) : []
         return (
             this.state.seeCars ?

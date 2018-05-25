@@ -10,6 +10,8 @@ const mapStateToProps = (state) => {
     // console.log("ADD NEW LIFE State: ", state)
     return {
         socket: state.socket,
+        towns: state.towns,
+        town: state.town,
         LeaseContract: state.LeaseContract,
         account: state.account,
         module: state.module,
@@ -22,6 +24,8 @@ const mapStateToProps = (state) => {
         newObject: state.newObject,
         progress: state.progress ? state.progress : false,
         usernames: state.usernames,
+        newLifeObj: state.newLifeObj,
+        newLeaseTokenAddress: state.newLeaseTokenAddress,
         [state.module]: state[state.module]
     }
 }

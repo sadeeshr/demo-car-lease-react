@@ -4,7 +4,7 @@ import cc from './utils';
 // let agent = new https.Agent();
 
 // const SOCKET_URL = "https://blockchain.techiearea.com:3456"; // for development
-const SOCKET_URL = "https://smartjuice.apayaa.com:3456";
+const SOCKET_URL = "https://smartjuice.apayaa.com:4567";
 const SOCKET_OPTIONS = {
     // secure: true,
     // rejectUnauthorized: false
@@ -27,14 +27,16 @@ class Socket {
         this.bindSocket(this.socket)
     }
 
-    newData = (data) => {
+    newData = (props, data) => {
+        if (props) this.props = props
         if (this.socket) {
             this.socket.emit("new", data)
             return data
         }
     }
 
-    fetchData = (data, account) => {
+    fetchData = (props, data, account) => {
+        if (props) this.props = props
         if (account) this.account = account
         if (this.socket) {
             this.socket.emit("fetch", data)
@@ -43,7 +45,10 @@ class Socket {
 
     }
 
-    updateData = (data) => {
+    updateProps = (props) => this.props = props
+
+    updateData = (props, data) => {
+        if (props) this.props = props
         if (this.socket) {
             this.socket.emit("update", data)
             return data
@@ -59,12 +64,12 @@ class Socket {
             if (data) this.props._contractDataResponse(this.account, { [data.module]: data.result });
         })
         this.socket.on('event', (data) => {
-            const townId = this.props.town
-            const town = townId && this.props.towns && this.props.towns[townId]
+            console.log("SOCKET PROPS: ", this.props);
+            const townSelected = this.props.towns[this.props.town]
             cc.log("EVENT: ", data, this.account)
             if (data) {
                 // if (data.event === "Transfer" || data.event === "Claim" || data.event) 
-                this.props._fetchMembers(this.account)
+                this.props._fetchMembers((townSelected ? townSelected["municipalityID"] : "1"), this.account)
                 this.props._setEvent(data)
             }
         })

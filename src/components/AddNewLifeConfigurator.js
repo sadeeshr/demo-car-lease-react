@@ -32,9 +32,17 @@ class AddNewLifeConfigurator extends Component {
             module: "leaseobjects"
         }
 
-        if (!this.props.leaseobjects && this.props.socket) this.props._fetchContractData(data, this.props.account)
+        if (!this.props.leaseobjects && this.props.socket) this.props._fetchContractData(this.props, data, this.props.account)
 
     }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.newLeaseTokenAddress) {
+            let leaseobject = this.props.newLifeObj
+            this.props._lcCreateObject(this.props, leaseobject.id, leaseobject.image, leaseobject.price, leaseobject.hash, nextProps.newLeaseTokenAddress, leaseobject.dealer, leaseobject.monthlycapcost, leaseobject.monthlyopcost, this.props.account)
+        }
+    }
+
 
     fileUploadHandler = (file, name) => {
         let reader = new FileReader();
@@ -58,15 +66,29 @@ class AddNewLifeConfigurator extends Component {
 
     checkMandatory = () => this.mandatory.every(item => this.state[item])
 
-    createAccount = () => {
+    createAccount = (leasetype, months, monthlycapcost, monthlyopcost) => {
         this.setState({ progress: true })
-        const car = this.props.cars[this.state.active]
+        // const car = this.props.cars[this.state.active]
+        const leaseobject = this.props.leaseobjects && this.props.leaseobjects[this.state.active]
+
         const member = this.props.member
         // let membersList = this.props.members
 
-        const carHash = '0x' + md5(member.username + member.town)
+        const objectHash = '0x' + md5(member.username + member.town + member["_id"])
+        let newLifeObj = {
+            id: member["_id"],
+            image: leaseobject["image"],
+            price: leasetype.price,
+            hash: objectHash,
+            dealer: leaseobject["dealer"],
+            monthlycapcost: monthlycapcost,
+            monthlyopcost: monthlyopcost
+        }
 
-        this.state.lobjectSelected && this.props._lcCreateObject(member["_id"], car.image, car.price, carHash, this.carType, car.dealer, (this.state.carFee || car.fee), (this.state.carTerm || car.term), Math.round((this.state.carMileage || car.mileage) / 12), member.account, this.props.location.state.module)
+        this.props._setObject({ newLifeObj, progress: true })
+        this.state.lobjectSelected && this.props._lcCreateNewLeaseTokenObject(this.props.account)
+
+        // this.state.lobjectSelected && this.props._lcCreateObject(member["_id"], car.image, car.price, carHash, this.carType, car.dealer, (this.state.carFee || car.fee), (this.state.carTerm || car.term), Math.round((this.state.carMileage || car.mileage) / 12), member.account, this.props.location.state.module)
 
         // this.props._writeNewContractData(data)
     }
@@ -74,6 +96,7 @@ class AddNewLifeConfigurator extends Component {
 
     render() {
         // if (this.props.members_new) this.props.history.goBack()
+        cc.log("Add new life state, props: ", this.state, this.props)
         cc.log(this.props.member, `ACTIVE: ${this.state.active}`);
         const leaseobjects = this.props.leaseobjects || []
         cc.log("LEASE OBJECTS: ", leaseobjects);
@@ -83,6 +106,12 @@ class AddNewLifeConfigurator extends Component {
         let leasetype = leaseobject && leaseobject["leasetypes"][ltypeId]
         let months = this.state.lobjmonths || leasetype && leasetype.months
         let monthlycapcost = ""
+        let monthlyopcost = 0.00
+
+        if ((this.state.active === 0 || this.state.active === 1) && (leasetype.type === "Operational" || leasetype.type === "Private") && this.state.lobjMileage) {
+            monthlyopcost = (parseInt(this.state.lobjMileage, 10) / 12) * 0.1
+        }
+
         if (leasetype) {
             switch (this.state.active) {
                 case 0:
@@ -103,7 +132,6 @@ class AddNewLifeConfigurator extends Component {
                             default:
                                 break;
                         }
-
                         break;
                     }
 
@@ -283,7 +311,7 @@ class AddNewLifeConfigurator extends Component {
                     <div className="footCon">
                         {this.state.lobjectSelected && <div>
                             <span>Confirm & Publish</span>
-                            <button title={!this.state.lobjectSelected ? "Select a Car" : "Confirm"} disabled={!this.state.lobjectSelected} className="arrowBtn" onClick={this.createAccount.bind(this)}>
+                            <button title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected} className="arrowBtn" onClick={() => this.createAccount(leasetype, months, monthlycapcost, monthlyopcost)}>
                                 <img src={require('../assets/add.jpg')} alt="addM" />
                             </button>
                             <img style={img} src={this.props.leaseobjects[this.state.active || "0"]["image"] || require('../assets/ninja.png')} alt="objectImage" />

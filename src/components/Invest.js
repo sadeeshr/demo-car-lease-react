@@ -75,22 +75,22 @@ class Invest extends Component {
 
     refreshValues = () => {
         // fetch Total Supply
-        this.props._lcTotalSupply()
+        // this.props._lcTotalSupply() //sadeesh
 
         // fetch Total Crowdsale Closed Objects
         // this.props._lcAmountObjects()
 
         // fetch My Lease Tokens
-        this.props._evBalanceOf(this.props.account)
+        // this.props._evBalanceOf(this.props.account) //sadeesh
 
         // fetch My Euro Tokens
-        this.props._euroBalanceOf(this.props.account)
+        // this.props._euroBalanceOf(this.props.account) //sadeesh
 
         // fetch My Allowance Value
-        this.props._euroAllowance(this.props.account)
+        // this.props._euroAllowance(this.props.account) //sadeesh
 
         // fetch Object ID's To Claim Dividend Value
-        this.props._lcToClaimTotal(this.props.account)
+        // this.props._lcToClaimTotal(this.props.account) //sadeesh
 
         // fetch Object ID's Values
         this.props._lcLeaseObject(this.props.member.carID)
@@ -99,17 +99,17 @@ class Invest extends Component {
         this.props._lcLeaseObjectCycle(this.props.member.carID)
 
         // fetch Object ID Redemption's Values
-        this.props._lcLeaseObjectRedemption(this.props.member.carID)
+        // this.props._lcLeaseObjectRedemption(this.props.member.carID)  //sadeesh
 
         // fetch Object ID's EVTokens
-        this.props._evMyTokens(this.props.account, this.props.member.carID)
+        //this.props._evMyTokens(this.props.account, this.props.member.carID) //sadeesh
 
         if (!this.props.unClaimedRedemption) this.props._lcToClaimTotal(this.props.account)
-        if (!this.props.totalSupply) this.props._lcTotalSupply()
-        if (!this.props.euroTokenBalance) this.props._euroBalanceOf(this.props.account)
-        if (!this.props.evTokenBalance) this.props._evBalanceOf(this.props.account)
+        // if (!this.props.totalSupply) this.props._lcTotalSupply() //sadeesh
+        // if (!this.props.euroTokenBalance) this.props._euroBalanceOf(this.props.account) //sadeesh
+        // if (!this.props.evTokenBalance) this.props._evBalanceOf(this.props.account) //sadeesh
         // if (!this.props.crowdsaleClosed) this.props._lcAmountObjects()
-        if (!this.props.allowance) this.props._euroAllowance(this.props.account)
+        // if (!this.props.allowance) this.props._euroAllowance(this.props.account) //sadeesh
     }
 
     render() {
@@ -165,7 +165,7 @@ class Invest extends Component {
                                             <div className="mtableUser">{this.props.member.username}
                                                 <p>{this.props.member.town}</p>
                                             </div>
-                                            <div className="mtableMnd">{this.props.member.car.objectTerm.toNumber()} mnd
+                                            <div className="mtableMnd">{/*this.props.member.car.objectTerm.toNumber()*/} mnd
                                                         <p>{this.props.member.car.objectPrice.toNumber()} euro</p>
                                             </div>
                                         </div>

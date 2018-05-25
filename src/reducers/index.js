@@ -127,6 +127,8 @@ const rootReducer = (state = initialState, action) => {
         case 'APPROVE':
         case 'ADD_NEW_USER':
         case 'HASH_CONFIRMATIONS':
+        case 'UPDATE_SOCKET_PROPS':
+        case 'NEW_LEASETOKEN_ADDR':
             return {
                 ...state,
                 ...action.payload

@@ -61,7 +61,7 @@ class Invoices extends Component {
                 // _id: 0
             }
         }
-        this.props._fetchContractData(data, this.props.account)
+        this.props._fetchContractData(this.props, data, this.props.account)
     }
 
     createInvoice = () => {
@@ -96,7 +96,7 @@ class Invoices extends Component {
                 status: true
             }
         }
-        this.props._updateContractData(data)
+        this.props._updateContractData(this.props, data)
     }
 
     fetchCarMileagesRedemption = () => {

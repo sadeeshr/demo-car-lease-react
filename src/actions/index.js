@@ -37,7 +37,7 @@ export const _fetchMembers = (municipalityID, account) => {
             account: 1
         }
     }
-    return (_fetchContractData(account, data))
+    return (_fetchContractData(null, account, data))
 }
 
 export const _socketStatus = (status) => {
@@ -85,11 +85,11 @@ export const _registered = () => {
     }
 }
 
-export const _fetchContractData = (data, account) => {
+export const _fetchContractData = (props, data, account) => {
     return (dispatch) => {
         dispatch({
             type: "FETCH_CONTRACT_DATA",
-            payload: socApi.fetchData(data, account)
+            payload: socApi.fetchData(props, data, account)
         })
     }
 }
@@ -111,21 +111,30 @@ export const _setNewContractData = (data) => {
     }
 }
 
-export const _writeNewContractData = (data) => {
+export const _writeNewContractData = (props, data) => {
     return (dispatch) => {
         dispatch({
             type: "WRITE_NEW_CONTRACT_DATA",
-            payload: socApi.newData(data)
+            payload: socApi.newData(props, data)
         })
     }
 }
 
-export const _updateContractData = (data) => {
+export const _updateContractData = (props, data) => {
     return (dispatch) => {
         // dispatch(_resetTxIds())
         dispatch({
             type: "UPDATE_CONTRACT_DATA",
-            payload: socApi.updateData(data)
+            payload: socApi.updateData(props, data)
+        })
+    }
+}
+
+export const _updateSocketProps = (props) => {
+    return (dispatch) => {
+        dispatch({
+            type: "UPDATE_SOCKET_PROPS",
+            payload: socApi.updateProps(props)
         })
     }
 }
@@ -141,8 +150,8 @@ export const _contractDataResponse = (account, response) => {
                 if (member.carID) {
                     dispatch(_lcLeaseObject(member.carID))
                     dispatch(_lcLeaseObjectCycle(member.carID))
-                    dispatch(_lcLeaseObjectRedemption(member.carID))
-                    account && dispatch(_evMyTokens(account, member.carID))
+                    // dispatch(_lcLeaseObjectRedemption(member.carID))   // sadeesh
+                    // account && dispatch(_evMyTokens(account, member.carID)) //sadeesh
                 }
                 // return 1
             })
@@ -189,6 +198,13 @@ export const _getConfirmationsHash = (hash) => {
             type: "HASH_CONFIRMATIONS",
             payload: contract.getConfirmationsHash(hash)
         })
+    }
+}
+
+export const _newLeaseTokenAddress = (address) => {
+    return {
+        type: "NEW_LEASETOKEN_ADDR",
+        payload: address
     }
 }
 
@@ -372,11 +388,11 @@ export const _lcAmountObjects = () => {
     }
 }
 
-export const _lcCreateObject = (id, objectImage, objectPrice, objectHash, objectType, objectDealer, objectFee, objectTerm, mileagesAvg, account, module) => {
+export const _lcCreateObject = (props, id, objectImage, objectPrice, objectHash, objectLTAddress, objectDealer, objectMCCost, objectMOCost, account) => {
     return (dispatch) => {
-        return contract.lcCreateObject(id, objectImage, objectPrice, objectHash, objectType, objectDealer, objectFee, objectTerm, mileagesAvg, account)
+        return contract.lcCreateObject(props, id, objectImage, objectPrice, objectHash, objectLTAddress, objectDealer, objectMCCost, objectMOCost, account)
             .then(result => {
-                dispatch(push("/", { module: module, path: "members" }))
+                dispatch(push("/", { path: "members" }))
                 return dispatch(
                     {
                         type: "ADD_NEW_OBJECT_RESULT",
@@ -529,6 +545,16 @@ export const _lcClaimDividend = (objectID, account) => {
             })
     }
 }
+
+export const _lcCreateNewLeaseTokenObject = (account) => {
+    return (dispatch) => {
+        dispatch({
+            type: "NEW_LEASETOKEN_ADDRESS_RESULT",
+            payload: contract.lcCreateNewLeaseTokenObject(account)
+        })
+    }
+}
+
 
 export const _resetTxIds = () => ({
     type: "RESET_TX_IDS"

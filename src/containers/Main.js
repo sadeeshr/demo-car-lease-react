@@ -9,6 +9,8 @@ import Main from '../components/Main';
 const mapStateToProps = (state) => {
     // console.log("State: ", state)
     return {
+        towns: state.towns,
+        town: state.town,
         account: state.account,
         usernames: state.usernames,
         members: state.members,

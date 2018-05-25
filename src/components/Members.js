@@ -17,7 +17,7 @@ class Members extends Component {
 
 
     componentWillMount() {
-        // cc.log("Members Props", this.props);
+        cc.log("Members Props", this.props);
         // this.setState({ eventAddNewObject: this.props.eventAddNewObject === "pending" ? this.props.eventAddNewObject : null })
         // if (this.props.reloadTokens || this.props.members_new || this.props.AddNewUser) this.fetchMembers()
     }
@@ -52,7 +52,7 @@ class Members extends Component {
                 account: 1
             }
         }
-        this.props._fetchContractData(data, this.props.account)
+        this.props._fetchContractData(this.props, data, this.props.account)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -153,7 +153,7 @@ class Members extends Component {
                             <button className="arrowBtn" onClick={() => {
                                 member.crowdsaleClosed ?
                                     (member.active ?
-                                        this.props.history.push("/", { module: this.props.location.state.module, path: "invoices" })
+                                        this.props.history.push("/", { path: "invoices" })
                                         :
                                         // (member.account === this.props.account) ? this.props._lcActivateDeactivateObject(member.carID, this.props.account) : cc.log("USER CAN ONLY ACTIVATE HIS OBJECT")
                                         (this.props._setEventAlert({
@@ -166,14 +166,14 @@ class Members extends Component {
                                     )
                                     :
                                     (member.authorized ?
-                                        this.props.history.push("/", { module: this.props.location.state.module, path: "invest" })
+                                        this.props.history.push("/", { path: "invest" })
                                         :
                                         cc.log("NO OBJECT CONFIGURED")
                                     )
                             }}>
                                 <img src={require('../assets/arrow.jpg')} alt="addM" />
                             </button>
-                            {/*<button title="Invoices (testing)" className="arrowBtn" onClick={() => { member.authorized ? this.props.history.push("/", { module: this.props.location.state.module, path: "invoices" }) : cc.log("NO OBJECT CONFIGURED") }}>
+                            {/*<button title="Invoices (testing)" className="arrowBtn" onClick={() => { member.authorized ? this.props.history.push("/", { path: "invoices" }) : cc.log("NO OBJECT CONFIGURED") }}>
                                 <img src={require('../assets/add.jpg')} alt="addI" />
                         </button>*/}
                         </div>
@@ -231,7 +231,7 @@ class Members extends Component {
                         <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
                     </div> */}
                     <div hidden className="navCon">
-                        <h1 id="header"><div className="fl"><i className="flaticon-back" onClick={() => this.props.history.push("/", { module: "westland", path: "main" })}></i></div>Members<div className="fr"><i onClick={() => this.fetchMembers()} className="flaticon-rotate marIcon"></i><i onClick={() => this.props.history.push("/")} className="flaticon-home"></i></div></h1>
+                        <h1 id="header"><div className="fl"><i className="flaticon-back" onClick={() => this.props.history.push("/", { path: "main" })}></i></div>Members<div className="fr"><i onClick={() => this.fetchMembers()} className="flaticon-rotate marIcon"></i><i onClick={() => this.props.history.push("/")} className="flaticon-home"></i></div></h1>
                     </div>
                     <div className="contentCon overflow bg-none">
                         <BlockUi tag="div" blocking={this.props.progress}>

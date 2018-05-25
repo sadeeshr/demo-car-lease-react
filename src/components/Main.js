@@ -81,13 +81,15 @@ class Main extends Component {
                                 data: newObjData
                             }
                             cc.log(data)
-                            this.props._updateContractData(data)
-                            setTimeout(() => this.props._fetchMembers("westland", this.props.account), 1000)
+                            this.props._updateContractData(this.props, data)
+
+                            const townSelected = this.props.towns[this.props.town]
+                            setTimeout(() => this.props._fetchMembers(townSelected["municipalityID"], this.props.account), 1000)
                             // this.props._setEventStatus({ eventAddNewObject: true, objectID: objectID }); setTimeout(() => { this.lcEventAddNewObjectUnsubscribe(); this.props._reloadTokens() }, 1000);
                         }
 
                         let alert = {
-                            title: "Great, A New Car has been added !!",
+                            title: "Great, A New Object has been added !!",
                             message: ``,
                             level: "info",
                             position: "tr",
@@ -150,7 +152,7 @@ class Main extends Component {
                     <table>
                         <tbody>
                             <tr>
-                                <td><img src={require('../assets/car-solar.png')} alt="logo" /></td>
+                                <td><img style={{ maxHeight: "200px" }} src={require('../assets/main.png')} alt="logo" /></td>
                             </tr>
                         </tbody>
                     </table>

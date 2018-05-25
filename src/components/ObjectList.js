@@ -35,7 +35,7 @@ class ObjectList extends Component {
                 account: 1
             }
         }
-        if (!this.props.usernames && this.props.socket) this.props._fetchContractData(data, this.props.account)
+        if (!this.props.usernames && this.props.socket) this.props._fetchContractData(this.props, data, this.props.account)
         if (this.props.account) this.checkRegistered(this.props.account)
     }
 
@@ -83,6 +83,12 @@ class ObjectList extends Component {
 
         const nextScreen = (this.state.registered || !this.props.account) ? "members" : "addmember"
 
+        const imageStyle = {
+            float: "left",
+            width: "119px",
+            display: "block",
+            height: "auto"
+        }
         return (
             <div className="content-border">
                 <div className="mainContentCon">
@@ -98,23 +104,27 @@ class ObjectList extends Component {
                             </span>
                             <span>{" "}wil</span>
                             <div>
+                                <img style={imageStyle} src={require('../assets/carwhite.png')} alt={"car"} />
                                 <p style={style.p}>{evs + " "} Electrisch</p>
                                 <p style={style.p}>Zelfrijdende Taxi's</p>
                                 <p style={style.p}><strong>Nu 25</strong></p>
                             </div>
                             <br />
                             <div>
+                                <img style={imageStyle} src={require('../assets/energy.png')} alt={"energy"} />
                                 <p style={style.p}>{neutral + " "} Energie</p>
                                 <p style={style.p}>Neutrale Huishoudens</p>
                                 <p style={style.p}><strong>Nu 39</strong></p>
                             </div>
                             <br />
                             <div>
+                                <img style={imageStyle} src={require('../assets/solar.png')} alt={"solar"} />
                                 <p style={style.p}>{solar + " "} Zonnedaken</p>
                                 <p style={style.p}><strong>Nu 2</strong></p>
                             </div>
                             <br />
                             <div>
+                                <img style={imageStyle} src={require('../assets/wind.png')} alt={"wind"} />
                                 <p style={style.p}>{wind + " "} Noordzee</p>
                                 <p style={style.p}>Windmolens</p>
                                 <p style={style.p}><strong>Nu 0</strong></p>

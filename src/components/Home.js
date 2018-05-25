@@ -21,7 +21,7 @@ class Home extends Component {
             module: "municipality",
             result: "towns",
         }
-        if (this.props.socket) this.props._fetchContractData(data, this.props.account)
+        if (this.props.socket) this.props._fetchContractData(this.props, data, this.props.account)
     }
 
     componentDidMount() {
@@ -74,7 +74,8 @@ class Home extends Component {
                             </select>}
                             <span>{" "}wordt</span>
                             <p>100% Duurzaam...</p>
-                            <div className="contentBtn bg-none">
+                            <div>
+                                <img src={require('../assets/Crowd.png')} alt={"crowd"} />
                             </div>
                             <p>
                                 <span>voor</span>{" "}
