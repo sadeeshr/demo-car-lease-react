@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import formatNumber from 'accounting-js/lib/formatNumber.js'
 
-// import cc from '../lib/utils';
+import cc from '../lib/utils';
 
 class Home extends Component {
     constructor(props) {
@@ -31,7 +31,6 @@ class Home extends Component {
 
     render() {
 
-        console.log("state,props: ", this.state, this.props);
         const style = {
             towndropdown: {
                 fontWeight: "800",
@@ -47,7 +46,6 @@ class Home extends Component {
         const town = this.props.towns && this.props.towns[townId]
         // const municipality = town && town.municipality
 
-        console.log(town);
 
         let inhabitants = town && town["inhabitants"]
         inhabitants = formatNumber(parseInt(inhabitants, 10), { precision: 0, thousand: "." });

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import formatNumber from 'accounting-js/lib/formatNumber.js'
+import cc from '../lib/utils';
 
 class ObjectList extends Component {
     constructor(props) {
@@ -53,7 +54,7 @@ class ObjectList extends Component {
 
     render() {
 
-        console.log("Object List state, props: ", this.state, this.props);
+        cc.log("Object List state, props: ", this.state, this.props);
         const style = {
             towndropdown: {
                 fontWeight: "800",

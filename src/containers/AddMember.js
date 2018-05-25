@@ -7,7 +7,7 @@ import AddMember from '../components/AddMember';
  * map state, actions to props
  */
 const mapStateToProps = (state) => {
-    console.log("State: ", state)
+    // console.log("State: ", state)
     return {
         socket: state.socket,
         towns: state.towns,

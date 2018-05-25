@@ -64,7 +64,6 @@ class Socket {
             if (data) this.props._contractDataResponse(this.account, { [data.module]: data.result });
         })
         this.socket.on('event', (data) => {
-            console.log("SOCKET PROPS: ", this.props);
             const townSelected = this.props.towns[this.props.town]
             cc.log("EVENT: ", data, this.account)
             if (data) {

@@ -186,7 +186,7 @@ class AddNewLifeConfigurator extends Component {
             }
         }
 
-        console.log(leaseobject, leasetype, months, monthlycapcost);
+        cc.log(leaseobject, leasetype, months, monthlycapcost);
 
         const sliderOpts = {
             dots: true,
