@@ -23,19 +23,19 @@ class Invoices extends Component {
     componentWillMount() {
         this.fetchInvoices()
         this.setState({ eventSubscription: null })
-        // cc.log("Object Fees: ", this.props.member.car.objectFee.toNumber())
-        // cc.log("Object Price: ", this.props.member.car.objectPrice.toNumber())
-        // cc.log("Object Type: ", this.props.member.car.objectType.toNumber())
+        // cc.log("Object Fees: ", this.props.member.obj.objectFee.toNumber())
+        // cc.log("Object Price: ", this.props.member.obj.objectPrice.toNumber())
+        // cc.log("Object Type: ", this.props.member.obj.objectType.toNumber())
         // cc.log("Object paymonth: ", this.props.member.paymonth)
         // cc.log("Object milages: ", this.props.member.mileagesTotal)
         // cc.log("Object totalDividends: ", this.props.member.totalDividends)
 
-        this.props._lcLeaseObject(this.props.member.carID)
-        this.props._lcLeaseObjectCycle(this.props.member.carID)
-        this.props._lcLeaseObjectRedemption(this.props.member.carID)
+        // this.props._lcLeaseObject(this.props.member.objectID)
+        // this.props._lcLeaseObjectCycle(this.props.member.objectID)
+        // this.props._lcLeaseObjectRedemption(this.props.member.objectID)
 
-        if (!this.props.unClaimedRedemption) this.props._lcToClaimTotal(this.props.account)
-        if (!this.props.euroTokenBalance) this.props._euroBalanceOf(this.props.account)
+        if (!this.props.unClaimedRedemption && this.props.account) this.props._lcToClaimTotal(this.props.account)
+        if (!this.props.euroTokenBalance && this.props.account) this.props._euroBalanceOf(this.props.account)
 
     }
 
@@ -44,7 +44,7 @@ class Invoices extends Component {
     }
 
     componentDidMount() {
-        this.carID = this.props.member.carID
+        this.objectID = this.props.member.objectID
         // if (this.props.car) this.fetchCarMileagesRedemption()
         setTimeout(() => this.setState({ reveal: true }), 200);
     }
@@ -55,7 +55,7 @@ class Invoices extends Component {
             result: "invoices",
             query: {
                 module: this.props.location.state.module,
-                carID: this.props.member.carID
+                objectID: this.props.member.objectID
             },
             filter: {
                 // _id: 0
@@ -70,7 +70,7 @@ class Invoices extends Component {
             result: "invoices",
             data: {
                 module: this.props.location.state.module,
-                carID: this.props.member.carID,
+                objectID: this.props.member.objectID,
                 year: this.state.year || (new Date()).getFullYear(),
                 month: this.state.month ? this.state.month + 1 : (new Date()).getMonth(),
                 // mileage: this.state.mileage || 0,
@@ -88,7 +88,7 @@ class Invoices extends Component {
             query: { "_id": invoice["_id"] },
             data: {
                 // module: invoice.module,
-                carID: invoice.carID,
+                objectID: invoice.objectID,
                 year: invoice.year,
                 month: invoice.month,
                 // mileage: mileage || 0,
@@ -100,8 +100,8 @@ class Invoices extends Component {
     }
 
     fetchCarMileagesRedemption = () => {
-        let car = this.props.car
-        this.setState({ carMilages: car.milages.toNumber(), monthlyRedemption: car.objectFee.toNumber() })
+        // let car = this.props.car
+        // this.setState({ carMilages: car.milages.toNumber(), monthlyRedemption: car.objectFee.toNumber() })
     }
 
     componentWillReceiveProps(nextProps) {
@@ -126,10 +126,10 @@ class Invoices extends Component {
         if (!this.props.unClaimedRedemption) this.props._lcToClaimTotal(this.props.account)
         if (!this.props.euroTokenBalance) this.props._euroBalanceOf(this.props.account)
 
-        if (nextProps.member && nextProps.member.car) {
-            // cc.log("Object Fees: ", this.props.member.car.objectFee.toNumber())
-            // cc.log("Object Price: ", this.props.member.car.objectPrice.toNumber())
-            // cc.log("Object Type: ", this.props.member.car.objectType.toNumber())
+        if (nextProps.member && nextProps.member.obj) {
+            // cc.log("Object Fees: ", this.props.member.obj.objectFee.toNumber())
+            // cc.log("Object Price: ", this.props.member.obj.objectPrice.toNumber())
+            // cc.log("Object Type: ", this.props.member.obj.objectType.toNumber())
             // cc.log("Object paymonth: ", this.props.member.paymonth)
             // cc.log("Object milages: ", this.props.member.mileagesTotal)
             // cc.log("Object totalDividends: ", this.props.member.totalDividends)
@@ -158,7 +158,7 @@ class Invoices extends Component {
         const invoices = this.props.invoices || []
         invoices.sort((a, b) => parseFloat(b.month) - parseFloat(a.month))
         // const invoices = this.props.invoices
-        let amount = (this.props.member.car.objectFee.toNumber()) + (((this.state.mileage || this.props.member.mileagesTotal) - this.props.member.mileagesTotal) * 0.10)
+        let amount = (this.props.member.obj.objectFee.toNumber()) + (((this.state.mileage || this.props.member.mileagesTotal) - this.props.member.mileagesTotal) * 0.10)
         // cc.log(amount, ' <= ', this.props.allowance, (amount <= this.props.allowance), this.state.mileage, ' >= ', this.props.member.mileagesTotal, (this.state.mileage >= this.props.member.mileagesTotal));
         const enableInvoice = ((this.state.mileage >= this.props.member.mileagesTotal) && (amount <= this.props.allowance)) ? true : false
         // cc.log("Invoice Enabled: ", enableInvoice);
@@ -166,19 +166,19 @@ class Invoices extends Component {
         let invoicesRow = []
 
         cc.log("INVOICES: ", invoices)
-        // if (invoices.length === 0) this.createInvoice(year, month); this.props._lcPayFee(this.props.member.carID, this.props.account)
+        // if (invoices.length === 0) this.createInvoice(year, month); this.props._lcPayFee(this.props.member.objectID, this.props.account)
 
         // this.props.member.paymonth = 3
         // for (var i = 0; i <= this.props.member.paymonth; i++) {
         //     invoicesRow.push(
         //         <div key={i} className="investAddCon">
         //             <div className="arrowBtn">
-        //                 <img onClick={() => { this.createInvoice(year, month); this.props._lcPayFee(this.props.member.carID, this.props.account) }} src={require('../assets/add.jpg')} alt="add2" />
+        //                 <img onClick={() => { this.createInvoice(year, month); this.props._lcPayFee(this.props.member.objectID, this.props.account) }} src={require('../assets/add.jpg')} alt="add2" />
         //             </div>
         //             <div className="investAddInput">
         //                 <p style={{ margin: "0" }}>{year} {this.months[month]}</p>
         //                 <p style={{ margin: "0" }}>{this.props.member.mileagesAverage} km stand</p>
-        //                 <p style={{ margin: "0" }}>{this.props.member.car.objectFee.toNumber()} Euro</p>
+        //                 <p style={{ margin: "0" }}>{this.props.member.obj.objectFee.toNumber()} Euro</p>
         //             </div>
         //             <div className="investAddStatus">
         //                 {this.props.payFeeTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.payFeeTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.payFeeTxID)) ? <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red" }}>pending</p>}</Link>)}
@@ -217,7 +217,7 @@ class Invoices extends Component {
                                         </div>
                                         <div className="mtableLink">
                                             <div className="mtableCar">
-                                                <img src={this.props.member.carPic} alt="carImage" />
+                                                <img src={this.props.member.objectPic} alt="carImage" />
                                             </div>
                                             <div className="mtableTokens">{this.props.member.totalRaised}
                                                 <p>{this.props.member.evTokens}</p>
@@ -231,12 +231,12 @@ class Invoices extends Component {
                                             invoices && invoices.map((invoice, i) => {
                                                 return <div key={i} className="investAddCon">
                                                     {!invoice.status && <div hidden={this.props.payFeeTxID} className="arrowBtn">
-                                                        <img onClick={() => { this.props._lcPayFee(this.props.member.carID, this.props.account); this.updateInvoice(invoice) }} src={require('../assets/add.jpg')} alt="add2" />
+                                                        <img onClick={() => { this.props._lcPayFee(this.props.member.objectID, this.props.account); this.updateInvoice(invoice) }} src={require('../assets/add.jpg')} alt="add2" />
                                                     </div>}
                                                     <div className="investAddInput">
                                                         <p style={{ margin: "0" }}>{invoice.year} {this.months[invoice.month]}</p>
                                                         <p style={{ margin: "0" }}>{this.props.member.mileagesAverage} km stand</p>
-                                                        <p style={{ margin: "0" }}>{this.props.member.car.objectFee.toNumber()} Euro</p>
+                                                        <p style={{ margin: "0" }}>{this.props.member.obj.objectFee.toNumber()} Euro</p>
                                                     </div>
                                                     <div className="investAddStatus">
                                                         {this.props.payFeeTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.payFeeTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.payFeeTxID)) ? <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red" }}>pending</p>}</Link>)}
@@ -287,7 +287,7 @@ export default Invoices
 //                                                     : <div title={!(amount <= this.props.allowance) ? "Less Allowance Set" : (!(this.state.mileage >= this.props.member.mileagesTotal) ? "Mileage Too Low" : "Pay Invoice")} className="arrowBtn">
 //                                                         <img style={{ cursor: enableInvoice ? "pointer" : "not-allowed" }}
 //                                                             onClick={() => {
-//                                                                 enableInvoice && this.props._lcPaySubscription(this.props.member.carID, (this.props.member.paymonth + 1), parseInt(this.state.mileage, 10), this.props.account)
+//                                                                 enableInvoice && this.props._lcPaySubscription(this.props.member.objectID, (this.props.member.paymonth + 1), parseInt(this.state.mileage, 10), this.props.account)
 //                                                                 enableInvoice && this.updateInvoice(invoice, this.state.mileage, amount || 0)
 //                                                             }}
 //                                                             src={require('../assets/add.jpg')}

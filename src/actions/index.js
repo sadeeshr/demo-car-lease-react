@@ -16,28 +16,16 @@ export const _connectSocket = (props, domain) => {
     }
 }
 
-export const _fetchMembers = (municipalityID, account) => {
+export const _fetchMembers = (props, municipalityID, account) => {
 
     let data = {
-        module: "membersdev2",
+        module: "membersobj",
         result: "members",
         query: {
             municipalityID: municipalityID
-        },
-        filter: {
-            _id: 1,
-            username: 1,
-            town: 1,
-            message: 1,
-            carID: 1,
-            carPic: 1,
-            carPrice: 1,
-            profilePic: 1,
-            municipalityID: 1,
-            account: 1
         }
     }
-    return (_fetchContractData(null, account, data))
+    return (_fetchContractData(props, data, account))
 }
 
 export const _socketStatus = (status) => {
@@ -145,15 +133,16 @@ export const _contractDataResponse = (account, response) => {
             response.members.map(member => {
                 // console.log("MEMBERS: ", member);
                 if (member.account) dispatch(_lcAuthorization(member.account))
-                // dispatch(_lcLeaseObjectCycle(0))
-                // dispatch(_lcLeaseObjectRedemption(0))
-                if (member.carID) {
-                    dispatch(_lcLeaseObject(member.carID))
-                    dispatch(_lcLeaseObjectCycle(member.carID))
-                    // dispatch(_lcLeaseObjectRedemption(member.carID))   // sadeesh
-                    // account && dispatch(_evMyTokens(account, member.carID)) //sadeesh
+                if (member.objectID) {
+                    dispatch(_lcLeaseObject(account, member.objectID))
+                    dispatch(_lcLeaseObjectCycle(member.objectID))
+                    dispatch(_ldGetRaised(member.objectID))
                 }
                 // return 1
+            })
+        if (response.usernames)
+            response.usernames.map(user => {
+                if (user.account) dispatch(_lcAuthorization(user.account))
             })
 
         return dispatch({
@@ -163,26 +152,26 @@ export const _contractDataResponse = (account, response) => {
     }
 }
 
-export const _memberSelected = (member, account, module) => {
+export const _objectSelected = (obj, account, module) => {
     return (dispatch) => {
-        if (!member.carID && member.account === account) {
-            dispatch(push("/", { module: module, path: "addnewlife" }))
+        if (!obj.objectID && obj.account === account) {
+            // dispatch(push("/", { module: module, path: "addnewlife" }))
         }
         return dispatch({
-            type: "SELECT_MEMBER",
-            payload: member
+            type: "SELECT_OBJECT",
+            payload: obj
         })
     }
 }
 
-export const _carSelected = (car) => {
-    return (dispatch) => {
-        dispatch({
-            type: "SELECT_CAR",
-            payload: car
-        })
-    }
-}
+// export const _objectSelected = (obj) => {
+//     return (dispatch) => {
+//         dispatch({
+//             type: "SELECT_OBJECT",
+//             payload: obj
+//         })
+//     }
+// }
 
 export const _resetMemberSelection = () => {
     return (dispatch) => {
@@ -332,10 +321,12 @@ export const _euroAllowance = (account) => {
     }
 }
 
-export const _lcLeaseObject = (objectID) => {
+export const _lcLeaseObject = (account, objectID) => {
     return (dispatch) => {
         return contract.lcLeaseObject(objectID)
             .then(result => {
+                console.log("LBO", result);
+                account && dispatch(_ltBalanceOf(objectID, account, result.result.leaseTokenAddress))
                 return dispatch(
                     {
                         type: "LEASE_OBJECT_RESULT",
@@ -388,9 +379,9 @@ export const _lcAmountObjects = () => {
     }
 }
 
-export const _lcCreateObject = (props, id, objectImage, objectPrice, objectHash, objectLTAddress, objectDealer, objectMCCost, objectMOCost, account) => {
+export const _lcCreateObject = (props, id, months, municipalityID, objectImage, objectPrice, objectHash, objectLTAddress, objectDealer, objectMCCost, objectMOCost, account) => {
     return (dispatch) => {
-        return contract.lcCreateObject(props, id, objectImage, objectPrice, objectHash, objectLTAddress, objectDealer, objectMCCost, objectMOCost, account)
+        return contract.lcCreateObject(props, id, months, municipalityID, objectImage, objectPrice, objectHash, objectLTAddress, objectDealer, objectMCCost, objectMOCost, account)
             .then(result => {
                 dispatch(push("/", { path: "members" }))
                 return dispatch(
@@ -563,3 +554,36 @@ export const _resetTxIds = () => ({
 export const _resetEvent = () => ({
     type: "RESET_EVENT"
 })
+
+// Lease Data Methods
+
+
+export const _ldGetRaised = (objectID) => {
+    return (dispatch) => {
+        return contract.ldGetRaised(objectID)
+            .then(result => {
+                return dispatch(
+                    {
+                        type: "TOTAL_RAISED_RESULT",
+                        payload: result
+                    }
+                )
+            })
+    }
+}
+
+// Lease token Object methods
+export const _ltBalanceOf = (objectID, account, address) => {
+    return (dispatch) => {
+        return contract.ltBalanceOf(objectID, account, address)
+            .then(result =>
+                dispatch(
+                    {
+                        type: "EV_MYTOKENS",
+                        payload: result
+                    }
+                )
+            )
+    }
+}
+

@@ -9,16 +9,17 @@ import Invest from '../components/Invest';
 const mapStateToProps = (state) => {
     // console.log("State: ", state)
     return {
-        lcCars: state.lcCars,
-        evTokenBalance: state.evTokenBalance,
+        // lcCars: state.lcCars,
+        usernames: state.usernames,
+        // evTokenBalance: state.evTokenBalance,
         euroTokenBalance: state.euroTokenBalance,
         evTokens: state.evTokens,
         account: state.account,
         event: state.event,
         module: state.module,
         member: state.member,
-        cars: state.cars,
-        car: state.car,
+        // cars: state.cars,
+        obj: state.obj,
         members: state.members,
         totalSupply: state.totalSupply,
         unClaimedRedemption: state.unClaimedRedemption,

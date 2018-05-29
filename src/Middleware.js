@@ -45,6 +45,7 @@ io.on('connection', (socket) => {
     // socket.on('admin', data => admin.handleAdmin(socket, data));
 
     socket.on('new', data => handleNew(socket, data));
+    socket.on('get', data => handleGet(socket, data));
     socket.on('fetch', data => handleFetch(socket, data));
     socket.on('update', data => handleUpdate(socket, data));
 
@@ -68,17 +69,31 @@ handleFetch = (socket, data) => {
         (err, result) => { console.log("RESULT: ", result.length); socket.emit('data', { module: data.result || data.module, result: result }) });
 }
 
+handleGet = (socket, data) => {
+    console.log(data);
+    if (data.query && data.query["_id"]) data.query["_id"] = mongo.obj.ObjectId(data.query["_id"]);
+
+    let query = data.query || {}
+    let filter = data.filter || {}
+    mongo.db[data.module].findOne(
+        query,
+        filter,
+        (err, result) => { console.log("RESULT: ", result.length); socket.emit('data', { module: data.result || data.module, result: result }) });
+}
+
 handleNew = (socket, request) => {
-    mongo.db[request.module].insert(
-        request.data,
-        (err, result) => {
-            if (err || !result) {
-                console.log(err);
-            } else {
-                socket.emit('data', { module: ((request.result || request.module) + "_new"), result: true })
-                io.sockets.emit('event', { event: "NewMember" })
-            }
-        })
+    console.log("NEW Request: ", request)
+    if (request)
+        mongo.db[request.module].insert(
+            request.data,
+            (err, result) => {
+                if (err || !result) {
+                    console.log(err);
+                } else {
+                    socket.emit('data', { module: ((request.result || request.module) + "_new"), result: true })
+                    io.sockets.emit('event', { event: "NewMember" })
+                }
+            })
 }
 
 handleUpdate = (socket, data) => {

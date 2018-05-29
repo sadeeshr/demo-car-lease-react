@@ -85,9 +85,9 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 ...action.payload,
                 evTokens: null,
-                lcCars: null,
+                // lcCars: null,
                 euroTokenBalance: null,
-                evTokenBalance: null,
+                // evTokenBalance: null,
                 totalSupply: null,
                 progress: false,
                 reloadTokens: false
@@ -99,10 +99,10 @@ const rootReducer = (state = initialState, action) => {
                 member: state.member !== action.payload ? action.payload : null
             }
 
-        case 'SELECT_CAR':
+        case 'SELECT_OBJECT':
             return {
                 ...state,
-                car: action.payload
+                member: action.payload
             }
 
         case 'RESET_MEMBER':
@@ -167,12 +167,12 @@ const rootReducer = (state = initialState, action) => {
         case 'EV_MYTOKENS':
             {
                 let members = state.members.map(member => {
-                    if (member.carID === action.payload.id)
+                    if (member.objectID === action.payload.id)
                         member["evTokens"] = action.payload.result
                     return member
                 })
 
-                if (state.member && (state.member.carID === action.payload.id))
+                if (state.member && (state.member.objectID === action.payload.id))
                     state.member["evTokens"] = action.payload.result
 
                 return {
@@ -184,13 +184,13 @@ const rootReducer = (state = initialState, action) => {
         case 'LEASE_OBJECT_RESULT':
             {
                 let members = state.members.map(member => {
-                    if (member.carID === action.payload.id)
-                        member["car"] = action.payload.result
+                    if (member.objectID === action.payload.id)
+                        member["obj"] = action.payload.result
                     return member
                 })
 
-                if (state.member && (state.member.carID === action.payload.id))
-                    state.member["car"] = action.payload.result
+                if (state.member && (state.member.objectID === action.payload.id))
+                    state.member["obj"] = action.payload.result
 
                 return {
                     ...state,
@@ -200,14 +200,15 @@ const rootReducer = (state = initialState, action) => {
 
         case 'LEASE_OBJECT_CYCLE_RESULT':
         case 'LEASE_OBJECT_REDEMPTION_RESULT':
+        case 'TOTAL_RAISED_RESULT':
             {
                 let members = state.members.map(member => {
-                    if (member.carID === action.payload.id)
+                    if (member.objectID === action.payload.id)
                         member = { ...member, ...action.payload.result }
                     return member
                 })
 
-                if (state.member && (state.member.carID === action.payload.id))
+                if (state.member && (state.member.objectID === action.payload.id))
                     state.member = { ...state.member, ...action.payload.result }
 
                 return {
@@ -218,18 +219,18 @@ const rootReducer = (state = initialState, action) => {
 
         case 'AUTHORIZATION':
             {
-                let members = state.members.map(member => {
+                let members = state.usernames.map(member => {
                     if (member.account === action.payload.account)
                         member["authorized"] = action.payload.result
                     return member
                 })
 
-                if (state.member && (state.member.account === action.payload.account))
-                    state.member["authorized"] = action.payload.result
+                // if (state.member && (state.member.account === action.payload.account))
+                //     state.member["authorized"] = action.payload.result
 
                 return {
                     ...state,
-                    members: members
+                    usernames: members
                 }
             }
 

@@ -13,7 +13,7 @@ class AddMember extends Component {
             "username",
             "town"
         ]
-        this.carType = 1
+        // this.carType = 1
     }
 
 
@@ -63,9 +63,7 @@ class AddMember extends Component {
         const self = this.state
         // let membersList = this.props.members
 
-        // const carHash = '0x' + md5(self.username + self.town)
-
-        const townSelected = this.props.towns[this.props.town]
+        // const objectHash = '0x' + md5(self.username + self.town)
 
         let newMember = {
             username: self.username || '',
@@ -76,13 +74,13 @@ class AddMember extends Component {
             iban: self.iban || '',
             email: self.email || '',
             message: self.message || '',
-            // carPic: self.carPic || '',
-            // carPrice: self.carPrice || '',
+            // objectPic: self.objectPic || '',
+            // objectPrice: self.objectPrice || '',
             account: self.account || this.props.account,
             profilePic: self.profilePic || '',
             // carMonRedemption: self.carMonRedemption || '',
             // carMonths: self.carMonths || '',
-            municipalityID: townSelected ? townSelected["municipalityID"] : ""
+            // municipalityID: townSelected ? townSelected["municipalityID"] : ""
         }
 
         let data = {
@@ -99,88 +97,10 @@ class AddMember extends Component {
 
     render() {
         if (this.props.members_new) this.props.history.push("/", { path: "members" })
-        const cars = this.props.cars || []
-        cc.log("CARS: ", cars);
         const img = { "maxHeight": "50px", "maxWidth": "118px", "display": "block", "width": "auto", "height": "auto" }
         cc.log("Add Member State: ", this.state, this.props);
         const usernames = this.props.usernames ? this.props.usernames.map(user => user.username) : []
         return (
-            this.state.seeCars ?
-                <div className="content-border">
-                    <div className="mainContentCon">
-                        {/* <i className="flaticon-back" onClick={() => this.setState({ seeCars: false })}></i>
-                        <div className="float-right">
-                            <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
-                        </div> */}
-                        <div className="navCon">
-                            <h1 id="header"><div className="fl"><i className="flaticon-back" onClick={() => this.setState({ seeCars: false })}></i></div>Select Car<div className="fr"><i onClick={() => this.props.history.push("/")} className="flaticon-home"></i></div></h1>
-                            {/*  */}
-                        </div>
-                        <div className="contentCon overflow bg-none">
-                            <BlockUi tag="div" blocking={this.props.progress}>
-
-                                {/* <table style={{ borderSpacing: "0px", borderCollapse: "collapse" }}>
-                                <tbody className="membersCon">
-                                    {
-                                        cars.map((car, i) => {
-                                            return (
-                                                <tr style={{ padding: "0px 0px" }} key={i} id="center-btn-container" onClick={() => { this.setState({ carModel: car.model, carPic: car.image, carPrice: car.price, carDealer: car.dealer, carMonRedemption: car.monRedemption, carMonths: car.months }) }}>
-                                                    <td style={{ padding: "10px 5px" }}><img src={car.image || ""} style={img} alt={"car-" + i} /></td>
-                                                    <td><span title="Model">{car.model || ""}</span></td>
-                                                    <td><span title="speed">{car.speed || ""}kwh</span></td>
-                                                    <td><span title="monred">{car.monRedemption || ""} Per maand</span></td>
-                                                    <td><span title="months">OBV {car.months || ""} MND</span></td>
-                                                    <td><span title="Price">{car.price || ""} Euro</span></td>
-                                                </tr>
-                                            )
-                                        })
-                                    }
-                                </tbody>
-                            </table> */}
-
-                                <table style={{ borderSpacing: "0px", borderCollapse: "collapse" }}>
-                                    <tbody className="membersCon">
-                                        {
-                                            cars.map((car, i) => {
-                                                return (
-                                                    <tr style={{ padding: "0px 0px" }} key={i} id="center-btn-container" onClick={() => { this.setState({ carModel: car.model, carPic: car.image, carPrice: car.price, carDealer: car.dealer, carMonRedemption: car.monRedemption, carMonths: car.months, carSelected: i }) }}>
-                                                        <td>
-                                                            <div className={this.state.carSelected === i ? "b-member-con active" : "b-member-con"}>
-                                                                <div className="b-member-left">
-                                                                    <span className="model" title="Model">{car.model || ""}</span>
-                                                                    <span className="speed" title="speed">{car.speed || ""}kwh</span>
-                                                                    <img src={car.image || ""} alt={"car-" + i} />
-                                                                </div>
-                                                                <div className="b-member-right">
-                                                                    <span className="monred" title="monred">{car.monRedemption || ""} <span className="per">Per maand</span></span>
-                                                                    <span className="months" title="months">OBV {car.months || ""} MND</span>
-                                                                    <span className="price" title="Price">{car.price || ""} Euro</span>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                )
-                                            })
-                                        }
-                                    </tbody>
-                                </table>
-
-                                {/* <div className="contentBtn">
-                                <button onClick={this.createAccount.bind(this)}>Confirm & Publish</button>
-                            </div> */}
-                            </BlockUi>
-                        </div>
-                        <div className="footCon">
-                            <div>
-                                <span>Confirm & Publish</span>
-                                <button className="arrowBtn" onClick={this.createAccount.bind(this)}>
-                                    <img src={require('../assets/add.jpg')} alt="addM" />
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                :
                 <div className="content-border">
                     <div className="mainContentCon">
                         {/* <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i> */}
@@ -242,10 +162,10 @@ class AddMember extends Component {
                                         </button>
                                     </div>
                                     <label>Select Car</label>
-                                    {(this.state.carPic && !this.state.seeCars) && <img className="inputImg" src={this.state.carPic || ""} alt="CarImage" />}
+                                    {(this.state.objectPic && !this.state.seeCars) && <img className="inputImg" src={this.state.objectPic || ""} alt="CarImage" />}
                                 </span> */}
                                     {
-                                        /*  (this.state.carPic && !this.state.seeCars) &&
+                                        /*  (this.state.objectPic && !this.state.seeCars) &&
                                           <div>
                                               <span className="form-input-containers">
                                                   <input className="membership-input" id="carDriver" value={this.state.carDriver || ""} onChange={(e) => this.setState({ carDriver: e.target.value })} type="text" placeholder="Car Driver Address" />
@@ -286,7 +206,7 @@ class AddMember extends Component {
                         </div>
                         <div className="footCon">
                             <div>
-                                <button disabled={!this.checkMandatory() || (usernames.indexOf(this.state.username) !== -1)} title={!this.checkMandatory() ? "Please fill mandatory fields" : (usernames.indexOf(this.state.username) !== -1 ? "Username already exists" : "Select Car")} className="arrowBtn" onClick={this.createAccount.bind(this)}>
+                                <button disabled={!this.checkMandatory() || (usernames.indexOf(this.state.username) !== -1)} title={!this.checkMandatory() ? "Please fill mandatory fields" : (usernames.indexOf(this.state.username) !== -1 ? "Username already exists" : "New Life Configuration")} className="arrowBtn" onClick={this.createAccount.bind(this)}>
                                     <img src={require('../assets/arrow.jpg')} alt="addM" />
                                 </button>
                                 {/*<button className="arrowBtn" onClick={() => this.props.history.push("/", { path: "members" })}>
@@ -301,3 +221,79 @@ class AddMember extends Component {
 }
 
 export default AddMember
+
+// this.state.seeCars ?
+// <div className="content-border">
+//     <div className="mainContentCon">
+//         {/* <i className="flaticon-back" onClick={() => this.setState({ seeCars: false })}></i>
+//         <div className="float-right">
+//             <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
+//         </div> */}
+//         <div className="navCon">
+//             <h1 id="header"><div className="fl"><i className="flaticon-back" onClick={() => this.setState({ seeCars: false })}></i></div>Select Car<div className="fr"><i onClick={() => this.props.history.push("/")} className="flaticon-home"></i></div></h1>
+//             {/*  */}
+//         </div>
+//         <div className="contentCon overflow bg-none">
+//             <BlockUi tag="div" blocking={this.props.progress}>
+
+//                 {/* <table style={{ borderSpacing: "0px", borderCollapse: "collapse" }}>
+//                 <tbody className="membersCon">
+//                     {
+//                         cars.map((car, i) => {
+//                             return (
+//                                 <tr style={{ padding: "0px 0px" }} key={i} id="center-btn-container" onClick={() => { this.setState({ carModel: car.model, objectPic: car.image, objectPrice: car.price, objectDealer: car.dealer, carMonRedemption: car.monRedemption, carMonths: car.months }) }}>
+//                                     <td style={{ padding: "10px 5px" }}><img src={car.image || ""} style={img} alt={"car-" + i} /></td>
+//                                     <td><span title="Model">{car.model || ""}</span></td>
+//                                     <td><span title="speed">{car.speed || ""}kwh</span></td>
+//                                     <td><span title="monred">{car.monRedemption || ""} Per maand</span></td>
+//                                     <td><span title="months">OBV {car.months || ""} MND</span></td>
+//                                     <td><span title="Price">{car.price || ""} Euro</span></td>
+//                                 </tr>
+//                             )
+//                         })
+//                     }
+//                 </tbody>
+//             </table> */}
+
+//                 <table style={{ borderSpacing: "0px", borderCollapse: "collapse" }}>
+//                     <tbody className="membersCon">
+//                         {
+//                             cars.map((car, i) => {
+//                                 return (
+//                                     <tr style={{ padding: "0px 0px" }} key={i} id="center-btn-container" onClick={() => { this.setState({ carModel: car.model, objectPic: car.image, objectPrice: car.price, objectDealer: car.dealer, carMonRedemption: car.monRedemption, carMonths: car.months, carSelected: i }) }}>
+//                                         <td>
+//                                             <div className={this.state.carSelected === i ? "b-member-con active" : "b-member-con"}>
+//                                                 <div className="b-member-left">
+//                                                     <span className="model" title="Model">{car.model || ""}</span>
+//                                                     <span className="speed" title="speed">{car.speed || ""}kwh</span>
+//                                                     <img src={car.image || ""} alt={"car-" + i} />
+//                                                 </div>
+//                                                 <div className="b-member-right">
+//                                                     <span className="monred" title="monred">{car.monRedemption || ""} <span className="per">Per maand</span></span>
+//                                                     <span className="months" title="months">OBV {car.months || ""} MND</span>
+//                                                     <span className="price" title="Price">{car.price || ""} Euro</span>
+//                                                 </div>
+//                                             </div>
+//                                         </td>
+//                                     </tr>
+//                                 )
+//                             })
+//                         }
+//                     </tbody>
+//                 </table>
+
+//                 {/* <div className="contentBtn">
+//                 <button onClick={this.createAccount.bind(this)}>Confirm & Publish</button>
+//             </div> */}
+//             </BlockUi>
+//         </div>
+//         <div className="footCon">
+//             <div>
+//                 <span>Confirm & Publish</span>
+//                 <button className="arrowBtn" onClick={this.createAccount.bind(this)}>
+//                     <img src={require('../assets/add.jpg')} alt="addM" />
+//                 </button>
+//             </div>
+//         </div>
+//     </div>
+// </div>

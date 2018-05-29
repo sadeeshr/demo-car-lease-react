@@ -16,7 +16,6 @@ class AddNewLifeConfigurator extends Component {
             progress: false
         }
 
-        this.carType = 1
     }
 
     componentDidMount() {
@@ -39,7 +38,7 @@ class AddNewLifeConfigurator extends Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.newLeaseTokenAddress) {
             let leaseobject = this.props.newLifeObj
-            this.props._lcCreateObject(this.props, leaseobject.id, leaseobject.image, leaseobject.price, leaseobject.hash, nextProps.newLeaseTokenAddress, leaseobject.dealer, leaseobject.monthlycapcost, leaseobject.monthlyopcost, this.props.account)
+            this.props._lcCreateObject(this.props, leaseobject.id, leaseobject.months, leaseobject.municipalityID, leaseobject.image, leaseobject.price, leaseobject.hash, nextProps.newLeaseTokenAddress, leaseobject.dealer, leaseobject.monthlycapcost, leaseobject.monthlyopcost, this.props.account)
         }
     }
 
@@ -68,11 +67,12 @@ class AddNewLifeConfigurator extends Component {
 
     createAccount = (leasetype, months, monthlycapcost, monthlyopcost) => {
         this.setState({ progress: true })
-        // const car = this.props.cars[this.state.active]
+
         const leaseobject = this.props.leaseobjects && this.props.leaseobjects[this.state.active]
 
-        const member = this.props.member
-        // let membersList = this.props.members
+        const member = this.props.usernames && this.props.usernames.find(userO => userO["_id"] === this.props.registered)
+
+        const townSelected = this.props.towns[this.props.town]
 
         const objectHash = '0x' + md5(member.username + member.town + member["_id"])
         let newLifeObj = {
@@ -80,15 +80,15 @@ class AddNewLifeConfigurator extends Component {
             image: leaseobject["image"],
             price: leasetype.price,
             hash: objectHash,
+            months: months,
             dealer: leaseobject["dealer"],
             monthlycapcost: monthlycapcost,
-            monthlyopcost: monthlyopcost
+            monthlyopcost: monthlyopcost,
+            municipalityID: townSelected ? townSelected["municipalityID"] : ""
         }
 
         this.props._setObject({ newLifeObj, progress: true })
-        this.state.lobjectSelected && this.props._lcCreateNewLeaseTokenObject(this.props.account)
-
-        // this.state.lobjectSelected && this.props._lcCreateObject(member["_id"], car.image, car.price, carHash, this.carType, car.dealer, (this.state.carFee || car.fee), (this.state.carTerm || car.term), Math.round((this.state.carMileage || car.mileage) / 12), member.account, this.props.location.state.module)
+        this.state.lobjectSelected && this.props.account && this.props._lcCreateNewLeaseTokenObject(this.props.account)
 
         // this.props._writeNewContractData(data)
     }
@@ -209,9 +209,9 @@ class AddNewLifeConfigurator extends Component {
                     <div hidden className="navCon">
                         <h1 id="header"><div className="fl"><i className="flaticon-back" onClick={() => this.props.history.goBack()}></i></div>New Life Configurator<div className="fr"><i onClick={() => this.props.history.push("/")} className="flaticon-home"></i></div></h1>
                     </div>
+                    <BlockUi tag="div" blocking={this.props.progress}>
 
-                    <div style={{ height: "auto" }} className="contentCon overflow bg-none"> {/* */}
-                        <BlockUi tag="div" blocking={this.props.progress}>
+                        <div style={{ height: "auto" }} className="contentCon overflow bg-none"> {/* */}
                             <div className="newLifeCon"> {/**/}
                                 <Coverflow
                                     width={'auto'}
@@ -305,18 +305,19 @@ class AddNewLifeConfigurator extends Component {
                             {/* <div className="contentBtn">
                                 <button onClick={this.createAccount.bind(this)}>Confirm & Publish</button>
                             </div> */}
-                        </BlockUi>
-                    </div>
+                        </div>
 
-                    <div className="footCon">
-                        {this.state.lobjectSelected && <div>
-                            <span>Confirm & Publish</span>
-                            <button title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected} className="arrowBtn" onClick={() => this.createAccount(leasetype, months, monthlycapcost, monthlyopcost)}>
-                                <img src={require('../assets/add.jpg')} alt="addM" />
-                            </button>
-                            <img style={img} src={this.props.leaseobjects[this.state.active || "0"]["image"] || require('../assets/ninja.png')} alt="objectImage" />
-                        </div>}
-                    </div>
+                        <div className="footCon">
+                            {this.state.lobjectSelected && this.props.account && <div>
+                                <span>Confirm & Publish</span>
+                                <button title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected} className="arrowBtn" onClick={() => this.createAccount(leasetype, months, monthlycapcost, monthlyopcost)}>
+                                    <img src={require('../assets/add.jpg')} alt="addM" />
+                                </button>
+                                <img style={img} src={this.props.leaseobjects[this.state.active || "0"]["image"] || require('../assets/ninja.png')} alt="objectImage" />
+                            </div>}
+                        </div>
+                    </BlockUi>
+
                 </div>
             </div>
 

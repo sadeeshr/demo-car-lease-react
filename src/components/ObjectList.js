@@ -28,12 +28,14 @@ class ObjectList extends Component {
             module: "membersdev2",
             result: "usernames",
             query: {
-                municipalityID: town["municipalityID"]
             },
             filter: {
-                _id: 0,
+                _id: 1,
                 username: 1,
-                account: 1
+                account: 1,
+                town: 1,
+                message: 1,
+                profilePic: 1
             }
         }
         if (!this.props.usernames && this.props.socket) this.props._fetchContractData(this.props, data, this.props.account)
@@ -43,12 +45,13 @@ class ObjectList extends Component {
     checkRegistered = (account) => {
         // console.log("REG check: ", account, this.props);
         if (this.props.usernames) {
-            const accounts = this.props.usernames ? this.props.usernames.map(user => user.account) : []
-            // console.log(accounts, account, accounts.indexOf(account));
-            this.setState({
-                registered: (accounts.indexOf(account) !== -1) ? true : false
-            })
 
+            const member = this.props.usernames ? this.props.usernames.find(user => user.account === account) : null
+
+            if (member) {
+                this.props._setObject({ registered: member["_id"] })
+            } else
+                cc.log("USER NOT REGISTERED YET")
         }
     }
 
@@ -82,7 +85,9 @@ class ObjectList extends Component {
         let wind = town && town["inhabitants"]
         wind = formatNumber((parseInt(wind, 10) / 10000), { precision: 0, thousand: "." });
 
-        const nextScreen = (this.state.registered || !this.props.account) ? "members" : "addmember"
+        const nextScreen = (this.props.registered || !this.props.account) ? "members" : "addmember"
+
+        cc.log("MEMBER ID: ", this.props.registered)
 
         const imageStyle = {
             float: "left",

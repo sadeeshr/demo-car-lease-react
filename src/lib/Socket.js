@@ -39,7 +39,9 @@ class Socket {
         if (props) this.props = props
         if (account) this.account = account
         if (this.socket) {
-            this.socket.emit("fetch", data)
+            let type = "fetch"
+            if (data.findone) type = "get"
+            this.socket.emit(type, data)
             return data.module
         }
 
@@ -60,15 +62,15 @@ class Socket {
         this.socket.on('connect', () => { cc.log("Online now, Socket ID: ", socket.id); this.props._socketStatus(true) })
         this.socket.on('disconnect', () => { cc.log("Offline now"); this.props._socketStatus(true) })
         this.socket.on('data', data => {
-            cc.log("DATA: ", data, this.account);
-            if (data) this.props._contractDataResponse(this.account, { [data.module]: data.result });
+            cc.log("DATA: ", data, this.account, this.props);
+            if (data && this.props) this.props._contractDataResponse(this.account, { [data.module]: data.result });
         })
         this.socket.on('event', (data) => {
             const townSelected = this.props.towns[this.props.town]
             cc.log("EVENT: ", data, this.account)
             if (data) {
                 // if (data.event === "Transfer" || data.event === "Claim" || data.event) 
-                this.props._fetchMembers((townSelected ? townSelected["municipalityID"] : "1"), this.account)
+                this.props._fetchMembers(this.props, (townSelected ? townSelected["municipalityID"] : "1"), this.account)
                 this.props._setEvent(data)
             }
         })

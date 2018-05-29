@@ -11,7 +11,9 @@ const mapStateToProps = (state) => {
     return {
         towns: state.towns,
         town: state.town,
-        lcCars: state.lcCars,
+        registered: state.registered,
+        usernames: state.usernames,
+        // lcCars: state.lcCars,
         AddNewUser: state.AddNewUser,
         evTokens: state.evTokens,
         reloadTokens: state.reloadTokens,

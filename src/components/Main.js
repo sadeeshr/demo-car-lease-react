@@ -52,10 +52,10 @@ class Main extends Component {
                 case "Transfer":
                     {
                         const txFrom = this.props.members.find(member => member.account && (member.account.toLowerCase() === nextProps.event.returnValues.to.toLowerCase()))
-                        const txTo = this.props.members.find(member => member.carID && (member.carID.toString() === nextProps.event.returnValues.objectId))
+                        const txTo = this.props.members.find(member => member.objectID && (member.objectID.toString() === nextProps.event.returnValues.objectId))
                         const value = nextProps.event.returnValues.value
                         // cc.log(txFrom, txTo, value);
-                        const message = (txFrom && txTo) ? `Awesome, ${txFrom.username} ${txFrom.town} has just invested ${value} euros on ${txTo.username} ${txTo.town}'s Car` : `Awesome, an investment made just now !`
+                        const message = (txFrom && txTo) ? `Awesome, ${txFrom.username} ${txFrom.town} has just invested ${value} euros on ${txTo.username} ${txTo.town}` : `Awesome, an investment made just now !`
                         let event = {
                             title: "Investment Update",
                             message: message,
@@ -73,18 +73,18 @@ class Main extends Component {
                         if (newObject && event.transactionHash === newObject.txID) {
                             let objectID = event.returnValues.objectID
                             let newObjData = newObject.data
-                            newObjData["carID"] = objectID
+                            newObjData["objectID"] = objectID
                             let data = {
-                                module: "membersdev2",
+                                module: "membersobj",
                                 result: "members",
-                                query: { "_id": newObject.id },
                                 data: newObjData
                             }
                             cc.log(data)
-                            this.props._updateContractData(this.props, data)
+                            // this.props._updateContractData(this.props, data)
+                            this.props._writeNewContractData(this.props, data)
 
                             const townSelected = this.props.towns[this.props.town]
-                            setTimeout(() => this.props._fetchMembers(townSelected["municipalityID"], this.props.account), 1000)
+                            setTimeout(() => this.props._fetchMembers(this.props, townSelected["municipalityID"], this.props.account), 1000)
                             // this.props._setEventStatus({ eventAddNewObject: true, objectID: objectID }); setTimeout(() => { this.lcEventAddNewObjectUnsubscribe(); this.props._reloadTokens() }, 1000);
                         }
 
@@ -138,7 +138,6 @@ class Main extends Component {
     }
 
     renderMain = () => {
-        cc.log("REGISTRATION STATUS: ", this.state.registered)
         const img = { "maxHeight": "95px", "maxWidth": "180px", "display": "block", "width": "auto", "height": "auto" }
 
         return <div className="content-border">

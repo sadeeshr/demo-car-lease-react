@@ -21,7 +21,7 @@ class Contract {
                 address: "0xCE868dEf60303B9D0c6c9e0F621B3591546e3C7E",
                 abi: [{ "constant": false, "inputs": [{ "name": "_spender", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "approve", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_from", "type": "address" }, { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "transferFrom", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "newUser", "type": "address" }], "name": "addAuthorization", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_to", "type": "address" }, { "name": "_amount", "type": "uint256" }], "name": "mint", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_value", "type": "uint256" }], "name": "burn", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_owner", "type": "address" }, { "name": "_spender", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "approveByLeasecontract", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_owner", "type": "address" }], "name": "balanceOf", "outputs": [{ "name": "balance", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [{ "name": "", "type": "address", "value": "0x60516aa74f455f642c66fa1ed1e77c553da4be17" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "existingUser", "type": "address" }], "name": "removeAuthorization", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "transfer", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }], "name": "authorization", "outputs": [{ "name": "", "type": "bool", "value": false }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_owner", "type": "address" }, { "name": "_spender", "type": "address" }], "name": "allowance", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "newOwner", "type": "address" }], "name": "transferOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "from", "type": "address" }, { "indexed": true, "name": "to", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Transfer", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "owner", "type": "address" }, { "indexed": true, "name": "spender", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Approval", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "burner", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Burn", "type": "event" }]
             },
-            leaseData: {
+            LeaseData: {
                 address: "0x216030686c6eE82bD1B692c0db9561B75E338FC6",
                 abi: [{ "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "getDealer", "outputs": [{ "name": "", "type": "address", "value": "0x" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_dealer", "type": "address" }], "name": "setDealer", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "getDriver", "outputs": [{ "name": "", "type": "address", "value": "0x" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "setDeactiveTime", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "getRaised", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_deliveryDate", "type": "uint256" }], "name": "setActiveTime", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "newUser", "type": "address" }], "name": "addAuthorization", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "uint256" }], "name": "leasecbjectcycle", "outputs": [{ "name": "crowdsaleClosed", "type": "bool", "value": false }, { "name": "objectActive", "type": "bool", "value": false }, { "name": "objectActiveTime", "type": "uint256", "value": "0" }, { "name": "objectDeactiveTime", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "uint256" }], "name": "leaseobject", "outputs": [{ "name": "leaseTokenAddress", "type": "address", "value": "0x0000000000000000000000000000000000000000" }, { "name": "objectDealerAddress", "type": "address", "value": "0x0000000000000000000000000000000000000000" }, { "name": "objectDriverAddress", "type": "address", "value": "0x0000000000000000000000000000000000000000" }, { "name": "objectPrice", "type": "uint256", "value": "0" }, { "name": "monthlyCapitalCost", "type": "uint256", "value": "0" }, { "name": "monthlyOperatingCost", "type": "uint256", "value": "0" }, { "name": "objectContractHash", "type": "bytes", "value": "0x" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "getCrowdsaleClosed", "outputs": [{ "name": "", "type": "bool", "value": false }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_owner", "type": "address" }], "name": "getLastCapitalPayout", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_leasetoken", "type": "address" }], "name": "setLeaseToken", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_hash", "type": "bytes" }], "name": "setHash", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "getHash", "outputs": [{ "name": "", "type": "bytes" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_driver", "type": "address" }], "name": "setDriver", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_operation", "type": "uint256" }], "name": "setOperationPaid", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "getOperatingCost", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [{ "name": "", "type": "address", "value": "0x60516aa74f455f642c66fa1ed1e77c553da4be17" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "existingUser", "type": "address" }], "name": "removeAuthorization", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_owner", "type": "address" }, { "name": "_lastCapitalPayout", "type": "uint256" }], "name": "setLastCapitalPayout", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_capital", "type": "uint256" }], "name": "setCapitalPaid", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_crowdsale", "type": "bool" }], "name": "setCrowdsaleClosed", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "getLeaseToken", "outputs": [{ "name": "", "type": "address", "value": "0x" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "getCapitalCost", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_capitalCost", "type": "uint256" }], "name": "setCapitalCost", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "uint256" }], "name": "leaseobjecttransactions", "outputs": [{ "name": "totalRaised", "type": "uint256", "value": "0" }, { "name": "totalCapitalPaid", "type": "uint256", "value": "0" }, { "name": "totalOperationPaid", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "getActiveTime", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "getActive", "outputs": [{ "name": "", "type": "bool", "value": false }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "getDeactiveTime", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }], "name": "authorization", "outputs": [{ "name": "", "type": "bool", "value": false }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "getOperationPaid", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "getCapitalPaid", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_active", "type": "bool" }], "name": "setActive", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "getPrice", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "newOwner", "type": "address" }], "name": "transferOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_monthlyOperatingCost", "type": "uint256" }], "name": "setOperatingCost", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_raised", "type": "uint256" }], "name": "setRaised", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_price", "type": "uint256" }], "name": "setPrice", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }]
             },
@@ -54,7 +54,7 @@ class Contract {
         this.payFeeTxID = null
         this.LeaseTokenContract = null
         this.euroToken = null
-        this.LeaseTokenContract = null
+        this.LeaseData = null
         this.LeaseTokenObjectContract = null
     }
 
@@ -109,7 +109,7 @@ class Contract {
         // const LeaseTokenContract = 
         this.euroToken = contract(this.contracts.euroToken.abi).at(this.contracts.euroToken.address)
         this.LeaseTokenContract = contract(this.contracts.LeaseTokenContract.abi).at(this.contracts.LeaseTokenContract.address)
-        this.LeaseData = contract(this.contracts.leaseData.abi).at(this.contracts.leaseData.address)
+        this.LeaseData = contract(this.contracts.LeaseData.abi).at(this.contracts.LeaseData.address)
         this.LeaseTokenObjectContract = contract(this.contracts.LeaseTokenObject.abi);
 
 
@@ -301,14 +301,14 @@ class Contract {
             })
     }
 
-    evBalanceOf = (account) => {
-        cc.log(`Fetching EV Tokens Balance for: ${account}`);
-        return this.LeaseTokenContract.balanceOf(account)
-            .then(result => {
-                cc.log(`EV TOKENS BALANCE: ${result[0].toString()}`);
-                return { evTokenBalance: result[0].toString() }
-            })
-    }
+    // evBalanceOf = (account) => {
+    //     cc.log(`Fetching EV Tokens Balance for: ${account}`);
+    //     return this.LeaseTokenContract.balanceOf(account)
+    //         .then(result => {
+    //             cc.log(`EV TOKENS BALANCE: ${result[0].toString()}`);
+    //             return { evTokenBalance: result[0].toString() }
+    //         })
+    // }
 
     /**
      * Lease Contract Events
@@ -325,7 +325,7 @@ class Contract {
                         if (res.transactionHash === this.addNewObjectTxID) {
                             let objectID = result[0].data.objectID.toNumber()
                             let newObjData = this.addNewObject
-                            newObjData["carID"] = objectID
+                            newObjData["objectID"] = objectID
                             let data = {
                                 module: "membersdev2",
                                 result: "members",
@@ -386,9 +386,9 @@ class Contract {
      * Lease Contract Methods
      */
 
-    lcCreateObject = (props, objectid, objectImage, objectPrice, objectHash, objectLTAddress, objectDealer, objectMCCost, objectMOCost, account) => {
+    lcCreateObject = (props, id, months, municipalityID, objectImage, objectPrice, objectHash, objectLTAddress, objectDealer, objectMCCost, objectMOCost, account) => {
         cc.log(`Adding New object for: ${objectPrice}, ${objectHash}, ${objectLTAddress}, ${objectDealer}, ${objectMCCost}, ${objectMOCost}, ${account}`);
-        this.props = props
+        if (props) this.props = props
         return this.LeaseTokenContract.createObject(objectPrice, objectHash, objectLTAddress, objectDealer, objectMCCost, objectMOCost, { from: account })
             .then(result => {
                 cc.log(`ADD NEW object RESULT: ${result}`);
@@ -396,10 +396,10 @@ class Contract {
                 // this.addNewObjectTxID = result
                 // this.addNewObjectID = objectid
                 // this.addNewObject = {
-                //     carPic: objectImage,
-                //     carPrice: objectPrice,
-                //     carHash: objectHash,
-                //     carDealer: objectDealer,
+                //     objectPic: objectImage,
+                //     objectPrice: objectPrice,
+                //     objectHash: objectHash,
+                //     objectDealer: objectDealer,
                 //     carFee: objectMCCost,
                 //     carTerm: objectMOCost,
                 //     car: ,
@@ -408,16 +408,18 @@ class Contract {
                 // return { addNewObjectTxID: result, addNewObjectHash: objectHash, progress: false }
                 return {
                     newObject: {
-                        id: objectid,
                         txID: result,
                         data: {
+                            member: id,
+                            municipalityID: municipalityID,
                             objectPic: objectImage,
-                            objectPrice: objectPrice,
-                            objectHash: objectHash,
-                            objectDealer: objectDealer,
-                            objectMonthlyCapitalCost: objectMCCost,
-                            objectMonthlyOperatingCost: objectMOCost,
-                            account: account
+                            months: months,
+                            // objectPrice: objectPrice,
+                            // objectHash: objectHash,
+                            // objectDealer: objectDealer,
+                            // objectMonthlyCapitalCost: objectMCCost,
+                            // objectMonthlyOperatingCost: objectMOCost,
+                            // account: account
                         }
                     },
                     progress: false
@@ -516,7 +518,7 @@ class Contract {
     }
 
     lcInvestInObject = (objectID, amount, account) => {
-        cc.log(`Calling Raise Funds For object ID: ${objectID}, ${amount}, ${account}`);
+        cc.log(`Calling Invest In Object For object ID: ${objectID}, ${amount}, ${account}`);
         return this.LeaseTokenContract.investInObject(objectID, amount || "0", { from: account })
             .then(result => {
                 cc.log(`Invest In Object RESULT: ${result}`);
@@ -610,6 +612,35 @@ class Contract {
                 }, 5000)
             }
         )
+    }
+
+    // Lease Data Methods:
+
+    ldGetRaised = (objectID) => {
+        cc.log(`Calling Total Raised.`);
+        return this.LeaseData.getRaised(objectID)
+            .then(result => {
+                cc.log(`getRaised RESULT: ${result[0].toNumber()}`);
+                return {
+                    id: objectID,
+                    result: {
+                        totalRaised: result[0].toNumber()
+                    }
+                }
+            })
+    }
+
+    // lease token object methods:
+
+    ltBalanceOf = (objectID, account, address) => {
+        cc.log(`Fetching Lease Token Balance Of: `);
+
+        return this.LeaseTokenObjectContract.at(address).balanceOf(account)
+            .then(result => {
+                cc.log(`EV TOKENS: ${result[0].toString()}`);
+                // this.setState({ ["evToken_" + objectID]: result[0].toString() })
+                return { id: objectID, result: result[0].toString() }
+            })
     }
 
 }
