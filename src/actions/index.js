@@ -325,7 +325,7 @@ export const _lcLeaseObject = (account, objectID) => {
     return (dispatch) => {
         return contract.lcLeaseObject(objectID)
             .then(result => {
-                console.log("LBO", result);
+                // console.log("LBO", result);
                 account && dispatch(_ltBalanceOf(objectID, account, result.result.leaseTokenAddress))
                 return dispatch(
                     {
