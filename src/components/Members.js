@@ -38,9 +38,9 @@ class Members extends Component {
     }
 
     componentDidMount() {
-        if (!this.props.members) {
+        // if (!this.props.members) {
             this.fetchMembers()
-        }
+        // }
     }
 
     fetchMembers = () => {
