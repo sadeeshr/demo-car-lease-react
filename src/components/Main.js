@@ -72,16 +72,19 @@ class Main extends Component {
                         const newObject = this.props.newObject || ""
                         if (newObject && event.transactionHash === newObject.txID) {
                             let objectID = event.returnValues.objectID
-                            let newObjData = newObject.data
-                            newObjData["objectID"] = objectID
+                            // let newObjData = newObject.data
+                            // newObjData["objectID"] = objectID
                             let data = {
                                 module: "membersobj",
                                 result: "members",
-                                data: newObjData
+                                query: {
+                                    "_id": newObject["id"]
+                                },
+                                data: { objectID: objectID }
                             }
                             cc.log(data)
-                            // this.props._updateContractData(this.props, data)
-                            this.props._writeNewContractData(this.props, data)
+                            this.props._updateContractData(this.props, data)
+                            // this.props._writeNewContractData(this.props, data)
 
                             const townSelected = this.props.towns[this.props.town]
                             setTimeout(() => this.props._fetchMembers(this.props, townSelected["municipalityID"], this.props.account), 1000)

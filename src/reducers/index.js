@@ -62,6 +62,12 @@ const rootReducer = (state = initialState, action) => {
                 // usernames: null
             }
 
+        case 'UPDATE_CONTRACT_DATA':
+            return {
+                ...state,
+                members_new: null
+            }
+
         case 'SET_EVENT':
             return {
                 ...state,

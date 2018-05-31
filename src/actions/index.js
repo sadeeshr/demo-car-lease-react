@@ -379,9 +379,9 @@ export const _lcAmountObjects = () => {
     }
 }
 
-export const _lcCreateObject = (props, id, months, municipalityID, objectImage, objectPrice, objectHash, objectLTAddress, objectDealer, objectMCCost, objectMOCost, account) => {
+export const _lcCreateObject = (props, id, months, municipalityID, objectPrice, objectHash, objectLTAddress, objectDealer, objectMCCost, objectMOCost, account) => {
     return (dispatch) => {
-        return contract.lcCreateObject(props, id, months, municipalityID, objectImage, objectPrice, objectHash, objectLTAddress, objectDealer, objectMCCost, objectMOCost, account)
+        return contract.lcCreateObject(props, id, months, municipalityID, objectPrice, objectHash, objectLTAddress, objectDealer, objectMCCost, objectMOCost, account)
             .then(result => {
                 dispatch(push("/", { path: "members" }))
                 return dispatch(

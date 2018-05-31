@@ -13,6 +13,7 @@ const mapStateToProps = (state) => {
         town: state.town,
         registered: state.registered,
         usernames: state.usernames,
+        newLeaseTokenAddress: state.newLeaseTokenAddress,
         // lcCars: state.lcCars,
         AddNewUser: state.AddNewUser,
         evTokens: state.evTokens,

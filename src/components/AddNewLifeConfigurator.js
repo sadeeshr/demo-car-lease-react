@@ -36,10 +36,7 @@ class AddNewLifeConfigurator extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.newLeaseTokenAddress) {
-            let leaseobject = this.props.newLifeObj
-            this.props._lcCreateObject(this.props, leaseobject.id, leaseobject.months, leaseobject.municipalityID, leaseobject.image, leaseobject.price, leaseobject.hash, nextProps.newLeaseTokenAddress, leaseobject.dealer, leaseobject.monthlycapcost, leaseobject.monthlyopcost, this.props.account)
-        }
+      
     }
 
 
@@ -75,20 +72,44 @@ class AddNewLifeConfigurator extends Component {
         const townSelected = this.props.towns[this.props.town]
 
         const objectHash = '0x' + md5(member.username + member.town + member["_id"])
+        // let newLifeObj = {
+        //     id: member["_id"],
+        //     image: leaseobject["image"],
+        //     price: leasetype.price,
+        //     hash: objectHash,
+        //     months: months,
+        //     dealer: leaseobject["dealer"],
+        //     monthlycapcost: monthlycapcost,
+        //     monthlyopcost: monthlyopcost,
+        //     municipalityID: townSelected ? townSelected["municipalityID"] : ""
+        // }
+
         let newLifeObj = {
-            id: member["_id"],
-            image: leaseobject["image"],
-            price: leasetype.price,
-            hash: objectHash,
+            member: member["_id"],
+            objectPic: leaseobject["image"],
+            objectPrice: leasetype.price,
+            objectHash: objectHash,
             months: months,
-            dealer: leaseobject["dealer"],
-            monthlycapcost: monthlycapcost,
-            monthlyopcost: monthlyopcost,
+            objectDealer: leaseobject["dealer"],
+            objectMonthlyCapitalCost: monthlycapcost,
+            objectMonthlyOperatingCost: monthlyopcost,
             municipalityID: townSelected ? townSelected["municipalityID"] : ""
         }
 
+        let data = {
+            module: "membersobj",
+            result: "members",
+            data: newLifeObj
+        }
+
+        cc.log(data)
+
+        this.props._writeNewContractData(this.props, data)
         this.props._setObject({ newLifeObj, progress: true })
-        this.state.lobjectSelected && this.props.account && this.props._lcCreateNewLeaseTokenObject(this.props.account)
+
+        this.state.lobjectSelected && this.props.account && this.props._lcCreateNewLeaseTokenObject(this.props.account) 
+
+        this.props.history.goBack()
 
         // this.props._writeNewContractData(data)
     }
@@ -313,7 +334,7 @@ class AddNewLifeConfigurator extends Component {
                                 <button title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected} className="arrowBtn" onClick={() => this.createAccount(leasetype, months, monthlycapcost, monthlyopcost)}>
                                     <img src={require('../assets/add.jpg')} alt="addM" />
                                 </button>
-                                <img style={img} src={this.props.leaseobjects[this.state.active || "0"]["image"] || require('../assets/ninja.png')} alt="objectImage" />
+                                <img style={img} src={(this.props.leaseobjects && this.props.leaseobjects[this.state.active || "0"]["image"])} alt="objectImage" />
                             </div>}
                         </div>
                     </BlockUi>

@@ -39,7 +39,7 @@ class Members extends Component {
 
     componentDidMount() {
         // if (!this.props.members) {
-            this.fetchMembers()
+        this.fetchMembers()
         // }
     }
 
@@ -70,7 +70,35 @@ class Members extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (nextProps.newLeaseTokenAddress && (this.props.newLeaseTokenAddress !== nextProps.newLeaseTokenAddress)) {
+            // let data = {
+            //     module: "membersobj",
+            //     result: "members",
+            //     data: this.props.newLifeObj
+            // }
+            // data["data"]["leaseTokenAddress"] = nextProps.newLeaseTokenAddress
+            // cc.log(data)
+            // // this.props._updateContractData(this.props, data)
+            // this.props._writeNewContractData(this.props, data)
+
+
+            let data = {
+                module: "membersobj",
+                result: "members",
+                query: { "_id": this.props.members_new["_id"] },
+                data: {
+                    leaseTokenAddress: nextProps.newLeaseTokenAddress
+                }
+            }
+            cc.log(data)
+            this.props._updateContractData(this.props, data)
+
+        }
+
         this.props = nextProps
+
+        if (this.props.members_edit) this.fetchMembers()
+
         // cc.log("Members Update Props", nextProps);
         // if (this.props.members && ) this.props._reloadTokens()
         // if (this.props.reloadTokens) this.fetchMembers()
@@ -132,6 +160,11 @@ class Members extends Component {
     //     }
     // }
 
+
+    createObject = (id) => {
+        let leaseobject = this.props.newLifeObj
+    }
+
     renderMember = (member, i) => {
 
         // console.log("member object", member)
@@ -167,7 +200,7 @@ class Members extends Component {
 
                 <div className="rowSelect" key={'invest-' + i}>
                     <div style={{ cursor: (member.objectID || user.authorized) ? "pointer" : "not-allowed" }} className="memberMesCon">{(member.objectID || user.authorized) ? user.message : "Not Allowed to Add New Life Configurator"}</div>
-                    {member.objectID && <div className="memberMesBtns">
+                    {(member.objectID || member.leaseTokenAddress) && <div className="memberMesBtns">
                         <div className="membersBtn">
                             <button className="arrowBtn" onClick={() => {
                                 member.crowdsaleClosed ?
@@ -184,10 +217,14 @@ class Members extends Component {
                                         }))
                                     )
                                     :
-                                    (user.authorized ?
-                                        this.props.history.push("/", { path: "invest" })
-                                        :
-                                        cc.log("NO OBJECT CONFIGURED")
+                                    (
+                                        (member.leaseTokenAddress && !member.objectID) ?
+                                            this.props._lcCreateObject(this.props, member["_id"], member.months, member.municipalityID, member.objectPrice, member.objectHash, member.leaseTokenAddress, member.objectDealer, (parseFloat(member.objectMonthlyCapitalCost) * 100), (parseFloat(member.objectMonthlyOperatingCost) * 100), this.props.account)
+                                            :
+                                            (user.authorized) ?
+                                                this.props.history.push("/", { path: "invest" })
+                                                :
+                                                cc.log("NO OBJECT CONFIGURED")
                                     )
                             }}>
                                 <img src={require('../assets/arrow.jpg')} alt="addM" />

@@ -85,7 +85,7 @@ class AddMember extends Component {
 
         let data = {
             module: "membersdev2",
-            result: "members",
+            result: "usernames",
             data: newMember
         }
         // this.props._setNewContractData(data)
