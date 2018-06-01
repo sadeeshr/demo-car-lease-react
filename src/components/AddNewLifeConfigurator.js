@@ -131,11 +131,13 @@ class AddNewLifeConfigurator extends Component {
         let monthlycapcost = ""
         let monthlyopcost = 0.00
 
-        if ((this.state.active === 0 || this.state.active === 1) && (leasetype.type === "Operational" || leasetype.type === "Private") && this.state.lobjMileage) {
-            monthlyopcost = (parseInt(this.state.lobjMileage, 10) / 12) * 0.1
-        }
+
 
         if (leasetype) {
+            if ((this.state.active === 0 || this.state.active === 1) && (leasetype && (leasetype.type === "Operational" || leasetype.type === "Private")) && this.state.lobjMileage) {
+                monthlyopcost = (parseInt(this.state.lobjMileage, 10) / 12) * 0.1
+            }
+            
             switch (this.state.active) {
                 case 0:
                     {
