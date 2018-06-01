@@ -412,16 +412,16 @@ class Contract {
                         txID: result,
                         id: id
                         // data: {
-                            // id: id,
-                            // municipalityID: municipalityID,
-                            // objectPic: objectImage,
-                            // months: months,
-                            // objectPrice: objectPrice,
-                            // objectHash: objectHash,
-                            // objectDealer: objectDealer,
-                            // objectMonthlyCapitalCost: objectMCCost,
-                            // objectMonthlyOperatingCost: objectMOCost,
-                            // account: account
+                        // id: id,
+                        // municipalityID: municipalityID,
+                        // objectPic: objectImage,
+                        // months: months,
+                        // objectPrice: objectPrice,
+                        // objectHash: objectHash,
+                        // objectDealer: objectDealer,
+                        // objectMonthlyCapitalCost: objectMCCost,
+                        // objectMonthlyOperatingCost: objectMOCost,
+                        // account: account
                         // }
                     },
                     progress: false
@@ -585,7 +585,7 @@ class Contract {
             })
     }
 
-    lcCreateNewLeaseTokenObject = (account) => {
+    lcCreateNewLeaseTokenObject = (hash, account) => {
         cc.log("Creating NewLeaseTokenObject");
         let self = this
         let _leasecontract = this.spender
@@ -600,7 +600,12 @@ class Contract {
                 gas: 4700000
             }, function (e, contract) {
                 cc.log(e, contract);
-
+                self.props._setObject({
+                    newLeaseTokenObject: {
+                        txID: contract,
+                        hash: hash
+                    }
+                })
                 let contractAddress = ""
                 let timer = setInterval(() => {
                     cc.log("CHECKING CONTRACT ADDRESS:");
@@ -612,7 +617,10 @@ class Contract {
                                 cc.log("TX RECEIPT: ", res)
                                 cc.log("CONTRACT ADDRESS: ", res.contractAddress)
                                 contractAddress = res.contractAddress
-                                if (contractAddress) self.props._newLeaseTokenAddress({ newLeaseTokenAddress: contractAddress })
+                                if (contractAddress) {
+                                    self.props._newLeaseTokenAddress({ newLeaseTokenAddress: contractAddress })
+                                    self.props._setEvent({ event: "NewLeaseTokenObject", ...res })
+                                }
                             }
                         })
                 }, 5000)

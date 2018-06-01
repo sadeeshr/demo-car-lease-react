@@ -36,7 +36,7 @@ class AddNewLifeConfigurator extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-      
+
     }
 
 
@@ -71,7 +71,9 @@ class AddNewLifeConfigurator extends Component {
 
         const townSelected = this.props.towns[this.props.town]
 
-        const objectHash = '0x' + md5(member.username + member.town + member["_id"])
+        var crypto = require('crypto');
+
+        const objectHash = '0x' + md5(member.username + member.town + member["_id"] + crypto.randomBytes(20).toString('hex'))
         // let newLifeObj = {
         //     id: member["_id"],
         //     image: leaseobject["image"],
@@ -107,7 +109,7 @@ class AddNewLifeConfigurator extends Component {
         this.props._writeNewContractData(this.props, data)
         this.props._setObject({ newLifeObj, progress: true })
 
-        this.state.lobjectSelected && this.props.account && this.props._lcCreateNewLeaseTokenObject(this.props.account) 
+        this.state.lobjectSelected && this.props.account && this.props._lcCreateNewLeaseTokenObject(objectHash, this.props.account)
 
         this.props.history.goBack()
 

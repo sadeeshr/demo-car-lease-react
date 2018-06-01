@@ -127,6 +127,20 @@ class Main extends Component {
                         this.props._setEventAlert(alert)
                         break;
                     }
+
+                case "NewLeaseTokenObject":
+                    {
+                        let alert = {
+                            title: "A New Object created on Blockchain !",
+                            message: "",
+                            level: "info",
+                            position: "tr",
+                            autoDismiss: 5
+                        }
+                        this.props._setEventAlert(alert)
+                        break;
+                    }
+
                 default:
                     break;
             }
