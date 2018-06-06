@@ -11,6 +11,7 @@ const mapStateToProps = (state) => {
     return {
         account: state.account,
         event: state.event,
+        usernames: state.usernames,
         member: state.member,
         allowance: state.allowance,
         progress: state.progress ? state.progress : false,

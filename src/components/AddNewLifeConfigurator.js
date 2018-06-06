@@ -88,6 +88,8 @@ class AddNewLifeConfigurator extends Component {
 
         let newLifeObj = {
             member: member["_id"],
+            objectType: leaseobject["objecttype"],
+            leaseType: leasetype.type,
             objectPic: leaseobject["image"],
             objectPrice: leasetype.price,
             objectHash: objectHash,
@@ -134,10 +136,10 @@ class AddNewLifeConfigurator extends Component {
 
 
         if (leasetype) {
-            if ((this.state.active === 0 || this.state.active === 1) && (leasetype && (leasetype.type === "Operational" || leasetype.type === "Private")) && this.state.lobjMileage) {
+            if ((this.state.active === 0) && (leasetype && (leasetype.type === "Operational")) && this.state.lobjMileage) {
                 monthlyopcost = (parseInt(this.state.lobjMileage, 10) / 12) * 0.1
             }
-            
+
             switch (this.state.active) {
                 case 0:
                     {
@@ -145,12 +147,12 @@ class AddNewLifeConfigurator extends Component {
                             case "Per day":
                                 monthlycapcost = parseFloat(leasetype.price) / 2000
                                 break;
-                            case "Per uur":
-                                monthlycapcost = parseFloat(leasetype.price) / 20000
-                                break;
+                            // case "Per uur":
+                            //     monthlycapcost = parseFloat(leasetype.price) / 20000
+                            //     break;
                             case "Financial":
                             case "Operational":
-                            case "Private":
+                                // case "Private":
                                 monthlycapcost = (parseFloat(leasetype.price) / 100) + (60 - parseInt(months, 10)) * 2
                                 break;
 
@@ -159,52 +161,61 @@ class AddNewLifeConfigurator extends Component {
                         }
                         break;
                     }
+
+                // case 1:
+                // {
+                //     switch (leasetype.type) {
+                //         case "Financial":
+                //         case "Operational":
+                //         case "Private":
+                //             monthlycapcost = (parseFloat(leasetype.price) / 100) + (60 - parseInt(months, 10)) * 2
+                //             break;
+
+                //         default:
+                //             break;
+                //     }
+
+                //     break;
+                // }
 
                 case 1:
                     {
-                        switch (leasetype.type) {
-                            case "Financial":
-                            case "Operational":
-                            case "Private":
-                                monthlycapcost = (parseFloat(leasetype.price) / 100) + (60 - parseInt(months, 10)) * 2
-                                break;
-
-                            default:
-                                break;
-                        }
-
+                        monthlycapcost = parseFloat(leasetype.price) / 100
                         break;
                     }
-
                 case 2:
-                case 3:
-                case 5:
                     {
-                        switch (leasetype.type) {
-                            case "Financial":
-                            case "Private":
-                                monthlycapcost = parseFloat(leasetype.price) / 100
-                                break;
-
-                            default:
-                                break;
-                        }
+                        monthlycapcost = parseFloat(leasetype.price) / 150
                         break;
                     }
-
-                case 4:
+                case 3:
                     {
                         switch (leasetype.type) {
                             case "Financial":
-                            case "Private":
                                 monthlycapcost = parseFloat(leasetype.price) / 150
                                 break;
-
+                            case "Operational":
+                                monthlycapcost = parseFloat(leasetype.price) / 100
+                                break;
                             default:
                                 break;
                         }
                         break;
                     }
+
+                // case 4:
+                //     {
+                //         switch (leasetype.type) {
+                //             case "Financial":
+                //             case "Private":
+                //                 monthlycapcost = parseFloat(leasetype.price) / 150
+                //                 break;
+
+                //             default:
+                //                 break;
+                //         }
+                //         break;
+                //     }
 
                 default:
                     break;
@@ -251,17 +262,13 @@ class AddNewLifeConfigurator extends Component {
                                         leaseobjects.map((lobject, i) => {
                                             let mileageLabel = ""
                                             switch (lobject.objecttype) {
-                                                case "1":
-                                                case "2":
+                                                case "Car":
                                                     mileageLabel = "KM p/j"
                                                     break;
-                                                case "3":
-                                                case "4":
-                                                case "6":
+                                                case "Heatpump/SolarPanel":
+                                                case "WindMill":
+                                                case "SolarPark":
                                                     mileageLabel = "Onderhoud p/m"
-                                                    break;
-                                                case "5":
-                                                    mileageLabel = "Kosten p/m"
                                                     break;
                                                 default:
                                                     break;
@@ -297,8 +304,12 @@ class AddNewLifeConfigurator extends Component {
                                                         </span>
                                                         <span className="nl-con">
                                                             <label className="nl-label">Maanden</label>
-                                                            {/*<div className="nl-inp">{leasetype.months}</div>*/}
-                                                            <input className="nl-inp" value={this.state.lobjmonths || leasetype && leasetype.months} onChange={(e) => this.setState({ lobjmonths: e.target.value })} type="text" />
+                                                            {
+                                                                (leasetype && leasetype.months === "60") ?
+                                                                    <input className="nl-inp" value={this.state.lobjmonths || leasetype && leasetype.months} onChange={(e) => this.setState({ lobjmonths: e.target.value })} type="text" />
+                                                                    : <div className="nl-inp">{leasetype.months}</div>
+                                                            }
+
                                                         </span>
                                                         <span className="nl-con">
                                                             <label className="nl-label">Prijs</label>
@@ -322,9 +333,6 @@ class AddNewLifeConfigurator extends Component {
                                 </Coverflow>
                                 {/*</Slider>*/}
                             </div>
-
-
-
 
 
                             {/* <div className="contentBtn">

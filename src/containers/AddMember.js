@@ -18,7 +18,7 @@ const mapStateToProps = (state) => {
         module: state.module,
         // cars: state.cars,
         members: state.members,
-        members_new: state.members_new,
+        usernames_new: state.usernames_new,
         eventAddNewObject: state.eventAddNewObject,
         objectID: state.objectID,
         newObject: state.newObject,

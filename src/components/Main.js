@@ -66,6 +66,32 @@ class Main extends Component {
                         this.props._setEventAlert(event)
                         break;
                     }
+
+                case "BoughtNewObject":
+                    {
+                        let alert = {
+                            title: "A New Object bought !",
+                            message: "",
+                            level: "info",
+                            position: "tr",
+                            autoDismiss: 5
+                        }
+                        this.props._setEventAlert(alert)
+                        break;
+                    }
+
+                case "CreateNewUser":
+                    {
+                        let alert = {
+                            title: "A New Member Authorized !",
+                            message: "",
+                            level: "info",
+                            position: "tr",
+                            autoDismiss: 5
+                        }
+                        this.props._setEventAlert(alert)
+                        break;
+                    }
                 case "AddNewObject":
                     {
                         const event = nextProps.event
@@ -144,6 +170,13 @@ class Main extends Component {
                 default:
                     break;
             }
+
+            // setTimeout(() => {
+            //     const townSelected = this.props.towns[this.props.town]
+            //     this.props._fetchMembers(this.props, (townSelected ? townSelected["municipalityID"] : "1"), this.props.account)
+            // }, 1000);
+
+
         }
         if (nextProps.eventAlert && (this.props.eventAlert !== nextProps.eventAlert)) {
             // cc.log(this.refs)
@@ -225,9 +258,9 @@ class Main extends Component {
         return (
             <div>
                 <nav style={style.nav}>
-                    <span style={{ fontWeight: (["main", "home"].indexOf(path) !== -1) ? "800" : "100" }}>HOME</span> {" "}
-                    <span style={{ fontWeight: (path === "addnewlife") ? "800" : "100" }}>GA DUURZAAM</span>{" "}
-                    <span style={{ fontWeight: (path === "members") ? "800" : "100" }}>LEDEN</span>{" "}
+                    <span onClick={() => this.props.history.push("/", { path: "home" })} style={{ cursor: "pointer", fontWeight: (["main", "home"].indexOf(path) !== -1) ? "800" : "100" }}>HOME</span> {" "}
+                    <span onClick={() => this.props.history.push("/", { path: "addnewlife" })} style={{ cursor: "pointer", fontWeight: (path === "addnewlife") ? "800" : "100" }}>GA DUURZAAM</span>{" "}
+                    <span onClick={() => this.props.history.push("/", { path: "members" })} style={{ cursor: "pointer", fontWeight: (path === "members") ? "800" : "100" }}>LEDEN</span>{" "}
                 </nav>
 
                 <NotificationSystem ref="notificationSystem" />

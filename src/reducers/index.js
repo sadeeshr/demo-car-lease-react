@@ -132,6 +132,8 @@ const rootReducer = (state = initialState, action) => {
         case 'INVEST_IN_OBJECT_RESULT':
         case 'APPROVE':
         case 'ADD_NEW_USER':
+        case 'BUY_AND_ACTIVATE':
+        case 'PAY_CAPITAL_OPERATION':
         case 'HASH_CONFIRMATIONS':
         case 'UPDATE_SOCKET_PROPS':
         case 'NEW_LEASETOKEN_ADDR':
@@ -247,7 +249,18 @@ const rootReducer = (state = initialState, action) => {
                 approveTxID: null,
                 investInObjectTxID: null,
                 payFeeTxID: null,
-                claimDividendTxID: null
+                claimDividendTxID: null,
+                // newObject: {
+                //     ...state.newObject,
+                //     txID: null
+                // },
+                // newLeaseTokenObject: {
+                //     ...state.newLeaseTokenObject,
+                //     txID: null
+                // },
+                newObject: null,
+                newLeaseTokenObject: null,
+                AddNewUser: null
             }
 
         case 'RESET_EVENT':

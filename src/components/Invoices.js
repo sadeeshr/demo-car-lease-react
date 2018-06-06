@@ -3,6 +3,7 @@ import BlockUi from 'react-block-ui';
 import { Link } from 'react-router-dom'
 import Slide from 'react-reveal/Slide';
 import cc from '../lib/utils';
+import formatNumber from 'accounting-js/lib/formatNumber.js'
 
 class Invoices extends Component {
     constructor(props) {
@@ -69,7 +70,6 @@ class Invoices extends Component {
             module: "invoicesdev2",
             result: "invoices",
             data: {
-                module: this.props.location.state.module,
                 objectID: this.props.member.objectID,
                 year: this.state.year || (new Date()).getFullYear(),
                 month: this.state.month ? this.state.month + 1 : (new Date()).getMonth(),
@@ -78,10 +78,10 @@ class Invoices extends Component {
                 status: false
             }
         }
-        this.props._writeNewContractData(data)
+        this.props._writeNewContractData(this.props, data)
     }
 
-    updateInvoice = (invoice) => {
+    updateInvoice = (invoice, tariff, nextTariff, mileage, total) => {
         let data = {
             module: "invoicesdev2",
             result: "invoices",
@@ -91,8 +91,8 @@ class Invoices extends Component {
                 objectID: invoice.objectID,
                 year: invoice.year,
                 month: invoice.month,
-                // mileage: mileage || 0,
-                // amount: amount || 0,
+                mileage: mileage || 0,
+                total: total || 0,
                 status: true
             }
         }
@@ -154,14 +154,28 @@ class Invoices extends Component {
 
     render() {
         cc.log("INVOICE State Props: ", this.state, this.props);
+
+        const user = this.props.usernames && this.props.usernames.find(userO => userO["_id"] === this.props.member["member"])
+
         // const invoices = this.props.invoices ? this.props.invoices.filter(invoice => (this.months[invoice.month].toLowerCase().startsWith(this.state.filter) || invoice.year === parseInt(this.state.filter, 10))) : []
         const invoices = this.props.invoices || []
         invoices.sort((a, b) => parseFloat(b.month) - parseFloat(a.month))
         // const invoices = this.props.invoices
-        let amount = (this.props.member.obj.objectFee.toNumber()) + (((this.state.mileage || this.props.member.mileagesTotal) - this.props.member.mileagesTotal) * 0.10)
+        // let amount = (this.props.member.obj.objectPrice.toNumber()) + (((this.state.mileage || this.props.member.mileagesTotal) - this.props.member.mileagesTotal) * 0.10)
         // cc.log(amount, ' <= ', this.props.allowance, (amount <= this.props.allowance), this.state.mileage, ' >= ', this.props.member.mileagesTotal, (this.state.mileage >= this.props.member.mileagesTotal));
-        const enableInvoice = ((this.state.mileage >= this.props.member.mileagesTotal) && (amount <= this.props.allowance)) ? true : false
+        // const enableInvoice = ((this.state.mileage >= this.props.member.mileagesTotal) && (amount <= this.props.allowance)) ? true : false
         // cc.log("Invoice Enabled: ", enableInvoice);
+
+        let tariff = this.props.member.objectMonthlyCapitalCost
+        let mileageEuro = this.props.member.objectMonthlyOperatingCost
+        let nextTariff = 0
+
+        if (this.props.member.leaseType === "Per Dag") {
+            tariff = parseFloat(this.props.member.objectMonthlyCapitalCost / 100).toFixed(2)
+            nextTariff = parseFloat(((invoices[0] && invoices[0]["nextTariff"]) ? invoices[0]["nextTariff"] : this.props.member.objectMonthlyCapitalCost) - (this.props.member.objectMonthlyCapitalCost / 2000)).toFixed(2)
+            mileageEuro = parseFloat((this.state.mileage || 0) * 0.1).toFixed(2)
+        }
+        const total = parseFloat(tariff + mileageEuro).toFixed(2)
 
         let invoicesRow = []
 
@@ -195,7 +209,7 @@ class Invoices extends Component {
                     <i title="Add Invoice" className="flaticon-invoice" onClick={() => this.createInvoice()}></i>
                     <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
                 </div> */}
-                <div className="navCon">
+                <div hidden className="navCon">
                     <h1 id="header">
                         <div hidden className="fl"><i className="flaticon-back" onClick={() => this.props.history.goBack()}></i></div>
                         Invoices
@@ -206,40 +220,58 @@ class Invoices extends Component {
                     </h1>
                 </div>
                 <Slide top opposite when={this.state.reveal}>
+                    <div className="fr"><i title="Add Invoice" className="flaticon-invoice marIcon" onClick={() => this.createInvoice()}></i></div>
                     <div className="contentCon bg-none overflow">
                         <BlockUi tag="div" blocking={this.props.progress}>
                             <div className="carIntestCon">
                                 <div className="membersCon">
                                     <div className="leaseCarCon invest">
                                         <div className="balance">
-                                            <div className="balanceName">My Balance</div>
-                                            <div className="balanceNum">{(this.props.euroTokenBalance + this.props.unClaimedRedemption)}<span> Euro</span></div>
+                                            <div className="balanceName">MIJIN SALDO:</div>
+                                            <div className="balanceNum">{formatNumber(parseInt((this.props.euroTokenBalance + this.props.unClaimedRedemption), 10), { precision: 0, thousand: "." })}<span> Euro</span></div>
                                         </div>
                                         <div className="mtableLink">
                                             <div className="mtableCar">
                                                 <img src={this.props.member.objectPic} alt="carImage" />
                                             </div>
-                                            <div className="mtableTokens">{this.props.member.totalRaised}
+                                            <div className="mtableTokens">{"ACTIVE"}
                                                 <p>{this.props.member.evTokens}</p>
                                             </div>
-                                            <div className="mtableUser">{this.props.member.username}
-                                                <p>{this.props.member.town}</p>
+                                            <div className="mtableUser">{user.username}
+                                                <p>{user.town}</p>
+                                            </div>
+                                            <div hidden className="mtableMnd">{formatNumber(parseInt((this.props.member.objectPrice), 10), { precision: 0, thousand: "." })} EUR
+                                                <p>{this.props.member.months} MND</p>
                                             </div>
                                         </div>
                                         {/*invoicesRow*/}
                                         {
                                             invoices && invoices.map((invoice, i) => {
-                                                return <div key={i} className="investAddCon">
-                                                    {!invoice.status && <div hidden={this.props.payFeeTxID} className="arrowBtn">
-                                                        <img onClick={() => { this.props._lcPayFee(this.props.member.objectID, this.props.account); this.updateInvoice(invoice) }} src={require('../assets/add.jpg')} alt="add2" />
-                                                    </div>}
-                                                    <div className="investAddInput">
-                                                        <p style={{ margin: "0" }}>{invoice.year} {this.months[invoice.month]}</p>
-                                                        <p style={{ margin: "0" }}>{this.props.member.mileagesAverage} km stand</p>
-                                                        <p style={{ margin: "0" }}>{this.props.member.obj.objectFee.toNumber()} Euro</p>
-                                                    </div>
-                                                    <div className="investAddStatus">
-                                                        {this.props.payFeeTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.payFeeTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.payFeeTxID)) ? <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red" }}>pending</p>}</Link>)}
+                                                return <div key={i} className="leaseCarCon invest">
+                                                    <div className="balance balanceNum"> BETAAL {this.months[invoice.month]} {invoice.year} </div>
+                                                    <div className="investAddCon">
+                                                        <div className="investAddInput">
+                                                            <table>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>Tarief (Incl BTW)</td><td>{tariff} Euro</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>{(this.props.member.objectType === "Car") ? "KM Vergoeding" : "Onderhoud p/m"}</td><td>{invoice.mileage || <input value={this.state.mileage || 0} onChange={(e) => this.setState({ mileage: e.target.value })} maxLength="20" type="number" placeholder="" />}{mileageEuro} Euro</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Totaal</td><td>{total} Euro</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+
+                                                        </div>
+                                                        {!invoice.status && <div hidden={this.props.payFeeTxID} className="arrowBtn">
+                                                            <img onClick={() => { this.props._lcPayCapitalAndOperation(this.props.member.objectID, (parseFloat(this.props.member.objectMonthlyCapitalCost) * 100).toFixed(2), (parseFloat(this.props.member.objectMonthlyOperatingCost) * 100).toFixed(2), this.props.account); this.updateInvoice(invoice, tariff, nextTariff, this.state.mileage, total) }} src={require('../assets/add.jpg')} alt="add2" />
+                                                        </div>}
+                                                        <div className="investAddStatus">
+                                                            {this.props.payFeeTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.payFeeTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.payFeeTxID)) ? <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red" }}>pending</p>}</Link>)}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             })
@@ -329,3 +361,7 @@ export default Invoices
 //                         <input className="searchBtn" type="text" name="filterMembers" value={this.state.filter || ""} placeholder="Search" onChange={(e) => { this.setState({ filter: e.target.value }) }} />
 //                     </div>
 //                 </div>
+
+// <p style={{ margin: "0" }}> </p>
+//                                                             <p style={{ margin: "0" }}> </p>
+//                                                             <p style={{ margin: "0" }}> </p>

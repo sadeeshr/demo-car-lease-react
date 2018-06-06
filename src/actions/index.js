@@ -152,7 +152,7 @@ export const _contractDataResponse = (account, response) => {
     }
 }
 
-export const _objectSelected = (obj, account, module) => {
+export const _objectSelected = (obj, account) => {
     return (dispatch) => {
         if (!obj.objectID && obj.account === account) {
             // dispatch(push("/", { module: module, path: "addnewlife" }))
@@ -437,6 +437,34 @@ export const _lcAddUser = (user, account) => {
 }
 
 
+export const _lcBuyAndActivate = (objectID, account) => {
+    return (dispatch) => {
+        return contract.lcBuyAndActivate(objectID, account)
+            .then(result => {
+                return dispatch(
+                    {
+                        type: "BUY_AND_ACTIVATE",
+                        payload: result
+                    }
+                )
+            })
+    }
+}
+
+export const _lcPayCapitalAndOperation = (objectID, capital, operation, account) => {
+    return (dispatch) => {
+        return contract.lcPayCapitalAndOperation(objectID, capital, operation, account)
+            .then(result => {
+                return dispatch(
+                    {
+                        type: "PAY_CAPITAL_OPERATION",
+                        payload: result
+                    }
+                )
+            })
+    }
+}
+
 export const _lcTotalSupply = () => {
     return (dispatch) => {
         return contract.lcTotalSupply()
@@ -580,6 +608,20 @@ export const _ltBalanceOf = (objectID, account, address) => {
                 dispatch(
                     {
                         type: "EV_MYTOKENS",
+                        payload: result
+                    }
+                )
+            )
+    }
+}
+
+export const _ltTotalSupply = (objectID, address) => {
+    return (dispatch) => {
+        return contract.ltTotalSupply(objectID, address)
+            .then(result =>
+                dispatch(
+                    {
+                        type: "TOTAL_SUPPLY_RESULT",
                         payload: result
                     }
                 )

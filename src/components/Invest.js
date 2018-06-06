@@ -171,7 +171,7 @@ class Invest extends Component {
                                             <div className="mtableUser">{user.username}
                                                 <p>{user.town}</p>
                                             </div>
-                                            <div className="mtableMnd">{formatNumber(parseInt((this.props.member.obj.objectPrice), 10), { precision: 0, thousand: "." })} EUR
+                                            <div className="mtableMnd">{formatNumber(parseInt((this.props.member.objectPrice), 10), { precision: 0, thousand: "." })} EUR
                                                         <p>{this.props.member.months} MND</p>
                                             </div>
                                         </div>
