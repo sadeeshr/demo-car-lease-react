@@ -97,7 +97,7 @@ const LeaseTokenObjectContract = new web3.eth.Contract(contracts.LeaseTokenObjec
 
 subscribeEvents = (io) => {
     console.log("!!! Subscribing to all events !!!");
-    // euroToken.events.allEvents("latest", (error, event) => error ? console.error("euroToken EVENT ERROR: ", error) : console.log("euroToken EVENT: ", event))
+    euroToken.events.allEvents("latest", (error, event) => error ? console.error("euroToken EVENT ERROR: ", error) : handleEvent(io, event))
     LeaseTokenContract.events.allEvents("latest", (error, event) => error ? console.error("LeaseTokenContract EVENT ERROR: ", error) : handleEvent(io, event))
 
     // setTimeout(() => {

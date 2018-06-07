@@ -228,7 +228,7 @@ class Invoices extends Component {
                                     <div className="leaseCarCon invest">
                                         <div className="balance">
                                             <div className="balanceName">MIJIN SALDO:</div>
-                                            <div className="balanceNum">{formatNumber(parseInt((this.props.euroTokenBalance + this.props.unClaimedRedemption), 10), { precision: 0, thousand: "." })}<span> Euro</span></div>
+                                            <div className="balanceNum">{formatNumber(parseInt((this.props.euroTokenBalance + this.props.unClaimedRedemption), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}<span> Euro</span></div>
                                         </div>
                                         <div className="mtableLink">
                                             <div className="mtableCar">
@@ -240,7 +240,7 @@ class Invoices extends Component {
                                             <div className="mtableUser">{user.username}
                                                 <p>{user.town}</p>
                                             </div>
-                                            <div hidden className="mtableMnd">{formatNumber(parseInt((this.props.member.objectPrice), 10), { precision: 0, thousand: "." })} EUR
+                                            <div hidden className="mtableMnd">{formatNumber(parseInt((this.props.member.objectPrice), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} EUR
                                                 <p>{this.props.member.months} MND</p>
                                             </div>
                                         </div>

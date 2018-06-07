@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import Slide from 'react-reveal/Slide';
 import cc from '../lib/utils';
 import formatNumber from 'accounting-js/lib/formatNumber.js'
+import { Calendar } from 'primereact/components/calendar/Calendar';
 
 class Invest extends Component {
 
@@ -123,6 +124,7 @@ class Invest extends Component {
 
         const user = this.props.usernames && this.props.usernames.find(userO => userO["_id"] === this.props.member["member"])
 
+        const buyAndActivate = this.props.member.crowdsaleClosed && !this.props.member.active
         // const amountRemaining = this.props.member.objectPrice - this.props.member.totalRaised
         // const allowedAmountToInvest = Math.min(Math.min(amountRemaining, this.props.allowance), this.props.euroTokenBalance)
         // const euroTokenBalance = this.props.euroTokenBalance ? (this.props.euroTokenBalance.length > 5 ? this.props.euroTokenBalance.substring(0, 5) + "..." : this.props.euroTokenBalance) : ""
@@ -159,7 +161,7 @@ class Invest extends Component {
                                     <div className="leaseCarCon invest">
                                         <div className="balance">
                                             <div className="balanceName">MIJIN SALDO:</div>
-                                            <div className="balanceNum">{formatNumber(parseInt((this.props.euroTokenBalance + this.props.unClaimedRedemption), 10), { precision: 0, thousand: "." })}<span> Euro</span></div>
+                                            <div className="balanceNum">{formatNumber(parseInt((this.props.euroTokenBalance + this.props.unClaimedRedemption), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}<span> Euro</span></div>
                                         </div>
                                         <div className="mtableLink">
                                             <div className="mtableCar">
@@ -171,20 +173,29 @@ class Invest extends Component {
                                             <div className="mtableUser">{user.username}
                                                 <p>{user.town}</p>
                                             </div>
-                                            <div className="mtableMnd">{formatNumber(parseInt((this.props.member.objectPrice), 10), { precision: 0, thousand: "." })} EUR
+                                            <div className="mtableMnd">{formatNumber(parseInt((this.props.member.objectPrice), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} EUR
                                                         <p>{this.props.member.months} MND</p>
                                             </div>
                                         </div>
                                         <div className="investAddCon">
                                             <div className="arrowBtn">
-                                                <img onClick={() => this.props.account && this.props._lcInvestInObject(this.props.member.objectID, this.state.ethInvest || "0", this.props.account)} src={require('../assets/add.jpg')} alt="add2" />
+                                                <img onClick={() => {
+                                                    buyAndActivate ?
+                                                        this.state.activedate && this.props._lcBuyAndActivate(this.props.member.objectID, this.state.activedate, this.props.account)
+                                                        : this.props.account && this.props._lcInvestInObject(this.props.member.objectID, this.state.ethInvest || "0", this.props.account)
+                                                }} src={require('../assets/add.jpg')} alt="add2" />
                                             </div>
-                                            <div className="investAddInput">
-                                                <input value={(typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest} onChange={(e) => this.setState({ ethInvest: e.target.value })} maxLength="20" type="text" placeholder="Euro Token" />
-                                            </div>
+
+                                            {
+                                                buyAndActivate ?
+                                                    <Calendar value={this.state.activedate || new Date()} onChange={(e) => this.setState({ activedate: e.value })}>Opleverdatum</Calendar>
+                                                    : <div className="investAddInput"><input value={(typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest} onChange={(e) => this.setState({ ethInvest: e.target.value })} maxLength="20" type="text" placeholder="Euro Token" />
+                                                    </div>
+                                            }
                                             <div className="investAddStatus">
-                                                <p>Invest Euro</p>
+                                                <p>{buyAndActivate ? "BETAAL WINDMOLEN" : "INVESTEER EURO"}</p>
                                                 {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.investInObjectTxID)) ? <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red" }}>pending</p>}</Link>)}
+                                                {this.props.BuyAndActivate && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.BuyAndActivate.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.BuyAndActivate.txID)) ? <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red" }}>pending</p>}</Link>)}
                                             </div>
                                         </div>
                                     </div>

@@ -27,6 +27,7 @@ const mapStateToProps = (state) => {
         payFeeTxID: state.payFeeTxID,
         progress: state.progress ? state.progress : false,
         investInObjectTxID: state.investInObjectTxID,
+        BuyAndActivate: state.BuyAndActivate,
         eventTransfer: state.eventTransfer,
         claimDividendTxID: state.claimDividendTxID,
         approveTxID: state.approveTxID,

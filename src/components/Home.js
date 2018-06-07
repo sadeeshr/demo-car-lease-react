@@ -48,7 +48,7 @@ class Home extends Component {
 
 
         let inhabitants = town && town["inhabitants"]
-        inhabitants = formatNumber(parseInt(inhabitants, 10), { precision: 0, thousand: "." });
+        inhabitants = formatNumber(parseInt(inhabitants, 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true });
 
         return (
             <div className="content-border">

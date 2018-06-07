@@ -171,10 +171,10 @@ class Main extends Component {
                     break;
             }
 
-            // setTimeout(() => {
-            //     const townSelected = this.props.towns[this.props.town]
-            //     this.props._fetchMembers(this.props, (townSelected ? townSelected["municipalityID"] : "1"), this.props.account)
-            // }, 1000);
+            setTimeout(() => {
+                const townSelected = this.props.towns[this.props.town]
+                this.props._fetchMembers(this.props, (townSelected ? townSelected["municipalityID"] : "1"), this.props.account)
+            }, 1500);
 
 
         }

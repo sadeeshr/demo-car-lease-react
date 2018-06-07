@@ -303,7 +303,8 @@ class Members extends Component {
                                             (userObject.active ?
                                                 this.props.history.push("/", { path: "invoices" })
                                                 :
-                                                (member.account === this.props.account) ? this.props._lcBuyAndActivate(userObject.objectID, this.props.account) : cc.log("MEMBER CAN ONLY BUY AND ACTIVATE HIS OBJECT")
+                                                (member.account === this.props.account) ? this.props.history.push("/", { path: "invest" }) : cc.log("MEMBER CAN ONLY BUY AND ACTIVATE HIS OBJECT")
+                                                // 
                                                 // (this.props._setEventAlert({
                                                 //     title: "Please contact admin for ACTIVATION",
                                                 //     message: ``,

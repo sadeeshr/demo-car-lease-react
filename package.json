@@ -20,6 +20,7 @@
     "md5": "^2.2.1",
     "module": "^1.2.5",
     "mongojs": "^2.4.1",
+    "primereact": "^1.6.0",
     "react": "^16.2.0",
     "react-block-ui": "^1.1.1",
     "react-coverflow": "^0.2.14",

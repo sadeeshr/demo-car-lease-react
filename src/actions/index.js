@@ -437,9 +437,9 @@ export const _lcAddUser = (user, account) => {
 }
 
 
-export const _lcBuyAndActivate = (objectID, account) => {
+export const _lcBuyAndActivate = (objectID, activeDate, account) => {
     return (dispatch) => {
-        return contract.lcBuyAndActivate(objectID, account)
+        return contract.lcBuyAndActivate(objectID, activeDate, account)
             .then(result => {
                 return dispatch(
                     {

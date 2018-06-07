@@ -77,13 +77,13 @@ class ObjectList extends Component {
 
         const town = this.props.towns[this.props.town];
         let evs = town && town["inhabitants"]
-        evs = formatNumber((parseInt(evs, 10) / 10), { precision: 0, thousand: "." });
+        evs = formatNumber((parseInt(evs, 10) / 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true });
         let neutral = town && town["households"]
-        neutral = formatNumber(parseInt(neutral, 10), { precision: 0, thousand: "." });
+        neutral = formatNumber(parseInt(neutral, 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true });
         let solar = town && town["inhabitants"]
-        solar = formatNumber((parseInt(solar, 10) / 1000), { precision: 0, thousand: "." });
+        solar = formatNumber((parseInt(solar, 10) / 1000), { precision: 2, thousand: ".", decimal: ",", stripZeros: true });
         let wind = town && town["inhabitants"]
-        wind = formatNumber((parseInt(wind, 10) / 10000), { precision: 0, thousand: "." });
+        wind = formatNumber((parseInt(wind, 10) / 10000), { precision: 2, thousand: ".", decimal: ",", stripZeros: true });
 
         const nextScreen = (this.props.registered || !this.props.account) ? "members" : "addmember"
 

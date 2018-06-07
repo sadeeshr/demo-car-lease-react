@@ -260,7 +260,8 @@ const rootReducer = (state = initialState, action) => {
                 // },
                 newObject: null,
                 newLeaseTokenObject: null,
-                AddNewUser: null
+                AddNewUser: null,
+                BuyAndActivate: null
             }
 
         case 'RESET_EVENT':

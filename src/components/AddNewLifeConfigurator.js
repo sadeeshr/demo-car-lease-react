@@ -13,7 +13,10 @@ class AddNewLifeConfigurator extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            progress: false
+            progress: false,
+            lobjprice: '',
+            lobjMileage: ''
+            // active: 0
         }
 
     }
@@ -62,7 +65,7 @@ class AddNewLifeConfigurator extends Component {
 
     checkMandatory = () => this.mandatory.every(item => this.state[item])
 
-    createAccount = (leasetype, months, monthlycapcost, monthlyopcost) => {
+    createAccount = (leasetype, price, months, monthlycapcost, monthlyopcost) => {
         this.setState({ progress: true })
 
         const leaseobject = this.props.leaseobjects && this.props.leaseobjects[this.state.active]
@@ -91,7 +94,7 @@ class AddNewLifeConfigurator extends Component {
             objectType: leaseobject["objecttype"],
             leaseType: leasetype.type,
             objectPic: leaseobject["image"],
-            objectPrice: leasetype.price,
+            objectPrice: price,
             objectHash: objectHash,
             months: months,
             objectDealer: leaseobject["dealer"],
@@ -129,7 +132,8 @@ class AddNewLifeConfigurator extends Component {
         const ltypeId = this.state.leasetypeid || 0
         let leaseobject = this.props.leaseobjects && this.props.leaseobjects[this.state.active]
         let leasetype = leaseobject && leaseobject["leasetypes"][ltypeId]
-        let months = this.state.lobjmonths || leasetype && leasetype.months
+        let months = this.state.lobjmonths || (leasetype && leasetype.months)
+        let price = this.state.lobjprice || (leasetype && leasetype.price)
         let monthlycapcost = ""
         let monthlyopcost = 0.00
 
@@ -144,7 +148,7 @@ class AddNewLifeConfigurator extends Component {
                 case 0:
                     {
                         switch (leasetype.type) {
-                            case "Per day":
+                            case "Per Dag":
                                 monthlycapcost = parseFloat(leasetype.price) / 2000
                                 break;
                             // case "Per uur":
@@ -300,20 +304,21 @@ class AddNewLifeConfigurator extends Component {
                                                         <span className="nl-con">
                                                             <label className="nl-label">Euro per maand</label>
                                                             {/*<input className="nl-inp" value={this.state.carFee || car.fee} onChange={(e) => this.setState({ carFee: e.target.value })} type="text" />*/}
-                                                            <div className="nl-inp">{formatNumber(parseInt(monthlycapcost, 10), { precision: 0, thousand: "." })}</div>
+                                                            <div className="nl-inp">{formatNumber(parseInt(monthlycapcost, 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</div>
                                                         </span>
                                                         <span className="nl-con">
                                                             <label className="nl-label">Maanden</label>
                                                             {
                                                                 (leasetype && leasetype.months === "60") ?
                                                                     <input className="nl-inp" value={this.state.lobjmonths || leasetype && leasetype.months} onChange={(e) => this.setState({ lobjmonths: e.target.value })} type="text" />
-                                                                    : <div className="nl-inp">{leasetype.months}</div>
+                                                                    : <div className="nl-inp">{leasetype && leasetype.months}</div>
                                                             }
 
                                                         </span>
                                                         <span className="nl-con">
                                                             <label className="nl-label">Prijs</label>
-                                                            <div className="nl-inp">{formatNumber(parseInt(leasetype && leasetype.price, 10), { precision: 0, thousand: "." })}</div>
+                                                            <input className="nl-inp" value={price} onChange={(e) => this.setState({ lobjprice: e.target.value })} type="text" />
+                                                            {/*<div className="nl-inp">{}</div>*/ /*formatNumber(parseInt(price, 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })*/}
                                                         </span>
                                                         <span className="nl-con">
                                                             <label className="nl-label">{mileageLabel}</label>
@@ -343,7 +348,7 @@ class AddNewLifeConfigurator extends Component {
                         <div className="footCon">
                             {this.state.lobjectSelected && this.props.account && <div>
                                 <span>Confirm & Publish</span>
-                                <button title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected} className="arrowBtn" onClick={() => this.createAccount(leasetype, months, monthlycapcost, monthlyopcost)}>
+                                <button title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected} className="arrowBtn" onClick={() => this.createAccount(leasetype, price, months, monthlycapcost, monthlyopcost)}>
                                     <img src={require('../assets/add.jpg')} alt="addM" />
                                 </button>
                                 <img style={img} src={(this.props.leaseobjects && this.props.leaseobjects[this.state.active || "0"]["image"])} alt="objectImage" />

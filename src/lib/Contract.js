@@ -470,8 +470,8 @@ class Contract {
             })
     }
 
-    lcBuyAndActivate = (objectID, account) => {
-        let timeStamp = Math.floor(Date.now() / 1000)
+    lcBuyAndActivate = (objectID, activeDate, account) => {
+        let timeStamp = Math.floor(activeDate.getTime() / 1000)
         cc.log(`Buy And Activate Object: ${objectID}, ${timeStamp}`);
         return this.LeaseTokenContract.buyAndActivate(objectID, timeStamp, { from: account })
             .then(result => {
