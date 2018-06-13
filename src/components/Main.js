@@ -46,8 +46,9 @@ class Main extends Component {
     componentWillReceiveProps(nextProps) {
         // cc.log("Main Update Props: ", nextProps, nextProps.socket, !nextProps.usernames);
         // if (nextProps.account && nextProps.socket && !nextProps.usernames) this.fetchUserData()
+        // this.props.event && (this.props.event.transactionHash !== nextProps.event.transactionHash)
 
-        if (nextProps.event && this.props.event !== nextProps.event) {
+        if (nextProps.event && (this.props.event !== nextProps.event)) {
             switch (nextProps.event.event) {
                 case "Transfer":
                     {
@@ -70,7 +71,7 @@ class Main extends Component {
                 case "BoughtNewObject":
                     {
                         let alert = {
-                            title: "A New Object bought !",
+                            title: "New Object bought !",
                             message: "",
                             level: "info",
                             position: "tr",
@@ -83,7 +84,7 @@ class Main extends Component {
                 case "CreateNewUser":
                     {
                         let alert = {
-                            title: "A New Member Authorized !",
+                            title: "New Member is Authorized !",
                             message: "",
                             level: "info",
                             position: "tr",
@@ -118,7 +119,7 @@ class Main extends Component {
                         }
 
                         let alert = {
-                            title: "Great, A New Object has been added !!",
+                            title: "New Object added !",
                             message: ``,
                             level: "info",
                             position: "tr",
@@ -131,7 +132,7 @@ class Main extends Component {
                 case "Claim":
                     {
                         let alert = {
-                            title: "A New Claim made !",
+                            title: "New Claim made !",
                             message: ``,
                             level: "info",
                             position: "tr",
@@ -144,7 +145,7 @@ class Main extends Component {
                 case "NewMember":
                     {
                         let alert = {
-                            title: "A New Member added !",
+                            title: "New Member added !",
                             message: "",
                             level: "info",
                             position: "tr",
@@ -157,7 +158,7 @@ class Main extends Component {
                 case "NewLeaseTokenObject":
                     {
                         let alert = {
-                            title: "A New Object created on Blockchain !",
+                            title: "New Crowdfunding contract created !",
                             message: "",
                             level: "info",
                             position: "tr",

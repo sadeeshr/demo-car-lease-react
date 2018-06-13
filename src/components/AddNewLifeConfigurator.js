@@ -347,7 +347,7 @@ class AddNewLifeConfigurator extends Component {
 
                         <div className="footCon">
                             {this.state.lobjectSelected && this.props.account && <div>
-                                <span>Confirm & Publish</span>
+                                <span>Creenen Crowdsale</span>
                                 <button title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected} className="arrowBtn" onClick={() => this.createAccount(leasetype, price, months, monthlycapcost, monthlyopcost)}>
                                     <img src={require('../assets/add.jpg')} alt="addM" />
                                 </button>

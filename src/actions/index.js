@@ -28,6 +28,26 @@ export const _fetchMembers = (props, municipalityID, account) => {
     return (_fetchContractData(props, data, account))
 }
 
+export const _fetchUsers = (props, account) => {
+
+    let data = {
+        module: "membersdev2",
+        result: "usernames",
+        query: {
+        },
+        filter: {
+            _id: 1,
+            username: 1,
+            account: 1,
+            town: 1,
+            message: 1,
+            profilePic: 1
+        }
+    }
+
+    return (_fetchContractData(props, data, account))
+}
+
 export const _socketStatus = (status) => {
     return (dispatch) => {
         dispatch({

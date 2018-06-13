@@ -11,7 +11,7 @@ class Invest extends Component {
 
     constructor(props) {
         super(props)
-        this.state = { reveal: false }
+        this.state = { reveal: false, activedate: new Date() }
         // this.confTimer = null
         this.rinkebyStatsURL = "https://rinkeby.etherscan.io/tx/"
     }
@@ -193,7 +193,7 @@ class Invest extends Component {
                                                     </div>
                                             }
                                             <div className="investAddStatus">
-                                                <p>{buyAndActivate ? "BETAAL WINDMOLEN" : "INVESTEER EURO"}</p>
+                                                <p>{buyAndActivate ? ("BETAAL " + this.props.member.objectType.toUpperCase()) : "INVESTEER EURO"}</p>
                                                 {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.investInObjectTxID)) ? <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red" }}>pending</p>}</Link>)}
                                                 {this.props.BuyAndActivate && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.BuyAndActivate.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.BuyAndActivate.txID)) ? <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red" }}>pending</p>}</Link>)}
                                             </div>

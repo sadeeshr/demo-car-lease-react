@@ -4,6 +4,7 @@ const RINKEBY_NODE_URL = "ws://178.62.195.242:8546"
 // const RINKEBY_NODE_URL = "ws://localhost:8546"
 
 const web3 = new Web3(new Web3.providers.WebsocketProvider(RINKEBY_NODE_URL));
+let txHash = "" // temporary variable to hold hash
 
 // console.log("WSS WEB3: ", web3)
 
@@ -122,33 +123,39 @@ handleEvent = (io, event) => {
 getConfirmationsHash = (event, cb) => {
     let hash = event["transactionHash"]
     console.log("HASH: ", hash);
-    let blockStart, blockEnd;
-    let timer = setInterval(() => {
-        console.log("CHECKING HASH CONFIRMATIONS:");
+    if (txHash !== hash) {
+        txHash = hash
+        let blockStart, blockEnd;
+        let timer = setInterval(() => {
+            console.log("CHECKING HASH CONFIRMATIONS:");
 
-        web3.eth.getTransactionReceipt(hash)
-            .then(res => {
-                if (res && res.blockNumber) {
-                    console.log("START BLOCK: ", res.blockNumber)
-                    blockStart = res.blockNumber
-                }
-            })
-            .then(
-                blockStart && web3.eth.getBlockNumber()
-                    .then(res => {
-                        blockEnd = res
-                        let confirmations = (blockEnd - blockStart)
-                        console.log("CURRENT BLOCK: ", res)
-                        console.log("No. CONFs: ", confirmations, (confirmations > 0))
+            web3.eth.getTransactionReceipt(hash)
+                .then(res => {
+                    if (res && res.blockNumber) {
+                        console.log("START BLOCK: ", res.blockNumber)
+                        blockStart = res.blockNumber
+                    }
+                })
+                .then(
+                    blockStart && web3.eth.getBlockNumber()
+                        .then(res => {
+                            blockEnd = res
+                            let confirmations = (blockEnd - blockStart)
+                            console.log("CURRENT BLOCK: ", res)
+                            console.log("No. CONFs: ", confirmations, (confirmations > 0))
 
-                        if (confirmations > 0) {
-                            // this.props._hashConfirmations({ hashConfirmations: confirmations })
-                            clearInterval(timer)
-                            cb(event)
-                        }
-                    })
-            )
-    }, 5000)
+                            if (confirmations > 0) {
+                                // this.props._hashConfirmations({ hashConfirmations: confirmations })
+                                clearInterval(timer)
+                                cb(event)
+                            }
+                        })
+                )
+        }, 5000)
+
+    } else {
+        console.log("DUPLICATE HASH: ", hash);
+    }
 
 }
 

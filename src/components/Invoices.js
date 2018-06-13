@@ -46,6 +46,7 @@ class Invoices extends Component {
 
     componentDidMount() {
         this.objectID = this.props.member.objectID
+        // this.props.member.leaseType = "Per Dag"   // for testing
         // if (this.props.car) this.fetchCarMileagesRedemption()
         setTimeout(() => this.setState({ reveal: true }), 200);
     }
@@ -78,6 +79,9 @@ class Invoices extends Component {
                 status: false
             }
         }
+        if (this.props.member.leaseType === "Per Dag")
+            data.data["date"] = this.getFormattedDate()
+
         this.props._writeNewContractData(this.props, data)
     }
 
@@ -102,6 +106,19 @@ class Invoices extends Component {
     fetchCarMileagesRedemption = () => {
         // let car = this.props.car
         // this.setState({ carMilages: car.milages.toNumber(), monthlyRedemption: car.objectFee.toNumber() })
+    }
+
+    getFormattedDate(date) {
+        if (!date) date = new Date()
+        var year = date.getFullYear();
+
+        var month = (1 + date.getMonth()).toString();
+        month = month.length > 1 ? month : '0' + month;
+
+        var day = date.getDate().toString();
+        day = day.length > 1 ? day : '0' + day;
+
+        return month + '/' + day + '/' + year;
     }
 
     componentWillReceiveProps(nextProps) {
@@ -166,13 +183,13 @@ class Invoices extends Component {
         // const enableInvoice = ((this.state.mileage >= this.props.member.mileagesTotal) && (amount <= this.props.allowance)) ? true : false
         // cc.log("Invoice Enabled: ", enableInvoice);
 
-        let tariff = this.props.member.objectMonthlyCapitalCost
-        let mileageEuro = this.props.member.objectMonthlyOperatingCost
+        let tariff = parseFloat(this.props.member.obj.monthlyCapitalCost.toNumber() / 100).toFixed(2)
+        let mileageEuro = this.props.member.obj.monthlyOperatingCost.toNumber()
         let nextTariff = 0
 
         if (this.props.member.leaseType === "Per Dag") {
-            tariff = parseFloat(this.props.member.objectMonthlyCapitalCost / 100).toFixed(2)
-            nextTariff = parseFloat(((invoices[0] && invoices[0]["nextTariff"]) ? invoices[0]["nextTariff"] : this.props.member.objectMonthlyCapitalCost) - (this.props.member.objectMonthlyCapitalCost / 2000)).toFixed(2)
+            tariff = this.props.member.obj.monthlyCapitalCost.toNumber()
+            nextTariff = parseFloat(((invoices[0] && invoices[0]["nextTariff"]) ? invoices[0]["nextTariff"] : this.props.member.obj.monthlyCapitalCost.toNumber()) - (this.props.member.obj.monthlyCapitalCost.toNumber() / 2000)).toFixed(2)
             mileageEuro = parseFloat((this.state.mileage || 0) * 0.1).toFixed(2)
         }
         const total = parseFloat(tariff + mileageEuro).toFixed(2)
@@ -248,7 +265,7 @@ class Invoices extends Component {
                                         {
                                             invoices && invoices.map((invoice, i) => {
                                                 return <div key={i} className="leaseCarCon invest">
-                                                    <div className="balance balanceNum"> BETAAL {this.months[invoice.month]} {invoice.year} </div>
+                                                    <div className="balance balanceNum"> BETAAL {(this.props.member.leaseType === "Per Dag") ? (invoice.date || this.getFormattedDate()) : (this.months[invoice.month] + " " + invoice.year)} </div>
                                                     <div className="investAddCon">
                                                         <div className="investAddInput">
                                                             <table>
@@ -267,7 +284,8 @@ class Invoices extends Component {
 
                                                         </div>
                                                         {!invoice.status && <div hidden={this.props.payFeeTxID} className="arrowBtn">
-                                                            <img onClick={() => { this.props._lcPayCapitalAndOperation(this.props.member.objectID, (parseFloat(this.props.member.objectMonthlyCapitalCost) * 100).toFixed(2), (parseFloat(this.props.member.objectMonthlyOperatingCost) * 100).toFixed(2), this.props.account); this.updateInvoice(invoice, tariff, nextTariff, this.state.mileage, total) }} src={require('../assets/add.jpg')} alt="add2" />
+                                                            {/*<img onClick={() => { this.props._lcPayCapitalAndOperation(this.props.member.objectID, (parseFloat(this.props.member.obj.monthlyCapitalCost.toNumber()) * 100).toFixed(2), (parseFloat(this.props.member.obj.monthlyOperatingCost.toNumber()) * 100).toFixed(2), this.props.account); this.updateInvoice(invoice, tariff, nextTariff, this.state.mileage, total) }} src={require('../assets/add.jpg')} alt="add2" />*/}
+                                                            <img onClick={() => { this.props._lcPayCapitalAndOperation(this.props.member.objectID, tariff, mileageEuro, this.props.account); this.updateInvoice(invoice, tariff, nextTariff, this.state.mileage, total) }} src={require('../assets/add.jpg')} alt="add2" />
                                                         </div>}
                                                         <div className="investAddStatus">
                                                             {this.props.payFeeTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.payFeeTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.payFeeTxID)) ? <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red" }}>pending</p>}</Link>)}

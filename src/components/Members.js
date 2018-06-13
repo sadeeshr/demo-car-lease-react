@@ -18,6 +18,7 @@ class Members extends Component {
 
     componentWillMount() {
         cc.log("Members Props", this.props);
+        this.props._fetchUsers(this.props, this.props.account)
 
         // let data = {
         //     module: "membersdev2",
@@ -97,7 +98,7 @@ class Members extends Component {
 
         this.props = nextProps
 
-        if (this.props.members_edit) this.fetchMembers()
+        if (this.props.members_edit || this.props.usernames_new) this.fetchMembers()
 
         // cc.log("Members Update Props", nextProps);
         // if (this.props.members && ) this.props._reloadTokens()
@@ -164,85 +165,6 @@ class Members extends Component {
     createObject = (id) => {
         let leaseobject = this.props.newLifeObj
     }
-
-    OldrenderMember = (member, i) => {
-
-        // console.log("member object", member)
-        const user = this.props.usernames && this.props.usernames.find(userO => userO["_id"] === member["member"])
-        // console.log("user ", user)
-        const objectPrice = member.obj ? member.obj.objectPrice.toNumber() : "0"
-
-        const img = member.objectPic ? { "display": "block" } : { "maxHeight": "50px", "maxWidth": "118px", height: "auto", width: "auto" }
-        // if (this.props.account)
-        // if (!(this.props.evTokens && this.props.evTokens[member.objectID]) || this.props.addNewObjectTxID || this.props.raiseFundsForCarTxID) this.props._evMyTokens(this.props.account, member.objectID)
-        // this.evTokenMyTokens(member.objectID)
-        // const selected = (this.props.member && !this.props.member.crowdsaleClosed) ? (this.props.member.username === member.username ? true : false) : false
-        const selected = this.props.member && (this.props.member["_id"] === member["_id"]) ? true : false
-        let memberRows = [
-            <div className="mtableLink" ref={divRef => this[member.objectID] = divRef} key={i} onClick={() => user.authorized ? this.props._objectSelected(member, this.props.account, this.props.location.state.module) : cc.log("MEMBER NOT AUTHORIZED")}>
-                {!user.authorized && <div className="membersBtn">
-                    <button title="Authorize" className="arrowBtn" onClick={() => user.account !== this.props.account ? this.props._lcAddUser(user.account, this.props.account) : cc.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
-                        <img src={require('../assets/add.jpg')} alt="addM" />
-                    </button>
-                </div>}
-                <div className="mtableTokens">{member.crowdsaleClosed ? <span style={{ color: "green", fontSize: "12px" }}>Closed</span> : member.totalRaised || "0"} <p>{member.evTokens}</p></div>
-                <div className="mtableUser"><span style={user.account === this.props.account ? { fontWeight: "bold" } : {}}>{user.username || ""}</span> <p>{user.town || ""}</p></div>
-                {<div className="mtableCar"><img style={img} src={member.objectPic || user.profilePic || require('../assets/ninja.png')} alt="carImage" /><span title="Car Raised" style={{ fontSize: "12px" }}>Euro {objectPrice}</span></div>}
-                {(this.props.newObject && this.props.newObject["id"] === member["_id"]) &&
-                    (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newObject.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red", marginLeft: "0px", marginTop: "15px" }}>pending</p>}</Link>)}
-                {(this.props.newLeaseTokenObject && this.props.newLeaseTokenObject["hash"] === member["objectHash"]) &&
-                    (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newLeaseTokenObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newLeaseTokenObject.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red", marginLeft: "0px", marginTop: "15px" }}>pending</p>}</Link>)}
-            </div>
-        ]
-
-        if (selected && this.props.account) {
-            cc.log("Member: ", member);
-
-            memberRows.push(
-
-                <div className="rowSelect" key={'invest-' + i}>
-                    <div style={{ cursor: (member.objectID || user.authorized) ? "pointer" : "not-allowed" }} className="memberMesCon">{(member.objectID || user.authorized) ? user.message : "Not Allowed to Add New Life Configurator"}</div>
-                    {(member.objectID || member.leaseTokenAddress) && <div className="memberMesBtns">
-                        <div className="membersBtn">
-                            <button className="arrowBtn" onClick={() => {
-                                member.crowdsaleClosed ?
-                                    (member.active ?
-                                        this.props.history.push("/", { path: "invoices" })
-                                        :
-                                        // (member.account === this.props.account) ? this.props._lcActivateDeactivateObject(member.objectID, this.props.account) : cc.log("USER CAN ONLY ACTIVATE HIS OBJECT")
-                                        (this.props._setEventAlert({
-                                            title: "Please contact admin for ACTIVATION",
-                                            message: ``,
-                                            level: "error",
-                                            position: "tr",
-                                            autoDismiss: 3
-                                        }))
-                                    )
-                                    :
-                                    (
-                                        (member.leaseTokenAddress && !member.objectID) ?
-                                            this.props._lcCreateObject(this.props, member["_id"], member.months, member.municipalityID, member.objectPrice, member.objectHash, member.leaseTokenAddress, member.objectDealer, (parseFloat(member.objectMonthlyCapitalCost) * 100).toFixed(2), (parseFloat(member.objectMonthlyOperatingCost) * 100).toFixed(2), this.props.account)
-                                            :
-                                            (user.authorized) ?
-                                                this.props.history.push("/", { path: "invest" })
-                                                :
-                                                cc.log("NO OBJECT CONFIGURED")
-                                    )
-                            }}>
-                                <img src={require('../assets/arrow.jpg')} alt="addM" />
-                            </button>
-                            {/*<button title="Invoices (testing)" className="arrowBtn" onClick={() => { member.authorized ? this.props.history.push("/", { path: "invoices" }) : cc.log("NO OBJECT CONFIGURED") }}>
-                                <img src={require('../assets/add.jpg')} alt="addI" />
-                        </button>*/}
-                        </div>
-                    </div>}
-                </div>
-            )
-        }
-
-        return <div className="leaseCarCon" key={i}>{memberRows}</div>
-    }
-
 
     renderMember = (member, i) => {
 
@@ -431,3 +353,81 @@ class Members extends Component {
 }
 
 export default Members
+
+// OldrenderMember = (member, i) => {
+
+//     // console.log("member object", member)
+//     const user = this.props.usernames && this.props.usernames.find(userO => userO["_id"] === member["member"])
+//     // console.log("user ", user)
+//     const objectPrice = member.obj ? member.obj.objectPrice.toNumber() : "0"
+
+//     const img = member.objectPic ? { "display": "block" } : { "maxHeight": "50px", "maxWidth": "118px", height: "auto", width: "auto" }
+//     // if (this.props.account)
+//     // if (!(this.props.evTokens && this.props.evTokens[member.objectID]) || this.props.addNewObjectTxID || this.props.raiseFundsForCarTxID) this.props._evMyTokens(this.props.account, member.objectID)
+//     // this.evTokenMyTokens(member.objectID)
+//     // const selected = (this.props.member && !this.props.member.crowdsaleClosed) ? (this.props.member.username === member.username ? true : false) : false
+//     const selected = this.props.member && (this.props.member["_id"] === member["_id"]) ? true : false
+//     let memberRows = [
+//         <div className="mtableLink" ref={divRef => this[member.objectID] = divRef} key={i} onClick={() => user.authorized ? this.props._objectSelected(member, this.props.account, this.props.location.state.module) : cc.log("MEMBER NOT AUTHORIZED")}>
+//             {!user.authorized && <div className="membersBtn">
+//                 <button title="Authorize" className="arrowBtn" onClick={() => user.account !== this.props.account ? this.props._lcAddUser(user.account, this.props.account) : cc.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
+//                     <img src={require('../assets/add.jpg')} alt="addM" />
+//                 </button>
+//             </div>}
+//             <div className="mtableTokens">{member.crowdsaleClosed ? <span style={{ color: "green", fontSize: "12px" }}>Closed</span> : member.totalRaised || "0"} <p>{member.evTokens}</p></div>
+//             <div className="mtableUser"><span style={user.account === this.props.account ? { fontWeight: "bold" } : {}}>{user.username || ""}</span> <p>{user.town || ""}</p></div>
+//             {<div className="mtableCar"><img style={img} src={member.objectPic || user.profilePic || require('../assets/ninja.png')} alt="carImage" /><span title="Car Raised" style={{ fontSize: "12px" }}>Euro {objectPrice}</span></div>}
+//             {(this.props.newObject && this.props.newObject["id"] === member["_id"]) &&
+//                 (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newObject.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red", marginLeft: "0px", marginTop: "15px" }}>pending</p>}</Link>)}
+//             {(this.props.newLeaseTokenObject && this.props.newLeaseTokenObject["hash"] === member["objectHash"]) &&
+//                 (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newLeaseTokenObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newLeaseTokenObject.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red", marginLeft: "0px", marginTop: "15px" }}>pending</p>}</Link>)}
+//         </div>
+//     ]
+
+//     if (selected && this.props.account) {
+//         cc.log("Member: ", member);
+
+//         memberRows.push(
+
+//             <div className="rowSelect" key={'invest-' + i}>
+//                 <div style={{ cursor: (member.objectID || user.authorized) ? "pointer" : "not-allowed" }} className="memberMesCon">{(member.objectID || user.authorized) ? user.message : "Not Allowed to Add New Life Configurator"}</div>
+//                 {(member.objectID || member.leaseTokenAddress) && <div className="memberMesBtns">
+//                     <div className="membersBtn">
+//                         <button className="arrowBtn" onClick={() => {
+//                             member.crowdsaleClosed ?
+//                                 (member.active ?
+//                                     this.props.history.push("/", { path: "invoices" })
+//                                     :
+//                                     // (member.account === this.props.account) ? this.props._lcActivateDeactivateObject(member.objectID, this.props.account) : cc.log("USER CAN ONLY ACTIVATE HIS OBJECT")
+//                                     (this.props._setEventAlert({
+//                                         title: "Please contact admin for ACTIVATION",
+//                                         message: ``,
+//                                         level: "error",
+//                                         position: "tr",
+//                                         autoDismiss: 3
+//                                     }))
+//                                 )
+//                                 :
+//                                 (
+//                                     (member.leaseTokenAddress && !member.objectID) ?
+//                                         this.props._lcCreateObject(this.props, member["_id"], member.months, member.municipalityID, member.objectPrice, member.objectHash, member.leaseTokenAddress, member.objectDealer, (parseFloat(member.objectMonthlyCapitalCost) * 100).toFixed(2), (parseFloat(member.objectMonthlyOperatingCost) * 100).toFixed(2), this.props.account)
+//                                         :
+//                                         (user.authorized) ?
+//                                             this.props.history.push("/", { path: "invest" })
+//                                             :
+//                                             cc.log("NO OBJECT CONFIGURED")
+//                                 )
+//                         }}>
+//                             <img src={require('../assets/arrow.jpg')} alt="addM" />
+//                         </button>
+//                         {/*<button title="Invoices (testing)" className="arrowBtn" onClick={() => { member.authorized ? this.props.history.push("/", { path: "invoices" }) : cc.log("NO OBJECT CONFIGURED") }}>
+//                             <img src={require('../assets/add.jpg')} alt="addI" />
+//                     </button>*/}
+//                     </div>
+//                 </div>}
+//             </div>
+//         )
+//     }
+
+//     return <div className="leaseCarCon" key={i}>{memberRows}</div>
+// }
