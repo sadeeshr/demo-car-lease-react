@@ -96,7 +96,9 @@ class Invoices extends Component {
                 month: invoice.month,
                 mileage: mileage || 0,
                 total: total || 0,
-                status: true
+                status: true,
+                tariff: tariff,
+                nextTariff: nextTariff
             }
         }
         this.props._updateContractData(this.props, data)
@@ -185,17 +187,25 @@ class Invoices extends Component {
         // const enableInvoice = ((this.state.mileage >= this.props.member.mileagesTotal) && (amount <= this.props.allowance)) ? true : false
         // cc.log("Invoice Enabled: ", enableInvoice);
 
-        let tariff = ((this.props.member.obj.monthlyCapitalCost.toNumber()) / 100).toFixed(2)
-        let mileageEuro = ((this.props.member.obj.monthlyOperatingCost.toNumber()) / 100).toFixed(2)
+        let tariff = 0
+        let mileageEuro = 0
         let nextTariff = 0
+        let total = 0
 
-        console.log("#####", tariff, mileageEuro);
         if (this.props.member.leaseType === "Per Dag") {
-            tariff = this.props.member.obj.monthlyCapitalCost.toNumber()
-            nextTariff = parseFloat(((invoices[0] && invoices[0]["nextTariff"]) ? invoices[0]["nextTariff"] : this.props.member.obj.monthlyCapitalCost.toNumber()) - (this.props.member.obj.monthlyCapitalCost.toNumber() / 2000)).toFixed(2)
+
+            tariff = (invoices[1] && invoices[1]["nextTariff"] && invoices[0] && invoices[0]["nextTariff"] === "false") ? invoices[1]["nextTariff"] : (this.props.member.obj.monthlyCapitalCost.toNumber() / 100).toFixed(2)
+            nextTariff = parseFloat(((invoices[0] && invoices[0]["nextTariff"] === "false" && invoices[1] && invoices[1]["nextTariff"]) ? invoices[1]["nextTariff"] : this.props.member.obj.monthlyCapitalCost.toNumber() / 100) - ((this.props.member.obj.monthlyCapitalCost.toNumber() / 100) / 2000)).toFixed(2)
             mileageEuro = parseFloat((this.state.mileage || 0) * 0.1).toFixed(2)
+            total = parseFloat(tariff) + parseFloat(mileageEuro)
+        } else {
+            tariff = ((this.props.member.obj.monthlyCapitalCost.toNumber()) / 100).toFixed(2)
+            mileageEuro = ((this.props.member.obj.monthlyOperatingCost.toNumber()) / 100).toFixed(2)
+            total = parseFloat(tariff) + parseFloat(mileageEuro)
+            // .toFixed(2)
         }
-        const total = parseFloat(tariff + mileageEuro).toFixed(2)
+
+        cc.log("Invoices, Tariff, Next Tariff, Mileage, Total : ", invoices, tariff, nextTariff, mileageEuro, total);
 
         let invoicesRow = []
 
@@ -268,6 +278,11 @@ class Invoices extends Component {
                                         {/*invoicesRow*/}
                                         {
                                             invoices && invoices.map((invoice, i) => {
+
+                                                if (this.props.member.leaseType === "Per Dag" && invoice["status"] === false) {
+                                                    tariff = nextTariff
+                                                }
+
                                                 return <div key={i} className="leaseCarCon invest">
                                                     <div className="balance balanceNum"> BETAAL {(this.props.member.leaseType === "Per Dag") ? (invoice.date || this.getFormattedDate()) : (this.months[invoice.month] + " " + invoice.year)} </div>
                                                     <div className="investAddCon">
@@ -289,7 +304,7 @@ class Invoices extends Component {
                                                         </div>
                                                         {!invoice.status && <div hidden={this.props.payFeeTxID} className="arrowBtn">
                                                             {/*<img onClick={() => { this.props._lcPayCapitalAndOperation(this.props.member.objectID, (parseFloat(this.props.member.obj.monthlyCapitalCost.toNumber()) * 100).toFixed(2), (parseFloat(this.props.member.obj.monthlyOperatingCost.toNumber()) * 100).toFixed(2), this.props.account); this.updateInvoice(invoice, tariff, nextTariff, this.state.mileage, total) }} src={require('../assets/add.jpg')} alt="add2" />*/}
-                                                            <img onClick={() => { this.props._lcPayCapitalAndOperation(this.props.member.objectID, (this.props.member.leaseType === "Per Dag" ? (tariff * 100) : tariff), (this.props.member.leaseType === "Per Dag" ? (mileageEuro * 100) : mileageEuro), this.props.account); this.updateInvoice(invoice, tariff, nextTariff, this.state.mileage, total) }} src={require('../assets/add.jpg')} alt="add2" />
+                                                            <img onClick={() => { this.props._lcPayCapitalAndOperation(this.props, this.props.member.objectID, (tariff * 100), (mileageEuro * 100), this.props.account); this.updateInvoice(invoice, tariff, nextTariff, this.state.mileage, total) }} src={require('../assets/add.jpg')} alt="add2" />
                                                         </div>}
                                                         <div className="investAddStatus">
                                                             {this.props.payFeeTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.payFeeTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.payFeeTxID)) ? <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red" }}>pending</p>}</Link>)}

@@ -486,7 +486,8 @@ class Contract {
             })
     }
 
-    lcPayCapitalAndOperation = (objectID, capital, operation, account) => {
+    lcPayCapitalAndOperation = (props, objectID, capital, operation, account) => {
+        if (props) this.props = props
         cc.log(`Pay Capital And Operation: ${objectID}, ${capital}, ${operation}`);
         return this.LeaseTokenContract.payCapitalAndOperation(objectID, capital, operation, { from: account })
             .then(result => {

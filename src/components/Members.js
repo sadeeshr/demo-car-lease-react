@@ -168,7 +168,7 @@ class Members extends Component {
 
     renderMember = (member, i) => {
 
-        cc.log("member object", member)
+        // cc.log("member object", member["_id"], member.authorized, member.account)
 
         const userObjects = this.props.members && this.props.members.filter(userO => userO["member"] === member["_id"])
         // console.log("userObjects: ", userObjects);
@@ -212,7 +212,7 @@ class Members extends Component {
                 ]
 
                 if (selected && this.props.account) {
-                    cc.log("Member Object: ", userObject);
+                    // cc.log("Member Object: ", userObject);
 
                     memberRows.push(
 

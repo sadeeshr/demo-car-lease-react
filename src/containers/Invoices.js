@@ -9,6 +9,8 @@ import Invoices from '../components/Invoices';
 const mapStateToProps = (state) => {
     // console.log("Invoices Container Props: ", state)
     return {
+        towns: state.towns,
+        town: state.town,
         account: state.account,
         event: state.event,
         usernames: state.usernames,

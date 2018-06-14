@@ -471,9 +471,9 @@ export const _lcBuyAndActivate = (objectID, activeDate, account) => {
     }
 }
 
-export const _lcPayCapitalAndOperation = (objectID, capital, operation, account) => {
+export const _lcPayCapitalAndOperation = (props, objectID, capital, operation, account) => {
     return (dispatch) => {
-        return contract.lcPayCapitalAndOperation(objectID, capital, operation, account)
+        return contract.lcPayCapitalAndOperation(props, objectID, capital, operation, account)
             .then(result => {
                 return dispatch(
                     {

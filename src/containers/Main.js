@@ -14,6 +14,7 @@ const mapStateToProps = (state) => {
         account: state.account,
         usernames: state.usernames,
         members: state.members,
+        member: state.member,
         socket: state.socket,
         event: state.event,
         eventAlert: state.eventAlert,
