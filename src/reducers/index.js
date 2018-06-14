@@ -259,6 +259,7 @@ const rootReducer = (state = initialState, action) => {
                 //     txID: null
                 // },
                 newObject: null,
+                invoices: null,
                 newLeaseTokenObject: null,
                 AddNewUser: null,
                 BuyAndActivate: null

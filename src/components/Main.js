@@ -5,6 +5,7 @@ import Members from '../containers/Members';
 import AddMember from '../containers/AddMember';
 import Invest from '../containers/Invest';
 import Invoices from '../containers/Invoices';
+import NewObject from '../containers/NewObject';
 import AddNewLifeConfigurator from '../containers/AddNewLifeConfigurator';
 import { Link } from 'react-router-dom'
 import NotificationSystem from 'react-notification-system';
@@ -110,6 +111,9 @@ class Main extends Component {
                                 data: { objectID: objectID }
                             }
                             cc.log(data)
+                            const member = this.props.member
+                            member["objectID"] = objectID
+                            this.props._setObject(member)
                             this.props._updateContractData(this.props, data)
                             // this.props._writeNewContractData(this.props, data)
 
@@ -239,6 +243,8 @@ class Main extends Component {
                     return <Invest />
                 case "invoices":
                     return <Invoices />
+                case "newobject":
+                    return <NewObject />
                 default:
                     return this.renderMain()
             }

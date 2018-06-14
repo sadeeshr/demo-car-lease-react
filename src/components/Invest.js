@@ -36,6 +36,10 @@ class Invest extends Component {
     componentDidMount() {
         this.refreshValues()
         this.setState({ reveal: true })
+        if(!this.props.member.objectID) {
+            const townSelected = this.props.towns[this.props.town]
+            this.props._fetchMembers(this.props, townSelected["municipalityID"], this.props.account)
+        }        
         // setTimeout(() => this.props._lcInvestInObject(this.props.member.objectID, "10", this.props.account), 5000);
     }
 
@@ -142,7 +146,7 @@ class Invest extends Component {
                     <i title="Invoices" className="flaticon-invoice" onClick={() => this.props.history.push("/", { path: "invoices" })}></i>
                     <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
                 </div> */}
-                <div className="navCon">
+                <div hidden className="navCon">
                     <h1 id="header">
                         <div hidden className="fl">
                             <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
@@ -182,7 +186,7 @@ class Invest extends Component {
                                                 <img onClick={() => {
                                                     buyAndActivate ?
                                                         this.state.activedate && this.props._lcBuyAndActivate(this.props.member.objectID, this.state.activedate, this.props.account)
-                                                        : this.props.account && this.props._lcInvestInObject(this.props.member.objectID, this.state.ethInvest || "0", this.props.account)
+                                                        : this.props.account && this.props._lcInvestInObject(this.props.member.objectID || (this.props.event && this.props.event.returnValues && this.props.event.returnValues.objectID), this.state.ethInvest || "0", this.props.account)
                                                 }} src={require('../assets/add.jpg')} alt="add2" />
                                             </div>
 

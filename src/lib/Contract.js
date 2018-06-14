@@ -457,7 +457,7 @@ class Contract {
     }
 
     lcAddUser = (user, account) => {
-        cc.log(`Add New User: ${account}`);
+        cc.log(`Add New User: ${user} Auth: ${account}`);
         return this.LeaseTokenContract.addUser(user, { from: account })
             .then(result => {
                 cc.log(`Add New User RESULT: ${result}`);

@@ -238,7 +238,8 @@ class Members extends Component {
                                             :
                                             (
                                                 (userObject.leaseTokenAddress && !userObject.objectID) ?
-                                                    this.props._lcCreateObject(this.props, userObject["_id"], userObject.months, userObject.municipalityID, userObject.objectPrice, userObject.objectHash, userObject.leaseTokenAddress, userObject.objectDealer, (parseFloat(userObject.objectMonthlyCapitalCost) * 100), (parseFloat(userObject.objectMonthlyOperatingCost) * 100), this.props.account)
+                                                    // this.props._lcCreateObject(this.props, userObject["_id"], userObject.months, userObject.municipalityID, userObject.objectPrice, userObject.objectHash, userObject.leaseTokenAddress, userObject.objectDealer, (parseFloat(userObject.objectMonthlyCapitalCost) * 100), (parseFloat(userObject.objectMonthlyOperatingCost) * 100), this.props.account)
+                                                    this.props.history.push("/", { path: "newobject" })
                                                     :
                                                     (member.authorized) ?
                                                         this.props.history.push("/", { path: "invest" })
