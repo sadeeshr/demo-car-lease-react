@@ -96,6 +96,9 @@ class Members extends Component {
 
         }
 
+        if (nextProps.event && (nextProps.event !== this.props.event) && ((nextProps.AddNewUser && (nextProps.event.transactionHash === nextProps.AddNewUser.txID)) || (nextProps.newObject && (nextProps.event.transactionHash === nextProps.newObject.txID)) || (nextProps.newLeaseTokenObject && (nextProps.event.transactionHash === nextProps.newLeaseTokenObject.txID)))) {
+            this.fetchMembers()
+        }
         this.props = nextProps
 
         if (this.props.members_edit || this.props.usernames_new) this.fetchMembers()
@@ -201,7 +204,7 @@ class Members extends Component {
                                 <img src={require('../assets/add.jpg')} alt="addM" />
                             </button>
                         </div>}
-                        <div className="mtableTokens">{userObject.crowdsaleClosed ? <span style={{ color: "green", fontSize: "12px" }}>Closed</span> : userObject.totalRaised || "0"} <p>{userObject.evTokens}</p></div>
+                        <div className="mtableTokens">{userObject.crowdsaleClosed ? <span style={{ color: "green", fontSize: "12px" }}>{userObject.active ? "Active" : "Closed"}</span> : userObject.totalRaised || "0"} <p>{userObject.evTokens}</p></div>
                         <div className="mtableUser"><span style={member.account === this.props.account ? { fontWeight: "bold" } : {}}>{member.username || ""}</span> <p>{member.town || ""}</p></div>
                         {<div className="mtableCar"><img style={img} src={userObject.objectPic || member.profilePic || require('../assets/ninja.png')} alt="carImage" /><span title="Car Raised" style={{ fontSize: "12px" }}>Euro {objectPrice}</span></div>}
                         {(this.props.newObject && this.props.newObject["id"] === userObject["_id"]) &&
@@ -213,13 +216,14 @@ class Members extends Component {
 
                 if (selected && this.props.account) {
                     // cc.log("Member Object: ", userObject);
-
+                    const disableDownButton = userObject.crowdsaleClosed && !userObject.active && (member.account !== this.props.account)
+                    // console.log("Disable button: ", disableDownButton);
                     memberRows.push(
 
                         <div className="rowSelect" key={'invest-' + i}>
                             <div style={{ cursor: (userObject.objectID || member.authorized) ? "pointer" : "not-allowed" }} className="memberMesCon">{(userObject.objectID || member.authorized) ? member.message : "Not Allowed to Add New Life Configurator"}</div>
                             {(userObject.objectID || userObject.leaseTokenAddress) && <div className="memberMesBtns">
-                                <div className="membersBtn">
+                                {!disableDownButton && <div className="membersBtn">
                                     <button className="arrowBtn" onClick={() => {
                                         userObject.crowdsaleClosed ?
                                             (userObject.active ?
@@ -252,7 +256,7 @@ class Members extends Component {
                                     {/*<button title="Invoices (testing)" className="arrowBtn" onClick={() => { member.authorized ? this.props.history.push("/", { path: "invoices" }) : cc.log("NO OBJECT CONFIGURED") }}>
                                         <img src={require('../assets/add.jpg')} alt="addI" />
                                 </button>*/}
-                                </div>
+                                </div>}
                             </div>}
                         </div>
                     )

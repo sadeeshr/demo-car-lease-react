@@ -36,10 +36,10 @@ class Invest extends Component {
     componentDidMount() {
         this.refreshValues()
         this.setState({ reveal: true })
-        if(!this.props.member.objectID) {
+        if (!this.props.member.objectID) {
             const townSelected = this.props.towns[this.props.town]
             this.props._fetchMembers(this.props, townSelected["municipalityID"], this.props.account)
-        }        
+        }
         // setTimeout(() => this.props._lcInvestInObject(this.props.member.objectID, "10", this.props.account), 5000);
     }
 
@@ -51,6 +51,14 @@ class Invest extends Component {
         if (nextProps.eventClaim && !this.state.eventClaim) { this.setState({ eventClaim: nextProps.eventClaim, ethInvest: null }) }
         if (nextProps.eventApprove && !this.state.eventApprove) { this.setState({ eventApprove: nextProps.eventApprove, ethInvest: null }) }
 
+        if (nextProps.event && (nextProps.event !== this.props.event) && ((nextProps.event.transactionHash === nextProps.investInObjectTxID) || (nextProps.event.transactionHash === nextProps.BuyAndActivate.txID))) {
+            // this.refreshValues()
+            this.props._euroBalanceOf(this.props.account)
+            this.props._lcLeaseObject(this.props.account, nextProps.member.objectID)
+            this.props._lcLeaseObjectCycle(nextProps.member.objectID)
+            this.props._ldGetRaised(nextProps.member.objectID)
+            console.log("i need to refresh here !!");
+        }
         // if (!this.props.unClaimedRedemption && this.props.account) this.props._lcToClaimTotal(this.props.account)
         // if (!this.props.euroTokenBalance && this.props.account) this.props._euroBalanceOf(this.props.account)
 
@@ -128,7 +136,7 @@ class Invest extends Component {
 
         const user = this.props.usernames && this.props.usernames.find(userO => userO["_id"] === this.props.member["member"])
 
-        const buyAndActivate = this.props.member.crowdsaleClosed && !this.props.member.active
+        const buyAndActivate = this.props.member.crowdsaleClosed && !this.props.member.active && (this.props.member.account === this.props.account)
         // const amountRemaining = this.props.member.objectPrice - this.props.member.totalRaised
         // const allowedAmountToInvest = Math.min(Math.min(amountRemaining, this.props.allowance), this.props.euroTokenBalance)
         // const euroTokenBalance = this.props.euroTokenBalance ? (this.props.euroTokenBalance.length > 5 ? this.props.euroTokenBalance.substring(0, 5) + "..." : this.props.euroTokenBalance) : ""
@@ -157,14 +165,14 @@ class Invest extends Component {
                             <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
                         </div></h1>
                 </div>
-                <Slide top opposite when={this.state.reveal}>
+                <Slide right opposite when={this.state.reveal}>
                     <div className="contentCon bg-none overflow">
                         <BlockUi tag="div" blocking={this.props.progress}>
                             <div className="carIntestCon">
                                 <div className="membersCon">
                                     <div className="leaseCarCon invest">
                                         <div className="balance">
-                                            <div className="balanceName">MIJIN SALDO:</div>
+                                            <div className="balanceName">MIJN SALDO:</div>
                                             <div className="balanceNum">{formatNumber(parseInt((this.props.euroTokenBalance + this.props.unClaimedRedemption), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}<span> Euro</span></div>
                                         </div>
                                         <div className="mtableLink">
@@ -186,14 +194,14 @@ class Invest extends Component {
                                                 <img onClick={() => {
                                                     buyAndActivate ?
                                                         this.state.activedate && this.props._lcBuyAndActivate(this.props.member.objectID, this.state.activedate, this.props.account)
-                                                        : this.props.account && this.props._lcInvestInObject(this.props.member.objectID || (this.props.event && this.props.event.returnValues && this.props.event.returnValues.objectID), this.state.ethInvest || "0", this.props.account)
+                                                        : this.props.account && !this.props.member.crowdsaleClosed && this.props._lcInvestInObject(this.props.member.objectID || (this.props.event && this.props.event.returnValues && this.props.event.returnValues.objectID), this.state.ethInvest || "0", this.props.account)
                                                 }} src={require('../assets/add.jpg')} alt="add2" />
                                             </div>
 
                                             {
                                                 buyAndActivate ?
                                                     <Calendar value={this.state.activedate || new Date()} onChange={(e) => this.setState({ activedate: e.value })}>Opleverdatum</Calendar>
-                                                    : <div className="investAddInput"><input value={(typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest} onChange={(e) => this.setState({ ethInvest: e.target.value })} maxLength="20" type="text" placeholder="Euro Token" />
+                                                    : <div className="investAddInput">{!this.props.member.crowdsaleClosed && <input value={(typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest} onChange={(e) => this.setState({ ethInvest: e.target.value })} maxLength="20" type="text" placeholder="Euro Token" />}
                                                     </div>
                                             }
                                             <div className="investAddStatus">

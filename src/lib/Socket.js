@@ -70,7 +70,8 @@ class Socket {
             cc.log("EVENT: ", data, this.account)
             if (data) {
                 // if (data.event === "Transfer" || data.event === "Claim" || data.event) 
-                this.props._fetchMembers(this.props, (townSelected ? townSelected["municipalityID"] : "1"), this.account)
+                if (data.event !== "Transfer")
+                    this.props._fetchMembers(this.props, (townSelected ? townSelected["municipalityID"] : "1"), this.account)
                 this.props._setEvent(data)
                 if (data.event === "CreateNewUser") {
                     this.props._fetchUsers(this.props, this.account)

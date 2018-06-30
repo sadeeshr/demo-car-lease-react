@@ -56,7 +56,7 @@ class NewObject extends Component {
                             <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
                         </div></h1>
                 </div>
-                <Slide top opposite when={this.state.reveal}>
+                <Slide right opposite when={this.state.reveal}>
                     <div className="contentCon bg-none overflow">
                         <BlockUi tag="div" blocking={this.props.progress}>
                             <div className="carIntestCon">
@@ -90,7 +90,7 @@ class NewObject extends Component {
                                                 }} src={require('../assets/add.jpg')} alt="add2" />
                                             </div>
                                             <div className="investAddStatus">
-                                                <p>{"CREATE OBJECT"}</p>
+                                                <p>{"Activeer mijn Coin"}</p>
                                                 {(this.props.newObject && this.props.newObject["id"] === member["_id"]) &&
                                                     (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newObject.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red", marginLeft: "0px", marginTop: "15px" }}>pending</p>}</Link>)}
                                             </div>

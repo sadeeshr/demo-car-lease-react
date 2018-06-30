@@ -41,14 +41,26 @@ class Main extends Component {
 
     componentDidMount() {
         // this.fetchUserData()
+        // if (!this.props.towns) this.fetchMunicipalityData()
+    }
+
+
+    fetchMunicipalityData = () => {
+        let data = {
+            module: "municipality",
+            result: "towns",
+        }
+        if (this.props.socket) this.props._fetchContractData(this.props, data, this.props.account)
     }
 
 
     componentWillReceiveProps(nextProps) {
-        // cc.log("Main Update Props: ", nextProps, nextProps.socket, !nextProps.usernames);
+        cc.log("Main Update Props: ", nextProps, nextProps.socket, !nextProps.usernames);
         // if (nextProps.account && nextProps.socket && !nextProps.usernames) this.fetchUserData()
         // this.props.event && (this.props.event.transactionHash !== nextProps.event.transactionHash)
 
+        if (nextProps.socket && !nextProps.towns) this.fetchMunicipalityData()
+        if (nextProps.towns) this.props._setObject({ town: 0 })
         if (nextProps.event && (this.props.event !== nextProps.event)) {
             switch (nextProps.event.event) {
                 case "Transfer":
@@ -63,7 +75,7 @@ class Main extends Component {
                             message: message,
                             level: "info",
                             position: "tr",
-                            autoDismiss: 5
+                            autoDismiss: 0
                         }
                         this.props._setEventAlert(event)
                         break;
@@ -76,7 +88,7 @@ class Main extends Component {
                             message: "",
                             level: "info",
                             position: "tr",
-                            autoDismiss: 5
+                            autoDismiss: 0
                         }
                         this.props._setEventAlert(alert)
                         break;
@@ -89,7 +101,7 @@ class Main extends Component {
                             message: "",
                             level: "info",
                             position: "tr",
-                            autoDismiss: 5
+                            autoDismiss: 0
                         }
                         this.props._setEventAlert(alert)
                         break;
@@ -127,7 +139,7 @@ class Main extends Component {
                             message: ``,
                             level: "info",
                             position: "tr",
-                            autoDismiss: 5
+                            autoDismiss: 0
                         }
                         this.props._setEventAlert(alert)
                         break;
@@ -140,7 +152,7 @@ class Main extends Component {
                             message: ``,
                             level: "info",
                             position: "tr",
-                            autoDismiss: 5
+                            autoDismiss: 0
                         }
                         this.props._setEventAlert(alert)
                         break;
@@ -153,7 +165,7 @@ class Main extends Component {
                             message: "",
                             level: "info",
                             position: "tr",
-                            autoDismiss: 5
+                            autoDismiss: 0
                         }
                         this.props._setEventAlert(alert)
                         break;
@@ -166,7 +178,7 @@ class Main extends Component {
                             message: "",
                             level: "info",
                             position: "tr",
-                            autoDismiss: 5
+                            autoDismiss: 0
                         }
                         this.props._setEventAlert(alert)
                         break;
@@ -176,10 +188,10 @@ class Main extends Component {
                     break;
             }
 
-            setTimeout(() => {
-                const townSelected = this.props.towns[this.props.town]
-                this.props._fetchMembers(this.props, (townSelected ? townSelected["municipalityID"] : "1"), this.props.account)
-            }, 1500);
+            // setTimeout(() => {
+            //     const townSelected = this.props.towns[this.props.town]
+            //     this.props._fetchMembers(this.props, (townSelected ? townSelected["municipalityID"] : "1"), this.props.account)
+            // }, 1500); // commented for testing 30 june
 
 
         }
@@ -267,7 +279,7 @@ class Main extends Component {
                 <nav style={style.nav}>
                     <span onClick={() => this.props.history.push("/", { path: "home" })} style={{ cursor: "pointer", fontWeight: (["main", "home"].indexOf(path) !== -1) ? "800" : "100" }}>HOME</span> {" "}
                     <span onClick={() => this.props.history.push("/", { path: "addnewlife" })} style={{ cursor: "pointer", fontWeight: (path === "addnewlife") ? "800" : "100" }}>GA DUURZAAM</span>{" "}
-                    <span onClick={() => this.props.history.push("/", { path: "members" })} style={{ cursor: "pointer", fontWeight: (path === "members") ? "800" : "100" }}>LEDEN</span>{" "}
+                    <span onClick={() => this.props.towns && this.props.history.push("/", { path: "members" })} style={{ cursor: "pointer", fontWeight: (path === "members") ? "800" : "100" }}>LEDEN</span>{" "}
                 </nav>
 
                 <NotificationSystem ref="notificationSystem" />

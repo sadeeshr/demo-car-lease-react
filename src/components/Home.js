@@ -87,7 +87,7 @@ class Home extends Component {
                     <div className="footCon">
                         <div>
                             <span>Verder</span>
-                            <button className="arrowBtn" onClick={() => this.props.history.push("/", { path: "objectlist" })}>
+                            <button className="arrowBtn" onClick={() => town && this.props.history.push("/", { path: "objectlist" })}>
                                 <img src={require('../assets/arrow.jpg')} alt="addM" />
                             </button>
                         </div>

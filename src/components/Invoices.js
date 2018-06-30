@@ -249,7 +249,7 @@ class Invoices extends Component {
                         </div>
                     </h1>
                 </div>
-                <Slide top opposite when={this.state.reveal}>
+                <Slide right opposite when={this.state.reveal}>
                     <div className="fr"><i title="Add Invoice" className="flaticon-invoice marIcon" onClick={() => this.createInvoice()}></i></div>
                     <div className="contentCon bg-none overflow">
                         <BlockUi tag="div" blocking={this.props.progress}>
@@ -257,7 +257,7 @@ class Invoices extends Component {
                                 <div className="membersCon">
                                     <div className="leaseCarCon invest">
                                         <div className="balance">
-                                            <div className="balanceName">MIJIN SALDO:</div>
+                                            <div className="balanceName">MIJN SALDO:</div>
                                             <div className="balanceNum">{formatNumber(parseInt((this.props.euroTokenBalance + this.props.unClaimedRedemption), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}<span> Euro</span></div>
                                         </div>
                                         <div className="mtableLink">
