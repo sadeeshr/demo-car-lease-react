@@ -216,13 +216,13 @@ class Members extends Component {
 
                 if (selected && this.props.account) {
                     // cc.log("Member Object: ", userObject);
-                    const disableDownButton = userObject.crowdsaleClosed && !userObject.active && (member.account !== this.props.account)
+                    const disableDownButton = (userObject.crowdsaleClosed && !userObject.active && (member.account !== this.props.account)) || (userObject.objectHash && !userObject.leaseTokenAddress && (member.account !== this.props.account))
                     // console.log("Disable button: ", disableDownButton);
                     memberRows.push(
 
                         <div className="rowSelect" key={'invest-' + i}>
                             <div style={{ cursor: (userObject.objectID || member.authorized) ? "pointer" : "not-allowed" }} className="memberMesCon">{(userObject.objectID || member.authorized) ? member.message : "Not Allowed to Add New Life Configurator"}</div>
-                            {(userObject.objectID || userObject.leaseTokenAddress) && <div className="memberMesBtns">
+                            {(userObject.objectID || userObject.leaseTokenAddress || userObject.objectHash) && <div className="memberMesBtns">
                                 {!disableDownButton && <div className="membersBtn">
                                     <button className="arrowBtn" onClick={() => {
                                         userObject.crowdsaleClosed ?
@@ -245,10 +245,13 @@ class Members extends Component {
                                                     // this.props._lcCreateObject(this.props, userObject["_id"], userObject.months, userObject.municipalityID, userObject.objectPrice, userObject.objectHash, userObject.leaseTokenAddress, userObject.objectDealer, (parseFloat(userObject.objectMonthlyCapitalCost) * 100), (parseFloat(userObject.objectMonthlyOperatingCost) * 100), this.props.account)
                                                     this.props.history.push("/", { path: "newobject" })
                                                     :
-                                                    (member.authorized) ?
-                                                        this.props.history.push("/", { path: "invest" })
+                                                    (userObject.objectHash && !userObject.leaseTokenAddress) ?
+                                                        this.props._lcCreateNewLeaseTokenObject(userObject.objectHash, this.props.account)
                                                         :
-                                                        cc.log("NO OBJECT CONFIGURED")
+                                                        (member.authorized) ?
+                                                            this.props.history.push("/", { path: "invest" })
+                                                            :
+                                                            cc.log("NO OBJECT CONFIGURED")
                                             )
                                     }}>
                                         <img src={require('../assets/arrow.jpg')} alt="addM" />

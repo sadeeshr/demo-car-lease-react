@@ -73,8 +73,10 @@ class NewObject extends Component {
                                             <div className="mtableTokens">{member.totalRaised}
                                                 <p>{member.evTokens}</p>
                                             </div>
-                                            <div className="mtableMnd">{"Monthly Capital Cost: "} {formatNumber((member.leaseType === "Per Dag" ? member.objectMonthlyCapitalCost : member.objectMonthlyCapitalCost / 100), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} EUR</div>
-                                            <div className="mtableMnd">{"Monthly Operating Cost: "} {formatNumber((member.leaseType === "Per Dag" ? member.objectMonthlyOperatingCost : member.objectMonthlyOperatingCost / 100), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} EUR</div>
+                                            {/*<div className="mtableMnd">{"Monthly Capital Cost: "} {formatNumber((member.leaseType === "Per Dag" ? member.objectMonthlyCapitalCost : (member.objectMonthlyCapitalCost / 100)), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} EUR</div>
+    <div className="mtableMnd">{"Monthly Operating Cost: "} {formatNumber((member.leaseType === "Per Dag" ? member.objectMonthlyOperatingCost : (member.objectMonthlyOperatingCost / 100)), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} EUR</div>*/}
+                                            <div className="mtableMnd">{"Monthly Capital Cost: "} {formatNumber(member.objectMonthlyCapitalCost, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} EUR</div>
+                                            <div className="mtableMnd">{"Monthly Operating Cost: "} {formatNumber(member.objectMonthlyOperatingCost, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} EUR</div>
                                             <br />
                                             <div className="mtableUser">{member.objectType}
                                                 <p>{member.leaseType}</p>

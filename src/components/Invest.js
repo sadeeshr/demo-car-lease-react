@@ -136,7 +136,8 @@ class Invest extends Component {
 
         const user = this.props.usernames && this.props.usernames.find(userO => userO["_id"] === this.props.member["member"])
 
-        const buyAndActivate = this.props.member.crowdsaleClosed && !this.props.member.active && (this.props.member.account === this.props.account)
+        const buyAndActivate = this.props.member.crowdsaleClosed && !this.props.member.active && (user["account"] === this.props.account)
+        cc.log(buyAndActivate, this.props.account);
         // const amountRemaining = this.props.member.objectPrice - this.props.member.totalRaised
         // const allowedAmountToInvest = Math.min(Math.min(amountRemaining, this.props.allowance), this.props.euroTokenBalance)
         // const euroTokenBalance = this.props.euroTokenBalance ? (this.props.euroTokenBalance.length > 5 ? this.props.euroTokenBalance.substring(0, 5) + "..." : this.props.euroTokenBalance) : ""

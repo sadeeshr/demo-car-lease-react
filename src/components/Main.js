@@ -61,7 +61,7 @@ class Main extends Component {
 
         if (nextProps.socket && !nextProps.towns) this.fetchMunicipalityData()
         if (nextProps.towns) this.props._setObject({ town: 0 })
-        if (nextProps.event && (this.props.event !== nextProps.event)) {
+        if ((nextProps.event && !this.props.event) || (nextProps.event && this.props.event && (this.props.event.transactionHash !== nextProps.event.transactionHash))) {
             switch (nextProps.event.event) {
                 case "Transfer":
                     {
@@ -162,6 +162,19 @@ class Main extends Component {
                     {
                         let alert = {
                             title: "New Member added !",
+                            message: "",
+                            level: "info",
+                            position: "tr",
+                            autoDismiss: 0
+                        }
+                        this.props._setEventAlert(alert)
+                        break;
+                    }
+
+                case "NewObject":
+                    {
+                        let alert = {
+                            title: "New Object created !",
                             message: "",
                             level: "info",
                             position: "tr",

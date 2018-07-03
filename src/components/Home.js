@@ -47,7 +47,7 @@ class Home extends Component {
         // const municipality = town && town.municipality
 
 
-        let inhabitants = town && town["inhabitants"]
+        let inhabitants = (town && town["inhabitants"]) || 0
         inhabitants = formatNumber(parseInt(inhabitants, 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true });
 
         return (
@@ -78,7 +78,7 @@ class Home extends Component {
                             <p>
                                 <span>voor</span>{" "}
                                 <span><strong>{inhabitants}</strong></span>{" "}
-                                <span>{town && town["name"]}</span>
+                                <span>{(town && town["name"]) || ""}</span>
                             </p>
                             <span><strong>Crowdfunding {" "}</strong>{" met 3-10% Rente"}</span>
                             <p>elk moment Opstapbaar</p>

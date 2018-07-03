@@ -16,6 +16,15 @@ export const _connectSocket = (props, domain) => {
     }
 }
 
+export const _sendUserEvent = (event) => {
+    return (dispatch) => {
+        dispatch({
+            type: "USER_EVENT",
+            payload: socApi.sendUserEvent(event)
+        })
+    }
+}
+
 export const _fetchMembers = (props, municipalityID, account) => {
 
     let data = {

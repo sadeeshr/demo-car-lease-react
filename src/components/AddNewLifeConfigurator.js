@@ -149,7 +149,7 @@ class AddNewLifeConfigurator extends Component {
                     {
                         switch (leasetype.type) {
                             case "Per Dag":
-                                monthlycapcost = parseFloat(leasetype.price) / 2000
+                                monthlycapcost = parseFloat(price) / 2000
                                 break;
                             // case "Per uur":
                             //     monthlycapcost = parseFloat(leasetype.price) / 20000
@@ -157,7 +157,7 @@ class AddNewLifeConfigurator extends Component {
                             case "Financial":
                             case "Operational":
                                 // case "Private":
-                                monthlycapcost = (parseFloat(leasetype.price) / 100) + (60 - parseInt(months, 10)) * 2
+                                monthlycapcost = (parseFloat(price) / 100) + (60 - parseInt(months, 10)) * 2
                                 break;
 
                             default:
@@ -184,22 +184,22 @@ class AddNewLifeConfigurator extends Component {
 
                 case 1:
                     {
-                        monthlycapcost = parseFloat(leasetype.price) / 100
+                        monthlycapcost = parseFloat(price) / 100
                         break;
                     }
                 case 2:
                     {
-                        monthlycapcost = parseFloat(leasetype.price) / 150
+                        monthlycapcost = parseFloat(price) / 150
                         break;
                     }
                 case 3:
                     {
                         switch (leasetype.type) {
                             case "Financial":
-                                monthlycapcost = parseFloat(leasetype.price) / 150
+                                monthlycapcost = parseFloat(price) / 150
                                 break;
                             case "Operational":
-                                monthlycapcost = parseFloat(leasetype.price) / 100
+                                monthlycapcost = parseFloat(price) / 100
                                 break;
                             default:
                                 break;

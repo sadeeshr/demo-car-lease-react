@@ -195,7 +195,7 @@ class Invoices extends Component {
         if (this.props.member.leaseType === "Per Dag") {
 
             tariff = (invoices[1] && invoices[1]["nextTariff"] && invoices[0] && invoices[0]["nextTariff"] === "false") ? invoices[1]["nextTariff"] : (this.props.member.obj.monthlyCapitalCost.toNumber() / 100).toFixed(2)
-            nextTariff = parseFloat(((invoices[0] && invoices[0]["nextTariff"] === "false" && invoices[1] && invoices[1]["nextTariff"]) ? invoices[1]["nextTariff"] : this.props.member.obj.monthlyCapitalCost.toNumber() / 100) - ((this.props.member.obj.monthlyCapitalCost.toNumber() / 100) / 2000)).toFixed(2)
+            nextTariff = parseFloat(((invoices[0] && invoices[0]["nextTariff"] === "false" && invoices[1] && invoices[1]["nextTariff"]) ? invoices[1]["nextTariff"] : (this.props.member.obj.monthlyCapitalCost.toNumber() / 100)) - ((this.props.member.obj.monthlyCapitalCost.toNumber() / 100) / 2000)).toFixed(2)
             mileageEuro = parseFloat((this.state.mileage || 0) * 0.1).toFixed(2)
             total = parseFloat(tariff) + parseFloat(mileageEuro)
         } else {

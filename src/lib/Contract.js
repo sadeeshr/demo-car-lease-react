@@ -632,31 +632,38 @@ class Contract {
                 from: account,
                 gas: 4700000
             }, function (e, contract) {
-                cc.log(e, contract);
-                self.props._setObject({
-                    newLeaseTokenObject: {
-                        txID: contract,
-                        hash: hash
-                    }
-                })
-                let contractAddress = ""
-                let timer = setInterval(() => {
-                    cc.log("CHECKING CONTRACT ADDRESS:");
-                    if (contractAddress)
-                        clearInterval(timer)
-                    self.eth.getTransactionReceipt(contract)
-                        .then(res => {
-                            if (res) {
-                                cc.log("TX RECEIPT: ", res)
-                                cc.log("CONTRACT ADDRESS: ", res.contractAddress)
-                                contractAddress = res.contractAddress
-                                if (contractAddress) {
-                                    self.props._newLeaseTokenAddress({ newLeaseTokenAddress: contractAddress })
-                                    self.props._setEvent({ event: "NewLeaseTokenObject", ...res })
+                // cc.log(e, contract);
+                if (contract && !e) {
+                    self.props._setObject({
+                        newLeaseTokenObject: {
+                            txID: contract,
+                            hash: hash
+                        }
+                    })
+                    let contractAddress = ""
+                    let timer = setInterval(() => {
+                        cc.log("CHECKING CONTRACT ADDRESS:");
+                        if (contractAddress)
+                            clearInterval(timer)
+                        self.eth.getTransactionReceipt(contract)
+                            .then(res => {
+                                if (res) {
+                                    cc.log("TX RECEIPT: ", res)
+                                    cc.log("CONTRACT ADDRESS: ", res.contractAddress)
+                                    contractAddress = res.contractAddress
+                                    if (contractAddress) {
+                                        let newEvent = { event: "NewLeaseTokenObject", ...res }
+                                        self.props._newLeaseTokenAddress({ newLeaseTokenAddress: contractAddress })
+                                        self.props._setEvent(newEvent)
+                                        self.props._sendUserEvent(newEvent)
+                                    }
                                 }
-                            }
-                        })
-                }, 5000)
+                            })
+                    }, 5000)
+                } else {
+                    cc.log("ERROR - Metamask Rejection: ", e)
+                }
+
             }
         )
     }
