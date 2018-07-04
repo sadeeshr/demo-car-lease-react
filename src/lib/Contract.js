@@ -618,11 +618,14 @@ class Contract {
             })
     }
 
-    lcCreateNewLeaseTokenObject = (hash, account) => {
+    lcCreateNewLeaseTokenObject = (props, data, account) => {
+        if (props) this.props = props
+
         cc.log("Creating NewLeaseTokenObject");
         let self = this
         let _leasecontract = this.spender
         let _admin = "0x60516AA74F455f642C66FA1eD1e77C553da4be17"
+        let hash = data["data"]["objectHash"]
 
         this.LeaseTokenObjectContract.new(
             _leasecontract,
@@ -640,6 +643,10 @@ class Contract {
                             hash: hash
                         }
                     })
+
+                    // data["data"]["leaseTokenAddress"] = contractAddress
+                    self.props._writeNewContractData(self.props, data)
+
                     let contractAddress = ""
                     let timer = setInterval(() => {
                         cc.log("CHECKING CONTRACT ADDRESS:");

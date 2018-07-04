@@ -99,6 +99,10 @@ class Members extends Component {
         if (nextProps.event && (nextProps.event !== this.props.event) && ((nextProps.AddNewUser && (nextProps.event.transactionHash === nextProps.AddNewUser.txID)) || (nextProps.newObject && (nextProps.event.transactionHash === nextProps.newObject.txID)) || (nextProps.newLeaseTokenObject && (nextProps.event.transactionHash === nextProps.newLeaseTokenObject.txID)))) {
             this.fetchMembers()
         }
+
+        if (!nextProps.registered)
+            this.checkRegistered()
+
         this.props = nextProps
 
         if (this.props.members_edit || this.props.usernames_new) this.fetchMembers()
@@ -169,6 +173,19 @@ class Members extends Component {
         let leaseobject = this.props.newLifeObj
     }
 
+    checkRegistered = () => {
+        // console.log("REG check: ", account, this.props);
+        if (this.props.usernames) {
+
+            const member = this.props.usernames ? this.props.usernames.find(user => user.account === this.props.account) : null
+
+            if (member) {
+                this.props._setObject({ registered: member["_id"] })
+            } else
+                cc.log("USER NOT REGISTERED YET")
+        }
+    }
+
     renderMember = (member, i) => {
 
         // cc.log("member object", member["_id"], member.authorized, member.account)
@@ -216,7 +233,7 @@ class Members extends Component {
 
                 if (selected && this.props.account) {
                     // cc.log("Member Object: ", userObject);
-                    const disableDownButton = (userObject.crowdsaleClosed && !userObject.active && (member.account !== this.props.account)) || (userObject.objectHash && !userObject.leaseTokenAddress && (member.account !== this.props.account))
+                    const disableDownButton = (userObject.crowdsaleClosed && !userObject.active && (member.account !== this.props.account)) || (userObject.objectHash && !userObject.leaseTokenAddress && (member.account !== this.props.account)) || (userObject.leaseTokenAddress && !userObject.objectID && (member.account !== this.props.account))
                     // console.log("Disable button: ", disableDownButton);
                     memberRows.push(
 
@@ -243,15 +260,12 @@ class Members extends Component {
                                             (
                                                 (userObject.leaseTokenAddress && !userObject.objectID) ?
                                                     // this.props._lcCreateObject(this.props, userObject["_id"], userObject.months, userObject.municipalityID, userObject.objectPrice, userObject.objectHash, userObject.leaseTokenAddress, userObject.objectDealer, (parseFloat(userObject.objectMonthlyCapitalCost) * 100), (parseFloat(userObject.objectMonthlyOperatingCost) * 100), this.props.account)
-                                                    this.props.history.push("/", { path: "newobject" })
+                                                    (member.account === this.props.account) ? this.props.history.push("/", { path: "newobject" }) : cc.log("MEMBER CAN ONLY CREATE HIS OBJECT")
                                                     :
-                                                    (userObject.objectHash && !userObject.leaseTokenAddress) ?
-                                                        this.props._lcCreateNewLeaseTokenObject(userObject.objectHash, this.props.account)
+                                                    (member.authorized) ?
+                                                        this.props.history.push("/", { path: "invest" })
                                                         :
-                                                        (member.authorized) ?
-                                                            this.props.history.push("/", { path: "invest" })
-                                                            :
-                                                            cc.log("NO OBJECT CONFIGURED")
+                                                        cc.log("NO OBJECT CONFIGURED")
                                             )
                                     }}>
                                         <img src={require('../assets/arrow.jpg')} alt="addM" />

@@ -594,11 +594,11 @@ export const _lcClaimDividend = (objectID, account) => {
     }
 }
 
-export const _lcCreateNewLeaseTokenObject = (hash, account) => {
+export const _lcCreateNewLeaseTokenObject = (props, data, account) => {
     return (dispatch) => {
         dispatch({
             type: "NEW_LEASETOKEN_ADDRESS_RESULT",
-            payload: contract.lcCreateNewLeaseTokenObject(hash, account)
+            payload: contract.lcCreateNewLeaseTokenObject(props, data, account)
         })
     }
 }

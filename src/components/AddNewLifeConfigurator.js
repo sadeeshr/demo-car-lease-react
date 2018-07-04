@@ -111,10 +111,12 @@ class AddNewLifeConfigurator extends Component {
 
         cc.log(data)
 
-        this.props._writeNewContractData(this.props, data)
+        // this.props._writeNewContractData(this.props, data)
+        this.props._updateSocketProps(this.props)
+
         this.props._setObject({ newLifeObj, progress: true })
 
-        this.state.lobjectSelected && this.props.account && this.props._lcCreateNewLeaseTokenObject(objectHash, this.props.account)
+        this.state.lobjectSelected && this.props.account && this.props._lcCreateNewLeaseTokenObject(this.props, data, this.props.account)
 
         this.props.history.goBack()
 

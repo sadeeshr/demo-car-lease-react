@@ -39,7 +39,7 @@ class ObjectList extends Component {
             }
         }
         if (!this.props.usernames && this.props.socket) this.props._fetchContractData(this.props, data, this.props.account)
-        if (this.props.account) this.checkRegistered(this.props.account)
+        if (this.props.account && this.props.usernames) this.checkRegistered(this.props.account)
     }
 
     checkRegistered = (account) => {
@@ -85,7 +85,7 @@ class ObjectList extends Component {
         let wind = town && town["inhabitants"]
         wind = formatNumber((parseInt(wind, 10) / 10000), { precision: 2, thousand: ".", decimal: ",", stripZeros: true });
 
-        const nextScreen = (this.props.registered || !this.props.account) ? "members" : "addmember"
+        const nextScreen = ((this.props.usernames && this.props.registered) || !this.props.account) ? "members" : "addmember"
 
         cc.log("MEMBER ID: ", this.props.registered)
 
@@ -140,7 +140,7 @@ class ObjectList extends Component {
                     <div className="footCon">
                         <div>
                             <span>Verder</span>
-                            <button className="arrowBtn" onClick={() => this.props.history.push("/", { path: nextScreen })}>
+                            <button className="arrowBtn" onClick={() => (this.props.usernames && this.props.history.push("/", { path: nextScreen }))}>
                                 <img src={require('../assets/arrow.jpg')} alt="addM" />
                             </button>
                         </div>
