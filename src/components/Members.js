@@ -71,6 +71,7 @@ class Members extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        let refreshEvents = ["Transfer", "BoughtNewObject", "NewObject", "CreateNewUser", "AddNewObject", "NewMember", "NewLeaseTokenObject"]
         if (nextProps.newLeaseTokenAddress && (this.props.newLeaseTokenAddress !== nextProps.newLeaseTokenAddress)) {
             // let data = {
             //     module: "membersobj",
@@ -96,7 +97,15 @@ class Members extends Component {
 
         }
 
-        if (nextProps.event && (nextProps.event !== this.props.event) && ((nextProps.AddNewUser && (nextProps.event.transactionHash === nextProps.AddNewUser.txID)) || (nextProps.newObject && (nextProps.event.transactionHash === nextProps.newObject.txID)) || (nextProps.newLeaseTokenObject && (nextProps.event.transactionHash === nextProps.newLeaseTokenObject.txID)))) {
+        if (
+            nextProps.event && (nextProps.event !== this.props.event) &&
+            (
+                (nextProps.AddNewUser && (nextProps.event.transactionHash === nextProps.AddNewUser.txID))
+                || (nextProps.newObject && (nextProps.event.transactionHash === nextProps.newObject.txID))
+                || (nextProps.newLeaseTokenObject && (nextProps.event.transactionHash === nextProps.newLeaseTokenObject.txID))
+                || (refreshEvents.indexOf(nextProps.event.event) !== -1)
+            )
+        ) {
             this.fetchMembers()
         }
 

@@ -158,6 +158,19 @@ class Main extends Component {
                         break;
                     }
 
+                case "PayCapitalAndOperation":
+                    {
+                        let alert = {
+                            title: "New Invoice Paid !",
+                            message: ``,
+                            level: "info",
+                            position: "tr",
+                            autoDismiss: 0
+                        }
+                        this.props._setEventAlert(alert)
+                        break;
+                    }
+
                 case "NewMember":
                     {
                         let alert = {
@@ -175,6 +188,19 @@ class Main extends Component {
                     {
                         let alert = {
                             title: "New Object created !",
+                            message: "",
+                            level: "info",
+                            position: "tr",
+                            autoDismiss: 0
+                        }
+                        this.props._setEventAlert(alert)
+                        break;
+                    }
+
+                case "NewInvoice":
+                    {
+                        let alert = {
+                            title: "New Invoice created !",
                             message: "",
                             level: "info",
                             position: "tr",

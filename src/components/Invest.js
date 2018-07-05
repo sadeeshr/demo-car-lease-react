@@ -138,16 +138,19 @@ class Invest extends Component {
 
         const buyAndActivate = this.props.member.crowdsaleClosed && !this.props.member.active && (user["account"] === this.props.account)
         cc.log(buyAndActivate, this.props.account);
-        // const amountRemaining = this.props.member.objectPrice - this.props.member.totalRaised
+        const amountRemaining = this.props.member.objectPrice - this.props.member.totalRaised
         // const allowedAmountToInvest = Math.min(Math.min(amountRemaining, this.props.allowance), this.props.euroTokenBalance)
         // const euroTokenBalance = this.props.euroTokenBalance ? (this.props.euroTokenBalance.length > 5 ? this.props.euroTokenBalance.substring(0, 5) + "..." : this.props.euroTokenBalance) : ""
         // (this.state.euroTokenBalance || "").substring(0, 8) + "..."
         // const account = this.props.account ? this.props.account.substring(0, 7) + '.....' + this.props.account.substring(this.props.account.length - 5) : ""
-        // const hideInvest = (this.props.member && this.props.member.totalRaised >= this.props.member.objectPrice) ? true : false
-        // const ethInvest = parseInt((this.state.ethInvest || "0"), 10)
+        // const hideInvest = (this.props.member.totalRaised >= this.props.member.objectPrice) ? true : false
+        const ethInvest = parseInt((this.state.ethInvest || "0"), 10)
+        const enableInvest = ((ethInvest <= amountRemaining) && (ethInvest <= this.props.euroTokenBalance) && (this.state.ethInvest !== "") && (this.state.ethInvest !== "0"))
         // const enableInvest = ((ethInvest <= amountRemaining) && (ethInvest <= this.props.allowance) && (ethInvest <= this.props.euroTokenBalance) && (this.state.ethInvest !== "") && (this.state.ethInvest !== "0"))
         // cc.log("Enable Invest: ", ethInvest, enableInvest, (ethInvest <= amountRemaining), (ethInvest <= this.props.allowance), (ethInvest <= this.props.euroTokenBalance), (this.state.ethInvest !== ""));
         // (this.props.account || "").substring(0, 8) + "..."
+        console.log("Allowed amount: ", amountRemaining, ethInvest, enableInvest);
+
         return (<div className="content-border">
             <div className="mainContentCon">
                 {/* <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
@@ -192,21 +195,21 @@ class Invest extends Component {
                                         </div>
                                         <div className="investAddCon">
                                             <div className="arrowBtn">
-                                                <img onClick={() => {
+                                                <img style={{ cursor: (enableInvest && !this.props.member.crowdsaleClosed) ? "pointer" : "not-allowed" }} onClick={() => {
                                                     buyAndActivate ?
                                                         this.state.activedate && this.props._lcBuyAndActivate(this.props.member.objectID, this.state.activedate, this.props.account)
-                                                        : this.props.account && !this.props.member.crowdsaleClosed && this.props._lcInvestInObject(this.props.member.objectID || (this.props.event && this.props.event.returnValues && this.props.event.returnValues.objectID), this.state.ethInvest || "0", this.props.account)
+                                                        : this.props.account && !this.props.member.crowdsaleClosed && enableInvest && this.props._lcInvestInObject(this.props.member.objectID || (this.props.event && this.props.event.returnValues && this.props.event.returnValues.objectID), this.state.ethInvest || "0", this.props.account)
                                                 }} src={require('../assets/add.jpg')} alt="add2" />
                                             </div>
 
                                             {
                                                 buyAndActivate ?
                                                     <Calendar value={this.state.activedate || new Date()} onChange={(e) => this.setState({ activedate: e.value })}>Opleverdatum</Calendar>
-                                                    : <div className="investAddInput">{!this.props.member.crowdsaleClosed && <input value={(typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest} onChange={(e) => this.setState({ ethInvest: e.target.value })} maxLength="20" type="text" placeholder="Euro Token" />}
+                                                    : <div className="investAddInput">{!this.props.member.crowdsaleClosed && <input style={{ color: (enableInvest ? "black" : "red") }} value={(typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest} onChange={(e) => this.setState({ ethInvest: e.target.value })} maxLength="20" type="text" placeholder="Euro Token" />}
                                                     </div>
                                             }
                                             <div className="investAddStatus">
-                                                <p>{buyAndActivate ? ("BETAAL " + this.props.member.objectType.toUpperCase()) : "INVESTEER EURO"}</p>
+                                                <p style={{ color: (this.props.member.crowdsaleClosed || buyAndActivate) ? "green" : "black" }}>{buyAndActivate ? ("BETAAL " + this.props.member.objectType.toUpperCase()) : (!this.props.member.crowdsaleClosed ? "INVESTEER EURO" : "CLOSED")}</p>
                                                 {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.investInObjectTxID)) ? <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red" }}>pending</p>}</Link>)}
                                                 {this.props.BuyAndActivate && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.BuyAndActivate.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.BuyAndActivate.txID)) ? <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red" }}>pending</p>}</Link>)}
                                             </div>

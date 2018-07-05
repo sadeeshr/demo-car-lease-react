@@ -124,7 +124,7 @@ class Invoices extends Component {
 
     componentWillReceiveProps(nextProps) {
         cc.log("new props", nextProps);
-        if (nextProps.invoices_new || nextProps.invoices_edit)
+        if (nextProps.invoices_new || nextProps.invoices_edit || (nextProps.event && (nextProps.event !== this.props.event) && (nextProps.event.event === "PayCapitalAndOperation" || nextProps.event.event === "Transfer" || nextProps.event.event === "NewInvoice")))
             this.fetchInvoices()
 
         // if (this.props.event && (this.props.event.transactionHash === this.props.payFeeTxID)) {
@@ -137,7 +137,7 @@ class Invoices extends Component {
         if (nextProps.invoices) {
             if (nextProps.invoices.length > 0) {
                 const invoices = nextProps.invoices.filter(invoice => invoice["objectID"] === this.props.member.objectID)
-                console.log("$$$$", invoices, this.props.member.objectID);
+                // cc.log("$$$$", invoices, this.props.member.objectID);
                 this.setState({ month: this.getMaxMonth(invoices), year: (new Date()).getFullYear() })
             }
         }
