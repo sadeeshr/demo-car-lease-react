@@ -477,11 +477,12 @@ class Contract {
             .then(result => {
                 cc.log(`Buy And Activate RESULT: ${result}`);
                 return {
-                    BuyAndActivate: {
-                        txID: result,
-                        account: account,
-                        objectID: objectID
-                    }
+                    // BuyAndActivate: {
+                    //     txID: result,
+                    //     account: account,
+                    //     objectID: objectID
+                    // }
+                    BuyAndActivateTxID: result
                 }
             })
     }

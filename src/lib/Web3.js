@@ -5,6 +5,7 @@ const RINKEBY_NODE_URL = "ws://178.62.195.242:8546"
 
 const web3 = new Web3(new Web3.providers.WebsocketProvider(RINKEBY_NODE_URL));
 let txHash = "" // temporary variable to hold hash
+let eventToSend = ""
 
 // console.log("WSS WEB3: ", web3)
 
@@ -125,6 +126,7 @@ getConfirmationsHash = (event, cb) => {
     console.log("HASH: ", hash);
     if (txHash !== hash) {
         txHash = hash
+        eventToSend = event
         let blockStart, blockEnd;
         let timer = setInterval(() => {
             console.log("CHECKING HASH CONFIRMATIONS:");
@@ -154,6 +156,8 @@ getConfirmationsHash = (event, cb) => {
         }, 5000)
 
     } else {
+        if (eventToSend && (eventToSend.event === "Transfer") && (eventToSend.event !== event.event))
+            eventToSend = event
         console.log("DUPLICATE HASH: ", hash);
     }
 

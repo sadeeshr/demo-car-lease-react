@@ -65,11 +65,15 @@ class Main extends Component {
             switch (nextProps.event.event) {
                 case "Transfer":
                     {
-                        const txFrom = this.props.members.find(member => member.account && (member.account.toLowerCase() === nextProps.event.returnValues.to.toLowerCase()))
-                        const txTo = this.props.members.find(member => member.objectID && (member.objectID.toString() === nextProps.event.returnValues.objectId))
-                        const value = nextProps.event.returnValues.value
-                        // cc.log(txFrom, txTo, value);
-                        const message = (txFrom && txTo) ? `Awesome, ${txFrom.username} ${txFrom.town} has just invested ${value} euros on ${txTo.username} ${txTo.town}` : `Awesome, an investment made just now !`
+                        let message = "Awesome, an investment made just now !"
+                        // if (this.props.members) {
+                        //     const txFrom = this.props.members.find(member => member.account && (member.account.toLowerCase() === nextProps.event.returnValues.to.toLowerCase()))
+                        //     const txTo = this.props.members.find(member => member.objectID && (member.objectID.toString() === nextProps.event.returnValues.objectId))
+                        //     const value = nextProps.event.returnValues.value
+                        //     // cc.log(txFrom, txTo, value);
+                        //     message = (txFrom && txTo) ? `Awesome, ${txFrom.username} ${txFrom.town} has just invested ${value} euros on ${txTo.username} ${txTo.town}` : `Awesome, an investment made just now !`
+                        // }
+
                         let event = {
                             title: "Investment Update",
                             message: message,

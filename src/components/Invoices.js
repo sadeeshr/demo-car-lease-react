@@ -71,8 +71,8 @@ class Invoices extends Component {
             result: "invoices",
             data: {
                 objectID: this.props.member.objectID,
-                year: this.state.year || (new Date()).getFullYear(),
-                month: this.state.month ? this.state.month + 1 : (new Date()).getMonth(),
+                year: this.state.year ? ((this.state.month === 11) ? this.state.year + 1 : this.state.year) : (new Date()).getFullYear(),
+                month: this.state.month ? (this.state.month === 11) ? 0 : this.state.month + 1 : (new Date()).getMonth(),
                 // mileage: this.state.mileage || 0,
                 // amount: this.state.amount || 0,                
                 status: false
@@ -180,7 +180,7 @@ class Invoices extends Component {
 
         // const invoices = this.props.invoices ? this.props.invoices.filter(invoice => (this.months[invoice.month].toLowerCase().startsWith(this.state.filter) || invoice.year === parseInt(this.state.filter, 10))) : []
         const invoices = this.props.invoices || []
-        invoices.sort((a, b) => parseFloat(b.month) - parseFloat(a.month))
+        invoices.sort((a, b) => (parseFloat(b.year) - parseFloat(a.year)) || (parseFloat(b.month) - parseFloat(a.month)))
         // const invoices = this.props.invoices
         // let amount = (this.props.member.obj.objectPrice.toNumber()) + (((this.state.mileage || this.props.member.mileagesTotal) - this.props.member.mileagesTotal) * 0.10)
         // cc.log(amount, ' <= ', this.props.allowance, (amount <= this.props.allowance), this.state.mileage, ' >= ', this.props.member.mileagesTotal, (this.state.mileage >= this.props.member.mileagesTotal));
@@ -335,13 +335,14 @@ class Invoices extends Component {
                                                                 <span className="minusBal">Pending</span>
                                                                 {/* <span className="confirmBal">Confirmed</span> */}
                                                             </div>
-                                                           
-                                                            {!invoice.status && <div hidden={this.props.payFeeTxID} className="arrowBtn">
-                                                                {/*<img onClick={() => { this.props._lcPayCapitalAndOperation(this.props.member.objectID, (parseFloat(this.props.member.obj.monthlyCapitalCost.toNumber()) * 100).toFixed(2), (parseFloat(this.props.member.obj.monthlyOperatingCost.toNumber()) * 100).toFixed(2), this.props.account); this.updateInvoice(invoice, tariff, nextTariff, this.state.mileage, total) }} src={require('../assets/add.jpg')} alt="add2" />*/}
-                                                                <img onClick={() => { this.props._lcPayCapitalAndOperation(this.props, this.props.member.objectID, (tariff * 100), (mileageEuro * 100), this.props.account); this.updateInvoice(invoice, tariff, nextTariff, this.state.mileage, total) }} src={require('../assets/add.jpg')} alt="add2" />
-                                                            </div>}
+
 
                                                         </div>
+                                                        {!invoice.status && <div className="arrowBtn">
+                                                            {/*<img onClick={() => { this.props._lcPayCapitalAndOperation(this.props.member.objectID, (parseFloat(this.props.member.obj.monthlyCapitalCost.toNumber()) * 100).toFixed(2), (parseFloat(this.props.member.obj.monthlyOperatingCost.toNumber()) * 100).toFixed(2), this.props.account); this.updateInvoice(invoice, tariff, nextTariff, this.state.mileage, total) }} src={require('../assets/add.jpg')} alt="add2" />*/}
+                                                            <img onClick={() => { this.props._lcPayCapitalAndOperation(this.props, this.props.member.objectID, (tariff * 100), (mileageEuro * 100), this.props.account); this.updateInvoice(invoice, tariff, nextTariff, this.state.mileage, total) }} src={require('../assets/add.jpg')} alt="add2" />
+                                                        </div>}
+
                                                     </div>
                                                 </div>
                                             })
