@@ -68,16 +68,17 @@ class Socket {
             if (data && this.props) this.props._contractDataResponse(this.account, { [data.module]: data.result });
         })
         this.socket.on('event', (data) => {
-            const townSelected = this.props.towns[this.props.town]
             cc.log("EVENT: ", data, this.account)
-            if (data) {
+            if (this.props && data) {
                 // if (data.event === "Transfer" || data.event === "Claim" || data.event) 
                 if (data.event === "CreateNewUser" || data.event === "NewMember") {
                     this.props._fetchUsers(this.props, this.account)
                 }
 
-                if (data.event !== "Transfer")
+                if ((data.event !== "Transfer") && this.props.town) {
+                    const townSelected = this.props.towns[this.props.town]
                     this.props._fetchMembers(this.props, (townSelected ? townSelected["municipalityID"] : "1"), this.account)
+                }
                 this.props._setEvent(data)
 
             }
