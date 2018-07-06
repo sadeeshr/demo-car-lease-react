@@ -3,6 +3,7 @@ import BlockUi from 'react-block-ui';
 import 'react-block-ui/style.css';
 import { Link } from 'react-router-dom'
 import cc from '../lib/utils';
+import { pseudoRandomBytes } from 'crypto';
 
 class Members extends Component {
 
@@ -204,16 +205,25 @@ class Members extends Component {
 
         if (!Array.isArray(userObjects) || !userObjects.length) {
             return <div className="leaseCarCon" key={i}>
-                <div className="mtableLink" onClick={() => member.authorized ? cc.log("MEMBER AUTHORIZED, NO OBJECTS") : cc.log("MEMBER NOT AUTHORIZED")}>
-                    {!member.authorized && <div className="membersBtn">
-                        <button title="Authorize" className="arrowBtn" onClick={() => member.account !== this.props.account ? this.props._lcAddUser(member.account, this.props.account) : cc.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
-                            <img src={require('../assets/add.jpg')} alt="addM" />
-                        </button>
-                    </div>}
-                    <div className="mtableUser"><span style={member.account === this.props.account ? { fontWeight: "bold" } : {}}>{member.username || ""}</span> <p>{member.town || ""}</p></div>
-                    <div className="mtableCar"><img style={{ "maxHeight": "50px", "maxWidth": "118px", height: "auto", width: "auto" }} src={member.profilePic || require('../assets/ninja.png')} alt="carImage" /></div>
-                    {(this.props.AddNewUser && this.props.AddNewUser["account"] === member["account"]) &&
+                    <div className="mtableLink" onClick={() => member.authorized ? cc.log("MEMBER AUTHORIZED, NO OBJECTS") : cc.log("MEMBER NOT AUTHORIZED")}>
+                        <div className="col-5">
+                            {/* {!member.authorized && <div className="membersBtn">
+                                <button title="Authorize" className="arrowBtn" onClick={() => member.account !== this.props.account ? this.props._lcAddUser(member.account, this.props.account) : cc.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
+                                    <img src={require('../assets/add.jpg')} alt="addM" />
+                                </button>
+                            </div>} */}
+                            <div className="mtableUser">
+                                <span style={member.account === this.props.account ? { fontWeight: "bold" } : {}}>{member.username || ""}</span>
+                                <p>{member.town || ""}</p>
+                            </div>
+                        </div>
+                        <div className="col-7">
+                            <div className="mtableCar" style={{backgroundImage: `url(${member.profilePic ||require('../assets/ninja.png')})`}}>
+                                {/* <img style={{ "maxHeight": "50px", "maxWidth": "118px", height: "auto", width: "auto" }} src={member.profilePic || require('../assets/ninja.png')} alt="carImage" /> */}
+                            </div>
+                            {(this.props.AddNewUser && this.props.AddNewUser["account"] === member["account"]) &&
                         (<Link target="_blank" to={this.rinkebyStatsURL + this.props.AddNewUser.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.AddNewUser.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red", marginLeft: "0px", marginTop: "15px" }}>pending</p>}</Link>)}
+                    </div>
                 </div>
             </div>
         } else {
@@ -225,18 +235,33 @@ class Members extends Component {
                 const selected = this.props.member && (this.props.member["_id"] === userObject["_id"]) ? true : false
                 let memberRows = [
                     <div className="mtableLink" key={j} onClick={() => member.authorized ? this.props._objectSelected(userObject, this.props.account) : cc.log("MEMBER NOT AUTHORIZED")}>
-                        {!member.authorized && <div className="membersBtn">
-                            <button title="Authorize" className="arrowBtn" onClick={() => member.account !== this.props.account ? this.props._lcAddUser(member.account, this.props.account) : cc.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
-                                <img src={require('../assets/add.jpg')} alt="addM" />
-                            </button>
-                        </div>}
-                        <div className="mtableTokens">{userObject.crowdsaleClosed ? <span style={{ color: "green", fontSize: "12px" }}>{userObject.active ? "Active" : "Closed"}</span> : userObject.totalRaised || "0"} <p>{userObject.evTokens}</p></div>
-                        <div className="mtableUser"><span style={member.account === this.props.account ? { fontWeight: "bold" } : {}}>{member.username || ""}</span> <p>{member.town || ""}</p></div>
-                        {<div className="mtableCar"><img style={img} src={userObject.objectPic || member.profilePic || require('../assets/ninja.png')} alt="carImage" /><span title="Car Raised" style={{ fontSize: "12px" }}>Euro {objectPrice}</span></div>}
-                        {(this.props.newObject && this.props.newObject["id"] === userObject["_id"]) &&
-                            (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newObject.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red", marginLeft: "0px", marginTop: "15px" }}>pending</p>}</Link>)}
-                        {(this.props.newLeaseTokenObject && this.props.newLeaseTokenObject["hash"] === userObject["objectHash"]) &&
-                            (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newLeaseTokenObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newLeaseTokenObject.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red", marginLeft: "0px", marginTop: "15px" }}>pending</p>}</Link>)}
+                        <div className="col-5">
+                            {/* {!member.authorized && <div className="membersBtn">
+                                <button title="Authorize" className="arrowBtn" onClick={() => member.account !== this.props.account ? this.props._lcAddUser(member.account, this.props.account) : cc.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
+                                    <img src={require('../assets/add.jpg')} alt="addM" />
+                                </button>
+                            </div>} */}
+                            <div className="mtableUser">
+                                <span className="fs-20" style={member.account === this.props.account ? { fontWeight: "bold" } : {}}>{member.username || ""}</span>
+                                <p>{member.town || ""}</p>
+                                <span title="Car Raised" style={{ fontSize: "12px" }}>Euro {objectPrice}</span>
+                                <div className="mtableTokens">
+                                    {userObject.crowdsaleClosed ?
+                                        <span style={{ color: "green", fontSize: "12px" }}>{userObject.active ? "Active" : "Closed"}</span> : userObject.totalRaised || "0"}
+                                    <p>{userObject.evTokens}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-7">
+                            {<div className="mtableCar"  style={{backgroundImage: `url(${userObject.objectPic || member.profilePic ||require('../assets/ninja.png')})`}}>
+                                {/* <img style={img} src={userObject.objectPic || member.profilePic || require('../assets/ninja.png')} alt="carImage" /> */}
+                                </div>}
+
+                            {(this.props.newObject && this.props.newObject["id"] === userObject["_id"]) &&
+                                (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newObject.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red", marginLeft: "0px", marginTop: "15px" }}>pending</p>}</Link>)}
+                            {(this.props.newLeaseTokenObject && this.props.newLeaseTokenObject["hash"] === userObject["objectHash"]) &&
+                                (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newLeaseTokenObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newLeaseTokenObject.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red", marginLeft: "0px", marginTop: "15px" }}>pending</p>}</Link>)}
+                        </div>
                     </div>
                 ]
 
@@ -367,14 +392,44 @@ class Members extends Component {
 
                         </BlockUi>
                     </div>
-                    <div className="footCon">
-                        <div>
-                            <span>Ga duurzaam</span>
-                            <button className="arrowBtn" onClick={() => this.props.history.push("/", { path: "addnewlife" })}>
-                                <img src={require('../assets/arrow.jpg')} alt="addM" />
-                            </button>
-                            {/*this.props.AddNewUser && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.AddNewUser}>{!this.state.eventAddNewUser ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>} </Link>)*/}
-                            <input className="searchBtn" type="text" name="filterMembers" value={this.state.filter || ""} placeholder="Search" onChange={(e) => { cc.log("SEARCH: ", e.target.value); this.setState({ filter: e.target.value }) }} />
+                </div>
+                <div className="footBtn">
+                    <div className="container text-center">
+                        <div className="beforeFooter">
+                            <div className="col-5">
+                                &nbsp;
+                            </div>
+                            <div className="col-2">
+                                <button className="arrowBtn" onClick={() => this.props.history.push("/", { path: "addnewlife" })}>
+                                    <span className="flaticon-right-arrow"></span>
+                                </button>
+                                {/* <span>Ga duurzaam</span> */}
+                                {/*this.props.AddNewUser && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.AddNewUser}>{!this.state.eventAddNewUser ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>} </Link>)*/}
+                                {/* <input className="searchBtn" type="text" name="filterMembers" value={this.state.filter || ""} placeholder="Search" onChange={(e) => { cc.log("SEARCH: ", e.target.value); this.setState({ filter: e.target.value }) }} /> */}
+                            </div>
+                            <div className="col-5 text-left padding-10-0">
+                                <span style={{lineHeight: "35px"}}>Ga duurzaam</span>
+                                <div className="text-right" style={{float:'right'}}>
+                                    <img className="infoImg" src={require('../assets/info.png')} alt="info" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div className="footCon-bottom">
+                    <div className="social bg-lightgrey">
+                        <div className="container">
+                            <span className="smallText">VOLG ONS</span>
+
+                            <span className="flaticon-twitter-logo-on-black-background"></span>
+                            <span className="flaticon-facebook-logo"></span>
+                            <span className="flaticon-youtube-logo"></span>
+                        </div>
+                    </div>
+                    <div className="contact bg-grey textWhite">
+                        <div className="container">
+                            <span className="smallText">CONTACT</span>
                         </div>
                     </div>
                 </div>

@@ -206,18 +206,44 @@ class AddMember extends Component {
                             </div>
                         </BlockUi>
                     </div>
-                    <div className="footCon">
-                        <div>
-                            <button disabled={!this.checkMandatory() || (usernames.indexOf(this.state.username) !== -1)} title={!this.checkMandatory() ? "Please fill mandatory fields" : (usernames.indexOf(this.state.username) !== -1 ? "Username already exists" : "New Life Configuration")} className="arrowBtn" onClick={this.createAccount.bind(this)}>
-                                <img src={require('../assets/arrow.jpg')} alt="addM" />
-                            </button>
-                            {/*<button className="arrowBtn" onClick={() => this.props.history.push("/", { path: "members" })}>
-                                    <img src={require('../assets/arrow.jpg')} alt="addM" />
-                                </button>*/}
+                </div>
+                <div className="footBtn container">
+                    <div className="container text-center">
+                        <div className="beforeFooter">
+                            <div className="col-5">
+                                &nbsp;
+                            </div>
+                            <div className="col-2">
+                                <button disabled={!this.checkMandatory() || (usernames.indexOf(this.state.username) !== -1)} title={!this.checkMandatory() ? "Please fill mandatory fields" : (usernames.indexOf(this.state.username) !== -1 ? "Username already exists" : "New Life Configuration")} className="arrowBtn" onClick={this.createAccount.bind(this)}>
+                                    <span className="flaticon-right-arrow"></span>
+                                </button>
+                            </div>
+                            <div className="col-5 text-left padding-10-0">
+                                <span> &nbsp;</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="footCon-bottom">
+                    <div className="social bg-lightgrey">
+                        <div className="container">
+                            <span className="smallText">VOLG ONS</span>
+
+                            <span className="flaticon-twitter-logo-on-black-background"></span>
+                            <span className="flaticon-facebook-logo"></span>
+                            <span className="flaticon-youtube-logo"></span>
+                        </div>
+                    </div>
+                    <div className="contact bg-grey textWhite">
+                        <div className="container">
+                            <span className="smallText">CONTACT</span>
                         </div>
                     </div>
                 </div>
             </div>
+
+
+     
         )
     }
 }

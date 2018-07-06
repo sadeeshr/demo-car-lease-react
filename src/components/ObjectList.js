@@ -60,18 +60,18 @@ class ObjectList extends Component {
         cc.log("Object List state, props: ", this.state, this.props);
         const style = {
             towndropdown: {
-                fontWeight: "800",
+                fontWeight: "700",
                 background: "none",
                 border: "0",
-                fontSize: "16px",
+                fontSize: "20px",
                 WebkitAppearance: "none",
                 textAlign: "center",
                 textAlignLast: "center"
             },
             p: {
                 textAlign: "center",
-                fontSize: "12px",
-                lineHeight: "10px"
+                fontSize: "16px",
+                lineHeight: "24px"
             }
         }
 
@@ -90,59 +90,101 @@ class ObjectList extends Component {
         cc.log("MEMBER ID: ", this.props.registered)
 
         const imageStyle = {
-            float: "left",
-            width: "119px",
-            display: "block",
+            // float: "left",
+            width: "120px",
+            // display: "block",
             height: "auto"
         }
         return (
             <div className="content-border">
                 <div className="mainContentCon">
-                    <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
+                    {/* <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
                     <div className="float-right">
 
-                    </div>
+                    </div> */}
                     <div className="contentCon overflow">
                         <div className="contentText">
-                            <span>Het{" "}</span>
-                            <span style={style.towndropdown}>
-                                {town && town["municipality"]}
-                            </span>
-                            <span>{" "}wil</span>
-                            <div>
-                                <img style={imageStyle} src={require('../assets/carwhite.png')} alt={"car"} />
-                                <p style={style.p}>{evs + " "} Electrisch</p>
-                                <p style={style.p}>Zelfrijdende Taxi's</p>
-                                <p style={style.p}><strong>Nu 25</strong></p>
+                            <div className="text-center fs-20">
+                                <span>Het{" "}</span>
+                                <span style={style.towndropdown}>
+                                    {town && town["municipality"]}
+                                </span>
+                                <span>{" "}wil</span>
                             </div>
-                            <br />
-                            <div>
-                                <img style={imageStyle} src={require('../assets/energy.png')} alt={"energy"} />
-                                <p style={style.p}>{neutral + " "} Energie</p>
-                                <p style={style.p}>Neutrale Huishoudens</p>
-                                <p style={style.p}><strong>Nu 39</strong></p>
+                            <div class="container dp-block">
+                                <div className="col-5 text-center">
+                                    <img style={imageStyle} src={require('../assets/carwhite.png')} alt={"car"} />
+                                </div>
+                                <div className="col-7 mt-30">
+                                    <p style={style.p}>{evs + " "} Electrisch</p>
+                                    <p style={style.p}>Zelfrijdende Taxi's</p>
+                                    <p style={style.p}><strong>Nu 25</strong></p>
+                                </div>
                             </div>
-                            <br />
-                            <div>
-                                <img style={imageStyle} src={require('../assets/solar.png')} alt={"solar"} />
-                                <p style={style.p}>{solar + " "} Zonnedaken</p>
-                                <p style={style.p}><strong>Nu 2</strong></p>
+                            <div class="container dp-block">
+                                <div className="col-5 text-center">
+                                    <img style={imageStyle} src={require('../assets/energy.png')} alt={"energy"} />
+                                </div>
+                                <div className="col-7 mt-30">
+                                    <p style={style.p}>{neutral + " "} Energie</p>
+                                    <p style={style.p}>Neutrale Huishoudens</p>
+                                    <p style={style.p}><strong>Nu 39</strong></p>
+                                </div>
                             </div>
-                            <br />
-                            <div>
-                                <img style={imageStyle} src={require('../assets/wind.png')} alt={"wind"} />
-                                <p style={style.p}>{wind + " "} Noordzee</p>
-                                <p style={style.p}>Windmolens</p>
-                                <p style={style.p}><strong>Nu 0</strong></p>
+                            <div class="container dp-block">
+                                <div className="col-5 text-center">
+                                    <img style={imageStyle} src={require('../assets/solar.png')} alt={"solar"} />
+                                </div>
+                                <div className="col-7 mt-30">
+                                    <p style={style.p}>{solar + " "} Zonnedaken</p>
+                                    <p style={style.p}><strong>Nu 2</strong></p>
+                                </div>
+                            </div>
+                            <div class="container dp-block">
+                                <div className="col-5 text-center">
+                                    <img style={imageStyle} src={require('../assets/wind.png')} alt={"wind"} />
+                                </div>
+                                <div className="col-7 mt-30">
+                                    <p style={style.p}>{wind + " "} Noordzee</p>
+                                    <p style={style.p}>Windmolens</p>
+                                    <p style={style.p}><strong>Nu 0</strong></p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div className="footCon">
-                        <div>
-                            <span>Verder</span>
-                            <button className="arrowBtn" onClick={() => (this.props.usernames && this.props.history.push("/", { path: nextScreen }))}>
-                                <img src={require('../assets/arrow.jpg')} alt="addM" />
-                            </button>
+                </div>
+
+                <div className="footBtn">
+                    <div className="container text-center">
+                        <div className="beforeFooter">
+                            <div className="col-5">
+                                &nbsp;
+                        </div>
+                            <div className="col-2">
+                                <button className="arrowBtn" onClick={() => this.props.history.push("/", { path: nextScreen })}>
+                                    <span className="flaticon-right-arrow"></span>
+                                </button>
+                            </div>
+                            <div className="col-5 lh-54 text-left">
+                                <span>Wordt lid</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div className="footCon-bottom">
+                    <div className="social bg-lightgrey">
+                        <div className="container">
+                            <span className="smallText">VOLG ONS</span>
+
+                            <span className="flaticon-twitter-logo-on-black-background"></span>
+                            <span className="flaticon-facebook-logo"></span>
+                            <span className="flaticon-youtube-logo"></span>
+                        </div>
+                    </div>
+                    <div className="contact bg-grey textWhite">
+                        <div className="container">
+                            <span className="smallText">CONTACT</span>
                         </div>
                     </div>
                 </div>

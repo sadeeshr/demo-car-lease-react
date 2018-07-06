@@ -250,9 +250,10 @@ class Main extends Component {
             <div className="mainContentCon">
                 <div className="contentCon overflow bg-none">
 
-                    <p className="text-center"><strong>GA</strong> Duurzaam</p>
-                    <p className="text-center">en bespaaar tot 50%</p>
-                    <p className="text-center">op je energie rekening</p>
+                    <p className="text-center fs-30"><strong>GA</strong> Duurzaam</p>
+                    <p className="text-center fs-20">en bespaar tot 50%</p>
+                    <p className="text-center fs-20">op je energie en</p>
+                    <p className="text-center fs-20">vervoers rekening</p>
 
                     <table>
                         <tbody>
@@ -261,19 +262,46 @@ class Main extends Component {
                             </tr>
                         </tbody>
                     </table>
-                    <p className="text-center">...en een Alternatief voor je</p>
-                    <p className="text-center">Spaarrekening en Pensioen</p>
+                    <p className="text-center fs-20">...en een Alternatief voor je</p>
+                    <p className="text-center fs-20">Spaarrekening en Pensioen</p>
                 </div>
-                <div className="footCon">
-                    <div>
-                        <span>Verder</span>
-                        <button className="arrowBtn" onClick={() => this.props.history.push("/", { path: "home" })}>
-                            <img src={require('../assets/arrow.jpg')} alt="addM" />
-                        </button>
+            </div>
+            <div className="footBtn">
+                <div className="container text-center">
+                    <div className="beforeFooter">
+                        <div className="col-5">
+                            &nbsp;
+                            </div>
+                        <div className="col-2">
+                            <button className="arrowBtn" onClick={() => this.props.history.push("/", { path: "home" })}>
+                                <span className="flaticon-right-arrow"></span>
+                            </button>
+                        </div>
+                        <div className="col-5 lh-54 text-left">
+                            <span>Verder</span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div className="footCon-bottom">
+                <div className="social bg-lightgrey">
+                    <div className="container">
+                        <span className="smallText">VOLG ONS</span>
+
+                        <span className="flaticon-twitter-logo-on-black-background"></span>
+                        <span className="flaticon-facebook-logo"></span>
+                        <span className="flaticon-youtube-logo"></span>
+                    </div>
+                </div>
+                <div className="contact bg-grey textWhite">
+                    <div className="container">
+                        <span className="smallText">CONTACT</span>
                     </div>
                 </div>
             </div>
         </div>
+
     }
 
     renderComponent = () => {
@@ -307,15 +335,17 @@ class Main extends Component {
         // cc.log("Main State: ", this.state);
         const style = {
             nav: {
-                borderTop: "1px solid black",
-                borderBottom: "1px solid black",
+                borderTop: "1px solid #333333",
+                borderBottom: "1px solid #333333",
                 textAlign: "center"
             }
         }
         const path = (this.props.location && this.props.location.state) ? this.props.location.state.path : "main"
         return (
             <div>
-                <nav style={style.nav}>
+                <div className="beforeNav container smallText">GA DUURZAMM . OI</div>
+                {/* <div className="beforeNav container smallText"><span className="flaticon-man-user flatcon pull-left"></span>WESTLAND ENERGIE NEUTRAL , NL<span className="flaticon-search flatcon pull-right"></span></div> */}
+                <nav className="navCon" style={style.nav}>
                     <span onClick={() => this.props.history.push("/", { path: "home" })} style={{ cursor: "pointer", fontWeight: (["main", "home"].indexOf(path) !== -1) ? "800" : "100" }}>HOME</span> {" "}
                     <span onClick={() => this.props.history.push("/", { path: "addnewlife" })} style={{ cursor: "pointer", fontWeight: (path === "addnewlife") ? "800" : "100" }}>GA DUURZAAM</span>{" "}
                     <span onClick={() => this.props.towns && this.props.history.push("/", { path: "members" })} style={{ cursor: "pointer", fontWeight: (path === "members") ? "800" : "100" }}>LEDEN</span>{" "}

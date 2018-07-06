@@ -250,31 +250,37 @@ class Invoices extends Component {
                     </h1>
                 </div>
                 <Slide right opposite when={this.state.reveal}>
-                    <div className="fr"><i title="Add Invoice" className="flaticon-invoice marIcon" onClick={() => this.createInvoice()}></i></div>
+                    <div className="fr addInv"><i title="Add Invoice" className="flaticon-invoice marIcon" onClick={() => this.createInvoice()}></i></div>
                     <div className="contentCon bg-none overflow">
                         <BlockUi tag="div" blocking={this.props.progress}>
                             <div className="carIntestCon">
                                 <div className="membersCon">
-                                    <div className="leaseCarCon invest">
-                                        <div className="balance">
-                                            <div className="balanceName">MIJN SALDO:</div>
-                                            <div className="balanceNum">{formatNumber(parseInt((this.props.euroTokenBalance + this.props.unClaimedRedemption), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}<span> Euro</span></div>
+                                    <div className="leaseCarCon main-i invest">
+                                        <div className="balance d-ib inv">
+                                            <div className="col-6 balanceName lh-25 text-right">MIJN SALDO : &nbsp;&nbsp;</div>
+                                            <div className="col-6 balanceNum lh-25 text-left">{formatNumber(parseInt((this.props.euroTokenBalance + this.props.unClaimedRedemption), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}<span> Euro</span></div>
+                                            <div className="col-6">&nbsp;</div>
+                                            <div className="col-6 minusBal text-left">-2.500</div>
                                         </div>
-                                        <div className="mtableLink">
+                                        <div className="col-12 mtableLink">
                                             <div className="mtableCar">
                                                 <img src={this.props.member.objectPic} alt="carImage" />
                                             </div>
-                                            <div className="mtableTokens">{"ACTIVE"}
+                                        </div>
+                                        <div className="col-12">
+                                            <div className="col-4 text-right mtableTokens">{"ACTIVE"}
                                                 <p>{this.props.member.evTokens}</p>
                                             </div>
-                                            <div className="mtableUser">{user.username}
+                                            <div className="col-8 mtableUser">{user.username}
                                                 <p>{user.town}</p>
                                                 <p>{this.props.member.leaseType}</p>
                                             </div>
+
                                             <div hidden className="mtableMnd">{formatNumber(parseInt((this.props.member.objectPrice), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} EUR
                                                 <p>{this.props.member.months} MND</p>
                                             </div>
                                         </div>
+
                                         {/*invoicesRow*/}
                                         <div className="investAddStatus">
                                             {this.props.payFeeTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.payFeeTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.payFeeTxID)) ? <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red" }}>pending</p>}</Link>)}
@@ -286,30 +292,56 @@ class Invoices extends Component {
                                                     tariff = nextTariff
                                                 }
 
-                                                return <div key={i} className="leaseCarCon invest">
-                                                    <div className="balance balanceNum"> BETAAL {(this.props.member.leaseType === "Per Dag") ? (invoice.date || this.getFormattedDate()) : (this.months[invoice.month] + " " + invoice.year)} </div>
-                                                    <div className="investAddCon">
-                                                        <div className="investAddInput">
-                                                            <table>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>Tarief (Incl BTW)</td><td>{formatNumber(tariff, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} Euro</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>{(this.props.member.objectType === "Car") ? "KM Vergoeding" : "Onderhoud p/m"}</td><td>{invoice.mileage || (this.props.member.leaseType === "Per Dag" && <input value={this.state.mileage || 0} onChange={(e) => this.setState({ mileage: e.target.value })} maxLength="20" type="number" placeholder="" />)}{formatNumber(mileageEuro, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} Euro</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Totaal</td><td>{formatNumber(total, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} Euro</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
+                                                return <div key={i} className="leaseCarCon invest no-border">
+                                                    <div className="col-12 d-ib border-2">
+                                                        <div className="balance balanceNum text-center"> BETAAL {(this.props.member.leaseType === "Per Dag") ? (invoice.date || this.getFormattedDate()) : (this.months[invoice.month] + " " + invoice.year)} </div>
+                                                        <div className="col-12 investAddCon">
+                                                            <div className="col-5 text-right">
+                                                                <span style={{padding: '0 5px', lineHeight: '30px'}}>Tarief</span>
+                                                            </div>
+                                                            <div className="col-3 text-center">
+                                                                <span style={{fontSize: '11px'}}>(Incl BTW)</span>
+                                                            </div>
+
+                                                            <div className="col-4" style={{lineHeight: '30px'}}>
+                                                                {formatNumber(tariff, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} Euro
+                                                            </div>
+                                                            <div className="col-5 text-right">&nbsp;
+                                                                <span style={{padding: '0 5px', lineHeight: '30px'}}>{(this.props.member.objectType === "Car") ? "KM" : "Onderhoud p/m"}</span>
+                                                            </div>
+
+                                                            <div className="col-3 text-center input-inv">&nbsp;
+                                                                {invoice.mileage || (this.props.member.leaseType === "Per Dag" && <input value={this.state.mileage || 0} onChange={(e) => this.setState({ mileage: e.target.value })} maxLength="20" type="number" placeholder="" />)}
+                                                            </div>
+
+                                                             <div className="col-4" style={{lineHeight: '30px'}}>
+                                                                {formatNumber(mileageEuro, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} Euro
+                                                            </div>
+
+                                                            <div className="col-5 text-right">
+                                                                <span style={{padding: '0 5px', lineHeight: '30px'}}>Totaal</span>
+                                                            </div>
+                                                            <div className="col-3 text-center">
+                                                                <span style={{fontSize: '11px'}}>&nbsp;</span>
+                                                            </div>
+
+                                                            <div className="col-4" style={{lineHeight: '30px'}}>
+                                                                {formatNumber(total, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} Euro
+                                                            </div>
+
+                                                            <div className="col-12 text-center">
+                                                                <span className="flaticon-lock-1 unlock"></span>
+                                                                {/* <span className="flaticon-lock unlock"></span>  */}
+                                                                <span className="minusBal">Pending</span>
+                                                                {/* <span className="confirmBal">Confirmed</span> */}
+                                                            </div>
+                                                           
+                                                            {!invoice.status && <div hidden={this.props.payFeeTxID} className="arrowBtn">
+                                                                {/*<img onClick={() => { this.props._lcPayCapitalAndOperation(this.props.member.objectID, (parseFloat(this.props.member.obj.monthlyCapitalCost.toNumber()) * 100).toFixed(2), (parseFloat(this.props.member.obj.monthlyOperatingCost.toNumber()) * 100).toFixed(2), this.props.account); this.updateInvoice(invoice, tariff, nextTariff, this.state.mileage, total) }} src={require('../assets/add.jpg')} alt="add2" />*/}
+                                                                <img onClick={() => { this.props._lcPayCapitalAndOperation(this.props, this.props.member.objectID, (tariff * 100), (mileageEuro * 100), this.props.account); this.updateInvoice(invoice, tariff, nextTariff, this.state.mileage, total) }} src={require('../assets/add.jpg')} alt="add2" />
+                                                            </div>}
 
                                                         </div>
-                                                        {!invoice.status && <div hidden={this.props.payFeeTxID} className="arrowBtn">
-                                                            {/*<img onClick={() => { this.props._lcPayCapitalAndOperation(this.props.member.objectID, (parseFloat(this.props.member.obj.monthlyCapitalCost.toNumber()) * 100).toFixed(2), (parseFloat(this.props.member.obj.monthlyOperatingCost.toNumber()) * 100).toFixed(2), this.props.account); this.updateInvoice(invoice, tariff, nextTariff, this.state.mileage, total) }} src={require('../assets/add.jpg')} alt="add2" />*/}
-                                                            <img onClick={() => { this.props._lcPayCapitalAndOperation(this.props, this.props.member.objectID, (tariff * 100), (mileageEuro * 100), this.props.account); this.updateInvoice(invoice, tariff, nextTariff, this.state.mileage, total) }} src={require('../assets/add.jpg')} alt="add2" />
-                                                        </div>}
-
                                                     </div>
                                                 </div>
                                             })
@@ -320,13 +352,45 @@ class Invoices extends Component {
                         </BlockUi>
                     </div>
                 </Slide>
-                <div className="footCon">
-                    <div className="arrowBtn back">
-                        <img src={require('../assets/back.jpg')} onClick={this.doExit.bind(this)} alt="back" />
+            </div>
+            <div className="footBtn container">
+                <div className="container text-center">
+                    <div className="beforeFooter">
+                        <div className="col-3">
+                            <button className="arrowBtn" onClick={this.doExit.bind(this)}>
+                                <span className="flaticon-left-arrow"></span>
+                            </button>
+                        
+                        </div>
+                        <div className="col-4 text-left" style={{padding: '18px 0'}}>
+                            &nbsp;
+                            {/* <span>Ga Terug</span> */}
+                        </div>
+                        <div className="col-5 text-left padding-10-0">
+                        <div className="text-right" style={{float:'right'}}>
+                                    <img className="infoImg" src={require('../assets/info.png')} alt="info" />
+                                </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <div className="footCon-bottom">
+                <div className="social bg-lightgrey">
+                    <div className="container">
+                        <span className="smallText">VOLG ONS</span>
+
+                        <span className="flaticon-twitter-logo-on-black-background"></span>
+                        <span className="flaticon-facebook-logo"></span>
+                        <span className="flaticon-youtube-logo"></span>
+                    </div>
+                </div>
+                <div className="contact bg-grey textWhite">
+                    <div className="container">
+                        <span className="smallText">CONTACT</span>
+                    </div>
+                </div>
+            </div>
+        </div >
         )
     }
 }

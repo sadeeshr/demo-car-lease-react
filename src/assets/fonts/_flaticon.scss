@@ -1,6 +1,6 @@
     /*
     Flaticon icon font: Flaticon
-    Creation date: 07/03/2018 02:24
+    Creation date: 26/06/2018 06:19
     */
 
     @font-face {
@@ -36,14 +36,34 @@
   font-smoothing: antialiased;
     }
 
-    .flaticon-rotate:before { content: "\f100"; }
-.flaticon-home:before { content: "\f101"; }
-.flaticon-back:before { content: "\f102"; }
-.flaticon-next:before { content: "\f103"; }
-.flaticon-invoice:before { content: "\f104"; }
+    .flaticon-euro:before { content: "\f100"; }
+.flaticon-search:before { content: "\f101"; }
+.flaticon-man-user:before { content: "\f102"; }
+.flaticon-lock-1:before { content: "\f103"; }
+.flaticon-lock:before { content: "\f104"; }
+.flaticon-left-arrow:before { content: "\f105"; }
+.flaticon-right-arrow:before { content: "\f106"; }
+.flaticon-youtube-logo:before { content: "\f107"; }
+.flaticon-facebook-logo:before { content: "\f108"; }
+.flaticon-twitter-logo-on-black-background:before { content: "\f109"; }
+.flaticon-invoice:before { content: "\f10a"; }
+.flaticon-next:before { content: "\f10b"; }
+.flaticon-back:before { content: "\f10c"; }
+.flaticon-home:before { content: "\f10d"; }
+.flaticon-rotate:before { content: "\f10e"; }
     
-    $font-Flaticon-rotate: "\f100";
-    $font-Flaticon-home: "\f101";
-    $font-Flaticon-back: "\f102";
-    $font-Flaticon-next: "\f103";
-    $font-Flaticon-invoice: "\f104";
+    $font-Flaticon-euro: "\f100";
+    $font-Flaticon-search: "\f101";
+    $font-Flaticon-man-user: "\f102";
+    $font-Flaticon-lock-1: "\f103";
+    $font-Flaticon-lock: "\f104";
+    $font-Flaticon-left-arrow: "\f105";
+    $font-Flaticon-right-arrow: "\f106";
+    $font-Flaticon-youtube-logo: "\f107";
+    $font-Flaticon-facebook-logo: "\f108";
+    $font-Flaticon-twitter-logo-on-black-background: "\f109";
+    $font-Flaticon-invoice: "\f10a";
+    $font-Flaticon-next: "\f10b";
+    $font-Flaticon-back: "\f10c";
+    $font-Flaticon-home: "\f10d";
+    $font-Flaticon-rotate: "\f10e";

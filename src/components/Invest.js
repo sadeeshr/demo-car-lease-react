@@ -220,16 +220,41 @@ class Invest extends Component {
                         </BlockUi>
                     </div>
                 </Slide>
-                <div className="footCon">
-                    <div>
-                        <span>Ga Terug</span>
-                        <div style={{ top: "-30px", left: "10px", position: "relative" }} className="arrowBtn back">
-                            <img src={require('../assets/back.jpg')} onClick={this.doExit.bind(this)} alt="back" />
+            </div>
+            <div className="footBtn container">
+                <div className="container text-center">
+                    <div className="beforeFooter">
+                        <div className="col-5">
+                            &nbsp;
+                                </div>
+                        <div className="col-2">
+                            <button className="arrowBtn" onClick={this.doExit.bind(this)}>
+                                <span className="flaticon-left-arrow"></span>
+                            </button>
+                        </div>
+                        <div className="col-5 text-left padding-10-0">
+                            <span>Ga Terug</span>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <div className="footCon-bottom">
+                <div className="social bg-lightgrey">
+                    <div className="container">
+                        <span className="smallText">VOLG ONS</span>
+
+                        <span className="flaticon-twitter-logo-on-black-background"></span>
+                        <span className="flaticon-facebook-logo"></span>
+                        <span className="flaticon-youtube-logo"></span>
+                    </div>
+                </div>
+                <div className="contact bg-grey textWhite">
+                    <div className="container">
+                        <span className="smallText">CONTACT</span>
+                    </div>
+                </div>
+            </div>
+        </div >
         )
     }
 }
