@@ -235,7 +235,7 @@ class Members extends Component {
             return userObjects.map((userObject, j) => {
                 // console.log("UO", userObject, userObject.objectPrice);
                 // const objectPrice = userObject.obj ? userObject.obj.objectPrice.toNumber() : "0"
-                // const objectPrice = parseInt(userObject.objectPrice, 10) || 0
+                const objectPrice = parseInt(userObject.objectPrice, 10) || 0
                 const img = userObject.objectPic ? { "display": "block" } : { "maxHeight": "50px", "maxWidth": "118px", height: "auto", width: "auto" }
                 const selected = this.props.member && (this.props.member["_id"] === userObject["_id"]) ? true : false
                 // const selected = true
