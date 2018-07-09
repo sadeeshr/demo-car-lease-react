@@ -99,6 +99,7 @@ class Main extends Component {
                     }
 
                 case "CreateNewUser":
+                case "Approval":
                     {
                         let alert = {
                             title: "New Member is Authorized !",
@@ -347,10 +348,10 @@ class Main extends Component {
         const path = (this.props.location && this.props.location.state) ? this.props.location.state.path : "main"
         return (
             <div>
-                <div className="beforeNav container smallText">GA DUURZAMM . OI</div>
+                <div className="beforeNav container smallText">WESTLAND ENERGIE NEUTRAAL . NL</div>
                 {/* <div className="beforeNav container smallText"><span className="flaticon-man-user flatcon pull-left"></span>WESTLAND ENERGIE NEUTRAL , NL<span className="flaticon-search flatcon pull-right"></span></div> */}
                 <nav className="navCon" style={style.nav}>
-                    <span onClick={() => this.props.history.push("/", { path: "home" })} style={{ cursor: "pointer", fontWeight: (["main", "home"].indexOf(path) !== -1) ? "800" : "100" }}>HOME</span> {" "}
+                    <span onClick={() => this.props.history.push("/", { path: "main" })} style={{ cursor: "pointer", fontWeight: (["main", "home"].indexOf(path) !== -1) ? "800" : "100" }}>HOME</span> {" "}
                     <span onClick={() => this.props.history.push("/", { path: "addnewlife" })} style={{ cursor: "pointer", fontWeight: (path === "addnewlife") ? "800" : "100" }}>GA DUURZAAM</span>{" "}
                     <span onClick={() => this.props.towns && this.props.history.push("/", { path: "members" })} style={{ cursor: "pointer", fontWeight: (path === "members") ? "800" : "100" }}>LEDEN</span>{" "}
                 </nav>

@@ -309,6 +309,7 @@ class AddNewLifeConfigurator extends Component {
                                                                 {/* <img src={lobject.image} alt={lobject.name} /> */}
                                                             </div>
                                                         </div>
+<<<<<<< HEAD
                                                         <div className="col-12 mb-15" style={{ height: "46px" }}>
                                                             <div hidden={lobject.objecttype !== "Car"}  className="col-12" >
                                                                 <div className="col-7">
@@ -327,6 +328,24 @@ class AddNewLifeConfigurator extends Component {
                                                                     <span className="color-default color-white"></span>
                                                                     <span className="color-default color-blue"></span>
                                                                 </div>
+=======
+                                                        <div hidden={lobject.objecttype !== "Car"} className="col-12 mb-15" style={{ height: "46px" }}>
+                                                            <div className="col-7">
+                                                                <div>
+                                                                    <span className="c-type opacity03">S</span>
+                                                                    <span className="c-type">3</span>
+                                                                    <span className="c-type opacity03">X</span>
+                                                                    <span className="c-type opacity03">Y</span>
+                                                                </div>
+                                                                <div>
+                                                                    <span className="c-type opacity03">ROADSTER</span>
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-5">
+                                                                <span className="color-default color-red"></span>
+                                                                <span className="color-default color-white"></span>
+                                                                <span className="color-default color-blue"></span>
+>>>>>>> 32113e069e23453fec3f9326506ced516f145a2e
                                                             </div>
                                                         </div>
                                                         <div className="mb-5 d-ib">
@@ -406,8 +425,12 @@ class AddNewLifeConfigurator extends Component {
                                                             </div>
                                                         </div>
 
+<<<<<<< HEAD
                                                         <div className={this.state.modalCondition ? "infoPop is-open" : "infoPop is-close"} >
                                                             <span className="modalCloseBtn" onClick={() => this.modalClick()}>x</span>
+=======
+                                                        <div className="infoPop" style={{ display: 'none' }}>
+>>>>>>> 32113e069e23453fec3f9326506ced516f145a2e
                                                             Vandaag 20 euro,
                                                             morgen 19.99,
                                                             overmorgen 19.98,
