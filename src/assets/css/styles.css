@@ -48,6 +48,9 @@ p{
    display: block;
 }
 
+.mainContentCon.foot{
+  height: 630px;
+}
 
 .header{
     position: relative;
@@ -163,7 +166,7 @@ margin-top: -13px;
    margin-top: 0px;
 }
 .text-center{
-   text-align: center;
+   text-align: center !important;
 }
 .text-right{
     text-align: right;
@@ -211,7 +214,7 @@ margin: 0 auto 10px;
    background-position: center center;
     background-repeat: no-repeat;
     background-size: contain;
-    height: 140px;
+    height: 190px;
 }
 .newlifeImage img{
    /* width: 80%; */
@@ -329,7 +332,8 @@ margin: 0 auto 10px;
    border: 3px solid #808080; */
 }
 .footCon div button:hover, .footCon div a:hover{
-   border: 3px solid rgba(255, 215, 0, .3);
+   /* border: 3px solid rgba(255, 215, 0, .3); */
+   cursor: pointer;
 }
 .contentBtn button:hover{
    border: 5px solid rgba(255, 215, 0, .3);
@@ -709,15 +713,41 @@ table tr td {
 .leaseCarCon.main-i{
   display: inline-block;
   border: 2px solid #f1f1f1;
+  width: calc(100% - 14px);
 }
 
 .leaseCarCon .border-2{
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
+}
+
+.leaseCarCon.cPadding .border-2{
+  width:  calc(100% - 4px);
+  height: 244px;
 }
 
 .balance.inv {
   padding: 5px 0!important;
   border: 2px solid #f1f1f1;
+  width: calc(100% - 4px);
+}
+
+.cPadding{
+  width: calc(100% - 14px);
+}
+
+.swiper-slide{
+  /* width: calc(100% - 14px) !important; */
+  padding-left: 0;
+  padding-right: 0;
+}
+
+
+.leaseCarCon .swiper-slide{
+  padding-left: 0;
+  padding-right: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  padding-top: 0;
 }
 
 .minusBal{
@@ -791,11 +821,26 @@ table tr td {
     transition: all .2s ease;
 }
 
-.invest .mtableCar img{
+/* .invest .mtableCar img{
     display: block;
     height: auto;
+} */
+.invest .mtableCar{
+  height: 100px;
 }
 
+.col-8.mtableUser{
+  width: 66.67%;
+  padding: 0;
+}
+
+.invest .mtableCar img{
+  display: block;
+  height: auto;
+  width: auto;
+  margin: 0 auto;
+  max-height: 190px;
+}
 .balanceNum {
     font-weight: 800;
     font-size: 18px;
@@ -897,11 +942,13 @@ table tr td {
    padding: 0 10px;
    font-size: 18px;
    cursor: default;
-   text-align: center;
+   text-align: left;
+   padding-left: 20px;
 }
 .mtableUser p{
     font-size: 15px;
 margin: 0 0 10px 0;
+color: #717171;
 }
 .mtableCar{
    float: right;
@@ -909,8 +956,19 @@ margin: 0 0 10px 0;
    background-size: contain;
    background-position: center center;
    background-repeat: no-repeat;
-   height: 100%;
+   height: 70px;
    width: 100%;
+}
+
+.carRaised{
+  font-size: 12px;
+  width: 84px;
+  text-align: center;
+  float: right;
+  background: #fff;
+  border: 2px solid #9c9c9c;
+  border-radius: 5px;
+  padding: 5px;
 }
 
 .mtableCar img{
@@ -919,7 +977,7 @@ margin: 0 0 10px 0;
 }
 
 .mtableTokens p{
-   font-size: 12px;
+   font-size: 13px;
    margin: 0;
 
 }
@@ -1237,6 +1295,7 @@ padding: 8px;
 
 .unlock:before{
 margin-left: 0 !important;
+font-size: 20px !important;
 }
 
 .unlock{
@@ -1256,9 +1315,9 @@ margin-left: 0 !important;
 }
 
 .investAddInput input{
-    width: 70px;
-    border-radius: 10px;
-    border: 3px solid #808080;
+    width: calc(100% - 20px);
+    border-radius: 6px;
+    border: 2px solid #E6E6E6;
     padding: 10px 10px;
     text-align: center;
 }
@@ -1424,12 +1483,27 @@ text-align: right;
     line-height: 54px;
 }
 
+.lh-40{
+  line-height: 40px;
+}
+
 .fs-30{
     font-size: 30px;;
+}
+.fs-16{
+  font-size: 16px;
 }
 
 .fs-20{
     font-size: 20px;
+}
+
+.fs-24{
+  font-size: 20px;
+}
+
+.fw-700{
+  font-weight: 600
 }
 
 .mb-50{
@@ -1511,6 +1585,10 @@ margin-left: 0 !important;
     padding: 10px 0;
 }
 
+.padding-20-0{
+  padding: 10px 0;
+}
+
 /* .coverflow__container__2RGwF{
 background: rgba(0, 0, 0, 0) !important;
 } */
@@ -1559,6 +1637,27 @@ background: rgba(0, 0, 0, 0) !important;
     font-size: 9px;
 }
 
+
+
+
+.modalCloseBtn{
+  position: absolute;
+  top: -10px;
+  right: -5px;
+  background: #ffffff;
+  color: #000000;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  text-align: center;
+  line-height: 20px;
+  z-index: 2;
+}
+.modalCloseBtn:hover{
+  cursor: pointer;
+  color: #ff8000;
+}
 
 
 .newLifeItem{
@@ -1615,6 +1714,63 @@ opacity: .3
         font-weight: 800;
         margin-right: 10px;
     }
+
+.infoPop{
+  position: absolute;
+  right: 0;
+  left: 0;
+  margin: auto;
+  display: inline-block;
+  top: 150px;
+  background: #ffb366;
+  background: -moz-linear-gradient(top, #ffb366 0%, #ff8000 100%);
+  background: -webkit-linear-gradient(top, #ffb366 0%,#ff8000 100%);
+  background: linear-gradient(to bottom, #ffb366 0%,#ff8000 100%);
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 30px;
+  width: 140px;
+  border: 2px solid #CCCCCC;
+  visibility: hidden;
+  opacity: 0;
+  transition: all .2s ease-out;
+}
+
+.infoPop.is-close{
+  visibility: hidden;
+}
+
+.infoPop.is-open{
+  visibility: visible;
+  opacity: 1;
+  top : 130px;
+}
+
+.col-12.investAddCon{
+  width: calc(100% - 4px);
+  padding: 20px 0px;
+
+}
+
+.modalOverlay{
+  width: 100%;
+  height: 100%;
+  background: #ffffff00;
+  display: block;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+}
+
+.modalOverlay.is-open{
+display: initial
+}
+
+.modalOverlay.is-close{
+display: none;
+}
+
+
 
 /**
  * Swiper 4.2.6

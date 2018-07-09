@@ -25,8 +25,15 @@ class Invest extends Component {
             eventTransfer: null,
             eventApprove: null,
             eventClaim: null,
-            refreshValues: false
+            refreshValues: false,
+            modalCondition: false,
         })
+    }
+
+    modalClick() {
+        this.setState({
+            modalCondition: !this.state.modalCondition
+        });
     }
 
     componentWillUnmount() {
@@ -174,45 +181,80 @@ class Invest extends Component {
                         <BlockUi tag="div" blocking={this.props.progress}>
                             <div className="carIntestCon">
                                 <div className="membersCon">
-                                    <div className="leaseCarCon invest">
-                                        <div className="balance">
-                                            <div className="balanceName">MIJN SALDO:</div>
-                                            <div className="balanceNum">{formatNumber(parseInt((this.props.euroTokenBalance + this.props.unClaimedRedemption), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}<span> Euro</span></div>
+                                    <div className="leaseCarCon  main-i invest">
+                                        <div className="balance d-ib inv">
+                                            <div className="col-6 balanceName lh-25 text-right">MIJN SALDO : </div>
+                                            <div className="col-6 balanceNum lh-25 text-left">{formatNumber(parseInt((this.props.euroTokenBalance + this.props.unClaimedRedemption), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}<span> Euro</span></div>
+                                            {/* <div className="col-6">&nbsp;</div>
+                                            <div className="col-6 minusBal text-left">-2.500</div> */}
                                         </div>
-                                        <div className="mtableLink">
-                                            <div className="mtableCar">
-                                                <img src={this.props.member.objectPic} alt="carImage" />
+                                        <div className="col-12 mtableLink">
+                                            <div className="mtableCar" style={{ backgroundImage: `url(${this.props.member.objectPic})` }}>
+                                                {/* <img src={this.props.member.objectPic} alt="carImage" /> */}
                                             </div>
-                                            <div className="mtableTokens">{this.props.member.totalRaised}
-                                                <p>{this.props.member.evTokens}</p>
+                                        </div>
+                                        <div className="col-12">
+                                            <div className="col-3 text-right mtableTokens fs-16">
+                                                {this.props.member.totalRaised}
+                                                <p style={{ color: 'green' }}>{this.props.member.evTokens}</p>
                                             </div>
-                                            <div className="mtableUser">{user.username}
+                                            <div className="col-5 mtableUser text-center">{user.username}
                                                 <p>{user.town}</p>
                                             </div>
-                                            <div className="mtableMnd">{formatNumber(parseInt((this.props.member.objectPrice), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} EUR
-                                                        <p>{this.props.member.months} MND</p>
+                                            <div className="col-4 mtableMnd">{formatNumber(parseInt((this.props.member.objectPrice), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} EUR
+                                                <p>{this.props.member.months} MND</p>
                                             </div>
                                         </div>
-                                        <div className="investAddCon">
-                                            <div className="arrowBtn">
+                                        <div className="col-12 investAddCon border-2">
+                                            <div className="col-12 mb-15">
+                                                <p className="fw-700 text-center" style={{ color: (this.props.member.crowdsaleClosed || buyAndActivate) ? "green" : "black" }}>{buyAndActivate ? ("BETAAL " + this.props.member.objectType.toUpperCase()) : (this.props.member.active ? "ACTIVE" : this.props.member.crowdsaleClosed ? "CLOSED" : "INVESTEER")}</p>
+                                            </div>
+                                            <div className="col-4 lh-40">
+                                                &nbsp;
+                                            </div>
+                                            <div className="col-4">
+                                                {
+                                                    buyAndActivate ?
+                                                        <Calendar value={this.state.activedate || new Date()} onChange={(e) => this.setState({ activedate: e.value })}>Opleverdatum</Calendar>
+                                                        : <div className="investAddInput">{!this.props.member.crowdsaleClosed && <input style={{ color: (enableInvest ? "black" : "red") }} value={(typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest} onChange={(e) => this.setState({ ethInvest: e.target.value })} maxLength="20" type="text" placeholder="Euro Token" />}
+                                                        </div>
+                                                }
+                                            </div>
+                                            <div className="col-4 lh-40">
+                                                Euro
+                                            </div>
+
+                                            <div className="col-12 text-center">
+                                                <span className="flaticon-lock-1 unlock" style={{ cursor: ((enableInvest && !this.props.member.crowdsaleClosed) || buyAndActivate) ? "pointer" : "not-allowed" }} onClick={() => {
+                                                    buyAndActivate ?
+                                                        this.state.activedate && this.props._lcBuyAndActivate(this.props.member.objectID, this.state.activedate, this.props.account)
+                                                        : this.props.account && !this.props.member.crowdsaleClosed && enableInvest && this.props._lcInvestInObject(this.props.member.objectID || (this.props.event && this.props.event.returnValues && this.props.event.returnValues.objectID), this.state.ethInvest || "0", this.props.account)
+                                                }} ></span>
+                                                {/* <span className="flaticon-lock unlock"></span>  */}
+                                                {/* <span className="minusBal">Pending</span> */}
+
+                                                {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.investInObjectTxID)) ? <p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)}
+                                                {this.props.BuyAndActivate && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.BuyAndActivateTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.BuyAndActivateTxID)) ? <p className="p-euro" style={{ ccolor: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)}
+
+                                                {/* <span className="confirmBal">Confirmed</span> */}
+                                            </div>
+
+                                            {/* <div className="arrowBtn">
                                                 <img style={{ cursor: ((enableInvest && !this.props.member.crowdsaleClosed) || buyAndActivate) ? "pointer" : "not-allowed" }} onClick={() => {
                                                     buyAndActivate ?
                                                         this.state.activedate && this.props._lcBuyAndActivate(this.props.member.objectID, this.state.activedate, this.props.account)
                                                         : this.props.account && !this.props.member.crowdsaleClosed && enableInvest && this.props._lcInvestInObject(this.props.member.objectID || (this.props.event && this.props.event.returnValues && this.props.event.returnValues.objectID), this.state.ethInvest || "0", this.props.account)
                                                 }} src={require('../assets/add.jpg')} alt="add2" />
                                             </div>
+ */}
 
-                                            {
-                                                buyAndActivate ?
-                                                    <Calendar value={this.state.activedate || new Date()} onChange={(e) => this.setState({ activedate: e.value })}>Opleverdatum</Calendar>
-                                                    : <div className="investAddInput">{!this.props.member.crowdsaleClosed && <input style={{ color: (enableInvest ? "black" : "red") }} value={(typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest} onChange={(e) => this.setState({ ethInvest: e.target.value })} maxLength="20" type="text" placeholder="Euro Token" />}
-                                                    </div>
-                                            }
-                                            <div className="investAddStatus">
-                                                <p style={{ color: (this.props.member.crowdsaleClosed || buyAndActivate) ? "green" : "black" }}>{buyAndActivate ? ("BETAAL " + this.props.member.objectType.toUpperCase()) : (this.props.member.active ? "ACTIVE" : this.props.member.crowdsaleClosed ? "CLOSED" : "INVESTEER EURO")}</p>
+
+                                            {/* <div className="investAddStatus">
+
                                                 {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.investInObjectTxID)) ? <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red" }}>pending</p>}</Link>)}
                                                 {this.props.BuyAndActivate && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.BuyAndActivateTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.BuyAndActivateTxID)) ? <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red" }}>pending</p>}</Link>)}
-                                            </div>
+                                            </div> */}
+
                                         </div>
                                     </div>
                                 </div>
@@ -221,19 +263,31 @@ class Invest extends Component {
                     </div>
                 </Slide>
             </div>
+            <div className={this.state.modalCondition ? "infoPop is-open" : "infoPop is-close"} >
+                        <span className="modalCloseBtn" onClick={() => this.modalClick()}>x</span>
+                        Vandaag 20 euro,
+                        morgen 19.99,
+                        overmorgen 19.98,
+                        over 3 jaar 10
+                        ...of 1 euro per uur
+                    </div>
             <div className="footBtn container">
                 <div className="container text-center">
                     <div className="beforeFooter">
-                        <div className="col-5">
-                            &nbsp;
-                                </div>
-                        <div className="col-2">
+                        <div className="col-3">
                             <button className="arrowBtn" onClick={this.doExit.bind(this)}>
                                 <span className="flaticon-left-arrow"></span>
                             </button>
                         </div>
+                        <div className="col-4 lh-54 text-left">
+                            Ga Terug
+                        </div>
                         <div className="col-5 text-left padding-10-0">
-                            <span>Ga Terug</span>
+                            <div className="text-right" style={{ float: 'right' }}>
+                                <span onClick={() => this.modalClick()}>
+                                    <img className="infoImg" src={require('../assets/info.png')} alt="info" />
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -254,6 +308,7 @@ class Invest extends Component {
                     </div>
                 </div>
             </div>
+            <div className={this.state.modalCondition ? "modalOverlay is-open" : "modalOverlay is-close"} onClick={() => this.modalClick()}></div>
         </div >
         )
     }

@@ -5,6 +5,8 @@ import Slide from 'react-reveal/Slide';
 import cc from '../lib/utils';
 import formatNumber from 'accounting-js/lib/formatNumber.js'
 
+import Swiper from 'react-id-swiper';
+
 class Invoices extends Component {
     constructor(props) {
         super(props)
@@ -14,10 +16,17 @@ class Invoices extends Component {
             progress: false,
             month: null,
             year: null,
+            modalCondition: false,
             reveal: false
         }
         this.rinkebyStatsURL = "https://rinkeby.etherscan.io/tx/"
         this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    }
+
+    modalClick() {
+        this.setState({
+            modalCondition: !this.state.modalCondition
+        });
     }
 
 
@@ -231,6 +240,15 @@ class Invoices extends Component {
         //     )
         // }
 
+        const params = {
+            shouldSwiperUpdate: true,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev'
+            },
+
+        }
+
 
         return (<div className="content-border">
             <div className="mainContentCon">
@@ -259,94 +277,100 @@ class Invoices extends Component {
                                         <div className="balance d-ib inv">
                                             <div className="col-6 balanceName lh-25 text-right">MIJN SALDO : &nbsp;&nbsp;</div>
                                             <div className="col-6 balanceNum lh-25 text-left">{formatNumber(parseInt((this.props.euroTokenBalance + this.props.unClaimedRedemption), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}<span> Euro</span></div>
-                                            <div className="col-6">&nbsp;</div>
-                                            <div className="col-6 minusBal text-left">-2.500</div>
+                                            {/* <div className="col-6">&nbsp;</div>
+                                            <div className="col-6 minusBal text-left">-2.500</div> */}
                                         </div>
                                         <div className="col-12 mtableLink">
-                                            <div className="mtableCar">
-                                                <img src={this.props.member.objectPic} alt="carImage" />
+                                            <div className="mtableCar" style={{ backgroundImage: `url(${this.props.member.objectPic})` }}>
+                                                {/* <img src={this.props.member.objectPic} alt="carImage" /> */}
                                             </div>
                                         </div>
                                         <div className="col-12">
                                             <div className="col-4 text-right mtableTokens">{"ACTIVE"}
                                                 <p>{this.props.member.evTokens}</p>
                                             </div>
-                                            <div className="col-8 mtableUser">{user.username}
-                                                <p>{user.town}</p>
-                                                <p>{this.props.member.leaseType}</p>
+                                            <div className="col-8 mtableUser">
+                                                <div style={{ paddingLeft: '20px' }}>
+                                                    {user.username}
+                                                    <p>{user.town} {this.props.member.leaseType}</p>
+                                                </div>
                                             </div>
 
-                                            <div hidden className="mtableMnd">{formatNumber(parseInt((this.props.member.objectPrice), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} EUR
+                                            <div hidden className="col-12 mtableMnd">{formatNumber(parseInt((this.props.member.objectPrice), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} EUR
                                                 <p>{this.props.member.months} MND</p>
                                             </div>
                                         </div>
 
                                         {/*invoicesRow*/}
-                                        <div className="investAddStatus">
+                                        {/* <div className="investAddStatus">
                                             {this.props.payFeeTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.payFeeTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.payFeeTxID)) ? <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red" }}>pending</p>}</Link>)}
-                                        </div>
-                                        {
-                                            invoices && invoices.map((invoice, i) => {
+                                        </div> */}
+                                        <div className="col-12 cPadding">
+                                            <Swiper {...params}>
+                                                {
+                                                    invoices && invoices.map((invoice, i) => {
 
-                                                if (this.props.member.leaseType === "Per Dag" && invoice["status"] === false) {
-                                                    tariff = nextTariff
-                                                }
+                                                        if (this.props.member.leaseType === "Per Dag" && invoice["status"] === false) {
+                                                            tariff = nextTariff
+                                                        }
 
-                                                return <div key={i} className="leaseCarCon invest no-border">
-                                                    <div className="col-12 d-ib border-2">
-                                                        <div className="balance balanceNum text-center"> BETAAL {(this.props.member.leaseType === "Per Dag") ? (invoice.date || this.getFormattedDate()) : (this.months[invoice.month] + " " + invoice.year)} </div>
-                                                        <div className="col-12 investAddCon">
-                                                            <div className="col-5 text-right">
-                                                                <span style={{padding: '0 5px', lineHeight: '30px'}}>Tarief</span>
-                                                            </div>
-                                                            <div className="col-3 text-center">
-                                                                <span style={{fontSize: '11px'}}>(Incl BTW)</span>
-                                                            </div>
+                                                        return <div key={i} className="leaseCarCon invest no-border cPadding">
+                                                            <div className="col-12 d-ib border-2">
+                                                                <div className="balance balanceNum text-center"> BETAAL {(this.props.member.leaseType === "Per Dag") ? (invoice.date || this.getFormattedDate()) : (this.months[invoice.month] + " " + invoice.year)} </div>
+                                                                <div className="col-12 investAddCon">
+                                                                    <div className="col-5 text-right">
+                                                                        <span style={{ padding: '0 5px', lineHeight: '30px' }}>Tarief</span>
+                                                                    </div>
+                                                                    <div className="col-3 text-center">
+                                                                        <span style={{ fontSize: '11px' }}>(Incl BTW)</span>
+                                                                    </div>
 
-                                                            <div className="col-4" style={{lineHeight: '30px'}}>
-                                                                {formatNumber(tariff, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} Euro
+                                                                    <div className="col-4" style={{ lineHeight: '30px' }}>
+                                                                        {formatNumber(tariff, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} Euro
                                                             </div>
-                                                            <div className="col-5 text-right">&nbsp;
-                                                                <span style={{padding: '0 5px', lineHeight: '30px'}}>{(this.props.member.objectType === "Car") ? "KM" : "Onderhoud p/m"}</span>
-                                                            </div>
+                                                                    <div className="col-5 text-right">&nbsp;
+                                                                <span style={{ padding: '0 5px', lineHeight: '30px' }}>{(this.props.member.objectType === "Car") ? "KM" : "Onderhoud p/m"}</span>
+                                                                    </div>
 
-                                                            <div className="col-3 text-center input-inv">&nbsp;
+                                                                    <div className="col-3 text-center input-inv">&nbsp;
                                                                 {invoice.mileage || (this.props.member.leaseType === "Per Dag" && <input value={this.state.mileage || 0} onChange={(e) => this.setState({ mileage: e.target.value })} maxLength="20" type="number" placeholder="" />)}
+                                                                    </div>
+
+                                                                    <div className="col-4" style={{ lineHeight: '30px' }}>
+                                                                        {formatNumber(mileageEuro, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} Euro
                                                             </div>
 
-                                                             <div className="col-4" style={{lineHeight: '30px'}}>
-                                                                {formatNumber(mileageEuro, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} Euro
+                                                                    <div className="col-5 text-right">
+                                                                        <span style={{ padding: '0 5px', lineHeight: '30px' }}>Totaal</span>
+                                                                    </div>
+                                                                    <div className="col-3 text-center">
+                                                                        <span style={{ fontSize: '11px' }}>&nbsp;</span>
+                                                                    </div>
+
+                                                                    <div className="col-4" style={{ lineHeight: '30px' }}>
+                                                                        {formatNumber(total, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} Euro
                                                             </div>
 
-                                                            <div className="col-5 text-right">
-                                                                <span style={{padding: '0 5px', lineHeight: '30px'}}>Totaal</span>
-                                                            </div>
-                                                            <div className="col-3 text-center">
-                                                                <span style={{fontSize: '11px'}}>&nbsp;</span>
-                                                            </div>
+                                                                    <div className="col-12 text-center">
+                                                                        {!invoice.status && <span className="flaticon-lock-1 unlock" onClick={() => { this.props._lcPayCapitalAndOperation(this.props, this.props.member.objectID, (tariff * 100), (mileageEuro * 100), this.props.account); this.updateInvoice(invoice, tariff, nextTariff, this.state.mileage, total) }} ></span>}
+                                                                        {/* <span className="flaticon-lock unlock"></span>  */}
+                                                                        {/* <span className="minusBal">Pending</span> */}
+                                                                        {this.props.payFeeTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.payFeeTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.payFeeTxID)) ? <p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}><i>Confirmed</i></p> : <p className="p-euro " style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>pending</p>}</Link>)}
+                                                                        {/* <span className="confirmBal">Confirmed</span> */}
+                                                                    </div>
 
-                                                            <div className="col-4" style={{lineHeight: '30px'}}>
-                                                                {formatNumber(total, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} Euro
+                                                                </div>
+                                                                {/* {!invoice.status && <div className="arrowBtn"> */}
+                                                                {/*<img onClick={() => { this.props._lcPayCapitalAndOperation(this.props.member.objectID, (parseFloat(this.props.member.obj.monthlyCapitalCost.toNumber()) * 100).toFixed(2), (parseFloat(this.props.member.obj.monthlyOperatingCost.toNumber()) * 100).toFixed(2), this.props.account); this.updateInvoice(invoice, tariff, nextTariff, this.state.mileage, total) }} src={require('../assets/add.jpg')} alt="add2" />*/}
+                                                                {/* <img onClick={() => { this.props._lcPayCapitalAndOperation(this.props, this.props.member.objectID, (tariff * 100), (mileageEuro * 100), this.props.account); this.updateInvoice(invoice, tariff, nextTariff, this.state.mileage, total) }} src={require('../assets/add.jpg')} alt="add2" />
+                                                        </div>} */}
+
                                                             </div>
-
-                                                            <div className="col-12 text-center">
-                                                                <span className="flaticon-lock-1 unlock"></span>
-                                                                {/* <span className="flaticon-lock unlock"></span>  */}
-                                                                <span className="minusBal">Pending</span>
-                                                                {/* <span className="confirmBal">Confirmed</span> */}
-                                                            </div>
-
-
                                                         </div>
-                                                        {!invoice.status && <div className="arrowBtn">
-                                                            {/*<img onClick={() => { this.props._lcPayCapitalAndOperation(this.props.member.objectID, (parseFloat(this.props.member.obj.monthlyCapitalCost.toNumber()) * 100).toFixed(2), (parseFloat(this.props.member.obj.monthlyOperatingCost.toNumber()) * 100).toFixed(2), this.props.account); this.updateInvoice(invoice, tariff, nextTariff, this.state.mileage, total) }} src={require('../assets/add.jpg')} alt="add2" />*/}
-                                                            <img onClick={() => { this.props._lcPayCapitalAndOperation(this.props, this.props.member.objectID, (tariff * 100), (mileageEuro * 100), this.props.account); this.updateInvoice(invoice, tariff, nextTariff, this.state.mileage, total) }} src={require('../assets/add.jpg')} alt="add2" />
-                                                        </div>}
-
-                                                    </div>
-                                                </div>
-                                            })
-                                        }
+                                                    })
+                                                }
+                                            </Swiper>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -354,6 +378,14 @@ class Invoices extends Component {
                     </div>
                 </Slide>
             </div>
+            <div className={this.state.modalCondition ? "infoPop is-open" : "infoPop is-close"} >
+                        <span className="modalCloseBtn" onClick={() => this.modalClick()}>x</span>
+                        Vandaag 20 euro,
+                        morgen 19.99,
+                        overmorgen 19.98,
+                        over 3 jaar 10
+                        ...of 1 euro per uur
+                    </div>
             <div className="footBtn container">
                 <div className="container text-center">
                     <div className="beforeFooter">
@@ -361,16 +393,16 @@ class Invoices extends Component {
                             <button className="arrowBtn" onClick={this.doExit.bind(this)}>
                                 <span className="flaticon-left-arrow"></span>
                             </button>
-                        
                         </div>
-                        <div className="col-4 text-left" style={{padding: '18px 0'}}>
-                            &nbsp;
-                            {/* <span>Ga Terug</span> */}
+                        <div className="col-4 lh-54 text-left">
+                            Ga Terug
                         </div>
                         <div className="col-5 text-left padding-10-0">
-                        <div className="text-right" style={{float:'right'}}>
+                            <div className="text-right" style={{ float: 'right' }}>
+                                <span onClick={() => this.modalClick()}>
                                     <img className="infoImg" src={require('../assets/info.png')} alt="info" />
-                                </div>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -391,6 +423,7 @@ class Invoices extends Component {
                     </div>
                 </div>
             </div>
+            <div className={this.state.modalCondition ? "modalOverlay is-open" : "modalOverlay is-close"} onClick={() => this.modalClick()}></div>
         </div >
         )
     }

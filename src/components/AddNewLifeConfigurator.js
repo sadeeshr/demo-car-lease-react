@@ -17,10 +17,17 @@ class AddNewLifeConfigurator extends Component {
         this.state = {
             progress: false,
             lobjprice: '',
-            lobjMileage: ''
+            lobjMileage: '',
+            modalCondition: false,
             // active: 0
         }
 
+    }
+
+    modalClick() {
+        this.setState({
+            modalCondition: !this.state.modalCondition
+        });
     }
 
     componentDidMount() {
@@ -257,7 +264,7 @@ class AddNewLifeConfigurator extends Component {
 
         return (
             <div className="content-border">
-                <div className="mainContentCon">
+                <div className="mainContentCon foot">
 
                     <div hidden className="navCon">
                         <h1 id="header"><div className="fl"><i className="flaticon-back" onClick={() => this.props.history.goBack()}></i></div>New Life Configurator<div className="fr"><i onClick={() => this.props.history.push("/")} className="flaticon-home"></i></div></h1>
@@ -291,31 +298,35 @@ class AddNewLifeConfigurator extends Component {
                                                             <span className="newLifeItem-title">{lobject.name.toUpperCase()}</span>
                                                         </div>
                                                         <div className="col-3">
-                                                            <div className="text-right">
-                                                                <img className="infoImg" src={require('../assets/info.png')} alt="info" />
+                                                            <div hidden={lobject.objecttype !== "Car"} className="text-right" >
+                                                                <span onClick={() => this.modalClick()}>
+                                                                    <img className="infoImg" src={require('../assets/info.png')} alt="info" />
+                                                                </span>
                                                             </div>
                                                         </div>
                                                         <div className="col-12">
-                                                            <div className="newlifeImage" style={{backgroundImage: `url(${lobject.image})`}}>
+                                                            <div className="newlifeImage" style={{ backgroundImage: `url(${lobject.image})` }}>
                                                                 {/* <img src={lobject.image} alt={lobject.name} /> */}
                                                             </div>
                                                         </div>
-                                                        <div className="col-12 mb-15" style={{ height: "46px"}}> 
-                                                            <div className="col-7">
-                                                               <div>
-                                                                   <span className="c-type opacity03">S</span>
-                                                                   <span className="c-type">3</span>
-                                                                   <span className="c-type opacity03">X</span>
-                                                                   <span className="c-type opacity03">Y</span>
-                                                               </div>
-                                                               <div>
-                                                                   <span className="c-type opacity03">ROADSTER</span>
-                                                               </div>
-                                                            </div>
-                                                            <div className="col-5">
-                                                                <span className="color-default color-red"></span>
-                                                                <span className="color-default color-white"></span>
-                                                                <span className="color-default color-blue"></span>
+                                                        <div className="col-12 mb-15" style={{ height: "46px" }}>
+                                                            <div hidden={lobject.objecttype !== "Car"}  className="col-12" >
+                                                                <div className="col-7">
+                                                                    <div>
+                                                                        <span className="c-type opacity03">S</span>
+                                                                        <span className="c-type">3</span>
+                                                                        <span className="c-type opacity03">X</span>
+                                                                        <span className="c-type opacity03">Y</span>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span className="c-type opacity03">ROADSTER</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="col-5">
+                                                                    <span className="color-default color-red"></span>
+                                                                    <span className="color-default color-white"></span>
+                                                                    <span className="color-default color-blue"></span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div className="mb-5 d-ib">
@@ -395,16 +406,19 @@ class AddNewLifeConfigurator extends Component {
                                                             </div>
                                                         </div>
 
-                                                        <div className="infoPop" style={{display: 'none'}}>
+                                                        <div className={this.state.modalCondition ? "infoPop is-open" : "infoPop is-close"} >
+                                                            <span className="modalCloseBtn" onClick={() => this.modalClick()}>x</span>
                                                             Vandaag 20 euro,
                                                             morgen 19.99,
                                                             overmorgen 19.98,
                                                             over 3 jaar 10
                                                             ...of 1 euro per uur
                                                         </div>
+                                                       
                                                     </div>
-
+                                                   
                                                 </div>
+                                                
                                             )
                                             // }
                                             // else return <div key={i} />
@@ -421,35 +435,36 @@ class AddNewLifeConfigurator extends Component {
                         </div>
 
                         <div className="footCon">
-                            {this.state.lobjectSelected && this.props.account && <div>
-                                <span>Creëer mijn Coin</span>
-                                <button title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected} className="arrowBtn" onClick={() => this.createAccount(leasetype, price, months, monthlycapcost, monthlyopcost)}>
-                                    <img src={require('../assets/add.jpg')} alt="addM" />
-                                </button>
-                                <img style={img} src={(this.props.leaseobjects && this.props.leaseobjects[this.state.active || "0"]["image"])} alt="objectImage" />
+                            {this.state.lobjectSelected && this.props.account && <div className="roadBg container">
+                                {/* <div className="container text-center">
+                                    <span>Creëer mijn Coin</span>
+                                    <button title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected} className="arrowBtn" onClick={() => this.createAccount(leasetype, price, months, monthlycapcost, monthlyopcost)}>
+                                        <img src={require('../assets/add.jpg')} alt="addM" />
+                                    </button>
+                                    <img style={img} src={(this.props.leaseobjects && this.props.leaseobjects[this.state.active || "0"]["image"])} alt="objectImage" />
+                                </div> */}
+                                <div className="container text-center">
+                                    <div className="beforeFooter">
+                                        <div className="col-5">
+                                            &nbsp;
+                                        </div>
+                                        <div className="col-2">
+                                            <button className="arrowBtn" title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected} className="arrowBtn" onClick={() => this.createAccount(leasetype, price, months, monthlycapcost, monthlyopcost)}>
+                                                <span className="flaticon-euro"></span>
+                                            </button>
+                                        </div>
+                                        <div className="col-5 text-left padding-20-0 lh-40">
+                                            <span>Creëer mijn Coin</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+
                             </div>}
                         </div>
                     </BlockUi>
                 </div>
-                <div className="footBtn roadBg container">
-                    {/* roadBg / seaBg / grassBg */}
-                    <div className="container text-center">
-                        <div className="beforeFooter">
-                            <div className="col-5">
-                                &nbsp;
-                            </div>
-                            <div className="col-2">
-                                <button className="arrowBtn" onClick={() => this.props.history.push("/", { path: "home" })}>
-                                    <span className="flaticon-euro"></span>
-                                </button>
-                            </div>
-                            <div className="col-5 text-left padding-10-0">
-                                <span>Creeer Crowdfunding</span>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
+               
                 <div className="footCon-bottom">
                     <div className="social bg-lightgrey">
                         <div className="container">
@@ -466,6 +481,7 @@ class AddNewLifeConfigurator extends Component {
                         </div>
                     </div>
                 </div>
+                <div className={this.state.modalCondition ? "modalOverlay is-open" : "modalOverlay is-close"} onClick={() => this.modalClick()}></div>
             </div>
 
         )
