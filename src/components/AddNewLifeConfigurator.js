@@ -296,21 +296,21 @@ class AddNewLifeConfigurator extends Component {
                                                             </div>
                                                         </div>
                                                         <div className="col-12">
-                                                            <div className="newlifeImage" style={{backgroundImage: `url(${lobject.image})`}}>
+                                                            <div className="newlifeImage" style={{ backgroundImage: `url(${lobject.image})` }}>
                                                                 {/* <img src={lobject.image} alt={lobject.name} /> */}
                                                             </div>
                                                         </div>
-                                                        <div className="col-12 mb-15" style={{ height: "46px"}}> 
+                                                        <div hidden={lobject.objecttype !== "Car"} className="col-12 mb-15" style={{ height: "46px" }}>
                                                             <div className="col-7">
-                                                               <div>
-                                                                   <span className="c-type opacity03">S</span>
-                                                                   <span className="c-type">3</span>
-                                                                   <span className="c-type opacity03">X</span>
-                                                                   <span className="c-type opacity03">Y</span>
-                                                               </div>
-                                                               <div>
-                                                                   <span className="c-type opacity03">ROADSTER</span>
-                                                               </div>
+                                                                <div>
+                                                                    <span className="c-type opacity03">S</span>
+                                                                    <span className="c-type">3</span>
+                                                                    <span className="c-type opacity03">X</span>
+                                                                    <span className="c-type opacity03">Y</span>
+                                                                </div>
+                                                                <div>
+                                                                    <span className="c-type opacity03">ROADSTER</span>
+                                                                </div>
                                                             </div>
                                                             <div className="col-5">
                                                                 <span className="color-default color-red"></span>
@@ -395,7 +395,7 @@ class AddNewLifeConfigurator extends Component {
                                                             </div>
                                                         </div>
 
-                                                        <div className="infoPop" style={{display: 'none'}}>
+                                                        <div className="infoPop" style={{ display: 'none' }}>
                                                             Vandaag 20 euro,
                                                             morgen 19.99,
                                                             overmorgen 19.98,

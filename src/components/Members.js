@@ -72,7 +72,7 @@ class Members extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        let refreshEvents = ["Transfer", "BoughtNewObject", "NewObject", "CreateNewUser", "AddNewObject", "NewMember", "NewLeaseTokenObject"]
+        let refreshEvents = ["Transfer", "BoughtNewObject", "NewObject", "CreateNewUser", "Approval", "AddNewObject", "NewMember", "NewLeaseTokenObject"]
         if (nextProps.newLeaseTokenAddress && (this.props.newLeaseTokenAddress !== nextProps.newLeaseTokenAddress)) {
             // let data = {
             //     module: "membersobj",
@@ -207,11 +207,11 @@ class Members extends Component {
             return <div className="leaseCarCon" key={i}>
                 <div className="mtableLink" onClick={() => member.authorized ? cc.log("MEMBER AUTHORIZED, NO OBJECTS") : cc.log("MEMBER NOT AUTHORIZED")}>
                     <div className="col-5">
-                        {/* {!member.authorized && <div className="membersBtn">
-                                <button title="Authorize" className="arrowBtn" onClick={() => member.account !== this.props.account ? this.props._lcAddUser(member.account, this.props.account) : cc.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
-                                    <img src={require('../assets/add.jpg')} alt="addM" />
-                                </button>
-                            </div>} */}
+                        {!member.authorized && <div className="membersBtn">
+                            <button title="Authorize" className="arrowBtn" onClick={() => member.account !== this.props.account ? this.props._lcAddUser(member.account, this.props.account) : cc.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
+                                <img src={require('../assets/add.jpg')} alt="addM" />
+                            </button>
+                        </div>}
                         <div className="mtableUser">
                             <span style={member.account === this.props.account ? { fontWeight: "bold" } : {}}>{member.username || ""}</span>
                             <p>{member.town || ""}</p>
@@ -237,11 +237,11 @@ class Members extends Component {
                 let memberRows = [
                     <div className="mtableLink" key={j} onClick={() => member.authorized ? this.props._objectSelected(userObject, this.props.account) : cc.log("MEMBER NOT AUTHORIZED")}>
                         <div className="col-5">
-                            {/* {!member.authorized && <div className="membersBtn">
+                            {!member.authorized && <div className="membersBtn">
                                 <button title="Authorize" className="arrowBtn" onClick={() => member.account !== this.props.account ? this.props._lcAddUser(member.account, this.props.account) : cc.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
                                     <img src={require('../assets/add.jpg')} alt="addM" />
                                 </button>
-                            </div>} */}
+                            </div>}
                             <div className="mtableUser">
                                 <span className="fs-20" style={member.account === this.props.account ? { fontWeight: "bold" } : {}}>{member.username || ""}</span>
                                 <p>{member.town || ""}</p>
