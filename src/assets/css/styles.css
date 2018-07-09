@@ -2390,3 +2390,15 @@ display: none;
     /* Windows 8 IE 10 fix */
     -ms-perspective: 1200px;
   }
+
+
+  @media only screen and (max-width: 360px) {
+    .container{
+      width: calc(100% - 10px);
+    }
+
+    .mainContentCon{
+      width: 100%;
+      height: calc(100% - 203px);
+    }
+  }
