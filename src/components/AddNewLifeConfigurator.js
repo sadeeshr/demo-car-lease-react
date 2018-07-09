@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import md5 from 'md5';
 import BlockUi from 'react-block-ui';
 
-import Coverflow from 'react-coverflow';
+// import Coverflow from 'react-coverflow';
 import cc from '../lib/utils';
 import formatNumber from 'accounting-js/lib/formatNumber.js'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
+// import Slider from "react-slick";
 
 import Swiper from 'react-id-swiper';
 
@@ -239,18 +239,18 @@ class AddNewLifeConfigurator extends Component {
 
         cc.log(leaseobject, leasetype, months, monthlycapcost);
 
-        const sliderOpts = {
-            dots: true,
-            infinite: true,
-            speed: 500,
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            adaptiveHeight: true,
-            swipeToSlide: true,
-            focusOnSelect: true,
+        // const sliderOpts = {
+        //     dots: true,
+        //     infinite: true,
+        //     speed: 500,
+        //     slidesToShow: 1,
+        //     slidesToScroll: 1,
+        //     adaptiveHeight: true,
+        //     swipeToSlide: true,
+        //     focusOnSelect: true,
 
 
-        };
+        // };
 
         const params = {
             shouldSwiperUpdate: true,
@@ -297,7 +297,7 @@ class AddNewLifeConfigurator extends Component {
                                                         <div className="col-9">
                                                             <span className="newLifeItem-title">{lobject.name.toUpperCase()}</span>
                                                         </div>
-                                                        <div className="col-3">
+                                                        <div className="col-3" style={{height: '29px'}}>
                                                             <div hidden={lobject.objecttype !== "Car"} className="text-right" >
                                                                 <span onClick={() => this.modalClick()}>
                                                                     <img className="infoImg" src={require('../assets/info.png')} alt="info" />
@@ -414,36 +414,36 @@ class AddNewLifeConfigurator extends Component {
                                                             over 3 jaar 10
                                                             ...of 1 euro per uur
                                                         </div>
-                                                        
+
                                                     </div>
                                                     <div className="footCon">
-                                                            {this.state.lobjectSelected && this.props.account && <div className="roadBg container">
-                                                                {/* <div className="container text-center">
+                                                        {this.state.lobjectSelected && this.props.account && <div className="roadBg container">
+                                                            {/* <div className="container text-center">
                                                                     <span>Creëer mijn Coin</span>
                                                                     <button title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected} className="arrowBtn" onClick={() => this.createAccount(leasetype, price, months, monthlycapcost, monthlyopcost)}>
                                                                         <img src={require('../assets/add.jpg')} alt="addM" />
                                                                     </button>
                                                                     <img style={img} src={(this.props.leaseobjects && this.props.leaseobjects[this.state.active || "0"]["image"])} alt="objectImage" />
                                                                 </div> */}
-                                                                <div className="container text-center">
-                                                                    <div className="beforeFooter">
-                                                                        <div className="col-5">
-                                                                            &nbsp;
+                                                            <div className="container text-center">
+                                                                <div className="beforeFooter">
+                                                                    <div className="col-5">
+                                                                        &nbsp;
                                                                          </div>
-                                                                        <div className="col-2">
-                                                                            <button className="arrowBtn" title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected} className="arrowBtn" onClick={() => this.createAccount(leasetype, price, months, monthlycapcost, monthlyopcost)}>
-                                                                                <span className="flaticon-euro"></span>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div className="col-5 text-left padding-20-0 lh-40">
-                                                                            <span>Creëer mijn Coin</span>
-                                                                        </div>
-
+                                                                    <div className="col-2">
+                                                                        <button className="arrowBtn" title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected} className="arrowBtn" onClick={() => this.createAccount(leasetype, price, months, monthlycapcost, monthlyopcost)}>
+                                                                            <span className="flaticon-euro"></span>
+                                                                        </button>
                                                                     </div>
-                                                                </div>
+                                                                    <div className="col-5 text-left padding-20-0 lh-40">
+                                                                        <span>Creëer mijn Coin</span>
+                                                                    </div>
 
-                                                            </div>}
-                                                        </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>}
+                                                    </div>
 
                                                 </div>
 
@@ -461,7 +461,6 @@ class AddNewLifeConfigurator extends Component {
                                 <button onClick={this.createAccount.bind(this)}>Confirm & Publish</button>
                             </div> */}
                         </div>
-
 
                     </BlockUi>
                 </div>

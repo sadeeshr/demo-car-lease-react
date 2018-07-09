@@ -7,7 +7,7 @@ import Invest from '../containers/Invest';
 import Invoices from '../containers/Invoices';
 import NewObject from '../containers/NewObject';
 import AddNewLifeConfigurator from '../containers/AddNewLifeConfigurator';
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import NotificationSystem from 'react-notification-system';
 import cc from '../lib/utils';
 

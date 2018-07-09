@@ -22,7 +22,7 @@ class ObjectList extends Component {
     }
 
     fetchUserData = () => {
-        const town = this.props.towns[this.props.town];
+        // const town = this.props.towns[this.props.town];
 
         let data = {
             module: "membersdev2",
