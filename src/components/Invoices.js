@@ -216,7 +216,7 @@ class Invoices extends Component {
 
         cc.log("Invoices, Tariff, Next Tariff, Mileage, Total : ", invoices, tariff, nextTariff, mileageEuro, total);
 
-        let invoicesRow = []
+        // let invoicesRow = []
 
         cc.log("INVOICES: ", invoices)
         // if (invoices.length === 0) this.createInvoice(year, month); this.props._lcPayFee(this.props.member.objectID, this.props.account)

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import formatNumber from 'accounting-js/lib/formatNumber.js'
 
-import cc from '../lib/utils';
+// import cc from '../lib/utils';
 
 class Home extends Component {
     constructor(props) {

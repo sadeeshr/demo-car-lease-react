@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import md5 from 'md5';
 import BlockUi from 'react-block-ui';
 
-import Coverflow from 'react-coverflow';
+// import Coverflow from 'react-coverflow';
 import cc from '../lib/utils';
 import formatNumber from 'accounting-js/lib/formatNumber.js'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
+// import Slider from "react-slick";
 
 import Swiper from 'react-id-swiper';
 
@@ -239,18 +239,18 @@ class AddNewLifeConfigurator extends Component {
 
         cc.log(leaseobject, leasetype, months, monthlycapcost);
 
-        const sliderOpts = {
-            dots: true,
-            infinite: true,
-            speed: 500,
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            adaptiveHeight: true,
-            swipeToSlide: true,
-            focusOnSelect: true,
+        // const sliderOpts = {
+        //     dots: true,
+        //     infinite: true,
+        //     speed: 500,
+        //     slidesToShow: 1,
+        //     slidesToScroll: 1,
+        //     adaptiveHeight: true,
+        //     swipeToSlide: true,
+        //     focusOnSelect: true,
 
 
-        };
+        // };
 
         const params = {
             shouldSwiperUpdate: true,
@@ -309,26 +309,6 @@ class AddNewLifeConfigurator extends Component {
                                                                 {/* <img src={lobject.image} alt={lobject.name} /> */}
                                                             </div>
                                                         </div>
-<<<<<<< HEAD
-                                                        <div className="col-12 mb-15" style={{ height: "46px" }}>
-                                                            <div hidden={lobject.objecttype !== "Car"}  className="col-12" >
-                                                                <div className="col-7">
-                                                                    <div>
-                                                                        <span className="c-type opacity03">S</span>
-                                                                        <span className="c-type">3</span>
-                                                                        <span className="c-type opacity03">X</span>
-                                                                        <span className="c-type opacity03">Y</span>
-                                                                    </div>
-                                                                    <div>
-                                                                        <span className="c-type opacity03">ROADSTER</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div className="col-5">
-                                                                    <span className="color-default color-red"></span>
-                                                                    <span className="color-default color-white"></span>
-                                                                    <span className="color-default color-blue"></span>
-                                                                </div>
-=======
                                                         <div hidden={lobject.objecttype !== "Car"} className="col-12 mb-15" style={{ height: "46px" }}>
                                                             <div className="col-7">
                                                                 <div>
@@ -345,7 +325,6 @@ class AddNewLifeConfigurator extends Component {
                                                                 <span className="color-default color-red"></span>
                                                                 <span className="color-default color-white"></span>
                                                                 <span className="color-default color-blue"></span>
->>>>>>> 32113e069e23453fec3f9326506ced516f145a2e
                                                             </div>
                                                         </div>
                                                         <div className="mb-5 d-ib">
@@ -425,12 +404,7 @@ class AddNewLifeConfigurator extends Component {
                                                             </div>
                                                         </div>
 
-<<<<<<< HEAD
-                                                        <div className={this.state.modalCondition ? "infoPop is-open" : "infoPop is-close"} >
-                                                            <span className="modalCloseBtn" onClick={() => this.modalClick()}>x</span>
-=======
                                                         <div className="infoPop" style={{ display: 'none' }}>
->>>>>>> 32113e069e23453fec3f9326506ced516f145a2e
                                                             Vandaag 20 euro,
                                                             morgen 19.99,
                                                             overmorgen 19.98,
@@ -472,7 +446,7 @@ class AddNewLifeConfigurator extends Component {
                                             &nbsp;
                                         </div>
                                         <div className="col-2">
-                                            <button className="arrowBtn" title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected} className="arrowBtn" onClick={() => this.createAccount(leasetype, price, months, monthlycapcost, monthlyopcost)}>
+                                            <button className="arrowBtn" title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected} onClick={() => this.createAccount(leasetype, price, months, monthlycapcost, monthlyopcost)}>
                                                 <span className="flaticon-euro"></span>
                                             </button>
                                         </div>

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import Slide from 'react-reveal/Slide';
 import cc from '../lib/utils';
 import formatNumber from 'accounting-js/lib/formatNumber.js'
-import { Calendar } from 'primereact/components/calendar/Calendar';
+// import { Calendar } from 'primereact/components/calendar/Calendar';
 
 class NewObject extends Component {
 
