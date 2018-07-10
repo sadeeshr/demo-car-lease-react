@@ -9,6 +9,7 @@ import Main from '../components/Main';
 const mapStateToProps = (state) => {
     // console.log("State: ", state)
     return {
+        filter: state.filter,
         towns: state.towns,
         town: state.town,
         account: state.account,

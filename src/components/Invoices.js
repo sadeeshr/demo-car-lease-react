@@ -144,10 +144,13 @@ class Invoices extends Component {
 
 
         if (nextProps.invoices) {
-            if (nextProps.invoices.length > 0) {
-                const invoices = nextProps.invoices.filter(invoice => invoice["objectID"] === this.props.member.objectID)
+            if ((nextProps.invoices.length > 0) && (nextProps.invoices.length > (this.props.invoices && this.props.invoices.length))) {
+                // const invoices = nextProps.invoices.filter(invoice => invoice["objectID"] === this.props.member.objectID)
                 // cc.log("$$$$", invoices, this.props.member.objectID);
-                this.setState({ month: this.getMaxMonth(invoices), year: (new Date()).getFullYear() })
+                let invoices = nextProps.invoices.sort((a, b) => (parseFloat(b.year) - parseFloat(a.year)) || (parseFloat(b.month) - parseFloat(a.month)))
+                console.log("Last Invoice status: ", invoices, invoices[0].status, nextProps.invoices[0].status, this.props.invoices && this.props.invoices[0].status);
+                if (invoices[0].status === true) this.createInvoice()
+                this.setState({ month: this.getMaxMonth(invoices), year: (new Date()).getFullYear(), invoices: invoices })
             }
         }
 
@@ -188,13 +191,14 @@ class Invoices extends Component {
         const user = this.props.usernames && this.props.usernames.find(userO => userO["_id"] === this.props.member["member"])
 
         // const invoices = this.props.invoices ? this.props.invoices.filter(invoice => (this.months[invoice.month].toLowerCase().startsWith(this.state.filter) || invoice.year === parseInt(this.state.filter, 10))) : []
-        const invoices = this.props.invoices || []
-        invoices.sort((a, b) => (parseFloat(b.year) - parseFloat(a.year)) || (parseFloat(b.month) - parseFloat(a.month)))
+        const invoices = this.state.invoices || []
+
         // const invoices = this.props.invoices
         // let amount = (this.props.member.obj.objectPrice.toNumber()) + (((this.state.mileage || this.props.member.mileagesTotal) - this.props.member.mileagesTotal) * 0.10)
         // cc.log(amount, ' <= ', this.props.allowance, (amount <= this.props.allowance), this.state.mileage, ' >= ', this.props.member.mileagesTotal, (this.state.mileage >= this.props.member.mileagesTotal));
         // const enableInvoice = ((this.state.mileage >= this.props.member.mileagesTotal) && (amount <= this.props.allowance)) ? true : false
         // cc.log("Invoice Enabled: ", enableInvoice);
+
 
         let tariff = 0
         let mileageEuro = 0
@@ -268,7 +272,7 @@ class Invoices extends Component {
                     </h1>
                 </div>
                 <Slide right opposite when={this.state.reveal}>
-                    <div className="fr addInv"><i title="Add Invoice" className="flaticon-invoice marIcon" onClick={() => this.createInvoice()}></i></div>
+                    <div hidden className="fr addInv"><i title="Add Invoice" className="flaticon-invoice marIcon" onClick={() => this.createInvoice()}></i></div>
                     <div className="contentCon bg-none overflow">
                         <BlockUi tag="div" blocking={this.props.progress}>
                             <div className="carIntestCon">
@@ -379,12 +383,12 @@ class Invoices extends Component {
                 </Slide>
             </div>
             <div className={this.state.modalCondition ? "infoPop is-open" : "infoPop is-close"} >
-                        <span className="modalCloseBtn" onClick={() => this.modalClick()}>x</span>
-                        Vandaag 20 euro,
-                        morgen 19.99,
-                        overmorgen 19.98,
-                        over 3 jaar 10
-                        ...of 1 euro per uur
+                <span className="modalCloseBtn" onClick={() => this.modalClick()}>x</span>
+                Vandaag 20 euro,
+                morgen 19.99,
+                overmorgen 19.98,
+                over 3 jaar 10
+                ...of 1 euro per uur
                     </div>
             <div className="footBtn container">
                 <div className="container text-center">

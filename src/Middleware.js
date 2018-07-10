@@ -64,10 +64,12 @@ handleFetch = (socket, data) => {
     console.log(data);
     let query = data.query || {}
     let filter = data.filter || {}
+    let sorting = 1
+    if (data.result === "invoices") sorting = -1
     mongo.db[data.module].find(
         query,
         filter,
-        (err, result) => { console.log("RESULT: ", result.length); socket.emit('data', { module: data.result || data.module, result: result }) });
+    ).sort({ "_id": sorting }, (err, result) => { console.log("RESULT: ", result.length); socket.emit('data', { module: data.result || data.module, result: result }) });
 }
 
 handleGet = (socket, data) => {

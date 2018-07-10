@@ -9,6 +9,7 @@ import Members from '../components/Members';
 const mapStateToProps = (state) => {
     // console.log("Members Container State: ", state)
     return {
+        filter: state.filter,
         towns: state.towns,
         town: state.town,
         registered: state.registered,

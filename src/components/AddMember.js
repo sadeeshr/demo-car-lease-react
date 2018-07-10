@@ -30,9 +30,15 @@ class AddMember extends Component {
         // }
 
         // if (!this.props.cars && this.props.socket) this.props._fetchContractData(data, this.props.account)
-
+        const path = (this.props.location && this.props.location.state) ? this.props.location.state.path : ""
+        if (path && path === "profile") {
+            const user = this.props.usernames && this.props.usernames.find(userO => userO["account"] === this.props.account)
+            console.log(user);
+            this.setState({ profile: true, ...user })
+        }
     }
     componentDidMount() {
+
     }
 
 
@@ -61,45 +67,75 @@ class AddMember extends Component {
     createAccount = () => {
         this.setState({ progress: true })
         const self = this.state
-        // let membersList = this.props.members
 
-        // const objectHash = '0x' + md5(self.username + self.town)
+        if (this.state.profile) {
+            console.log("UPDATE Profile here")
+            let updateMember = {
+                address: self.address || '',
+                town: self.town || '',
+                zip: self.zip || '',
+                email: self.email || '',
+                message: self.message || '',
+            }
 
-        let newMember = {
-            username: self.username || '',
-            fullname: self.fullname || '',
-            address: self.address || '',
-            town: self.town || '',
-            zip: self.zip || '',
-            iban: self.iban || '',
-            email: self.email || '',
-            message: self.message || '',
-            // objectPic: self.objectPic || '',
-            // objectPrice: self.objectPrice || '',
-            account: self.account || this.props.account,
-            profilePic: self.profilePic || '',
-            // carMonRedemption: self.carMonRedemption || '',
-            // carMonths: self.carMonths || '',
-            // municipalityID: townSelected ? townSelected["municipalityID"] : ""
+            let data = {
+                module: "membersdev2",
+                result: "usernames",
+                query: {
+                    "_id": this.state["_id"]
+                },
+                data: updateMember
+            }
+
+            this.props._updateContractData(this.props, data)
+
+        } else {
+
+            // let membersList = this.props.members
+
+            // const objectHash = '0x' + md5(self.username + self.town)
+
+            let newMember = {
+                username: self.username || '',
+                fullname: self.fullname || '',
+                address: self.address || '',
+                town: self.town || '',
+                zip: self.zip || '',
+                iban: self.iban || '',
+                email: self.email || '',
+                message: self.message || '',
+                // objectPic: self.objectPic || '',
+                // objectPrice: self.objectPrice || '',
+                account: self.account || this.props.account,
+                profilePic: self.profilePic || '',
+                // carMonRedemption: self.carMonRedemption || '',
+                // carMonths: self.carMonths || '',
+                // municipalityID: townSelected ? townSelected["municipalityID"] : ""
+            }
+
+            let data = {
+                module: "membersdev2",
+                result: "usernames",
+                data: newMember
+            }
+            // this.props._setNewContractData(data)
+
+            this.props._writeNewContractData(this.props, data)
+
         }
-
-        let data = {
-            module: "membersdev2",
-            result: "usernames",
-            data: newMember
-        }
-        // this.props._setNewContractData(data)
-
-        this.props._writeNewContractData(this.props, data)
 
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.usernames_new) this.props.history.push("/", { path: "members" })
+        if (nextProps.usernames_new || nextProps.usernames_edit) {
+            this.props._fetchUsers(nextProps, nextProps.account)
+            this.props.history.push("/", { path: "members" })
+        }
     }
 
     render() {
-        const img = { "maxHeight": "50px", "maxWidth": "118px", "display": "block", "width": "auto", "height": "auto" }
+        const img = { "maxHeight": "100px", "maxWidth": "118px", "display": "block", "marginLeft": "auto", "marginRight": "auto" }
+        const cursor = { cursor: this.state.profile ? "not-allowed" : "pointer" }
         cc.log("Add Member State: ", this.state, this.props);
         const usernames = this.props.usernames ? this.props.usernames.map(user => user.username) : []
         return (
@@ -117,10 +153,10 @@ class AddMember extends Component {
                         <BlockUi tag="div" blocking={this.props.progress}>
                             <div className="form-row-container bmemberCon">
                                 <span className="form-input-containers">
-                                    <input className="membership-input" maxLength="20" value={this.state.username || ""} onChange={(e) => this.setState({ username: e.target.value })} type="text" id="username" name="username" placeholder="Username *" />
+                                    <input style={cursor} readOnly={this.state.profile} className="membership-input" maxLength="20" value={this.state.username || ""} onChange={(e) => this.setState({ username: e.target.value })} type="text" id="username" name="username" placeholder="Username *" />
                                 </span>
                                 <span className="form-input-containers">
-                                    <input className="membership-input" maxLength="20" value={this.state.fullname || ""} onChange={(e) => this.setState({ fullname: e.target.value })} type="text" id="fullname" name="fullname" placeholder="Full Name" />
+                                    <input style={cursor} readOnly={this.state.profile} className="membership-input" maxLength="20" value={this.state.fullname || ""} onChange={(e) => this.setState({ fullname: e.target.value })} type="text" id="fullname" name="fullname" placeholder="Full Name" />
                                 </span>
                                 <span className="form-input-containers">
                                     <input className="membership-input" maxLength="20" value={this.state.address || ""} onChange={(e) => this.setState({ address: e.target.value })} type="text" id="address" name="address" placeholder="Address" />
@@ -132,16 +168,16 @@ class AddMember extends Component {
                                     <input maxLength="30" className="membership-input m-b-10" value={this.state.zip || ""} onChange={(e) => this.setState({ zip: e.target.value })} type="text" placeholder="Zip Code" />
                                 </span>
                                 <span className="form-input-containers">
-                                    <input pattern="\d*" maxLength="30" className="membership-input m-b-10" value={this.state.iban || ""} onChange={(e) => this.setState({ iban: e.target.value })} type="text" placeholder="IBAN" />
+                                    <input style={cursor} readOnly={this.state.profile} pattern="\d*" maxLength="30" className="membership-input m-b-10" value={this.state.iban || ""} onChange={(e) => this.setState({ iban: e.target.value })} type="text" placeholder="IBAN" />
                                 </span>
                                 <span className="form-input-containers">
-                                    <input pattern="\d*" maxLength="30" className="membership-input m-b-10" value={this.state.account || this.props.account || ""} onChange={(e) => this.setState({ account: e.target.value || this.props.account })} type="text" placeholder="Ether address" />
+                                    <input style={cursor} readOnly={this.state.profile} pattern="\d*" maxLength="30" className="membership-input m-b-10" value={this.state.account || this.props.account || ""} onChange={(e) => this.setState({ account: e.target.value || this.props.account })} type="text" placeholder="Ether address" />
                                 </span>
                                 <span className="form-input-containers">
                                     <input pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" maxLength="30" className="membership-input m-b-10" value={this.state.email || ""} onChange={(e) => this.setState({ email: e.target.value })} type="text" placeholder="Email" />
                                 </span>
                                 <span className="form-input-containers marginBttm inputAddbtn">
-                                    <div className="upload-selfieCon">
+                                    {!this.state.profile && <div className="upload-selfieCon">
                                         <div className="image-upload" htmlFor="imageUpload">
                                             <label className="image-upload-selfieCon" style={{ "textAlign": "center", }} htmlFor="prPicIn">
                                                 <img className="image-upload-selfie" src={require('../assets/upload.jpg')} alt="prPic" />
@@ -149,8 +185,8 @@ class AddMember extends Component {
                                             <input type="file" id="prPicIn" onChange={(e) => { this.fileUploadHandler(e.target.files[0], "profilePic") }} />
                                         </div>
                                         <label >Upload Selfie</label>
-                                    </div>
-                                    {this.state.profilePic && <img className="inputImg" src={this.state.profilePic} alt="intI" />}
+                                    </div>}
+                                    {this.state.profilePic && <img style={img} className="inputImg" src={this.state.profilePic} alt="intI" />}
                                 </span>
                                 <span className="form-input-containers">
                                     <textarea className="membership-input" rows="5" value={this.state.message || ""} onChange={(e) => this.setState({ message: e.target.value })} name="message" placeholder="Your message"></textarea>
@@ -214,7 +250,7 @@ class AddMember extends Component {
                                 &nbsp;
                             </div>
                             <div className="col-2">
-                                <button disabled={!this.checkMandatory() || (usernames.indexOf(this.state.username) !== -1)} title={!this.checkMandatory() ? "Please fill mandatory fields" : (usernames.indexOf(this.state.username) !== -1 ? "Username already exists" : "New Life Configuration")} className="arrowBtn" onClick={this.createAccount.bind(this)}>
+                                <button disabled={this.state.profile ? false : (!this.checkMandatory() || (usernames.indexOf(this.state.username) !== -1))} title={this.state.profile ? "Update" : (!this.checkMandatory() ? "Please fill mandatory fields" : (usernames.indexOf(this.state.username) !== -1 ? "Username already exists" : "New Life Configuration"))} className="arrowBtn" onClick={this.createAccount.bind(this)}>
                                     <span className="flaticon-right-arrow"></span>
                                 </button>
                             </div>
@@ -243,7 +279,7 @@ class AddMember extends Component {
             </div>
 
 
-     
+
         )
     }
 }

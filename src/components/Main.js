@@ -60,6 +60,8 @@ class Main extends Component {
         // this.props.event && (this.props.event.transactionHash !== nextProps.event.transactionHash)
 
         if (nextProps.socket && !nextProps.towns) this.fetchMunicipalityData()
+        if (nextProps.socket && nextProps.account && !nextProps.usernames) this.props._fetchUsers(nextProps, nextProps.account)
+
         if (nextProps.towns) this.props._setObject({ town: 0 })
         if ((nextProps.event && !this.props.event) || (nextProps.event && this.props.event && (this.props.event.transactionHash !== nextProps.event.transactionHash))) {
             switch (nextProps.event.event) {
@@ -320,6 +322,7 @@ class Main extends Component {
                 case "members":
                     return <Members />
                 case "addmember":
+                case "profile":
                     return <AddMember />
                 case "addnewlife":
                     return <AddNewLifeConfigurator />
@@ -348,17 +351,23 @@ class Main extends Component {
         const path = (this.props.location && this.props.location.state) ? this.props.location.state.path : "main"
         return (
             <div>
-                <div className="beforeNav container smallText">WESTLAND ENERGIE NEUTRAAL . NL</div>
+                <div className="beforeNav container smallText">{this.props.account && this.props.usernames && <button onClick={() => this.props.history.push("/", { path: "profile" })}>Profile</button>}WESTLAND ENERGIE NEUTRAAL . NL {(path === "members") && <input style={{ width: "50px" }} className="" type="text" name="filterMembers" value={this.props.filter || ""} placeholder="Search"
+                    onChange={(e) => {
+                        // let filterVal = this.props.filter ? (this.props.filter + e.target.value) : e.target.value
+                        // cc.log("SEARCH: ", this.props.filter, e.target.value, filterVal);
+                        this.props._setObject({ filter: e.target.value })
+                    }} />}
+                </div>
                 {/* <div className="beforeNav container smallText"><span className="flaticon-man-user flatcon pull-left"></span>WESTLAND ENERGIE NEUTRAL , NL<span className="flaticon-search flatcon pull-right"></span></div> */}
                 <nav className="navCon" style={style.nav}>
                     <span onClick={() => this.props.history.push("/", { path: "main" })} style={{ cursor: "pointer", fontWeight: (["main", "home"].indexOf(path) !== -1) ? "800" : "100" }}>HOME</span> {" "}
                     <span onClick={() => this.props.history.push("/", { path: "addnewlife" })} style={{ cursor: "pointer", fontWeight: (path === "addnewlife") ? "800" : "100" }}>GA DUURZAAM</span>{" "}
-                    <span onClick={() => this.props.towns && this.props.history.push("/", { path: "members" })} style={{ cursor: "pointer", fontWeight: (path === "members") ? "800" : "100" }}>LEDEN</span>{" "}
+                    <span onClick={() => this.props.towns && this.props.history.push("/", { path: "members" })} style={{ cursor: this.props.towns ? "pointer" : "not-allowed", fontWeight: (path === "members") ? "800" : "100" }}>LEDEN</span>{" "}
                 </nav>
 
                 <NotificationSystem ref="notificationSystem" />
                 {this.renderComponent()}
-            </div>
+            </div >
         )
     }
 }

@@ -45,12 +45,12 @@ export const _fetchUsers = (props, account) => {
         query: {
         },
         filter: {
-            _id: 1,
-            username: 1,
-            account: 1,
-            town: 1,
-            message: 1,
-            profilePic: 1
+            // _id: 1,
+            // username: 1,
+            // account: 1,
+            // town: 1,
+            // message: 1,
+            // profilePic: 1
         }
     }
 

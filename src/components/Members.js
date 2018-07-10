@@ -10,7 +10,7 @@ class Members extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            filter: '',
+            // filter: '',
             modalCondition: false,
         }
         this.rinkebyStatsURL = "https://rinkeby.etherscan.io/tx/"
@@ -217,7 +217,7 @@ class Members extends Component {
                             <p>{member.town || ""}</p>
                             {!member.authorized && <div className="membersBtn">
                                 <button title="Authorize" className="arrowBtn" onClick={() => member.account !== this.props.account ? this.props._lcAddUser(member.account, this.props.account) : cc.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
-                                    <span class="flaticon-lock-1 unlock"></span>
+                                    <span className="flaticon-lock-1 unlock"></span>
                                 </button>
                             </div>}
                         </div>
@@ -248,13 +248,13 @@ class Members extends Component {
                                 <div className="mtableTokens">
                                     {userObject.crowdsaleClosed ?
                                         <span style={{ color: "green", fontSize: "15px", }}>{userObject.active ? "Active" : "Closed"}</span> : userObject.totalRaised || "0"}
-                                    <p>{userObject.evTokens || "-"}</p> 
+                                    <p>{userObject.evTokens || "-"}</p>
                                 </div>
                                 {!member.authorized && <div className="membersBtn">
-                                <button title="Authorize" className="arrowBtn" onClick={() => member.account !== this.props.account ? this.props._lcAddUser(member.account, this.props.account) : cc.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
-                                    <span class="flaticon-lock-1 unlock"></span>
-                                </button>
-                            </div>}
+                                    <button title="Authorize" className="arrowBtn" onClick={() => member.account !== this.props.account ? this.props._lcAddUser(member.account, this.props.account) : cc.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
+                                        <span className="flaticon-lock-1 unlock"></span>
+                                    </button>
+                                </div>}
                             </div>
                         </div>
                         <div className="col-7">
@@ -354,9 +354,10 @@ class Members extends Component {
         // const members = this.state.members ? this.state.members.filter(member => (member.username.startsWith(this.state.filter) || member.objectID === parseInt(this.state.filter, 10))) : []
         // const members = this.props.members ? this.props.members.filter(member => ((member.username && member.username.startsWith(this.state.filter)) || member.objectID === parseInt(this.state.filter, 10))) : []
 
-        // const members = this.props.members || []
-        const members = this.props.usernames || []
 
+        // const members = this.props.members || []
+        // const members = this.props.usernames || []
+        const members = this.props.usernames ? this.props.filter ? this.props.usernames.filter(user => ((user.username && user.username.toLowerCase().startsWith(this.props.filter && this.props.filter.toLowerCase())))) : this.props.usernames : []
         // console.log("Members: ", members);
 
         // TESTING DIV FOCUS
@@ -419,7 +420,6 @@ class Members extends Component {
                                 </button>
                                 {/* <span>Ga duurzaam</span> */}
                                 {/*this.props.AddNewUser && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.AddNewUser}>{!this.state.eventAddNewUser ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>} </Link>)*/}
-                                {/* <input className="searchBtn" type="text" name="filterMembers" value={this.state.filter || ""} placeholder="Search" onChange={(e) => { cc.log("SEARCH: ", e.target.value); this.setState({ filter: e.target.value }) }} /> */}
                             </div>
                             <div className="col-5 text-left padding-10-0">
                                 <span style={{ lineHeight: "35px" }}>Ga duurzaam</span>

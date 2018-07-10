@@ -58,7 +58,9 @@ const rootReducer = (state = initialState, action) => {
                 approveTxID: null,
                 // investInObjectTxID: null,
                 invoices_new: false,
-                invoices_edit: false
+                invoices_edit: false,
+                usernames_new: false,
+                usernames_edit: false,
                 // usernames: null
             }
 
