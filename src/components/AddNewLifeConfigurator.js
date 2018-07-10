@@ -292,8 +292,8 @@ class AddNewLifeConfigurator extends Component {
                                             }
                                             // if (lobject.active) {
                                             return (
-                                                <div>
-                                                    <div style={{ display: !lobject.active ? "none" : "" }} key={i} className="newLifeItem" onWheel={() => cc.log("KEY DOWN: ", i)} onClick={() => this.setState({ active: i, lobjectSelected: true })} tabIndex="0">
+                                                <div key={i}>
+                                                    <div style={{ display: !lobject.active ? "none" : "" }} className="newLifeItem" onWheel={() => cc.log("KEY DOWN: ", i)} onClick={() => this.setState({ active: i, lobjectSelected: true })} tabIndex="0">
                                                         <div className="col-9">
                                                             <span className="newLifeItem-title">{lobject.name.toUpperCase()}</span>
                                                         </div>

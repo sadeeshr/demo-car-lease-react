@@ -58,7 +58,7 @@ class Invest extends Component {
         if (nextProps.eventClaim && !this.state.eventClaim) { this.setState({ eventClaim: nextProps.eventClaim, ethInvest: null }) }
         if (nextProps.eventApprove && !this.state.eventApprove) { this.setState({ eventApprove: nextProps.eventApprove, ethInvest: null }) }
 
-        if (nextProps.event && (nextProps.event !== this.props.event) && ((nextProps.event.event === "Transfer") || (nextProps.event.event === "BoughtNewObject") || (nextProps.event.transactionHash === nextProps.investInObjectTxID) || (nextProps.event.transactionHash === nextProps.BuyAndActivateTxID))) {
+        if (nextProps.event && (nextProps.event !== this.props.event) && ((nextProps.event.event === "Transfer") || (nextProps.event.event === "AddNewObject") || (nextProps.event.event === "BoughtNewObject") || (nextProps.event.transactionHash === nextProps.investInObjectTxID) || (nextProps.event.transactionHash === nextProps.BuyAndActivateTxID))) {
             // this.refreshValues()
             this.props._euroBalanceOf(this.props.account)
             this.props._lcLeaseObject(this.props.account, nextProps.member.objectID)
@@ -66,8 +66,8 @@ class Invest extends Component {
             this.props._ldGetRaised(nextProps.member.objectID)
             // cc.log("i need to refresh here !!");
         }
-        // if (!this.props.unClaimedRedemption && this.props.account) this.props._lcToClaimTotal(this.props.account)
-        // if (!this.props.euroTokenBalance && this.props.account) this.props._euroBalanceOf(this.props.account)
+        if (!this.props.unClaimedRedemption && this.props.account) this.props._lcToClaimTotal(this.props.account)
+        if (!this.props.euroTokenBalance && this.props.account) this.props._euroBalanceOf(this.props.account)
 
         // this.setState({ refreshValues: !this.state.refreshValues })
         // cc.log("#### TOTAL SUPPLY: ######", nextProps.eventTransfer, this.props.totalSupply, nextProps.totalSupply, this.props.hashConfirmations);
@@ -264,12 +264,12 @@ class Invest extends Component {
                 </Slide>
             </div>
             <div className={this.state.modalCondition ? "infoPop is-open" : "infoPop is-close"} >
-                        <span className="modalCloseBtn" onClick={() => this.modalClick()}>x</span>
-                        Vandaag 20 euro,
-                        morgen 19.99,
-                        overmorgen 19.98,
-                        over 3 jaar 10
-                        ...of 1 euro per uur
+                <span className="modalCloseBtn" onClick={() => this.modalClick()}>x</span>
+                Vandaag 20 euro,
+                morgen 19.99,
+                overmorgen 19.98,
+                over 3 jaar 10
+                ...of 1 euro per uur
                     </div>
             <div className="footBtn container">
                 <div className="container text-center">
