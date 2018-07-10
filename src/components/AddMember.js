@@ -33,7 +33,7 @@ class AddMember extends Component {
         const path = (this.props.location && this.props.location.state) ? this.props.location.state.path : ""
         if (path && path === "profile") {
             const user = this.props.usernames && this.props.usernames.find(userO => userO["account"] === this.props.account)
-            console.log(user);
+            // console.log(user);
             this.setState({ profile: true, ...user })
         }
     }
@@ -69,7 +69,7 @@ class AddMember extends Component {
         const self = this.state
 
         if (this.state.profile) {
-            console.log("UPDATE Profile here")
+            // console.log("UPDATE Profile here")
             let updateMember = {
                 address: self.address || '',
                 town: self.town || '',

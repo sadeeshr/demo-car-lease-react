@@ -75,6 +75,7 @@ class Invoices extends Component {
     }
 
     createInvoice = () => {
+        // console.log("MONTH:", this.state);
         let data = {
             module: "invoicesdev2",
             result: "invoices",
@@ -148,16 +149,16 @@ class Invoices extends Component {
                 // const invoices = nextProps.invoices.filter(invoice => invoice["objectID"] === this.props.member.objectID)
                 // cc.log("$$$$", invoices, this.props.member.objectID);
                 let invoices = nextProps.invoices.sort((a, b) => (parseFloat(b.year) - parseFloat(a.year)) || (parseFloat(b.month) - parseFloat(a.month)))
-                console.log("Last Invoice status: ", invoices, invoices[0].status, nextProps.invoices[0].status, this.props.invoices && this.props.invoices[0].status);
-                if (invoices[0].status === true) this.createInvoice()
-                this.setState({ month: this.getMaxMonth(invoices), year: (new Date()).getFullYear(), invoices: invoices })
+                // console.log("Last Invoice status: ", invoices, invoices[0].status, nextProps.invoices[0].status, this.props.invoices && this.props.invoices[0].status);
+
+                this.setState({ month: this.getMaxMonth(invoices), year: (new Date()).getFullYear(), invoices: invoices }, () => { if (invoices[0].status === true) this.createInvoice() })
             }
         }
 
         if (nextProps.eventSubscription && !this.state.eventSubscription) { this.setState({ eventSubscription: nextProps.eventSubscription }) }
 
-        if (!this.props.unClaimedRedemption) this.props._lcToClaimTotal(this.props.account)
-        if (!this.props.euroTokenBalance) this.props._euroBalanceOf(this.props.account)
+        if (!nextProps.unClaimedRedemption) this.props._lcToClaimTotal(this.props.account)
+        if (!nextProps.euroTokenBalance) this.props._euroBalanceOf(this.props.account)
 
         if (nextProps.member && nextProps.member.obj) {
             // cc.log("Object Fees: ", this.props.member.obj.objectFee.toNumber())

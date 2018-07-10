@@ -297,7 +297,7 @@ class AddNewLifeConfigurator extends Component {
                                                         <div className="col-9">
                                                             <span className="newLifeItem-title">{lobject.name.toUpperCase()}</span>
                                                         </div>
-                                                        <div className="col-3" style={{height: '29px'}}>
+                                                        <div className="col-3" style={{ height: '29px' }}>
                                                             <div hidden={lobject.objecttype !== "Car"} className="text-right" >
                                                                 <span onClick={() => this.modalClick()}>
                                                                     <img className="infoImg" src={require('../assets/info.png')} alt="info" />
@@ -435,6 +435,7 @@ class AddNewLifeConfigurator extends Component {
                                                                             <span className="flaticon-euro"></span>
                                                                         </button>
                                                                     </div>
+                                                                    <img style={img} src={(this.props.leaseobjects && this.props.leaseobjects[this.state.active || "0"]["image"])} alt="objectImage" />
                                                                     <div className="col-5 text-left padding-20-0 lh-40">
                                                                         <span>Creëer mijn Coin</span>
                                                                     </div>
