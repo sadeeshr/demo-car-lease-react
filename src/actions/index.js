@@ -468,6 +468,7 @@ export const _lcAddUser = (user, account) => {
 
 export const _lcBuyAndActivate = (objectID, activeDate, account) => {
     return (dispatch) => {
+        dispatch(_resetTxIds())
         return contract.lcBuyAndActivate(objectID, activeDate, account)
             .then(result => {
                 return dispatch(

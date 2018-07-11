@@ -83,6 +83,8 @@ class Invest extends Component {
         // if (this.props.totalSupply !== nextProps.totalSupply || this.props.allowance !== nextProps.allowance || this.props.unClaimedRedemption !== nextProps.unClaimedRedemption) {
         // this.props._resetEvent() //temporary
         if (nextProps.eventTransfer && !this.state.eventTransfer) { this.setState({ eventTransfer: nextProps.eventTransfer, ethInvest: undefined }) }
+        if (nextProps.member.crowdsaleClosed && !nextProps.member.active) this.props._resetTxIds()
+
         // }
         this.props = nextProps
     }
@@ -220,9 +222,9 @@ class Invest extends Component {
                                                         </div>
                                                 }
                                             </div>
-                                            <div className="col-4 lh-40">
+                                            {!buyAndActivate && !this.props.member.crowdsaleClosed && <div className="col-4 lh-40">
                                                 Euro
-                                            </div>
+                                            </div>}
 
                                             <div className="col-12 text-center">
                                                 <span className="flaticon-lock-1 unlock" style={{ cursor: ((enableInvest && !this.props.member.crowdsaleClosed) || buyAndActivate) ? "pointer" : "not-allowed" }} onClick={() => {

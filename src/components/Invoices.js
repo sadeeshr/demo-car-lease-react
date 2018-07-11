@@ -11,6 +11,7 @@ class Invoices extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            invoice: '',
             filter: '',
             mileage: 0,
             progress: false,
@@ -91,7 +92,15 @@ class Invoices extends Component {
         if (this.props.member.leaseType === "Per Dag")
             data.data["date"] = this.getFormattedDate()
 
-        this.props._writeNewContractData(this.props, data)
+        console.log(data, this.state.invoice);
+        if (this.state.invoice) console.log((this.state.invoice.objectID === data["data"]["objectID"]), (this.state.invoice.month === data["data"]["month"]), (this.state.invoice.year === data["data"]["year"]));
+        if (this.state.invoice && (this.state.invoice.objectID === data["data"]["objectID"]) && (this.state.invoice.month === data["data"]["month"]) && (this.state.invoice.year === data["data"]["year"]))
+            console.log("DUPLICATE CREATE INVOICE REQUEST, DONT PUSH TO DB")
+        else {
+            console.log("CREATE NEW INVOICE")
+            this.setState({ invoice: data["data"] }, () => this.props._writeNewContractData(this.props, data))
+        }
+
     }
 
     updateInvoice = (invoice, tariff, nextTariff, mileage, total) => {
@@ -145,13 +154,15 @@ class Invoices extends Component {
 
 
         if (nextProps.invoices) {
-            if ((nextProps.invoices.length > 0) && (nextProps.invoices.length > (this.props.invoices && this.props.invoices.length))) {
+            if (this.state.invoices ? (nextProps.invoices.length > this.state.invoices.length) : (nextProps.invoices.length > 0)) {
                 // const invoices = nextProps.invoices.filter(invoice => invoice["objectID"] === this.props.member.objectID)
                 // cc.log("$$$$", invoices, this.props.member.objectID);
                 let invoices = nextProps.invoices.sort((a, b) => (parseFloat(b.year) - parseFloat(a.year)) || (parseFloat(b.month) - parseFloat(a.month)))
-                // console.log("Last Invoice status: ", invoices, invoices[0].status, nextProps.invoices[0].status, this.props.invoices && this.props.invoices[0].status);
+                // console.log("Last Invoice status: ", invoices, invoices[0].status, nextProps.invoices[0].status, this.state.invoices && this.state.invoices[0].status);
 
                 this.setState({ month: this.getMaxMonth(invoices), year: (new Date()).getFullYear(), invoices: invoices }, () => { if (invoices[0].status === true) this.createInvoice() })
+            } else if (nextProps.invoices.length === 0) {
+                this.createInvoice()
             }
         }
 
@@ -191,10 +202,10 @@ class Invoices extends Component {
 
         const user = this.props.usernames && this.props.usernames.find(userO => userO["_id"] === this.props.member["member"])
 
-        // const invoices = this.props.invoices ? this.props.invoices.filter(invoice => (this.months[invoice.month].toLowerCase().startsWith(this.state.filter) || invoice.year === parseInt(this.state.filter, 10))) : []
+        // const invoices = this.state.invoices ? this.state.invoices.filter(invoice => (this.months[invoice.month].toLowerCase().startsWith(this.state.filter) || invoice.year === parseInt(this.state.filter, 10))) : []
         const invoices = this.state.invoices || []
 
-        // const invoices = this.props.invoices
+        // const invoices = this.state.invoices
         // let amount = (this.props.member.obj.objectPrice.toNumber()) + (((this.state.mileage || this.props.member.mileagesTotal) - this.props.member.mileagesTotal) * 0.10)
         // cc.log(amount, ' <= ', this.props.allowance, (amount <= this.props.allowance), this.state.mileage, ' >= ', this.props.member.mileagesTotal, (this.state.mileage >= this.props.member.mileagesTotal));
         // const enableInvoice = ((this.state.mileage >= this.props.member.mileagesTotal) && (amount <= this.props.allowance)) ? true : false

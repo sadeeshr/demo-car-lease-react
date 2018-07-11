@@ -367,7 +367,7 @@ class AddNewLifeConfigurator extends Component {
                                                             <div className="col-5">
                                                                 {
                                                                     (leasetype && leasetype.months === "60") ?
-                                                                        <div className="nl-inp"><input value={this.state.lobjmonths || leasetype && leasetype.months} onChange={(e) => this.setState({ lobjmonths: e.target.value })} type="text" /></div>
+                                                                        <div className="nl-inp"><input value={this.state.lobjmonths || (leasetype && leasetype.months)} onChange={(e) => this.setState({ lobjmonths: e.target.value })} type="text" /></div>
                                                                         : <div className="nl-inp">{leasetype && leasetype.months}</div>
                                                                 }
                                                             </div>
@@ -417,7 +417,7 @@ class AddNewLifeConfigurator extends Component {
 
                                                     </div>
                                                     <div className="footCon">
-                                                        {this.state.lobjectSelected && this.props.account && <div className="roadBg container">
+                                                        {this.state.lobjectSelected && this.props.account && this.props.registered && <div className="roadBg container">
                                                             {/* <div className="container text-center">
                                                                     <span>Creëer mijn Coin</span>
                                                                     <button title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected} className="arrowBtn" onClick={() => this.createAccount(leasetype, price, months, monthlycapcost, monthlyopcost)}>
@@ -431,7 +431,7 @@ class AddNewLifeConfigurator extends Component {
                                                                         &nbsp;
                                                                          </div>
                                                                     <div className="col-2">
-                                                                        <button className="arrowBtn" title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected} className="arrowBtn" onClick={() => this.createAccount(leasetype, price, months, monthlycapcost, monthlyopcost)}>
+                                                                        <button className="arrowBtn" title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected} onClick={() => this.createAccount(leasetype, price, months, monthlycapcost, monthlyopcost)}>
                                                                             <span className="flaticon-euro"></span>
                                                                         </button>
                                                                     </div>

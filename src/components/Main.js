@@ -349,9 +349,10 @@ class Main extends Component {
             }
         }
         const path = (this.props.location && this.props.location.state) ? this.props.location.state.path : "main"
+        const registered = (this.props.account && this.props.usernames && (this.props.usernames.find(user => user.account === this.props.account)))
         return (
             <div>
-                <div className="beforeNav container smallText">{this.props.account && this.props.usernames && <button onClick={() => this.props.history.push("/", { path: "profile" })}>Profile</button>}WESTLAND ENERGIE NEUTRAAL . NL {(path === "members") && <input style={{ width: "50px" }} className="" type="text" name="filterMembers" value={this.props.filter || ""} placeholder="Search"
+                <div className="beforeNav container smallText">{registered && <button onClick={() => this.props.history.push("/", { path: "profile" })}>Profile</button>}WESTLAND ENERGIE NEUTRAAL . NL {(path === "members") && <input style={{ width: "50px" }} className="" type="text" name="filterMembers" value={this.props.filter || ""} placeholder="Search"
                     onChange={(e) => {
                         // let filterVal = this.props.filter ? (this.props.filter + e.target.value) : e.target.value
                         // cc.log("SEARCH: ", this.props.filter, e.target.value, filterVal);

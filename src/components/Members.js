@@ -3,7 +3,7 @@ import BlockUi from 'react-block-ui';
 import 'react-block-ui/style.css';
 import { Link } from 'react-router-dom'
 import cc from '../lib/utils';
-import { pseudoRandomBytes } from 'crypto';
+// import { pseudoRandomBytes } from 'crypto';
 
 class Members extends Component {
 
@@ -184,9 +184,9 @@ class Members extends Component {
     // }
 
 
-    createObject = (id) => {
-        let leaseobject = this.props.newLifeObj
-    }
+    // createObject = (id) => {
+    //     let leaseobject = this.props.newLifeObj
+    // }
 
     checkRegistered = () => {
         // console.log("REG check: ", account, this.props);
@@ -271,7 +271,7 @@ class Members extends Component {
                     </div>
                 ]
 
-                if (selected && this.props.account) {
+                if (selected && this.props.account && this.props.registered) {
                     cc.log("Member Object: ", userObject);
                     const disableDownButton = (userObject.crowdsaleClosed && !userObject.active && (member.account !== this.props.account)) || (userObject.objectHash && !userObject.leaseTokenAddress && (member.account !== this.props.account)) || (userObject.leaseTokenAddress && !userObject.objectID && (member.account !== this.props.account))
                     // console.log("Disable button: ", disableDownButton);
