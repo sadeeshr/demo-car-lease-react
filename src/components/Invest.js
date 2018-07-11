@@ -83,8 +83,13 @@ class Invest extends Component {
         // if (this.props.totalSupply !== nextProps.totalSupply || this.props.allowance !== nextProps.allowance || this.props.unClaimedRedemption !== nextProps.unClaimedRedemption) {
         // this.props._resetEvent() //temporary
         if (nextProps.eventTransfer && !this.state.eventTransfer) { this.setState({ eventTransfer: nextProps.eventTransfer, ethInvest: undefined }) }
-        if (nextProps.member.crowdsaleClosed && !nextProps.member.active) this.props._resetTxIds()
+        // if (nextProps.member.crowdsaleClosed && !nextProps.member.active) this.props._resetTxIds()
 
+        if (nextProps.event && (nextProps.event !== this.props.event) && ((nextProps.event.transactionHash === nextProps.investInObjectTxID) || (nextProps.event.transactionHash === nextProps.BuyAndActivateTxID))) {
+            setTimeout(() => {
+                this.props._resetTxIds()
+            }, 5000);
+        }
         // }
         this.props = nextProps
     }

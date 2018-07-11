@@ -92,12 +92,12 @@ class Invoices extends Component {
         if (this.props.member.leaseType === "Per Dag")
             data.data["date"] = this.getFormattedDate()
 
-        console.log(data, this.state.invoice);
-        if (this.state.invoice) console.log((this.state.invoice.objectID === data["data"]["objectID"]), (this.state.invoice.month === data["data"]["month"]), (this.state.invoice.year === data["data"]["year"]));
+        // cc.log(data, this.state.invoice);
+        if (this.state.invoice) cc.log((this.state.invoice.objectID === data["data"]["objectID"]), (this.state.invoice.month === data["data"]["month"]), (this.state.invoice.year === data["data"]["year"]));
         if (this.state.invoice && (this.state.invoice.objectID === data["data"]["objectID"]) && (this.state.invoice.month === data["data"]["month"]) && (this.state.invoice.year === data["data"]["year"]))
-            console.log("DUPLICATE CREATE INVOICE REQUEST, DONT PUSH TO DB")
+            cc.log("DUPLICATE CREATE INVOICE REQUEST, DONT PUSH TO DB")
         else {
-            console.log("CREATE NEW INVOICE")
+            cc.log("CREATE NEW INVOICE")
             this.setState({ invoice: data["data"] }, () => this.props._writeNewContractData(this.props, data))
         }
 

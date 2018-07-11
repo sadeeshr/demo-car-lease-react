@@ -112,6 +112,9 @@ class Members extends Component {
                 || (refreshEvents.indexOf(nextProps.event.event) !== -1)
             )
         ) {
+            setTimeout(() => {
+                this.props._resetTxIds()
+            }, 5000);
             this.fetchMembers()
         }
 
@@ -203,7 +206,7 @@ class Members extends Component {
 
     renderMember = (member, i) => {
 
-        // cc.log("member object", member["_id"], member.authorized, member.account)
+        cc.log("member object: ", member)
 
         const userObjects = this.props.members && this.props.members.filter(userO => userO["member"] === member["_id"])
         // console.log("userObjects: ", userObjects);
@@ -272,13 +275,13 @@ class Members extends Component {
                 ]
 
                 if (selected && this.props.account && this.props.registered) {
-                    cc.log("Member Object: ", userObject);
+                    cc.log("Member Object: ", userObject, member.account, this.props.account);
                     const disableDownButton = (userObject.crowdsaleClosed && !userObject.active && (member.account !== this.props.account)) || (userObject.objectHash && !userObject.leaseTokenAddress && (member.account !== this.props.account)) || (userObject.leaseTokenAddress && !userObject.objectID && (member.account !== this.props.account))
-                    // console.log("Disable button: ", disableDownButton);
+                    cc.log("Disable button: ", disableDownButton);
                     memberRows.push(
 
                         <div className="rowSelect" key={'invest-' + i}>
-                            <div style={{ cursor: (userObject.objectID || member.authorized) ? "pointer" : "not-allowed" }} className="memberMesCon">{(userObject.objectID || member.authorized) ? member.message : "Not Allowed to Add New Life Configurator"}</div>
+                            <div style={{ cursor: (userObject.objectID || member.authorized) ? "pointer" : "not-allowed" }} className="memberMesCon">{member.message}</div>
                             {(userObject.objectID || userObject.leaseTokenAddress || userObject.objectHash) && <div className="memberMesBtns">
                                 {!disableDownButton && <div className="membersBtn">
                                     <button className="arrowBtn" onClick={() => {

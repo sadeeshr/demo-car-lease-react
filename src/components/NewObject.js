@@ -18,6 +18,15 @@ class NewObject extends Component {
 
     componentWillMount() {
 
+        let data = {
+            module: "membersobj",
+            result: "member",
+            findone: true,
+            query: {
+                _id: this.props.member["_id"]
+            }
+        }
+        this.props._fetchContractData(this.props, data, this.props.account)
     }
 
     componentWillUnmount() {
@@ -29,7 +38,11 @@ class NewObject extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-
+        if (nextProps.event && (nextProps.event !== this.props.event) && (nextProps.event.transactionHash === nextProps.newObject.txID)) {
+            setTimeout(() => {
+                this.props._resetTxIds()
+            }, 5000);
+        }
     }
 
     doExit = () => {
