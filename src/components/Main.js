@@ -258,9 +258,18 @@ class Main extends Component {
                 <div className="contentCon overflow bg-none">
 
                     <p className="text-center fs-30"><strong>GA</strong> Duurzaam</p>
-                    <p className="text-center fs-20">en bespaar tot 50%</p>
-                    <p className="text-center fs-20">op je energie en</p>
-                    <p className="text-center fs-20">vervoers rekening</p>
+                    <p className="text-center fs-30 mb-15">GA Decentraal</p>
+                    <p className="text-center fs-20">lanceer je eigen digitale munt</p>
+                    <p className="text-center fs-20">en wordt 100%</p>
+                    <p className="text-center fs-20">energie neutraal</p>
+
+                    <div className="demoApp">
+                        <p><strong>DEMO APP</strong></p>
+                        <p>WIN EEN TESLA</p>
+                        <p>MET</p>
+                        <p>DE STRAAT</p>
+                    </div>
+
 
                     <table>
                         <tbody>
@@ -269,8 +278,11 @@ class Main extends Component {
                             </tr>
                         </tbody>
                     </table>
+
                     <p className="text-center fs-20">...en een Alternatief voor je</p>
                     <p className="text-center fs-20">Spaarrekening en Pensioen</p>
+                    <p className="text-center fs-20">met 3-10% rente en</p>
+                    <p className="text-center fs-20">elk moment Uitstapbaar</p>
                 </div>
             </div>
             <div className="footBtn">
@@ -285,7 +297,7 @@ class Main extends Component {
                             </button>
                         </div>
                         <div className="col-5 lh-54 text-left">
-                            <span>Verder</span>
+                            <span>Wordt lid</span>
                         </div>
 
                     </div>
