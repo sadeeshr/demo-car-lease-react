@@ -407,6 +407,17 @@ class Contract {
                 //     account: account
                 // }
                 // return { addNewObjectTxID: result, addNewObjectHash: objectHash, progress: false }
+
+                let data = {
+                    module: "membersobj",
+                    result: "members",
+                    query: {
+                        "_id": id
+                    },
+                    data: { objectTxHash: result }
+                }
+                this.props._updateContractData(this.props, data)
+
                 return {
                     newObject: {
                         txID: result,

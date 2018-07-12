@@ -20,14 +20,29 @@ class Invest extends Component {
     componentWillMount() {
         // cc.log("Invest Props: ", this.props);
         this.setState({
-            objectID: this.props.member ? this.props.member.objectID : null,
-            obj: this.props.member ? this.props.member.obj : null,
-            eventTransfer: null,
-            eventApprove: null,
-            eventClaim: null,
+            // objectID: this.props.member ? this.props.member.objectID : null,
+            // obj: this.props.member ? this.props.member.obj : null,
+            // eventTransfer: null,
+            // eventApprove: null,
+            // eventClaim: null,
             refreshValues: false,
             modalCondition: false,
         })
+
+        // console.log("TOTAL RAISED: ", this.props.member.totalRaised, !this.props.member.totalRaised, );
+        // if (!this.props.member.objectID || (typeof this.props.member.totalRaised === "undefined") || !(this.props.member.totalRaised === 0)) {
+        //     // const townSelected = this.props.towns[this.props.town]
+        //     // this.props._fetchMembers(this.props, townSelected["municipalityID"], this.props.account)
+        //     let data = {
+        //         module: "membersobj",
+        //         result: "member",
+        //         findone: true,
+        //         query: {
+        //             _id: this.props.member["_id"]
+        //         }
+        //     }
+        //     this.props._fetchContractData(this.props, data, this.props.account)
+        // }
     }
 
     modalClick() {
@@ -43,10 +58,7 @@ class Invest extends Component {
     componentDidMount() {
         this.refreshValues()
         this.setState({ reveal: true })
-        if (!this.props.member.objectID) {
-            const townSelected = this.props.towns[this.props.town]
-            this.props._fetchMembers(this.props, townSelected["municipalityID"], this.props.account)
-        }
+
         // setTimeout(() => this.props._lcInvestInObject(this.props.member.objectID, "10", this.props.account), 5000);
     }
 
@@ -58,8 +70,12 @@ class Invest extends Component {
         if (nextProps.eventClaim && !this.state.eventClaim) { this.setState({ eventClaim: nextProps.eventClaim, ethInvest: null }) }
         if (nextProps.eventApprove && !this.state.eventApprove) { this.setState({ eventApprove: nextProps.eventApprove, ethInvest: null }) }
 
+        if (nextProps.investInObjectTxID || nextProps.BuyAndActivateTxID) {
+            this.setState({ pending: true })
+        }
         if (nextProps.event && (nextProps.event !== this.props.event) && ((nextProps.event.event === "Transfer") || (nextProps.event.event === "AddNewObject") || (nextProps.event.event === "BoughtNewObject") || (nextProps.event.transactionHash === nextProps.investInObjectTxID) || (nextProps.event.transactionHash === nextProps.BuyAndActivateTxID))) {
             // this.refreshValues()
+            this.setState({ pending: false })
             this.props._euroBalanceOf(this.props.account)
             this.props._lcLeaseObject(this.props.account, nextProps.member.objectID)
             this.props._lcLeaseObjectCycle(nextProps.member.objectID)
@@ -146,7 +162,7 @@ class Invest extends Component {
     render() {
         cc.log("Invest State Props", this.state, this.props);
         // cc.log("##### EVT", this.props.member ? this.props.member.evTokens : "no evtokens");
-        if (this.props.account && !this.props[this.props.account]) this.props._getBalance(this.props.account);
+        // if (this.props.account && !this.props[this.props.account]) this.props._getBalance(this.props.account);
 
         const user = this.props.usernames && this.props.usernames.find(userO => userO["_id"] === this.props.member["member"])
 
@@ -159,7 +175,7 @@ class Invest extends Component {
         // const account = this.props.account ? this.props.account.substring(0, 7) + '.....' + this.props.account.substring(this.props.account.length - 5) : ""
         // const hideInvest = (this.props.member.totalRaised >= this.props.member.objectPrice) ? true : false
         const ethInvest = parseInt((this.state.ethInvest || "0"), 10)
-        const enableInvest = ((ethInvest <= amountRemaining) && (ethInvest <= this.props.euroTokenBalance) && (this.state.ethInvest !== "") && (this.state.ethInvest !== "0"))
+        const enableInvest = ((ethInvest <= amountRemaining) && (ethInvest <= (this.props.euroTokenBalance + this.props.unClaimedRedemption)) && (this.state.ethInvest !== "") && (this.state.ethInvest !== "0"))
         // const enableInvest = ((ethInvest <= amountRemaining) && (ethInvest <= this.props.allowance) && (ethInvest <= this.props.euroTokenBalance) && (this.state.ethInvest !== "") && (this.state.ethInvest !== "0"))
         // cc.log("Enable Invest: ", ethInvest, enableInvest, (ethInvest <= amountRemaining), (ethInvest <= this.props.allowance), (ethInvest <= this.props.euroTokenBalance), (this.state.ethInvest !== ""));
         // (this.props.account || "").substring(0, 8) + "..."
@@ -244,10 +260,10 @@ class Invest extends Component {
                                                 {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.investInObjectTxID)) ? <p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)}
                                                 {this.props.BuyAndActivate && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.BuyAndActivateTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.BuyAndActivateTxID)) ? <p className="p-euro" style={{ ccolor: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)}
 
-                                                <span className="flaticon-padlock unlock" style={{ cursor: ((enableInvest && !this.props.member.crowdsaleClosed) || buyAndActivate) ? "pointer" : "not-allowed" }} onClick={() => {
+                                                <span className="flaticon-padlock unlock" style={{ cursor:  !this.state.pending && ((enableInvest && !this.props.member.crowdsaleClosed) || buyAndActivate) ? "pointer" : "not-allowed" }} onClick={() => {
                                                     buyAndActivate ?
-                                                        this.state.activedate && this.props._lcBuyAndActivate(this.props.member.objectID, this.state.activedate, this.props.account)
-                                                        : this.props.account && !this.props.member.crowdsaleClosed && enableInvest && this.props._lcInvestInObject(this.props.member.objectID || (this.props.event && this.props.event.returnValues && this.props.event.returnValues.objectID), this.state.ethInvest || "0", this.props.account)
+                                                        !this.state.pending && this.state.activedate && this.props._lcBuyAndActivate(this.props.member.objectID, this.state.activedate, this.props.account)
+                                                        : !this.state.pending && this.props.account && !this.props.member.crowdsaleClosed && enableInvest && this.props._lcInvestInObject(this.props.member.objectID || (this.props.event && this.props.event.returnValues && this.props.event.returnValues.objectID), this.state.ethInvest || "0", this.props.account)
                                                 }} ></span>
                                                 
 

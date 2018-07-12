@@ -2,6 +2,7 @@ const Web3 = require('web3');
 // const RINKEBY_NODE_URL = "wss://rinkeby.infura.io/_ws" //infura for testing websockets, can use our socket also
 const RINKEBY_NODE_URL = "ws://178.62.195.242:8546"
 // const RINKEBY_NODE_URL = "ws://localhost:8546"
+const mongo = require('./Mongo')
 
 const web3 = new Web3(new Web3.providers.WebsocketProvider(RINKEBY_NODE_URL));
 let txHash = "" // temporary variable to hold hash
@@ -118,6 +119,24 @@ handleEvent = (io, event) => {
     //     default:
     //         break;
     // }
+
+    if (event.event === "AddNewObject") {
+        // objectTxHash
+        let objectID = event.returnValues.objectID
+        let txHash = event.transactionHash
+        if (objectID && txHash) {
+            console.log("OBJECT ID, TXHASH: ", objectID, txHash);
+            mongo.db["membersobj"].findAndModify(
+                {
+                    query: { "objectTxHash": txHash },
+                    update: { $set: { objectID: objectID } },
+                    new: true
+                },
+                (err, result) => {
+                    console.log("OBJECT ID INSERTED RESULT: ", result, err);
+                });
+        }
+    }
     getConfirmationsHash(event, resEvent => io.sockets.emit('event', resEvent))
 }
 

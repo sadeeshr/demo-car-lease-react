@@ -44,7 +44,9 @@ class NewObject extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (nextProps.newObject) this.setState({ pending: true })
         if (nextProps.event && (nextProps.event !== this.props.event) && (nextProps.event.transactionHash === nextProps.newObject.txID)) {
+            this.setState({ pending: false })
             setTimeout(() => {
                 this.props._resetTxIds()
             }, 5000);
@@ -129,9 +131,9 @@ class NewObject extends Component {
                                                 {(this.props.newObject && this.props.newObject["id"] === member["_id"]) &&
                                                     (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newObject.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Confirmed</p> : <p className="p-euro" style={{ color: "#FF9800", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Pending</p>}</Link>)}
 
-                                                <span className="flaticon-padlock-1 unlock" onClick={() => {
+                                              { !this.state.pending && <span className="flaticon-padlock-1 unlock" onClick={() => {
                                                     this.props.account && this.props._lcCreateObject(this.props, member["_id"], member.months, member.municipalityID, member.objectPrice, member.objectHash, member.leaseTokenAddress, member.objectDealer, (parseFloat(member.objectMonthlyCapitalCost) * 100), (parseFloat(member.objectMonthlyOperatingCost) * 100), this.props.account)
-                                                }} ></span>
+                                                }} ></span>}
 
                                             </div>
                                         </div>

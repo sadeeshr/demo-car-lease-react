@@ -129,23 +129,30 @@ class Main extends Component {
                             let objectID = event.returnValues.objectID
                             // let newObjData = newObject.data
                             // newObjData["objectID"] = objectID
-                            let data = {
-                                module: "membersobj",
-                                result: "members",
-                                query: {
-                                    "_id": newObject["id"]
-                                },
-                                data: { objectID: objectID }
-                            }
-                            cc.log(data)
+
+                            // let data = {
+                            //     module: "membersobj",
+                            //     result: "members",
+                            //     query: {
+                            //         "_id": newObject["id"]
+                            //     },
+                            //     data: { objectID: objectID }
+                            // }
+                            // cc.log(data)
+
                             const member = this.props.member
-                            member["objectID"] = objectID
-                            this.props._setObject(member)
-                            this.props._updateContractData(this.props, data)
+                            if (!member["objectID"]) {
+                                member["objectID"] = objectID
+                                this.props._setObject(member)
+                            }
+
+                            // this.props._updateContractData(this.props, data)
+
                             // this.props._writeNewContractData(this.props, data)
 
-                            const townSelected = this.props.towns[this.props.town]
-                            setTimeout(() => this.props._fetchMembers(this.props, townSelected["municipalityID"], this.props.account), 1000)
+                            // const townSelected = this.props.towns[this.props.town]
+                            // setTimeout(() => this.props._fetchMembers(this.props, townSelected["municipalityID"], this.props.account), 1000)
+                            setTimeout(() => this.props._fetchMembers(this.props, "1", this.props.account), 1000)
                             // this.props._setEventStatus({ eventAddNewObject: true, objectID: objectID }); setTimeout(() => { this.lcEventAddNewObjectUnsubscribe(); this.props._reloadTokens() }, 1000);
                         }
 
@@ -300,7 +307,7 @@ class Main extends Component {
                             &nbsp;
                             </div>
                         <div className="col-2">
-                            <button className="arrowBtn" onClick={() => this.props.history.push("/", { path: "home" })}>
+                            <button className="arrowBtn" onClick={() => this.props.history.push("/", { path: "members" })}> 
                                 <span className="flaticon-right-arrow"></span>
                             </button>
                         </div>
@@ -402,7 +409,8 @@ class Main extends Component {
                 <nav className="navCon" style={style.nav}>
                     <span onClick={() => this.props.history.push("/", { path: "main" })} style={{ cursor: "pointer", fontWeight: (["main", "home"].indexOf(path) !== -1) ? "800" : "100" }}>HOME</span> {" "}
                     <span onClick={() => this.props.history.push("/", { path: "addnewlife" })} style={{ cursor: "pointer", fontWeight: (path === "addnewlife") ? "800" : "100" }}>GA DUURZAAM</span>{" "}
-                    <span onClick={() => this.props.towns && this.props.history.push("/", { path: "members" })} style={{ cursor: this.props.towns ? "pointer" : "not-allowed", fontWeight: (path === "members") ? "800" : "100" }}>LEDEN</span>{" "}
+                    <span onClick={() => this.props.history.push("/", { path: "members" })} style={{ cursor: "pointer", fontWeight: (path === "members") ? "800" : "100" }}>LEDEN</span>{" "}
+                    {/*<span onClick={() => this.props.towns && this.props.history.push("/", { path: "members" })} style={{ cursor: this.props.towns ? "pointer" : "not-allowed", fontWeight: (path === "members") ? "800" : "100" }}>LEDEN</span>{" "}*/}
                 </nav>
 
                 <NotificationSystem ref="notificationSystem" />

@@ -143,13 +143,16 @@ class Invoices extends Component {
 
     componentWillReceiveProps(nextProps) {
         cc.log("new props", nextProps);
-        if (nextProps.invoices_new || nextProps.invoices_edit || (nextProps.event && (nextProps.event !== this.props.event) && (nextProps.event.event === "PayCapitalAndOperation" || nextProps.event.event === "Transfer" || nextProps.event.event === "NewInvoice")))
+        if (nextProps.payFeeTxID) this.setState({ pending: true })
+        if (nextProps.invoices_new || nextProps.invoices_edit || (nextProps.event && (nextProps.event !== this.props.event) && (nextProps.event.event === "PayCapitalAndOperation" || nextProps.event.event === "Transfer" || nextProps.event.event === "NewInvoice"))) {
             this.fetchInvoices()
+        }
 
-        // if (this.props.event && (this.props.event.transactionHash === this.props.payFeeTxID)) {
-        //     // this.updateInvoice(invoice)
-        //     // this.fetchInvoices()
-        // }
+        if (nextProps.event && (nextProps.event !== this.props.event) && (nextProps.event.transactionHash === nextProps.payFeeTxID)) {
+            // this.updateInvoice(invoice)
+            // this.fetchInvoices()
+            this.setState({ pending: false })
+        }
 
 
 
@@ -378,8 +381,8 @@ class Invoices extends Component {
                                                             </div>
 
                                                                     <div className="col-12 text-center">
-                                                                       
-                                                                        {/* <span className="flaticon-padlock unlock"></span>  */}
+                                                                        {!this.state.pending && !invoice.status && <span className="flaticon-lock-1 unlock" onClick={() => { this.props._lcPayCapitalAndOperation(this.props, this.props.member.objectID, (tariff * 100), (mileageEuro * 100), this.props.account); this.updateInvoice(invoice, tariff, nextTariff, this.state.mileage, total) }} ></span>}
+                                                                        {/* <span className="flaticon-lock unlock"></span>  */}
                                                                         {/* <span className="minusBal">Pending</span> */}
                                                                         {this.props.payFeeTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.payFeeTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.payFeeTxID)) ? <p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p className="p-euro " style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)}
                                                                         {/* <span className="confirmBal">Confirmed</span> */}

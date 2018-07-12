@@ -109,7 +109,8 @@ class AddNewLifeConfigurator extends Component {
             objectDealer: leaseobject["dealer"],
             objectMonthlyCapitalCost: monthlycapcost,
             objectMonthlyOperatingCost: monthlyopcost,
-            municipalityID: townSelected ? townSelected["municipalityID"] : ""
+            // municipalityID: townSelected ? townSelected["municipalityID"] : ""
+            municipalityID: "1"
         }
 
         let data = {
