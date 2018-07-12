@@ -51,13 +51,14 @@ class Members extends Component {
     }
 
     fetchMembers = () => {
-        const townSelected = this.props.towns[this.props.town]
+        // const townSelected = this.props.towns[this.props.town]
 
         let data = {
             module: "membersobj",
             result: "members",
             query: {
-                municipalityID: townSelected ? townSelected["municipalityID"] : ""
+                // municipalityID: townSelected ? townSelected["municipalityID"] : ""
+                municipalityID: "1"
             },
             filter: {
                 // _id: 0,
@@ -103,6 +104,10 @@ class Members extends Component {
 
         }
 
+        if (nextProps.AddNewUser || nextProps.newObject || nextProps.newLeaseTokenObject) {
+            this.setState({ pending: true })
+        }
+
         if (
             nextProps.event && (nextProps.event !== this.props.event) &&
             (
@@ -112,9 +117,11 @@ class Members extends Component {
                 || (refreshEvents.indexOf(nextProps.event.event) !== -1)
             )
         ) {
+            this.setState({ pending: false })
+
             setTimeout(() => {
                 this.fetchMembers()
-            }, 1500);
+            }, 1000);
         }
 
         if (
@@ -288,7 +295,7 @@ class Members extends Component {
 
                 if (selected && this.props.account && this.props.registered) {
                     cc.log("Member Object: ", userObject, member.account, this.props.account);
-                    const disableDownButton = (userObject.crowdsaleClosed && !userObject.active && (member.account !== this.props.account)) || (userObject.objectHash && !userObject.leaseTokenAddress && (member.account !== this.props.account)) || (userObject.leaseTokenAddress && !userObject.objectID && (member.account !== this.props.account))
+                    const disableDownButton = (userObject.crowdsaleClosed && !userObject.active && (member.account !== this.props.account)) || (userObject.objectHash && !userObject.leaseTokenAddress && (member.account !== this.props.account)) || (userObject.leaseTokenAddress && !userObject.objectID && (member.account !== this.props.account)) || (userObject.objectHash && !userObject.leaseTokenAddress && !userObject.objectID) || this.state.pending
                     cc.log("Disable button: ", disableDownButton);
                     memberRows.push(
 

@@ -38,7 +38,9 @@ class NewObject extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (nextProps.newObject) this.setState({ pending: true })
         if (nextProps.event && (nextProps.event !== this.props.event) && (nextProps.event.transactionHash === nextProps.newObject.txID)) {
+            this.setState({ pending: false })
             setTimeout(() => {
                 this.props._resetTxIds()
             }, 5000);
@@ -99,11 +101,11 @@ class NewObject extends Component {
                                             </div>
                                         </div>
                                         <div className="investAddCon">
-                                            <div className="arrowBtn">
+                                            {!this.state.pending && <div className="arrowBtn">
                                                 <img onClick={() => {
                                                     this.props.account && this.props._lcCreateObject(this.props, member["_id"], member.months, member.municipalityID, member.objectPrice, member.objectHash, member.leaseTokenAddress, member.objectDealer, (parseFloat(member.objectMonthlyCapitalCost) * 100), (parseFloat(member.objectMonthlyOperatingCost) * 100), this.props.account)
                                                 }} src={require('../assets/add.jpg')} alt="add2" />
-                                            </div>
+                                            </div>}
                                             <div className="investAddStatus">
                                                 <p>{"Activeer mijn Coin"}</p>
                                                 {(this.props.newObject && this.props.newObject["id"] === member["_id"]) &&

@@ -76,8 +76,9 @@ class Socket {
                 }
 
                 if ((data.event !== "Transfer") && this.props.town) {
-                    const townSelected = this.props.towns[this.props.town]
-                    this.props._fetchMembers(this.props, (townSelected ? townSelected["municipalityID"] : "1"), this.account)
+                    // const townSelected = this.props.towns[this.props.town]
+                    // this.props._fetchMembers(this.props, (townSelected ? townSelected["municipalityID"] : "1"), this.account)
+                    this.props._fetchMembers(this.props, "1", this.account)
                 }
                 this.props._setEvent(data)
 
