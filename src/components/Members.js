@@ -113,9 +113,21 @@ class Members extends Component {
             )
         ) {
             setTimeout(() => {
+                this.fetchMembers()
+            }, 1500);
+        }
+
+        if (
+            nextProps.event && (nextProps.event !== this.props.event) &&
+            (
+                (nextProps.AddNewUser && (nextProps.event.transactionHash === nextProps.AddNewUser.txID))
+                || (nextProps.newObject && (nextProps.event.transactionHash === nextProps.newObject.txID))
+                || (nextProps.newLeaseTokenObject && (nextProps.event.transactionHash === nextProps.newLeaseTokenObject.txID))
+            )
+        ) {
+            setTimeout(() => {
                 this.props._resetTxIds()
             }, 5000);
-            this.fetchMembers()
         }
 
         if (!nextProps.registered)

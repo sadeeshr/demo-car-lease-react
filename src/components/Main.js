@@ -121,19 +121,25 @@ class Main extends Component {
                             let objectID = event.returnValues.objectID
                             // let newObjData = newObject.data
                             // newObjData["objectID"] = objectID
-                            let data = {
-                                module: "membersobj",
-                                result: "members",
-                                query: {
-                                    "_id": newObject["id"]
-                                },
-                                data: { objectID: objectID }
-                            }
-                            cc.log(data)
+
+                            // let data = {
+                            //     module: "membersobj",
+                            //     result: "members",
+                            //     query: {
+                            //         "_id": newObject["id"]
+                            //     },
+                            //     data: { objectID: objectID }
+                            // }
+                            // cc.log(data)
+
                             const member = this.props.member
-                            member["objectID"] = objectID
-                            this.props._setObject(member)
-                            this.props._updateContractData(this.props, data)
+                            if (!member["objectID"]) {
+                                member["objectID"] = objectID
+                                this.props._setObject(member)
+                            }
+
+                            // this.props._updateContractData(this.props, data)
+
                             // this.props._writeNewContractData(this.props, data)
 
                             const townSelected = this.props.towns[this.props.town]
