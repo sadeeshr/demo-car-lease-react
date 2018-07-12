@@ -166,7 +166,13 @@ class Invest extends Component {
         cc.log("Allowed amount: ", amountRemaining, ethInvest, enableInvest);
 
         return (<div className="content-border">
-            <div className="mainContentCon">
+            <div className="border-bottom-1">
+                <div className="container">
+                    <span className="lh-40">MIJN SALDO: <strong className="fs-20">{formatNumber(parseInt((this.props.euroTokenBalance + this.props.unClaimedRedemption), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</strong> Euro</span>
+                    <span className="fr pt-8"><img className="infoImg" src={require('../assets/deal.png')} alt="deal" /></span>
+                </div>
+            </div>
+            <div className="mainContentCon mainContentCon-43">
                 {/* <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
                 <div className="float-right">
                     <i title="Invoices" className="flaticon-invoice" onClick={() => this.props.history.push("/", { path: "invoices" })}></i>
@@ -184,17 +190,17 @@ class Invest extends Component {
                         </div></h1>
                 </div>
                 <Slide right opposite when={this.state.reveal}>
-                    <div className="contentCon bg-none overflow">
+                    <div className="contentCon bg-none overflow contentCon-8 pt-8">
                         <BlockUi tag="div" blocking={this.props.progress}>
                             <div className="carIntestCon">
                                 <div className="membersCon">
                                     <div className="leaseCarCon  main-i invest">
-                                        <div className="balance d-ib inv">
+                                        {/* <div className="balance d-ib inv">
                                             <div className="col-6 balanceName lh-25 text-right">MIJN SALDO : </div>
-                                            <div className="col-6 balanceNum lh-25 text-left">{formatNumber(parseInt((this.props.euroTokenBalance + this.props.unClaimedRedemption), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}<span> Euro</span></div>
+                                            <div className="col-6 balanceNum lh-25 text-left">{formatNumber(parseInt((this.props.euroTokenBalance + this.props.unClaimedRedemption), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}<span> Euro</span></div> */}
                                             {/* <div className="col-6">&nbsp;</div>
                                             <div className="col-6 minusBal text-left">-2.500</div> */}
-                                        </div>
+                                        {/* </div> */}
                                         <div className="col-12 mtableLink">
                                             <div className="mtableCar" style={{ backgroundImage: `url(${this.props.member.objectPic})` }}>
                                                 {/* <img src={this.props.member.objectPic} alt="carImage" /> */}
@@ -214,34 +220,36 @@ class Invest extends Component {
                                         </div>
                                         <div className="col-12 investAddCon border-2">
                                             <div className="col-12 mb-15">
-                                                <p className="fw-700 text-center" style={{ color: (this.props.member.crowdsaleClosed || buyAndActivate) ? "green" : "black" }}>{buyAndActivate ? ("BETAAL " + this.props.member.objectType.toUpperCase()) : (this.props.member.active ? "ACTIVE" : this.props.member.crowdsaleClosed ? "CLOSED" : "INVESTEER")}</p>
+                                                <p className="fw-700 text-center" style={{ color: (this.props.member.crowdsaleClosed || buyAndActivate) ? "green" : "black" }}>{buyAndActivate ? ("AANSCHAF " + this.props.member.objectType.toUpperCase()) : (this.props.member.active ? "ACTIVE" : this.props.member.crowdsaleClosed ? "CLOSED" : "INVESTEER")}</p>
                                             </div>
-                                            <div className="col-4 lh-40">
+                                            <div className="col-3 lh-40">
                                                 &nbsp;
                                             </div>
-                                            <div className="col-4">
+                                            <div className="col-6">
                                                 {
                                                     buyAndActivate ?
-                                                        <Calendar value={this.state.activedate || new Date()} onChange={(e) => this.setState({ activedate: e.value })}>Opleverdatum</Calendar>
+                                                        <Calendar className="calInput" value={this.state.activedate || new Date()} onChange={(e) => this.setState({ activedate: e.value })}>Opleverdatum</Calendar>
                                                         : <div className="investAddInput">{!this.props.member.crowdsaleClosed && <input style={{ color: (enableInvest ? "black" : "red") }} value={(typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest} onChange={(e) => this.setState({ ethInvest: e.target.value })} maxLength="20" type="text" placeholder="Euro Token" />}
                                                         </div>
                                                 }
                                             </div>
-                                            {!buyAndActivate && !this.props.member.crowdsaleClosed && <div className="col-4 lh-40">
+                                            {!buyAndActivate && !this.props.member.crowdsaleClosed && <div className="col-3 lh-40">
                                                 Euro
                                             </div>}
 
                                             <div className="col-12 text-center">
-                                                <span className="flaticon-lock-1 unlock" style={{ cursor: ((enableInvest && !this.props.member.crowdsaleClosed) || buyAndActivate) ? "pointer" : "not-allowed" }} onClick={() => {
+  
+                                                {/* <span className="flaticon-padlock unlock"></span>  */}
+                                                {/* <span className="minusBal">Pending</span> */}
+                                                {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.investInObjectTxID)) ? <p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)}
+                                                {this.props.BuyAndActivate && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.BuyAndActivateTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.BuyAndActivateTxID)) ? <p className="p-euro" style={{ ccolor: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)}
+
+                                                <span className="flaticon-padlock unlock" style={{ cursor: ((enableInvest && !this.props.member.crowdsaleClosed) || buyAndActivate) ? "pointer" : "not-allowed" }} onClick={() => {
                                                     buyAndActivate ?
                                                         this.state.activedate && this.props._lcBuyAndActivate(this.props.member.objectID, this.state.activedate, this.props.account)
                                                         : this.props.account && !this.props.member.crowdsaleClosed && enableInvest && this.props._lcInvestInObject(this.props.member.objectID || (this.props.event && this.props.event.returnValues && this.props.event.returnValues.objectID), this.state.ethInvest || "0", this.props.account)
                                                 }} ></span>
-                                                {/* <span className="flaticon-lock unlock"></span>  */}
-                                                {/* <span className="minusBal">Pending</span> */}
-
-                                                {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.investInObjectTxID)) ? <p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)}
-                                                {this.props.BuyAndActivate && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.BuyAndActivateTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.BuyAndActivateTxID)) ? <p className="p-euro" style={{ ccolor: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)}
+                                                
 
                                                 {/* <span className="confirmBal">Confirmed</span> */}
                                             </div>
@@ -281,15 +289,15 @@ class Invest extends Component {
             <div className="footBtn container">
                 <div className="container text-center">
                     <div className="beforeFooter">
-                        <div className="col-3">
+                        <div className="col-2 text-left">
                             <button className="arrowBtn" onClick={this.doExit.bind(this)}>
                                 <span className="flaticon-left-arrow"></span>
                             </button>
                         </div>
-                        <div className="col-4 lh-54 text-left">
+                        <div className="col-8 lh-54 text-left">
                             Ga Terug
                         </div>
-                        <div className="col-5 text-left padding-10-0">
+                        <div className="col-2 text-left padding-10-0">
                             <div className="text-right" style={{ float: 'right' }}>
                                 <span onClick={() => this.modalClick()}>
                                     <img className="infoImg" src={require('../assets/info.png')} alt="info" />
@@ -306,7 +314,7 @@ class Invest extends Component {
 
                         <span className="flaticon-twitter-logo-on-black-background"></span>
                         <span className="flaticon-facebook-logo"></span>
-                        <span className="flaticon-youtube-logo"></span>
+                        <span className="flaticon-social-media"></span>
                     </div>
                 </div>
                 <div className="contact bg-grey textWhite">

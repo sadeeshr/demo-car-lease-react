@@ -267,7 +267,13 @@ class Invoices extends Component {
 
 
         return (<div className="content-border">
-            <div className="mainContentCon">
+                    <div className="border-bottom-1">
+                <div className="container">
+                    <span className="lh-40">MIJN SALDO: <strong className="fs-20">{formatNumber(parseInt((this.props.euroTokenBalance + this.props.unClaimedRedemption), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</strong> Euro</span>
+                    <span className="fr pt-8"><img className="infoImg" src={require('../assets/deal.png')} alt="deal" /></span>
+                </div>
+            </div>
+            <div className="mainContentCon  mainContentCon-43">
                 {/* <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i> 
                 <div className="float-right">
                     <i title="Add Invoice" className="flaticon-invoice" onClick={() => this.createInvoice()}></i>
@@ -285,17 +291,17 @@ class Invoices extends Component {
                 </div>
                 <Slide right opposite when={this.state.reveal}>
                     <div hidden className="fr addInv"><i title="Add Invoice" className="flaticon-invoice marIcon" onClick={() => this.createInvoice()}></i></div>
-                    <div className="contentCon bg-none overflow">
+                    <div className="contentCon bg-none overflow contentCon-8 pt-8">
                         <BlockUi tag="div" blocking={this.props.progress}>
                             <div className="carIntestCon">
                                 <div className="membersCon">
                                     <div className="leaseCarCon main-i invest">
-                                        <div className="balance d-ib inv">
+                                        {/* <div className="balance d-ib inv">
                                             <div className="col-6 balanceName lh-25 text-right">MIJN SALDO : &nbsp;&nbsp;</div>
-                                            <div className="col-6 balanceNum lh-25 text-left">{formatNumber(parseInt((this.props.euroTokenBalance + this.props.unClaimedRedemption), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}<span> Euro</span></div>
+                                            <div className="col-6 balanceNum lh-25 text-left">{formatNumber(parseInt((this.props.euroTokenBalance + this.props.unClaimedRedemption), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}<span> Euro</span></div> */}
                                             {/* <div className="col-6">&nbsp;</div>
                                             <div className="col-6 minusBal text-left">-2.500</div> */}
-                                        </div>
+                                        {/* </div> */}
                                         <div className="col-12 mtableLink">
                                             <div className="mtableCar" style={{ backgroundImage: `url(${this.props.member.objectPic})` }}>
                                                 {/* <img src={this.props.member.objectPic} alt="carImage" /> */}
@@ -332,16 +338,20 @@ class Invoices extends Component {
 
                                                         return <div key={i} className="leaseCarCon invest no-border cPadding">
                                                             <div className="col-12 d-ib border-2">
-                                                                <div className="balance balanceNum text-center"> BETAAL {(this.props.member.leaseType === "Per Dag") ? (invoice.date || this.getFormattedDate()) : (this.months[invoice.month] + " " + invoice.year)} </div>
-                                                                <div className="col-12 investAddCon">
-                                                                    <div className="col-5 text-right">
-                                                                        <span style={{ padding: '0 5px', lineHeight: '30px' }}>Tarief</span>
-                                                                    </div>
-                                                                    <div className="col-3 text-center">
+                                                                <div className="balance balanceNum text-center"> BETAAL {(this.props.member.leaseType === "Per Dag") ? (invoice.date || this.getFormattedDate()) : (this.months[invoice.month] + " " + invoice.year)}
+                                                                <div className="col-12 text-center">
                                                                         <span style={{ fontSize: '11px' }}>(Incl BTW)</span>
                                                                     </div>
+                                                                </div>
+                                                                <div className="col-12 investAddCon">
+                                                                    <div className="col-6 text-right">
+                                                                        <span style={{ padding: '0 5px', lineHeight: '30px' }}>Tarief</span>
+                                                                    </div>
+                                                                    <div className="col-1 text-center">
+                                                                        <span style={{ fontSize: '11px' }}>&nbsp;</span>
+                                                                    </div>
 
-                                                                    <div className="col-4" style={{ lineHeight: '30px' }}>
+                                                                    <div className="col-5" style={{ lineHeight: '30px' }}>
                                                                         {formatNumber(tariff, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} Euro
                                                             </div>
                                                                     <div className="col-5 text-right">&nbsp;
@@ -368,11 +378,13 @@ class Invoices extends Component {
                                                             </div>
 
                                                                     <div className="col-12 text-center">
-                                                                        {!invoice.status && <span className="flaticon-lock-1 unlock" onClick={() => { this.props._lcPayCapitalAndOperation(this.props, this.props.member.objectID, (tariff * 100), (mileageEuro * 100), this.props.account); this.updateInvoice(invoice, tariff, nextTariff, this.state.mileage, total) }} ></span>}
-                                                                        {/* <span className="flaticon-lock unlock"></span>  */}
+                                                                       
+                                                                        {/* <span className="flaticon-padlock unlock"></span>  */}
                                                                         {/* <span className="minusBal">Pending</span> */}
-                                                                        {this.props.payFeeTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.payFeeTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.payFeeTxID)) ? <p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}><i>Confirmed</i></p> : <p className="p-euro " style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>pending</p>}</Link>)}
+                                                                        {this.props.payFeeTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.payFeeTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.payFeeTxID)) ? <p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p className="p-euro " style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)}
                                                                         {/* <span className="confirmBal">Confirmed</span> */}
+
+                                                                        {!invoice.status && <span className="flaticon-padlock unlock" onClick={() => { this.props._lcPayCapitalAndOperation(this.props, this.props.member.objectID, (tariff * 100), (mileageEuro * 100), this.props.account); this.updateInvoice(invoice, tariff, nextTariff, this.state.mileage, total) }} ></span>}
                                                                     </div>
 
                                                                 </div>
@@ -405,15 +417,15 @@ class Invoices extends Component {
             <div className="footBtn container">
                 <div className="container text-center">
                     <div className="beforeFooter">
-                        <div className="col-3">
+                        <div className="col-2 text-left">
                             <button className="arrowBtn" onClick={this.doExit.bind(this)}>
                                 <span className="flaticon-left-arrow"></span>
                             </button>
                         </div>
-                        <div className="col-4 lh-54 text-left">
+                        <div className="col-8 lh-54 text-left">
                             Ga Terug
                         </div>
-                        <div className="col-5 text-left padding-10-0">
+                        <div className="col-2 text-left padding-10-0">
                             <div className="text-right" style={{ float: 'right' }}>
                                 <span onClick={() => this.modalClick()}>
                                     <img className="infoImg" src={require('../assets/info.png')} alt="info" />
@@ -430,7 +442,7 @@ class Invoices extends Component {
 
                         <span className="flaticon-twitter-logo-on-black-background"></span>
                         <span className="flaticon-facebook-logo"></span>
-                        <span className="flaticon-youtube-logo"></span>
+                        <span className="flaticon-social-media"></span>
                     </div>
                 </div>
                 <div className="contact bg-grey textWhite">

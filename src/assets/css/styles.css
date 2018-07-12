@@ -48,6 +48,14 @@ p{
    display: block;
 }
 
+.mainContentCon-43{
+  height: 487px;
+}
+
+.mainContentCon-40{
+  height: 490px;
+}
+
 .mainContentCon.foot{
   height: 630px;
 }
@@ -110,6 +118,7 @@ img.addBtn {
    font-size: 20px;
    line-height: 30px;
    height: 30px;
+   margin-top: 30px;
    /* margin-bottom: 40px; */
 } 
 .content-border{
@@ -165,16 +174,6 @@ margin-top: -13px;
    margin-left: -20px;
    margin-top: 0px;
 }
-.text-center{
-   text-align: center !important;
-}
-.text-right{
-    text-align: right;
- }
-
- .text-left{
-    text-align: left;
- }
 
 .lrBtn{
    background: none;
@@ -379,16 +378,14 @@ margin: 0 auto 10px;
     width: -webkit-stretch !important;
     text-align: center;
     color: #000000;
-    font-size: 18px;
+    font-size: 16px;
     margin: 0 auto;
     padding: 4px 15px !important;
     border-radius: 5px !important;
     background: rgba(255, 255, 255, 1) !important;
     border: 1px solid #333333 !important;
 }
-.m-b-10{
-   margin-bottom: 15px;
-}
+
 textarea.membership-input{
    font-family: Tahoma, Verdana, Segoe, sans-serif;
    font-weight: 500;
@@ -472,6 +469,11 @@ textarea.membership-input{
    margin: 0;
    padding-top: 39px; 
 }
+
+.contentCon-8{
+  height: 492px;
+}
+
 .form-input-containers label{
     margin-bottom: 10px !important;
     display: inline-block;
@@ -629,12 +631,7 @@ a{
  float:right;
  margin: 0px 25px;
 }
-.fl{
-   float: left;
-}
-.fr{
-   float: right;
-}
+
 .tableCon td img{
    width: 60px;
    height: auto;
@@ -701,14 +698,6 @@ table tr td {
   padding: 10px 5px 5px;
 }
 
-.no-border{
-  border: 0 !important;
-}
-
-.border-2{
-  border: 2px solid #f1f1f1;
-  border-radius: 5px;
-}
 
 .leaseCarCon.main-i{
   display: inline-block;
@@ -722,7 +711,7 @@ table tr td {
 
 .leaseCarCon.cPadding .border-2{
   width:  calc(100% - 4px);
-  height: 244px;
+  /* height: 244px; */
 }
 
 .balance.inv {
@@ -938,12 +927,12 @@ table tr td {
 
 .mtableUser{
    width: 100%;
-   float: left;
-   padding: 0 10px;
+   /* float: left; */
+   /* padding: 0 10px; */
    font-size: 18px;
    cursor: default;
-   text-align: left;
-   padding-left: 20px;
+   text-align: center;
+   /* padding-left: 20px; */
 }
 .mtableUser p{
     font-size: 15px;
@@ -966,7 +955,7 @@ color: #717171;
   text-align: center;
   float: right;
   background: #fff;
-  border: 2px solid #9c9c9c;
+  /* border: 2px solid #9c9c9c; */
   border-radius: 5px;
   padding: 5px;
 }
@@ -1030,6 +1019,11 @@ span.inLeft input{
 .flaticon-back{
    float: left;
 }
+
+.flaticon-right-arrow.fs-25:before{
+  font-size: 25px;
+}
+
 #center-btn-container img{
    float: left;
    /*margin: 0 auto;*/
@@ -1306,7 +1300,7 @@ font-size: 20px !important;
   border: 1px solid #404040;
   text-align: center;
   line-height: 50px;
-  margin: 10px auto 5px;
+  margin: 10px 25px 5px auto;
 }
 .investAddInput{
     float: left;
@@ -1349,10 +1343,67 @@ font-size: 20px !important;
 }
 
 .beforeNav{
-    margin-top: 10px !important;
-    margin-bottom: 5px !important;
+    /* margin-top: 10px !important; */
+    /* margin-bottom: 5px !important; */
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    display: inline-block;
+
+    overflow: hidden;
+    margin-top: 0;
+    line-height: 30px;
 }
 
+.beforeNav .flatcon{
+  cursor: pointer;
+  transition: all .1s ease-out;
+}
+.beforeNav .flatcon:hover{
+  color: #FF8000;
+}
+.searchInput{
+  padding: 4px 0 4px 15px;
+  background: #f7f7f7;
+  border-radius: 10px;
+  width: calc(100% - 50px);
+  border: 0;
+  margin-top: 3px;
+}
+
+.flaticon-cancel {
+  position: absolute;
+  margin-left: -30px;
+  font-size: 6px;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+}
+
+.body2 span:before {
+  font-size: 8px;
+  font-weight: 600;
+  margin-left: 0;
+}
+
+.mainBody{
+  width: calc(100% + 100%);
+  display: inline-block;
+  transition-property: margin-left;
+  transition-timing-function: cubic-bezier(.86,0,.07,1);
+  transition-duration: .3s;
+}
+
+.mainBody.search-is-open{
+  margin-left: -100%;
+}
+
+.body1, .body2{
+  float: left;
+  width: 50%;
+  position: relative;
+}
 
 .smallText{
     font-size: 10px;
@@ -1418,6 +1469,37 @@ text-align: right;
     padding: 25px 0;
 }
 
+.text-center{
+  text-align: center !important;
+}
+.text-right{
+   text-align: right;
+}
+
+.text-left{
+   text-align: left;
+}
+
+.fl{
+  float: left;
+}
+.fr{
+  float: right;
+}
+
+.border-bottom-1{
+  border-bottom: 1px solid rgb(51, 51, 51);
+}
+
+.no-border{
+  border: 0 !important;
+}
+
+.border-2{
+  border: 2px solid #f1f1f1;
+  border-radius: 5px;
+}
+
 .col-1{
     width: 8.33%;
     float: left;
@@ -1478,7 +1560,6 @@ text-align: right;
     float: left;
 }
 
-
 .lh-54{
     line-height: 54px;
 }
@@ -1487,9 +1568,18 @@ text-align: right;
   line-height: 40px;
 }
 
-.fs-30{
-    font-size: 30px;;
+.lh-35{
+  line-height: 35px;
 }
+
+.lh-28{
+  line-height: 28px;
+}
+
+.lh-25{
+  line-height: 25px;
+}
+
 .fs-16{
   font-size: 16px;
 }
@@ -1499,10 +1589,34 @@ text-align: right;
 }
 
 .fs-24{
-  font-size: 20px;
+  font-size: 24px;
+}
+
+.fs-25{
+  font-size: 25px;
+}
+
+.fs-30{
+  font-size: 30px;;
 }
 
 .fw-700{
+  font-weight: 600
+}
+
+.fw-600{
+  font-weight: 600
+}
+
+.fw-500{
+  font-weight: 600
+}
+
+.fw-400{
+  font-weight: 600
+}
+
+.fw-300{
   font-weight: 600
 }
 
@@ -1510,29 +1624,43 @@ text-align: right;
     margin-bottom: 50px;
 }
 
+.mb-15{
+  margin-bottom: 15px;
+}
+
 .mt-30{
     margin-top: 30px;
+}
+
+.mb-15{
+  margin-bottom: 15px;
 }
 
 .mb-5{
     margin-bottom: 5px;
 }
 
-.mb-15{
-    margin-bottom: 15px;
+.no-padding{
+  padding: 0;
 }
+
+.pt-8{
+  padding-top: 8px;
+}
+
+.pt-10{
+  padding-top: 10px 
+}
+
+.pb-20{
+  padding-bottom: 20px 
+}
+
+
 
 .dp-block{
 display: inline-block;
 margin-bottom: 10px;
-}
-
-.lh-25{
-  line-height: 25px;
-}
-
-.lh-35{
-  line-height: 35px;
 }
 
 .infoImg{
@@ -1620,12 +1748,18 @@ background: rgba(0, 0, 0, 0) !important;
 
 
 .flatcon.pull-right{
-  margin-left: 30px;
+  right: 5px;
+  top: -5px;
+  position: absolute;
+  line-height: 40px;
 }
 
 
 .flatcon.pull-left{
-  margin-right: 30px;
+  left: 5px;
+  top: -5px;
+  position: absolute;
+  line-height: 40px;
 }
 
 
@@ -1748,7 +1882,7 @@ opacity: .3
 
 .col-12.investAddCon{
   width: calc(100% - 4px);
-  padding: 20px 0px;
+  padding: 10px 0px;
 
 }
 
@@ -1784,6 +1918,12 @@ display: none;
   padding-top: 35px;
   font-size: 18px;
   position: absolute;
+}
+
+.profileicon{
+  padding: 0;
+  border: 0;
+  background: none;
 }
 
 
@@ -2419,3 +2559,22 @@ display: none;
   }
 
   
+.posCon{
+  width: 100%;
+  text-align: center;
+}
+
+
+
+.cal span{
+  width: 90%;
+  padding: 0 5%;
+}
+
+.calInput input{
+  width: calc(100% - 20px);
+  border-radius: 6px;
+  border: 2px solid #E6E6E6;
+  padding: 10px 10px;
+  text-align: center;
+}

@@ -140,7 +140,12 @@ class AddMember extends Component {
         const usernames = this.props.usernames ? this.props.usernames.map(user => user.username) : []
         return (
             <div className="content-border">
-                <div className="mainContentCon">
+                <div >
+                    <div className="container">
+                        <span className="lh-40"><strong>MIJN > PROFIEL</strong></span>
+                    </div>
+                </div>
+                <div className="mainContentCon mainContentCon-40">
                     {/* <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i> */}
                     {/* <div className="float-right">
                             <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
@@ -149,7 +154,7 @@ class AddMember extends Component {
                         <h1 id="header"> <i className="flaticon-back fl" onClick={() => this.props.history.goBack()}></i>Become Member<i onClick={() => this.props.history.push("/")} className="flaticon-home fr"></i></h1>
                         {/*  */}
                     </div>
-                    <div className="contentCon overflow" style={{ height: "auto" }}>
+                    <div className="contentCon overflow contentCon-8 pt-8" style={{ height: "auto" }}>
                         <BlockUi tag="div" blocking={this.props.progress}>
                             <div className="form-row-container bmemberCon">
                                 <span className="form-input-containers">
@@ -165,16 +170,16 @@ class AddMember extends Component {
                                     <input maxLength="30" className="membership-input" value={this.state.town || ""} onChange={(e) => this.setState({ town: e.target.value })} type="text" id="town" name="town" placeholder="Town *" />
                                 </span>
                                 <span className="form-input-containers">
-                                    <input maxLength="30" className="membership-input m-b-10" value={this.state.zip || ""} onChange={(e) => this.setState({ zip: e.target.value })} type="text" placeholder="Zip Code" />
+                                    <input maxLength="30" className="membership-input mb-15" value={this.state.zip || ""} onChange={(e) => this.setState({ zip: e.target.value })} type="text" placeholder="Zip Code" />
                                 </span>
                                 <span className="form-input-containers">
-                                    <input style={cursor} readOnly={this.state.profile} pattern="\d*" maxLength="30" className="membership-input m-b-10" value={this.state.iban || ""} onChange={(e) => this.setState({ iban: e.target.value })} type="text" placeholder="IBAN" />
+                                    <input style={cursor} readOnly={this.state.profile} pattern="\d*" maxLength="30" className="membership-input mb-15" value={this.state.iban || ""} onChange={(e) => this.setState({ iban: e.target.value })} type="text" placeholder="IBAN" />
                                 </span>
                                 <span className="form-input-containers">
-                                    <input style={cursor} readOnly={this.state.profile} pattern="\d*" maxLength="30" className="membership-input m-b-10" value={this.state.account || this.props.account || ""} onChange={(e) => this.setState({ account: e.target.value || this.props.account })} type="text" placeholder="Ether address" />
+                                    <input style={cursor} readOnly={this.state.profile} pattern="\d*" maxLength="30" className="membership-input mb-15" value={this.state.account || this.props.account || ""} onChange={(e) => this.setState({ account: e.target.value || this.props.account })} type="text" placeholder="Ether address" />
                                 </span>
                                 <span className="form-input-containers">
-                                    <input pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" maxLength="30" className="membership-input m-b-10" value={this.state.email || ""} onChange={(e) => this.setState({ email: e.target.value })} type="text" placeholder="Email" />
+                                    <input pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" maxLength="30" className="membership-input mb-15" value={this.state.email || ""} onChange={(e) => this.setState({ email: e.target.value })} type="text" placeholder="Email" />
                                 </span>
                                 <span className="form-input-containers marginBttm inputAddbtn">
                                     {!this.state.profile && <div className="upload-selfieCon">
@@ -267,7 +272,7 @@ class AddMember extends Component {
 
                             <span className="flaticon-twitter-logo-on-black-background"></span>
                             <span className="flaticon-facebook-logo"></span>
-                            <span className="flaticon-youtube-logo"></span>
+                            <span className="flaticon-social-media"></span>
                         </div>
                     </div>
                     <div className="contact bg-grey textWhite">

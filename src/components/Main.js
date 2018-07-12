@@ -15,7 +15,9 @@ class Main extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            searchbarCondition: false,
+        }
         this.redirectURL = "http://www.1112.net/lastpage.html"
     }
 
@@ -42,6 +44,12 @@ class Main extends Component {
     componentDidMount() {
         // this.fetchUserData()
         // if (!this.props.towns) this.fetchMunicipalityData()
+    }
+
+    handleClick() {
+        this.setState({
+            searchbarCondition: !this.state.searchbarCondition
+        });
     }
 
 
@@ -310,7 +318,7 @@ class Main extends Component {
 
                         <span className="flaticon-twitter-logo-on-black-background"></span>
                         <span className="flaticon-facebook-logo"></span>
-                        <span className="flaticon-youtube-logo"></span>
+                        <span className="flaticon-social-media"></span>
                     </div>
                 </div>
                 <div className="contact bg-grey textWhite">
@@ -364,12 +372,31 @@ class Main extends Component {
         const registered = (this.props.account && this.props.usernames && (this.props.usernames.find(user => user.account === this.props.account)))
         return (
             <div>
-                <div className="beforeNav container smallText">{registered && <button onClick={() => this.props.history.push("/", { path: "profile" })}>Profile</button>}WESTLAND ENERGIE NEUTRAAL . NL {(path === "members") && <input style={{ width: "50px" }} className="" type="text" name="filterMembers" value={this.props.filter || ""} placeholder="Search"
-                    onChange={(e) => {
-                        // let filterVal = this.props.filter ? (this.props.filter + e.target.value) : e.target.value
-                        // cc.log("SEARCH: ", this.props.filter, e.target.value, filterVal);
-                        this.props._setObject({ filter: e.target.value })
-                    }} />}
+                <div className="beforeNav container smallText">
+                    <div className={this.state.searchbarCondition ? "mainBody search-is-open" : "mainBody search-is-close"}>
+                    <div className="body1">
+                    {
+                        registered && <button className="profileicon flatcon pull-left" onClick={() => this.props.history.push("/", { path: "profile" })}>
+                            <span className="flaticon-man-user flatcon "></span>
+                        </button>
+                    }
+                    WESTLAND ENERGIE NEUTRAAL . NL
+                    {
+                            (path === "members") && <span className="flaticon-search flatcon pull-right" onClick={() => this.handleClick()}></span>
+                    }
+                    </div>
+                    <div className="body2">
+                        {
+                            (path === "members") && <div>
+                            <input className="searchInput" type="text" name="filterMembers" value={this.props.filter || ""} placeholder="Search"
+                            onChange={(e) => {
+                                // let filterVal = this.props.filter ? (this.props.filter + e.target.value) : e.target.value
+                                // cc.log("SEARCH: ", this.props.filter, e.target.value, filterVal);
+                                this.props._setObject({ filter: e.target.value })
+                            }} /><span className="flaticon-cancel" onClick={() => this.handleClick()}></span></div>
+                        }
+                    </div>
+                    </div>
                 </div>
                 {/* <div className="beforeNav container smallText"><span className="flaticon-man-user flatcon pull-left"></span>WESTLAND ENERGIE NEUTRAL , NL<span className="flaticon-search flatcon pull-right"></span></div> */}
                 <nav className="navCon" style={style.nav}>

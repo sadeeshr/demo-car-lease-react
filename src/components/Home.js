@@ -115,7 +115,7 @@ class Home extends Component {
 
                             <span className="flaticon-twitter-logo-on-black-background"></span>
                             <span className="flaticon-facebook-logo"></span>
-                            <span className="flaticon-youtube-logo"></span>
+                            <span className="flaticon-social-media"></span>
                         </div>
                     </div>
                     <div className="contact bg-grey textWhite">
