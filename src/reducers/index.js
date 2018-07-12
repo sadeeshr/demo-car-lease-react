@@ -94,7 +94,7 @@ const rootReducer = (state = initialState, action) => {
                 ...action.payload,
                 evTokens: null,
                 // lcCars: null,
-                euroTokenBalance: null,
+                // euroTokenBalance: null,
                 // evTokenBalance: null,
                 totalSupply: null,
                 progress: false,

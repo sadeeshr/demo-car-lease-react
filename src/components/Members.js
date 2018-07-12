@@ -3,6 +3,8 @@ import BlockUi from 'react-block-ui';
 import 'react-block-ui/style.css';
 import { Link } from 'react-router-dom'
 import cc from '../lib/utils';
+import formatNumber from 'accounting-js/lib/formatNumber.js'
+
 // import { pseudoRandomBytes } from 'crypto';
 
 class Members extends Component {
@@ -25,7 +27,8 @@ class Members extends Component {
     componentWillMount() {
         cc.log("Members Props", this.props);
         this.props._fetchUsers(this.props, this.props.account)
-
+        if (!this.props.unClaimedRedemption && this.props.account) this.props._lcToClaimTotal(this.props.account)
+        if (!this.props.euroTokenBalance && this.props.account) this.props._euroBalanceOf(this.props.account)
         // let data = {
         //     module: "membersdev2",
         //     result: "member",
@@ -118,6 +121,9 @@ class Members extends Component {
             )
         ) {
             this.setState({ pending: false })
+
+            if (this.props.account) this.props._lcToClaimTotal(this.props.account)
+            if (this.props.account) this.props._euroBalanceOf(this.props.account)
 
             setTimeout(() => {
                 this.fetchMembers()
@@ -280,7 +286,7 @@ class Members extends Component {
                             </div>
                         </div>
                         <div className="col-7">
-                            
+
                             {<div className="mtableCar" style={{ backgroundImage: `url(${userObject.objectPic || member.profilePic || require('../assets/anonymous.png')})` }}>
                                 {/* <img style={img} src={userObject.objectPic || member.profilePic || require('../assets/anonymous.png')} alt="carImage" /> */}
                             </div>}
@@ -289,7 +295,7 @@ class Members extends Component {
                             {(this.props.newObject && this.props.newObject["id"] === userObject["_id"]) &&
                                 (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newObject.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px", textAlign: "center", fontWeight: "600" }}>Confirmed</p> : <p className="p-euro" style={{ color: "#FF9800", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Pending</p>}</Link>)}
                             {(this.props.newLeaseTokenObject && this.props.newLeaseTokenObject["hash"] === userObject["objectHash"]) &&
-                                (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newLeaseTokenObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newLeaseTokenObject.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Confirmed</p> : <p className="p-euro" style={{ color: "#FF9800", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600"}}>Pending</p>}</Link>)}
+                                (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newLeaseTokenObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newLeaseTokenObject.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Confirmed</p> : <p className="p-euro" style={{ color: "#FF9800", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Pending</p>}</Link>)}
                         </div>
                     </div>
                 ]
@@ -400,7 +406,7 @@ class Members extends Component {
             <div className="content-border">
                 <div className="border-bottom-1">
                     <div className="container">
-                        <span className="lh-40">MIJN SALDO: <strong className="fs-20">99.999</strong> Euro</span>
+                        <span className="lh-40">MIJN SALDO: <strong className="fs-20">{formatNumber(parseInt(((this.props.euroTokenBalance || 0) + (this.props.unClaimedRedemption || 0)), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</strong> Euro</span>
                         <span className="fr pt-8"><img className="infoImg" src={require('../assets/deal.png')} alt="deal" /></span>
                     </div>
                 </div>
@@ -453,7 +459,7 @@ class Members extends Component {
                                 {/*this.props.AddNewUser && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.AddNewUser}>{!this.state.eventAddNewUser ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>} </Link>)*/}
                             </div>
                             <div className="col-2 text-left padding-10-0">
-                            
+
                                 <div className="text-right" style={{ float: 'right' }}>
                                     <span onClick={() => this.modalClick()}>
                                         <img className="infoImg" src={require('../assets/info.png')} alt="info" />
