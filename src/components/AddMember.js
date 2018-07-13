@@ -158,7 +158,7 @@ class AddMember extends Component {
                         <BlockUi tag="div" blocking={this.props.progress}>
                             <div className="form-row-container bmemberCon">
                                 <span className="form-input-containers">
-                                    <input style={cursor} readOnly={this.state.profile} className="membership-input" maxLength="20" value={this.state.username || ""} onChange={(e) => this.setState({ username: e.target.value })} type="text" id="username" name="username" placeholder="Username *" />
+                                    <input style={cursor} readOnly={this.state.profile} className="membership-input" maxLength="20" value={this.state.username || ""} onChange={(e) => this.setState({ username: e.target.value })} type="text" id="username" name="username" placeholder="Coin Name *" />
                                 </span>
                                 <span className="form-input-containers">
                                     <input style={cursor} readOnly={this.state.profile} className="membership-input" maxLength="20" value={this.state.fullname || ""} onChange={(e) => this.setState({ fullname: e.target.value })} type="text" id="fullname" name="fullname" placeholder="Full Name" />

@@ -287,11 +287,9 @@ class Main extends Component {
             <div className="mainContentCon">
                 <div className="contentCon overflow bg-none">
 
-                    <p className="text-center fs-30"><strong>GA</strong> Duurzaam</p>
-                    <p className="text-center fs-30 mb-15">GA Decentraal</p>
-                    <p className="text-center fs-20">lanceer je eigen digitale munt</p>
-                    <p className="text-center fs-20">en wordt 100%</p>
-                    <p className="text-center fs-20">energie neutraal</p>
+                    <p className="text-center fs-30 mb-15">Duurzame Zaken</p>
+                    <p className="text-center fs-20">Crowdfunding</p>
+                    <p className="text-center fs-20">met je eigen Coin</p>
 
                     <div className="demoApp">
                         <p><strong>DEMO APP</strong></p>
@@ -309,10 +307,9 @@ class Main extends Component {
                         </tbody>
                     </table>
 
-                    <p className="text-center fs-20">...en een Alternatief voor je</p>
-                    <p className="text-center fs-20">Spaarrekening en Pensioen</p>
-                    <p className="text-center fs-20">met 3-10% rente en</p>
-                    <p className="text-center fs-20">elk moment Uitstapbaar</p>
+                    <p className="text-center fs-20">Een Altermatief voor je</p>
+                    <p className="text-center fs-20 mb-15">Spaarrekening en Pensioen</p>
+                    <p className="text-center fs-20">Elk moment Uitstapbaar</p>
                 </div>
             </div>
             <div className="footBtn">
@@ -327,7 +324,7 @@ class Main extends Component {
                             </button>
                         </div>}
                         <div className="col-5 lh-54 text-left">
-                            <span>Wordt lid</span>
+                            <span><strong>ZAKEN</strong></span>
                         </div>
 
                     </div>
@@ -422,9 +419,9 @@ class Main extends Component {
                 </div>
                 {/* <div className="beforeNav container smallText"><span className="flaticon-man-user flatcon pull-left"></span>WESTLAND ENERGIE NEUTRAL , NL<span className="flaticon-search flatcon pull-right"></span></div> */}
                 <nav className="navCon" style={style.nav}>
-                    <span onClick={() => this.props.history.push("/", { path: "main" })} style={{ cursor: "pointer", fontWeight: (["main", "home"].indexOf(path) !== -1) ? "800" : "100" }}>HOME</span> {" "}
-                    <span onClick={() => this.props.history.push("/", { path: "addnewlife" })} style={{ cursor: "pointer", fontWeight: (path === "addnewlife") ? "800" : "100" }}>GA DUURZAAM</span>{" "}
-                    <span onClick={() => this.props.history.push("/", { path: "members" })} style={{ cursor: "pointer", fontWeight: (path === "members") ? "800" : "100" }}>LEDEN</span>{" "}
+                    <span onClick={() => this.props.history.push("/", { path: "main" })} style={{ cursor: "pointer", fontWeight: (["main", "home"].indexOf(path) !== -1) ? "800" : "100" }}>Thuis</span> {" "}
+                    <span onClick={() => this.props.history.push("/", { path: "addnewlife" })} style={{ cursor: "pointer", fontWeight: (path === "addnewlife") ? "800" : "100" }}>Duurzaam</span>{" "}
+                    <span onClick={() => this.props.history.push("/", { path: "members" })} style={{ cursor: "pointer", fontWeight: (path === "members") ? "800" : "100" }}>Zaken</span>{" "}
                     {/*<span onClick={() => this.props.towns && this.props.history.push("/", { path: "members" })} style={{ cursor: this.props.towns ? "pointer" : "not-allowed", fontWeight: (path === "members") ? "800" : "100" }}>LEDEN</span>{" "}*/}
                 </nav>
 
