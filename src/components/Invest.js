@@ -210,13 +210,19 @@ class Invest extends Component {
                         <BlockUi tag="div" blocking={this.props.progress}>
                             <div className="carIntestCon">
                                 <div className="membersCon">
-                                    <div className="leaseCarCon  main-i invest">
+                                    <div className="leaseCarCon br-30 main-i invest">
                                         {/* <div className="balance d-ib inv">
                                             <div className="col-6 balanceName lh-25 text-right">MIJN SALDO : </div>
                                             <div className="col-6 balanceNum lh-25 text-left">{formatNumber(parseInt((this.props.euroTokenBalance + this.props.unClaimedRedemption), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}<span> Euro</span></div> */}
                                         {/* <div className="col-6">&nbsp;</div>
                                             <div className="col-6 minusBal text-left">-2.500</div> */}
                                         {/* </div> */}
+                                        <div className="col-12">
+                                            <div className="pt-10 pl-15">
+                                                {user.username}
+                                                <p>{user.town}</p>
+                                            </div>
+                                        </div>
                                         <div className="col-12 mtableLink">
                                             <div className="mtableCar" style={{ backgroundImage: `url(${this.props.member.objectPic})` }}>
                                                 {/* <img src={this.props.member.objectPic} alt="carImage" /> */}
@@ -227,10 +233,13 @@ class Invest extends Component {
                                                 {this.props.member.totalRaised}
                                                 <p style={{ color: 'green' }}>{this.props.member.evTokens}</p>
                                             </div>
-                                            <div className="col-5 mtableUser text-center">{user.username}
+                                            {/* <div className="col-5 mtableUser text-center">{user.username}
                                                 <p>{user.town}</p>
+                                            </div> */}
+                                            <div className="col-5 text-left pl-10 w5-10">Totaal
+                                                <p className="fs-13">Mijn Investering</p>
                                             </div>
-                                            <div className="col-4 mtableMnd">{formatNumber(parseInt((this.props.member.objectPrice), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} EUR
+                                            <div className="col-4 mtableMnd pr-10 w4-10">{formatNumber(parseInt((this.props.member.objectPrice), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} EUR
                                                 <p>{this.props.member.months} MND</p>
                                             </div>
                                         </div>
@@ -238,6 +247,7 @@ class Invest extends Component {
                                             <div className="col-12 mb-15">
                                                 <p className="fw-700 text-center" style={{ color: (this.props.member.crowdsaleClosed || buyAndActivate) ? "green" : "black" }}>{buyAndActivate ? ("AANSCHAF " + this.props.member.objectType.toUpperCase()) : (this.props.member.active ? "ACTIVE" : this.props.member.crowdsaleClosed ? "CLOSED" : "INVESTEER")}</p>
                                             </div>
+                                            {/* <div className="col-12 text-center fs-13"> <span>Bedrag</span></div> */}
                                             <div className="col-3 lh-40">
                                                 &nbsp;
                                             </div>
@@ -260,7 +270,7 @@ class Invest extends Component {
                                                 {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.investInObjectTxID)) ? <p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)}
                                                 {this.props.BuyAndActivate && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.BuyAndActivateTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.BuyAndActivateTxID)) ? <p className="p-euro" style={{ ccolor: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)}
 
-                                                <span className="flaticon-padlock unlock" style={{ cursor: !this.state.pending && ((enableInvest && !this.props.member.crowdsaleClosed) || buyAndActivate) ? "pointer" : "not-allowed" }} onClick={() => {
+                                                <span className="flaticon-padlock unlock unlock-m" style={{ cursor: !this.state.pending && ((enableInvest && !this.props.member.crowdsaleClosed) || buyAndActivate) ? "pointer" : "not-allowed" }} onClick={() => {
                                                     buyAndActivate ?
                                                         !this.state.pending && this.state.activedate && this.props._lcBuyAndActivate(this.props.member.objectID, this.state.activedate, this.props.account)
                                                         : !this.state.pending && this.props.account && !this.props.member.crowdsaleClosed && enableInvest && this.props._lcInvestInObject(this.props.member.objectID || (this.props.event && this.props.event.returnValues && this.props.event.returnValues.objectID), this.state.ethInvest || "0", this.props.account)

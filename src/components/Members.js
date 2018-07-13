@@ -245,7 +245,7 @@ class Members extends Component {
                             <p>{member.town || ""}</p>
                             {!member.authorized && <div className="membersBtn">
                                 <button title="Authorize" className="arrowBtn" onClick={() => member.account !== this.props.account ? this.props._lcAddUser(member.account, this.props.account) : cc.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
-                                    <span className="flaticon-padlock-1 unlock"></span>
+                                    <span className="flaticon-padlock-1 unlock unlock-m"></span>
                                 </button>
                             </div>}
                         </div>
@@ -280,7 +280,7 @@ class Members extends Component {
                                 </div>
                                 {!member.authorized && <div className="membersBtn">
                                     <button title="Authorize" className="arrowBtn" onClick={() => member.account !== this.props.account ? this.props._lcAddUser(member.account, this.props.account) : cc.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
-                                        <span className="flaticon-padlock-1 unlock"></span>
+                                        <span className="flaticon-padlock-1 unlock unlock-m"></span>
                                     </button>
                                 </div>}
                             </div>
@@ -306,7 +306,7 @@ class Members extends Component {
                     cc.log("Disable button: ", disableDownButton);
                     memberRows.push(
 
-                        <div className="rowSelect" key={'invest-' + i}>
+                        <div className="rowSelect mb-5" key={'invest-' + i}>
                             <div style={{ cursor: (userObject.objectID || member.authorized) ? "pointer" : "not-allowed" }} className="memberMesCon">{member.message}</div>
                             {(userObject.objectID || userObject.leaseTokenAddress || userObject.objectHash) && <div className="memberMesBtns">
                                 {!disableDownButton && <div className="membersBtn">
@@ -349,7 +349,7 @@ class Members extends Component {
                     )
                 }
 
-                return <div className="leaseCarCon" key={j}>{memberRows}</div>
+                return <div className="leaseCarCon ph-5" key={j}>{memberRows}</div>
             })
         }
 
