@@ -69,6 +69,17 @@ class Main extends Component {
 
         if (nextProps.socket && !nextProps.towns) this.fetchMunicipalityData()
         if (nextProps.socket && nextProps.account && !nextProps.usernames) this.props._fetchUsers(nextProps, nextProps.account)
+        if (nextProps.account && nextProps.usernames) {
+            if (nextProps.usernames) {
+
+                const member = nextProps.usernames ? nextProps.usernames.find(user => user.account === nextProps.account) : null
+
+                if (member) {
+                    this.props._setObject({ registered: member["_id"] })
+                } else
+                    cc.log("USER NOT REGISTERED YET")
+            }
+        }
 
         if (nextProps.towns) this.props._setObject({ town: 0 })
         if ((nextProps.event && !this.props.event) || (nextProps.event && this.props.event && (this.props.event.transactionHash !== nextProps.event.transactionHash))) {
@@ -266,6 +277,10 @@ class Main extends Component {
     }
 
     renderMain = () => {
+        const nextScreen = ((this.props.usernames && this.props.registered) || !this.props.account) ? "members" : "addmember"
+
+        cc.log("MEMBER ID: ", this.props.registered)
+
         const img = { "maxHeight": "95px", "maxWidth": "180px", "display": "block", "width": "auto", "height": "auto" }
 
         return <div className="content-border">
@@ -306,11 +321,11 @@ class Main extends Component {
                         <div className="col-5">
                             &nbsp;
                             </div>
-                        <div className="col-2">
-                            <button className="arrowBtn" onClick={() => this.props.history.push("/", { path: "members" })}> 
+                        {this.props.usernames && <div className="col-2">
+                            <button className="arrowBtn" onClick={() => this.props.history.push("/", { path: nextScreen })}>
                                 <span className="flaticon-right-arrow"></span>
                             </button>
-                        </div>
+                        </div>}
                         <div className="col-5 lh-54 text-left">
                             <span>Wordt lid</span>
                         </div>
@@ -381,28 +396,28 @@ class Main extends Component {
             <div>
                 <div className="beforeNav container smallText">
                     <div className={this.state.searchbarCondition ? "mainBody search-is-open" : "mainBody search-is-close"}>
-                    <div className="body1">
+                        <div className="body1">
+                            {
+                                registered && <button className="profileicon flatcon pull-left" onClick={() => this.props.history.push("/", { path: "profile" })}>
+                                    <span className="flaticon-man-user flatcon "></span>
+                                </button>
+                            }
+                            WESTLAND ENERGIE NEUTRAAL . NL
                     {
-                        registered && <button className="profileicon flatcon pull-left" onClick={() => this.props.history.push("/", { path: "profile" })}>
-                            <span className="flaticon-man-user flatcon "></span>
-                        </button>
-                    }
-                    WESTLAND ENERGIE NEUTRAAL . NL
-                    {
-                            (path === "members") && <span className="flaticon-search flatcon pull-right" onClick={() => this.handleClick()}></span>
-                    }
-                    </div>
-                    <div className="body2">
-                        {
-                            (path === "members") && <div>
-                            <input className="searchInput" type="text" name="filterMembers" value={this.props.filter || ""} placeholder="Search"
-                            onChange={(e) => {
-                                // let filterVal = this.props.filter ? (this.props.filter + e.target.value) : e.target.value
-                                // cc.log("SEARCH: ", this.props.filter, e.target.value, filterVal);
-                                this.props._setObject({ filter: e.target.value })
-                            }} /><span className="flaticon-cancel" onClick={() => this.handleClick()}></span></div>
-                        }
-                    </div>
+                                (path === "members") && <span className="flaticon-search flatcon pull-right" onClick={() => this.handleClick()}></span>
+                            }
+                        </div>
+                        <div className="body2">
+                            {
+                                (path === "members") && <div>
+                                    <input className="searchInput" type="text" name="filterMembers" value={this.props.filter || ""} placeholder="Search"
+                                        onChange={(e) => {
+                                            // let filterVal = this.props.filter ? (this.props.filter + e.target.value) : e.target.value
+                                            // cc.log("SEARCH: ", this.props.filter, e.target.value, filterVal);
+                                            this.props._setObject({ filter: e.target.value })
+                                        }} /><span className="flaticon-cancel" onClick={() => this.handleClick()}></span></div>
+                            }
+                        </div>
                     </div>
                 </div>
                 {/* <div className="beforeNav container smallText"><span className="flaticon-man-user flatcon pull-left"></span>WESTLAND ENERGIE NEUTRAL , NL<span className="flaticon-search flatcon pull-right"></span></div> */}

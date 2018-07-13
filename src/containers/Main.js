@@ -13,6 +13,7 @@ const mapStateToProps = (state) => {
         towns: state.towns,
         town: state.town,
         account: state.account,
+        registered: state.registered,
         usernames: state.usernames,
         members: state.members,
         member: state.member,

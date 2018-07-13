@@ -143,7 +143,7 @@ class Invoices extends Component {
 
     componentWillReceiveProps(nextProps) {
         cc.log("new props", nextProps);
-        if (nextProps.payFeeTxID) this.setState({ pending: true })
+        if (nextProps.payFeeTxID && (nextProps.payFeeTxID !== this.props.payFeeTxID)) this.setState({ pending: true })
         if (nextProps.invoices_new || nextProps.invoices_edit || (nextProps.event && (nextProps.event !== this.props.event) && (nextProps.event.event === "PayCapitalAndOperation" || nextProps.event.event === "Transfer" || nextProps.event.event === "NewInvoice"))) {
             this.fetchInvoices()
         }
@@ -270,7 +270,7 @@ class Invoices extends Component {
 
 
         return (<div className="content-border">
-                    <div className="border-bottom-1">
+            <div className="border-bottom-1">
                 <div className="container">
                     <span className="lh-40">MIJN SALDO: <strong className="fs-20">{formatNumber(parseInt((this.props.euroTokenBalance + this.props.unClaimedRedemption), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</strong> Euro</span>
                     <span className="fr pt-8"><img className="infoImg" src={require('../assets/deal.png')} alt="deal" /></span>
@@ -302,7 +302,7 @@ class Invoices extends Component {
                                         {/* <div className="balance d-ib inv">
                                             <div className="col-6 balanceName lh-25 text-right">MIJN SALDO : &nbsp;&nbsp;</div>
                                             <div className="col-6 balanceNum lh-25 text-left">{formatNumber(parseInt((this.props.euroTokenBalance + this.props.unClaimedRedemption), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}<span> Euro</span></div> */}
-                                            {/* <div className="col-6">&nbsp;</div>
+                                        {/* <div className="col-6">&nbsp;</div>
                                             <div className="col-6 minusBal text-left">-2.500</div> */}
                                         {/* </div> */}
                                         <div className="col-12 mtableLink">
@@ -342,7 +342,7 @@ class Invoices extends Component {
                                                         return <div key={i} className="leaseCarCon invest no-border cPadding">
                                                             <div className="col-12 d-ib border-2">
                                                                 <div className="balance balanceNum text-center"> BETAAL {(this.props.member.leaseType === "Per Dag") ? (invoice.date || this.getFormattedDate()) : (this.months[invoice.month] + " " + invoice.year)}
-                                                                <div className="col-12 text-center">
+                                                                    <div className="col-12 text-center">
                                                                         <span style={{ fontSize: '11px' }}>(Incl BTW)</span>
                                                                     </div>
                                                                 </div>

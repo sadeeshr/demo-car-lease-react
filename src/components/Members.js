@@ -107,7 +107,7 @@ class Members extends Component {
 
         }
 
-        if (nextProps.AddNewUser || nextProps.newObject || nextProps.newLeaseTokenObject) {
+        if ((nextProps.AddNewUser && (nextProps.AddNewUser !== this.props.AddNewUser)) || (nextProps.newObject && (nextProps.newObject !== this.props.newObject)) || (nextProps.newLeaseTokenObject && (nextProps.newLeaseTokenObject !== this.props.newLeaseTokenObject))) {
             this.setState({ pending: true })
         }
 
