@@ -361,7 +361,9 @@ class AddNewLifeConfigurator extends Component {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="mb-5 d-ib opacity03">
+                                                        <div className={
+                                                            (leasetype && leasetype.months === "60") ? "mb-5 d-ib opacity03" : "mb-5 d-i"
+                                                        }>
                                                             <div className="col-7">
                                                                 <label className="nl-label">Maanden</label>
                                                             </div>
@@ -386,7 +388,7 @@ class AddNewLifeConfigurator extends Component {
                                                             </div>
                                                         </div>
 
-                                                        <div className="mb-5 d-ib opacity03">
+                                                        <div className="mb-5 d-ib">
                                                             <div className="col-7">
                                                                 <label className="nl-label">{mileageLabel}</label>
                                                             </div>
