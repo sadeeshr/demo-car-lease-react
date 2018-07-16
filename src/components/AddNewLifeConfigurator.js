@@ -361,7 +361,9 @@ class AddNewLifeConfigurator extends Component {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="mb-5 d-ib opacity03">
+                                                        <div className={
+                                                            (leasetype && leasetype.months === "60") ? "mb-5 d-ib opacity03" : "mb-5 d-i"
+                                                        }>
                                                             <div className="col-7">
                                                                 <label className="nl-label">Maanden</label>
                                                             </div>
@@ -386,7 +388,7 @@ class AddNewLifeConfigurator extends Component {
                                                             </div>
                                                         </div>
 
-                                                        <div className="mb-5 d-ib opacity03">
+                                                        <div className="mb-5 d-ib">
                                                             <div className="col-7">
                                                                 <label className="nl-label">{mileageLabel}</label>
                                                             </div>
@@ -438,7 +440,7 @@ class AddNewLifeConfigurator extends Component {
                                                                     </div>
                                                                     <img style={img} src={(this.props.leaseobjects && this.props.leaseobjects[this.state.active || "0"]["image"])} alt="objectImage" />
                                                                     <div className="col-5 text-left padding-20-0 lh-40">
-                                                                        <span>Creëer mijn Coin</span>
+                                                                        <span>Creëer Crowdsale</span>
                                                                     </div>
 
                                                                 </div>
