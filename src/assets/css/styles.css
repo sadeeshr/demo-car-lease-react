@@ -315,7 +315,16 @@ margin: 0 auto 10px;
    /* font-size: 18px;
    margin-right: -40px;
    font-weight: bold; */
-}
+  }
+   .white-arrowBtn{
+    background: #ffffff !important;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    display: inline-block;
+   }
+
 .arrowBtn{
     background: none;
     border: 0;
@@ -1567,7 +1576,7 @@ text-align: right;
     float: left;
 }
 
-.col-10{
+.col-11{
     width: 91.67%;
     float: left;
 }
@@ -1695,6 +1704,11 @@ text-align: right;
   padding-right: 5px;
 }
 
+.pv-10{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 .br-30{
   border-radius: 30px;
 }
@@ -1705,6 +1719,14 @@ text-align: right;
   width: calc(33.33% - 10px);
 }
 
+
+.text-stroke-1{
+  text-shadow:
+  -1px -1px 0 #fff,  
+   1px -1px 0 #fff,
+   -1px 1px 0 #fff,
+    1px 1px 0 #fff;
+}
 
 
 .dp-block{

@@ -390,7 +390,7 @@ class AddNewLifeConfigurator extends Component {
 
                                                         <div className="mb-5 d-ib">
                                                             <div className="col-7">
-                                                                <label className="nl-label">{mileageLabel}</label>
+                                                                <label className="nl-label">{mileageLabel || " "}</label>
                                                             </div>
                                                             <div className="col-5">
                                                                 <div className="nl-inp">
@@ -430,17 +430,17 @@ class AddNewLifeConfigurator extends Component {
                                                                 </div> */}
                                                             <div className="container text-center">
                                                                 <div className="beforeFooter">
-                                                                    <div className="col-5">
-                                                                        &nbsp;
-                                                                         </div>
-                                                                    <div className="col-2">
+<div className="col-12 text-right">  <img style={img} src={(this.props.leaseobjects && this.props.leaseobjects[this.state.active || "0"]["image"])} alt="objectImage" /></div>                                                                                                                                                        
+                                                                    <div className="col-3">
                                                                         <button className="arrowBtn" title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected} onClick={() => this.createAccount(leasetype, price, months, monthlycapcost, monthlyopcost)}>
-                                                                            <span className="flaticon-euro"></span>
+                                                                            <span className="flaticon-euro white-arrowBtn"></span>
                                                                         </button>
                                                                     </div>
-                                                                    <img style={img} src={(this.props.leaseobjects && this.props.leaseobjects[this.state.active || "0"]["image"])} alt="objectImage" />
-                                                                    <div className="col-5 text-left padding-20-0 lh-40">
-                                                                        <span>Creëer mijn Coin</span>
+
+                                                                  
+                                                                    <div className="col-9 text-left pv-10">
+                                                                      
+                                                                        <span className="text-stroke-1">Start Crowdfunding en verkoop je eigen coin</span>
                                                                         {/*<span>Start Crowdfunding en verkoop je eigen coin</span>*/}  {/* Change this text and edit css style to display entire line*/}
                                                                     </div>
 
