@@ -231,7 +231,7 @@ class Members extends Component {
 
     renderMember = (member, i) => {
 
-        cc.log("member object: ", member)
+        // cc.log("member object: ", member)
 
         const userObjects = this.props.members && this.props.members.filter(userO => userO["member"] === member["_id"])
         // console.log("userObjects: ", userObjects);
@@ -302,8 +302,15 @@ class Members extends Component {
 
                 if (selected && this.props.account && this.props.registered) {
                     cc.log("Member Object: ", userObject, member.account, this.props.account);
+                    cc.log("---------------------------------------------------------------------------")
+                    cc.log("CHECK 1 (crowdsale closed and user object not active and not owner address): ", (userObject.crowdsaleClosed && !userObject.active && (member.account !== this.props.account)) || "false");
+                    cc.log("CHECK 2 (object hash and no lease token address and not owner address): ", (userObject.objectHash && !userObject.leaseTokenAddress && (member.account !== this.props.account)) || "false");
+                    cc.log("CHECK 3 (lease token address and no object ID and not owner address): ", (userObject.leaseTokenAddress && !userObject.objectID && (member.account !== this.props.account)) || "false");
+                    cc.log("CHECK 4 (object hash and no lease token address and no object ID): ", (userObject.objectHash && !userObject.leaseTokenAddress && !userObject.objectID) || "false");
+                    cc.log("CHECK 5 (pending status in state due to awaiting transaction confirmation event): ", this.state.pending || "false");
+
                     const disableDownButton = (userObject.crowdsaleClosed && !userObject.active && (member.account !== this.props.account)) || (userObject.objectHash && !userObject.leaseTokenAddress && (member.account !== this.props.account)) || (userObject.leaseTokenAddress && !userObject.objectID && (member.account !== this.props.account)) || (userObject.objectHash && !userObject.leaseTokenAddress && !userObject.objectID) || this.state.pending
-                    cc.log("Disable button: ", disableDownButton);
+                    cc.log("Disable button: ", disableDownButton || "false");
                     memberRows.push(
 
                         <div className="rowSelect mb-5" key={'invest-' + i}>

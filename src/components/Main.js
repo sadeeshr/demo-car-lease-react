@@ -7,7 +7,7 @@ import Invest from '../containers/Invest';
 import Invoices from '../containers/Invoices';
 import NewObject from '../containers/NewObject';
 import AddNewLifeConfigurator from '../containers/AddNewLifeConfigurator';
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import NotificationSystem from 'react-notification-system';
 import cc from '../lib/utils';
 
@@ -277,6 +277,7 @@ class Main extends Component {
     }
 
     renderMain = () => {
+        // console.log(this.props.usernames, this.props.registered, this.props.account);
         const nextScreen = ((this.props.usernames && this.props.registered) || !this.props.account) ? "members" : "addmember"
 
         cc.log("MEMBER ID: ", this.props.registered)
@@ -288,8 +289,8 @@ class Main extends Component {
                 <div className="contentCon overflow bg-none">
 
                     <p className="text-center fs-30 mb-15">Duurzame Zaken</p>
-                    <p className="text-center fs-20">Crowdfunding</p>
-                    <p className="text-center fs-20">met je eigen Coin</p>
+                    <p className="text-center fs-20">Start je eigen Crowdfund</p>
+                    <p className="text-center fs-20">en verkoop je Coin</p>
 
                     <div className="demoApp">
                         <p><strong>DEMO APP</strong></p>
@@ -307,8 +308,8 @@ class Main extends Component {
                         </tbody>
                     </table>
 
-                    <p className="text-center fs-20">Een Altermatief voor je</p>
-                    <p className="text-center fs-20 mb-15">Spaarrekening en Pensioen</p>
+                    <p className="text-center fs-20">Investeer in andere Coins</p>
+                    <p className="text-center fs-20 mb-15">en bepaal je rendement</p>
                     <p className="text-center fs-20">Elk moment Uitstapbaar</p>
                 </div>
             </div>
@@ -318,8 +319,8 @@ class Main extends Component {
                         <div className="col-5">
                             &nbsp;
                             </div>
-                        {this.props.usernames && <div className="col-2">
-                            <button className="arrowBtn" onClick={() => this.props.history.push("/", { path: nextScreen })}>
+                        {<div className="col-2">
+                            <button disabled={!(this.props.usernames || !this.props.account)} className="arrowBtn" onClick={() => this.props.history.push("/", { path: nextScreen })}>
                                 <span className="flaticon-right-arrow"></span>
                             </button>
                         </div>}
@@ -342,7 +343,8 @@ class Main extends Component {
                 </div>
                 <div className="contact bg-grey textWhite">
                     <div className="container">
-                        <span className="smallText">CONTACT</span>
+                        <Link target="_self" to="mailto:info@duurzamezaken.io"><span className="smallText">CONTACT</span>
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -399,7 +401,7 @@ class Main extends Component {
                                     <span className="flaticon-man-user flatcon "></span>
                                 </button>
                             }
-                            WESTLAND ENERGIE NEUTRAAL . NL
+                            Duurzame Zaken . IO
                     {
                                 (path === "members") && <span className="flaticon-search flatcon pull-right" onClick={() => this.handleClick()}></span>
                             }

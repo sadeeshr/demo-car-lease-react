@@ -262,8 +262,8 @@ class Invoices extends Component {
         const params = {
             shouldSwiperUpdate: true,
             navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev'
+                prevEl: '.swiper-button-next',
+                nextEl: '.swiper-button-prev'
             },
 
         }
