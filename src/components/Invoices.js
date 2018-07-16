@@ -350,18 +350,18 @@ class Invoices extends Component {
                                                                     <div className="col-6 text-right">
                                                                         <span style={{ padding: '0 5px', lineHeight: '30px' }}>Tarief</span>
                                                                     </div>
-                                                                    <div className="col-1 text-center">
+                                                                    <div className="col-2 text-center">
                                                                         <span style={{ fontSize: '11px' }}>&nbsp;</span>
                                                                     </div>
 
-                                                                    <div className="col-5" style={{ lineHeight: '30px' }}>
+                                                                    <div className="col-4" style={{ lineHeight: '30px' }}>
                                                                         {formatNumber(tariff, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} Euro
                                                             </div>
-                                                                    <div className="col-5 text-right">&nbsp;
+                                                                    <div className="col-6 text-right">&nbsp;
                                                                 <span style={{ padding: '0 5px', lineHeight: '30px' }}>{(this.props.member.objectType === "Car") ? "KM" : "Onderhoud p/m"}</span>
                                                                     </div>
 
-                                                                    <div className="col-3 text-center input-inv">&nbsp;
+                                                                    <div className="col-2 text-center input-inv">
                                                                 {invoice.mileage || (this.props.member.leaseType === "Per Dag" && <input value={this.state.mileage || 0} onChange={(e) => this.setState({ mileage: e.target.value })} maxLength="20" type="number" placeholder="" />)}
                                                                     </div>
 
@@ -369,10 +369,10 @@ class Invoices extends Component {
                                                                         {formatNumber(mileageEuro, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} Euro
                                                             </div>
 
-                                                                    <div className="col-5 text-right">
+                                                                    <div className="col-6 text-right">
                                                                         <span style={{ padding: '0 5px', lineHeight: '30px' }}>Totaal</span>
                                                                     </div>
-                                                                    <div className="col-3 text-center">
+                                                                    <div className="col-2 text-center">
                                                                         <span style={{ fontSize: '11px' }}>&nbsp;</span>
                                                                     </div>
 

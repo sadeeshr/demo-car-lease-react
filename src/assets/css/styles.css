@@ -1529,60 +1529,72 @@ text-align: right;
 .col-1{
     width: 8.33%;
     float: left;
+    min-height: 1px;
 }
 
 .col-2{
     width: 16.67%;
     float: left;
+    min-height: 1px;
 }
 
 .col-3{
     width: 25%;
     float: left;
+    min-height: 1px;
 }
 
 .col-4{
     width: 33.33%;
     float: left;
+    min-height: 1px;
 }
 
 .col-5{
     width: 40%;
     float: left;
+    min-height: 1px;
 }
 
 .col-6{
     width: 50%;
+    min-height: 1px;
     float: left;
 }
 
 .col-7{
     width: 58.33%;
     float: left;
+    min-height: 1px;
 }
 
 .col-8{
     width: 66.66%;
     float: left;
+    min-height: 1px;
 }
 
 .col-9{
     width: 75%;
+    min-height: 1px;
     float: left;
 }
 
 .col-10{
     width: 83.33%;
+    min-height: 1px;
     float: left;
 }
 
 .col-11{
     width: 91.67%;
     float: left;
+    min-height: 1px;
 }
 
 .col-12{
     width: 100%;
+    min-height: 1px;
     float: left;
 }
 
