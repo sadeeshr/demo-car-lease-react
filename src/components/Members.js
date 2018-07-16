@@ -275,7 +275,7 @@ class Members extends Component {
                                 <p>{member.town || ""}</p>
                                 <div className="mtableTokens">
                                     {userObject.crowdsaleClosed ?
-                                        <span style={{ color: "green", fontSize: "15px", }}>{userObject.active ? "Active" : "Closed"}</span> : userObject.totalRaised ? "E " + userObject.totalRaised + " Totaal" : "0"}
+                                        <span style={{ color: "green", fontSize: "15px", }}>{userObject.active ? "Active" : "Closed"}</span> : userObject.totalRaised ? "E " + userObject.totalRaised + " Totaal" : "E 0 Totaal"}
                                     <p>{userObject.evTokens ? "E " + userObject.evTokens + " Van mij" : "-"}</p>
                                 </div>
                                 {!member.authorized && <div className="membersBtn">

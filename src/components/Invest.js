@@ -229,7 +229,7 @@ class Invest extends Component {
                                             <div className="col-12 mb-15">
                                                 <p className="fw-700 text-center" style={{ color: (member.crowdsaleClosed || member.active) ? "black" : "black" }}>{buyAndActivate ? ("AANSCHAF " + member.objectType.toUpperCase()) : (member.active ? "ACTIVE" : member.crowdsaleClosed ? "CLOSED" : "INVESTEER")}</p>
                                             </div>
-                                            <div className="col-12 text-center fs-13"> <span>Bedrag</span></div>
+                                            <div className="col-12 text-center fs-13"> <span>{ buyAndActivate ? "Opleverdatum" : "Bedrag"}</span></div>
                                             <div className="col-3 lh-40">
                                                 &nbsp;
                                             </div>
