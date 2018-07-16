@@ -150,8 +150,10 @@ class Invoices extends Component {
 
         if (nextProps.event && (nextProps.event !== this.props.event) && (nextProps.event.transactionHash === nextProps.payFeeTxID)) {
             // this.updateInvoice(invoice)
-            // this.fetchInvoices()
-            this.setState({ pending: false })
+            this.fetchInvoices()
+            this.setState({ pending: false }, () => setTimeout(() => {
+                this.props._resetTxIds()
+            }, 5000))
         }
 
 
@@ -339,6 +341,7 @@ class Invoices extends Component {
                                                             tariff = nextTariff
                                                         }
 
+                                                        cc.log("STATUS: ", this.state.pending, invoice.status, (this.state.pending && !invoice.status));
                                                         return <div key={i} className="leaseCarCon invest no-border cPadding">
                                                             <div className="col-12 d-ib border-2">
                                                                 <div className="balance balanceNum text-center"> BETAAL {(this.props.member.leaseType === "Per Dag") ? (invoice.date || this.getFormattedDate()) : (this.months[invoice.month] + " " + invoice.year)}
@@ -387,7 +390,7 @@ class Invoices extends Component {
                                                                         {this.props.payFeeTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.payFeeTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.payFeeTxID)) ? <p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p className="p-euro " style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)}
                                                                         {/* <span className="confirmBal">Confirmed</span> */}
 
-                                                                        {!this.state.pending && !invoice.status && <span className="flaticon-padlock unlock unlock-m" onClick={() => { this.props._lcPayCapitalAndOperation(this.props, this.props.member.objectID, (tariff * 100), (mileageEuro * 100), this.props.account); this.updateInvoice(invoice, tariff, nextTariff, this.state.mileage, total) }} ></span>}
+                                                                        {(!this.state.pending && !invoice.status) && <span className="flaticon-padlock unlock unlock-m" onClick={() => { this.props._lcPayCapitalAndOperation(this.props, this.props.member.objectID, (tariff * 100), (mileageEuro * 100), this.props.account); this.updateInvoice(invoice, tariff, nextTariff, this.state.mileage, total) }} ></span>}
                                                                     </div>
 
                                                                 </div>
