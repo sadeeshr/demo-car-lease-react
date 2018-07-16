@@ -283,7 +283,7 @@ class AddNewLifeConfigurator extends Component {
                                                 case "Car":
                                                     mileageLabel = "KM p/j"
                                                     break;
-                                                case "Heatpump/SolarPanel":
+                                                case "Heatpump":
                                                 case "WindMill":
                                                 case "SolarPark":
                                                     mileageLabel = "Onderhoud p/m"
@@ -362,7 +362,7 @@ class AddNewLifeConfigurator extends Component {
                                                             </div>
                                                         </div>
                                                         <div className={
-                                                            (leasetype && leasetype.months === "60") ? "mb-5 d-ib opacity03" : "mb-5 d-i"
+                                                            (leasetype && leasetype.months === "60") ? "mb-5 d-i" : "mb-5 d-ib opacity03"
                                                         }>
                                                             <div className="col-7">
                                                                 <label className="nl-label">Maanden</label>
@@ -420,7 +420,7 @@ class AddNewLifeConfigurator extends Component {
 
                                                     </div>
                                                     <div className="footCon">
-                                                        {this.state.lobjectSelected && this.props.account && this.props.registered && <div className="roadBg container">
+                                                        {this.state.lobjectSelected && this.props.account && this.props.registered && <div className={lobject.objecttype === "Car" ? "roadBg container" : "container"}>
                                                             {/* <div className="container text-center">
                                                                     <span>Creëer mijn Coin</span>
                                                                     <button title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected} className="arrowBtn" onClick={() => this.createAccount(leasetype, price, months, monthlycapcost, monthlyopcost)}>
