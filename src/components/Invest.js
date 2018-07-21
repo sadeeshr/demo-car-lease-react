@@ -163,8 +163,8 @@ class Invest extends Component {
         cc.log("Object Price, Total Raised: ", member.objectPrice, member.totalRaised)
         cc.log("Allowed amount: ", amountRemaining, ethInvest, enableInvest);
 
-        return (<div className="content-border">
-            <div className="border-bottom-1">
+        return (<div className="content-border mobile-margin">
+            <div className="border-bottom-1  fix-small-dev">
                 <div className="container">
                     <span className="lh-40">MIJN SALDO: <strong className="fs-20">{formatNumber(parseInt((this.props.euroTokenBalance + this.props.unClaimedRedemption), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</strong> Euro</span>
                     <span className="fr pt-8"><img className="infoImg" src={require('../assets/deal.png')} alt="deal" /></span>
@@ -191,7 +191,7 @@ class Invest extends Component {
                     <div className="contentCon bg-none overflow contentCon-8 pt-8">
                         <BlockUi tag="div" blocking={this.props.progress}>
                             <div className="carIntestCon">
-                                <div className="membersCon">
+                                <div className="membersCon text-center pt-5-mobile">
                                     <div className="leaseCarCon br-30 main-i invest">
                                         {/* <div className="balance d-ib inv">
                                             <div className="col-6 balanceName lh-25 text-right">MIJN SALDO : </div>
@@ -211,18 +211,18 @@ class Invest extends Component {
                                             </div>
                                         </div>
                                         <div className="col-12">
-                                            <div className="col-3 text-right mtableTokens fs-16">
-                                                {member.totalRaised}
-                                                <p style={{ color: 'green' }}>{member.evTokens}</p>
+                                            <div className="col-5 text-left pl-10 w5-10">
+
+                                                <span style={{ width: "40px", display: "inline-block", textAlign: "right"}}>{member.totalRaised}</span>
+                                                <span className="ml-3">Totaal</span>
+
+                                                <p className="fs-12">
+                                                    <span style={{ color: 'green', width: "40px", display: "inline-block", textAlign: "right" }}>{member.evTokens}</span>
+                                                    <span className="ml-3">Mijn Investering</span>
+                                                </p>
                                             </div>
-                                            {/* <div className="col-5 mtableUser text-center">{user.username}
-                                                <p>{user.town}</p>
-                                            </div> */}
-                                            <div className="col-5 text-left pl-10 w5-10">Totaal
-                                                <p className="fs-13">Mijn Investering</p>
-                                            </div>
-                                            <div className="col-4 mtableMnd pr-10 w4-10">{formatNumber(parseInt((member.objectPrice), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} EUR
-                                                <p>{member.months} MND</p>
+                                            <div className="col-7 mtableMnd" style={{fontSize: "14px"}}>Crownfunding {formatNumber(parseInt((member.objectPrice), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} EUR
+                                                <p className="fs-12">{member.months} MND</p>
                                             </div>
                                         </div>
                                         <div className="col-12 investAddCon border-2">
@@ -302,7 +302,7 @@ class Invest extends Component {
                                 <span className="flaticon-left-arrow"></span>
                             </button>
                         </div>
-                        <div className="col-8 lh-54 text-left">
+                        <div className="col-8 lh-54 text-left ti-5-mobile">
                             Ga Terug
                         </div>
                         <div className="col-2 text-left padding-10-0">

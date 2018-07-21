@@ -139,7 +139,7 @@ class AddMember extends Component {
         cc.log("Add Member State: ", this.state, this.props);
         const usernames = this.props.usernames ? this.props.usernames.map(user => user.username) : []
         return (
-            <div className="content-border">
+            <div className="content-border no-border-r-mobile">
                 <div >
                     <div className="container">
                         <span className="lh-40"><strong>MIJN > PROFIEL</strong></span>

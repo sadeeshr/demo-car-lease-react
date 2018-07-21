@@ -410,8 +410,8 @@ class Members extends Component {
         // }, 1000);
 
         return (
-            <div className="content-border">
-                <div className="border-bottom-1">
+            <div className="content-border mobile-margin">
+                <div className="border-bottom-1  fix-small-dev">
                     <div className="container">
                         <span className="lh-40">MIJN SALDO: <strong className="fs-20">{formatNumber(parseInt(((this.props.euroTokenBalance || 0) + (this.props.unClaimedRedemption || 0)), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</strong> Euro</span>
                         <span className="fr pt-8"><img className="infoImg" src={require('../assets/deal.png')} alt="deal" /></span>
@@ -428,7 +428,7 @@ class Members extends Component {
                     </div>
                     <div className="contentCon overflow bg-none contentCon-8 pt-8">
                         <BlockUi tag="div" blocking={this.props.progress}>
-                            <div className="membersCon pb-20">
+                            <div className="membersCon pb-20 pt-5-mobile pv-5-mobile">
                                 {
                                     members && members.map((member, i) => {
                                         return this.renderMember(member, i)
@@ -459,7 +459,7 @@ class Members extends Component {
                                     <span className="flaticon-right-arrow"></span>
                                 </button>
                             </div>
-                            <div className="col-8 lh-54 text-left">
+                            <div className="col-8 lh-54 text-left ti-5-mobile">
                                 Ga duurzaam
 
                                 {/* <span>Ga duurzaam</span> */}

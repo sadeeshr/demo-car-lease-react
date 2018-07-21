@@ -292,12 +292,12 @@ class Main extends Component {
                     <p className="text-center fs-20">Start je eigen Crowdfund</p>
                     <p className="text-center fs-20">en verkoop je Coin</p>
 
-                    <div className="demoApp">
+                    {/* <div className="demoApp" >
                         <p><strong>DEMO APP</strong></p>
                         <p>WIN EEN TESLA</p>
                         <p>MET</p>
                         <p>DE STRAAT</p>
-                    </div>
+                    </div> */}
 
 
                     <table>
@@ -324,7 +324,7 @@ class Main extends Component {
                                 <span className="flaticon-right-arrow"></span>
                             </button>
                         </div>}
-                        <div className="col-5 lh-54 text-left">
+                        <div className="col-5 lh-54 text-left pl-5-mobile">
                             <span><strong>ZAKEN</strong></span>
                         </div>
 

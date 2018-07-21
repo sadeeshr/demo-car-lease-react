@@ -431,16 +431,16 @@ class AddNewLifeConfigurator extends Component {
                                                             <div className="container text-center">
                                                                 <div className="beforeFooter">
 <div className="col-12 text-right">  <img style={img} src={(this.props.leaseobjects && this.props.leaseobjects[this.state.active || "0"]["image"])} alt="objectImage" /></div>                                                                                                                                                        
-                                                                    <div className="col-3">
+                                                                    <div className="col-5 text-right">
                                                                         <button className="arrowBtn" title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected} onClick={() => this.createAccount(leasetype, price, months, monthlycapcost, monthlyopcost)}>
                                                                             <span className="flaticon-euro white-arrowBtn"></span>
                                                                         </button>
                                                                     </div>
 
                                                                   
-                                                                    <div className="col-9 text-left pv-10">
+                                                                    <div className="col-7 text-right pv-10">
                                                                       
-                                                                        <span className="text-stroke-1">Start Crowdfunding en verkoop je eigen coin</span>
+                                                                        <span className="text-stroke-1">Start Crowdfunding<br></br>en verkoop je eigen coin</span>
                                                                         {/*<span>Start Crowdfunding en verkoop je eigen coin</span>*/}  {/* Change this text and edit css style to display entire line*/}
                                                                     </div>
 
