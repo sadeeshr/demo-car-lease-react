@@ -64,11 +64,11 @@ class NewObject extends Component {
 
     render() {
         cc.log("New Object State Props", this.state, this.props);
-        // const member = this.props.member
+        // const member = this.props.members
         const member = this.props.members && this.props.members.find(memberO => memberO["_id"] === this.props.member["_id"])
         const user = this.props.usernames && this.props.usernames.find(userO => userO["_id"] === member["member"])
-        return (<div className="content-border">
-            <div className="border-bottom-1">
+        return (<div className="content-border mobile-margin">
+            <div className="border-bottom-1  fix-small-dev">
                 <div className="container">
                     <span className="lh-40">MIJN SALDO: <strong className="fs-20">99.99</strong> Euro</span>
                     <span className="fr pt-8"><img className="infoImg" src={require('../assets/deal.png')} alt="deal" /></span>
@@ -90,7 +90,7 @@ class NewObject extends Component {
                     <div className="contentCon bg-none overflow contentCon-8 pt-8">
                         <BlockUi tag="div" blocking={this.props.progress}>
                             <div className="carIntestCon">
-                                <div className="membersCon">
+                                <div className="membersCon text-center pt-5-mobile">
                                     <div className="leaseCarCon main-i invest">
                                         <div className="col-12 mtableLink">
                                             <div className="mtableCar" style={{ backgroundImage: `url(${member.objectPic})` }} alt="carImage">
@@ -167,7 +167,7 @@ class NewObject extends Component {
                                 <span className="flaticon-left-arrow"></span>
                             </button>
                         </div>
-                        <div className="col-8 lh-54 text-left">
+                        <div className="col-8 lh-54 text-left ti-5-mobile">
                             Ga Terug
                         </div>
                         <div className="col-2 text-left padding-10-0">
