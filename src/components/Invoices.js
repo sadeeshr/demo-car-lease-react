@@ -365,7 +365,7 @@ class Invoices extends Component {
                                                                     </div>
 
                                                                     <div className="col-2 text-center input-inv">
-                                                                {invoice.mileage || (this.props.member.leaseType === "Per Dag" && <input value={this.state.mileage || 0} onChange={(e) => this.setState({ mileage: e.target.value })} maxLength="20" type="number" placeholder="" />)}
+                                                                        {invoice.mileage || (this.props.member.leaseType === "Per Dag" && <input value={this.state.mileage || 0} onChange={(e) => this.setState({ mileage: e.target.value })} maxLength="20" type="number" placeholder="" />)}
                                                                     </div>
 
                                                                     <div className="col-4" style={{ lineHeight: '30px' }}>

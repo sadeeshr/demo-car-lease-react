@@ -147,98 +147,107 @@ class AddNewLifeConfigurator extends Component {
         let months = this.state.lobjmonths || (leasetype && leasetype.months)
         let price = this.state.lobjprice || (leasetype && leasetype.price)
         let monthlycapcost = ""
-        let monthlyopcost = 0.00
+        let monthlyopcost = parseFloat("0.00")
 
 
 
-        if (leasetype) {
-            if ((this.state.active === 0) && (leasetype && (leasetype.type === "Operational")) && this.state.lobjMileage) {
-                monthlyopcost = (parseInt(this.state.lobjMileage, 10) / 12) * 0.1
-            }
+        if (!leasetype)
+            leasetype = leaseobject && leaseobject["leasetypes"][0]
 
-            switch (this.state.active) {
-                case 0:
-                    {
-                        switch (leasetype.type) {
-                            case "Per Dag":
-                                monthlycapcost = parseFloat(price) / 2000
-                                break;
-                            // case "Per uur":
-                            //     monthlycapcost = parseFloat(leasetype.price) / 20000
-                            //     break;
-                            case "Financial":
-                            case "Operational":
-                                // case "Private":
-                                monthlycapcost = (parseFloat(price) / 100) + (60 - parseInt(months, 10)) * 2
-                                break;
-
-                            default:
-                                break;
-                        }
-                        break;
-                    }
-
-                // case 1:
-                // {
-                //     switch (leasetype.type) {
-                //         case "Financial":
-                //         case "Operational":
-                //         case "Private":
-                //             monthlycapcost = (parseFloat(leasetype.price) / 100) + (60 - parseInt(months, 10)) * 2
-                //             break;
-
-                //         default:
-                //             break;
-                //     }
-
-                //     break;
-                // }
-
-                case 1:
-                    {
-                        monthlycapcost = parseFloat(price) / 100
-                        break;
-                    }
-                case 2:
-                    {
-                        monthlycapcost = parseFloat(price) / 150
-                        break;
-                    }
-                case 3:
-                    {
-                        switch (leasetype.type) {
-                            case "Financial":
-                                monthlycapcost = parseFloat(price) / 150
-                                break;
-                            case "Operational":
-                                monthlycapcost = parseFloat(price) / 100
-                                break;
-                            default:
-                                break;
-                        }
-                        break;
-                    }
-
-                // case 4:
-                //     {
-                //         switch (leasetype.type) {
-                //             case "Financial":
-                //             case "Private":
-                //                 monthlycapcost = parseFloat(leasetype.price) / 150
-                //                 break;
-
-                //             default:
-                //                 break;
-                //         }
-                //         break;
-                //     }
-
-                default:
-                    break;
-            }
+        if ((this.state.active === 0) && (leasetype && (leasetype.type === "Operational")) && this.state.lobjMileage) {
+            monthlyopcost = (parseInt(this.state.lobjMileage, 10) / 12) * 0.1
         }
 
-        cc.log(leaseobject, leasetype, months, monthlycapcost);
+        switch (this.state.active) {
+            case 0:
+                {
+                    switch (leasetype.type) {
+                        case "Per Dag":
+                            monthlycapcost = parseFloat(price) / 2000
+                            break;
+                        // case "Per uur":
+                        //     monthlycapcost = parseFloat(leasetype.price) / 20000
+                        //     break;
+                        case "Financial":
+                        case "Operational":
+                            // case "Private":
+                            monthlycapcost = (parseFloat(price) / 100) + (60 - parseInt(months, 10)) * 2
+                            break;
+
+                        default:
+                            break;
+                    }
+                    break;
+                }
+
+            // case 1:
+            // {
+            //     switch (leasetype.type) {
+            //         case "Financial":
+            //         case "Operational":
+            //         case "Private":
+            //             monthlycapcost = (parseFloat(leasetype.price) / 100) + (60 - parseInt(months, 10)) * 2
+            //             break;
+
+            //         default:
+            //             break;
+            //     }
+
+            //     break;
+            // }
+
+            case 1:
+                {
+                    if (!price) price = leaseobject["leasetypes"][0]["price"]
+                    monthlycapcost = parseFloat(price) / 100
+                    break;
+                }
+            case 2:
+                {
+                    monthlycapcost = parseFloat(price) / 150
+                    if (leasetype.type === "Operational")
+                        monthlyopcost = parseFloat("2500.00")
+                    break;
+                }
+            case 3:
+                {
+                    switch (leasetype.type) {
+                        case "Financial":
+                            monthlycapcost = parseFloat(price) / 150
+                            break;
+                        case "Operational":
+                            {
+                                monthlycapcost = parseFloat(price) / 100
+                                monthlyopcost = parseFloat("250.00")
+                                break;
+                            }
+                        default:
+                            break;
+                    }
+                    break;
+                }
+
+            // case 4:
+            //     {
+            //         switch (leasetype.type) {
+            //             case "Financial":
+            //             case "Private":
+            //                 monthlycapcost = parseFloat(leasetype.price) / 150
+            //                 break;
+
+            //             default:
+            //                 break;
+            //         }
+            //         break;
+            //     }
+
+            default:
+                break;
+        }
+        // }
+
+        cc.log("LO: ", leaseobject, "LT: ", leasetype)
+        cc.log("MON: ", months, "MCAP: ", monthlycapcost, "MOP: ", monthlyopcost.toString());
 
         // const sliderOpts = {
         //     dots: true,
@@ -352,7 +361,7 @@ class AddNewLifeConfigurator extends Component {
                                                         </div>
                                                         <div className="mb-5 d-ib opacity03">
                                                             <div className="col-7">
-                                                                <label className="nl-label">Euro per Dag</label>
+                                                                <label className="nl-label">Euro per Maand</label>
                                                             </div>
                                                             <div className="col-5">
                                                                 <div className="nl-inp">
@@ -388,14 +397,21 @@ class AddNewLifeConfigurator extends Component {
                                                             </div>
                                                         </div>
 
-                                                        <div className="mb-5 d-ib">
+                                                        <div className={
+                                                            (leasetype && leasetype.type === "Operational") ? "mb-5 d-i" : "mb-5 d-ib opacity03"
+                                                        }>
                                                             <div className="col-7">
                                                                 <label className="nl-label">{mileageLabel || " "}</label>
                                                             </div>
                                                             <div className="col-5">
-                                                                <div className="nl-inp">
-                                                                    <input value={this.state.lobjMileage} onChange={(e) => this.setState({ lobjMileage: e.target.value })} type="text" />
-                                                                </div>
+                                                                {
+                                                                    (leasetype && leasetype.type === "Operational") ?
+                                                                        <div className="nl-inp">
+                                                                            <input value={this.state.lobjMileage || monthlyopcost} onChange={(e) => this.setState({ lobjMileage: e.target.value })} type="text" />
+                                                                        </div>
+                                                                        : <div className="nl-inp">{formatNumber(monthlyopcost, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</div>
+                                                                }
+
                                                             </div>
                                                         </div>
 
@@ -430,16 +446,16 @@ class AddNewLifeConfigurator extends Component {
                                                                 </div> */}
                                                             <div className="container text-center">
                                                                 <div className="beforeFooter">
-<div className="col-12 text-right">  <img style={img} src={(this.props.leaseobjects && this.props.leaseobjects[this.state.active || "0"]["image"])} alt="objectImage" /></div>                                                                                                                                                        
+                                                                    <div className="col-12 text-right">  <img style={img} src={(this.props.leaseobjects && this.props.leaseobjects[this.state.active || "0"]["image"])} alt="objectImage" /></div>
                                                                     <div className="col-5 text-right">
                                                                         <button className="arrowBtn" title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected} onClick={() => this.createAccount(leasetype, price, months, monthlycapcost, monthlyopcost)}>
                                                                             <span className="flaticon-euro white-arrowBtn"></span>
                                                                         </button>
                                                                     </div>
 
-                                                                  
+
                                                                     <div className="col-7 text-right pv-10">
-                                                                      
+
                                                                         <span className="text-stroke-1">Start Crowdfunding<br></br>en verkoop je eigen coin</span>
                                                                         {/*<span>Start Crowdfunding en verkoop je eigen coin</span>*/}  {/* Change this text and edit css style to display entire line*/}
                                                                     </div>
