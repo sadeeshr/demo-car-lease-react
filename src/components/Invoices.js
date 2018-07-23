@@ -344,7 +344,7 @@ class Invoices extends Component {
                                                         cc.log("STATUS: ", this.state.pending, invoice.status, (this.state.pending && !invoice.status));
                                                         return <div key={i} className="leaseCarCon invest no-border cPadding">
                                                             <div className="col-12 d-ib border-2">
-                                                                <div className="balance balanceNum text-center"> BETAAL {(this.props.member.leaseType === "Per Dag") ? (invoice.date || this.getFormattedDate()) : (this.months[invoice.month] + " " + invoice.year)}
+                                                                <div className="balance balanceNum text-center"> REKENING {(this.props.member.leaseType === "Per Dag") ? (invoice.date || this.getFormattedDate()) : (this.months[invoice.month] + " " + invoice.year)}
                                                                     <div className="col-12 text-center">
                                                                         <span style={{ fontSize: '11px' }}>(Incl BTW)</span>
                                                                     </div>
@@ -365,7 +365,7 @@ class Invoices extends Component {
                                                                     </div>
 
                                                                     <div className="col-2 text-center input-inv">
-                                                                {invoice.mileage || (this.props.member.leaseType === "Per Dag" && <input value={this.state.mileage || 0} onChange={(e) => this.setState({ mileage: e.target.value })} maxLength="20" type="number" placeholder="" />)}
+                                                                        {invoice.mileage || (this.props.member.leaseType === "Per Dag" && <input value={this.state.mileage || 0} onChange={(e) => this.setState({ mileage: e.target.value })} maxLength="20" type="number" placeholder="" />)}
                                                                     </div>
 
                                                                     <div className="col-4" style={{ lineHeight: '30px' }}>
