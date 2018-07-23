@@ -199,13 +199,13 @@ class Invest extends Component {
                                         {/* <div className="col-6">&nbsp;</div>
                                             <div className="col-6 minusBal text-left">-2.500</div> */}
                                         {/* </div> */}
-                                        <div className="col-12">
-                                            <div className="pt-10 pl-15">
-                                                {user.username}
+                                        <div className="col-4">
+                                            <div className="pt-25 pl-15 fs-20  tt-capital fw-600">
+                                                <span className="opacity07">{user.username}</span>
                                                 <p>{user.town}</p>
                                             </div>
                                         </div>
-                                        <div className="col-12 mtableLink">
+                                        <div className="col-8 mtableLink">
                                             <div className="mtableCar" style={{ backgroundImage: `url(${member.objectPic})` }}>
                                                 {/* <img src={this.props.member.objectPic} alt="carImage" /> */}
                                             </div>

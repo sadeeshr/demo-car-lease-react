@@ -1502,7 +1502,7 @@ span.inLeft input {
     transition-property: margin-left;
     transition-timing-function: cubic-bezier(.86, 0, .07, 1);
     transition-duration: .3s;
-    background: #ffffff;
+    /* background: #ffffff; */
 }
 
 .mainBody.search-is-open {
@@ -1588,6 +1588,10 @@ span.inLeft input {
 
 .text-left {
     text-align: left;
+}
+
+.tt-capital{
+    text-transform: capitalize;
 }
 
 .fl {
@@ -1799,6 +1803,10 @@ span.inLeft input {
 
 .pt-10 {
     padding-top: 10px
+}
+
+.pt-25 {
+    padding-top: 25px
 }
 
 .pb-20 {
@@ -2033,6 +2041,9 @@ background: rgba(0, 0, 0, 0) !important;
 
 .pt-50 {
     padding-top: 50px;
+}
+.opacity07 {
+    opacity: .7
 }
 
 .opacity10 {
