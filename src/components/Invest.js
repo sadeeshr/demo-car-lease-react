@@ -199,30 +199,31 @@ class Invest extends Component {
                                         {/* <div className="col-6">&nbsp;</div>
                                             <div className="col-6 minusBal text-left">-2.500</div> */}
                                         {/* </div> */}
-                                        <div className="col-4">
+                                        <div className="col-6">
                                             <div className="pt-25 pl-15 fs-20  tt-capital fw-600">
                                                 <span className="opacity07">{user.username}</span>
                                                 <p>{user.town}</p>
+                                                <span className="opacity07 fs-14"><span className="fw-900">{member.totalRaised}</span> Euro opgehaald</span>
                                             </div>
                                         </div>
-                                        <div className="col-8 mtableLink">
+                                        <div className="col-6 mtableLink">
                                             <div className="mtableCar" style={{ backgroundImage: `url(${member.objectPic})` }}>
                                                 {/* <img src={this.props.member.objectPic} alt="carImage" /> */}
                                             </div>
                                         </div>
                                         <div className="col-12">
-                                            <div className="col-5 text-left pl-10 w5-10">
+                                            <div className="col-6 text-left pl-10 w6-10">
 
-                                                <span style={{ width: "40px", display: "inline-block", textAlign: "right"}}>{member.totalRaised}</span>
-                                                <span className="ml-3">Totaal</span>
+                                                {/* <span style={{ width: "40px", display: "inline-block", textAlign: "right"}}>{member.totalRaised}</span>
+                                                <span className="ml-3">Totaal</span> */}
 
-                                                <p className="fs-12">
-                                                    <span style={{ color: 'green', width: "40px", display: "inline-block", textAlign: "right" }}>{member.evTokens}</span>
-                                                    <span className="ml-3">Mijn Investering</span>
+                                                <p className="fs-15">
+                                                    <span style={{ display: "inline-block", textAlign: "right" }}>waarvan <span className="fw-900">{member.evTokens}</span> door mij</span>
+                                                    {/* <span className="ml-3">Mijn Investering</span> */}
                                                 </p>
                                             </div>
-                                            <div className="col-7 mtableMnd" style={{fontSize: "14px"}}>Crownfunding {formatNumber(parseInt((member.objectPrice), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} EUR
-                                                <p className="fs-12">{member.months} MND</p>
+                                            <div className="col-6 mtableMnd text-center" style={{fontSize: "14px"}}><span className="fw-900">Target: </span>{formatNumber(parseInt((member.objectPrice), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} EUR
+                                                {/* <p className="fs-12">{member.months} MND</p> */}
                                             </div>
                                         </div>
                                         <div className="col-12 investAddCon border-2">

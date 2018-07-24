@@ -880,7 +880,7 @@ table tr td {
 } */
 
 .invest .mtableCar {
-    height: 100px;
+    height: 85px;
 }
 
 .col-8.mtableUser {
@@ -1715,6 +1715,14 @@ span.inLeft input {
     font-size: 13px;
 }
 
+.fs-14 {
+    font-size: 14px;
+}
+
+.fs-15 {
+    font-size: 15px;
+}
+
 .fs-16 {
     font-size: 16px;
 }
@@ -1736,8 +1744,12 @@ span.inLeft input {
     ;
 }
 
+.fw-900 {
+    font-weight: 900
+}
+
 .fw-700 {
-    font-weight: 600
+    font-weight: 700
 }
 
 .fw-600 {
@@ -1745,15 +1757,15 @@ span.inLeft input {
 }
 
 .fw-500 {
-    font-weight: 600
+    font-weight: 500
 }
 
 .fw-400 {
-    font-weight: 600
+    font-weight: 400
 }
 
 .fw-300 {
-    font-weight: 600
+    font-weight: 300
 }
 
 .mb-50 {
