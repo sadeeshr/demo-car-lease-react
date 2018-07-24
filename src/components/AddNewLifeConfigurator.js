@@ -158,92 +158,93 @@ class AddNewLifeConfigurator extends Component {
             monthlyopcost = (parseInt(this.state.lobjMileage, 10) / 12) * 0.1
         }
 
-        switch (this.state.active) {
-            case 0:
-                {
-                    switch (leasetype.type) {
-                        case "Per Dag":
-                            monthlycapcost = parseFloat(price) / 2000
-                            break;
-                        // case "Per uur":
-                        //     monthlycapcost = parseFloat(leasetype.price) / 20000
-                        //     break;
-                        case "Financial":
-                        case "Operational":
-                            // case "Private":
-                            monthlycapcost = (parseFloat(price) / 100) + (60 - parseInt(months, 10)) * 2
-                            break;
-
-                        default:
-                            break;
-                    }
-                    break;
-                }
-
-            // case 1:
-            // {
-            //     switch (leasetype.type) {
-            //         case "Financial":
-            //         case "Operational":
-            //         case "Private":
-            //             monthlycapcost = (parseFloat(leasetype.price) / 100) + (60 - parseInt(months, 10)) * 2
-            //             break;
-
-            //         default:
-            //             break;
-            //     }
-
-            //     break;
-            // }
-
-            case 1:
-                {
-                    if (!price) price = leaseobject["leasetypes"][0]["price"]
-                    monthlycapcost = parseFloat(price) / 100
-                    break;
-                }
-            case 2:
-                {
-                    monthlycapcost = parseFloat(price) / 150
-                    if (leasetype.type === "Operational")
-                        monthlyopcost = parseFloat("2500.00")
-                    break;
-                }
-            case 3:
-                {
-                    switch (leasetype.type) {
-                        case "Financial":
-                            monthlycapcost = parseFloat(price) / 150
-                            break;
-                        case "Operational":
-                            {
-                                monthlycapcost = parseFloat(price) / 100
-                                monthlyopcost = parseFloat("250.00")
+        if (leasetype)
+            switch (this.state.active) {
+                case 0:
+                    {
+                        switch (leasetype.type) {
+                            case "Per Dag":
+                                monthlycapcost = parseFloat(price) / 2000
                                 break;
-                            }
-                        default:
-                            break;
+                            // case "Per uur":
+                            //     monthlycapcost = parseFloat(leasetype.price) / 20000
+                            //     break;
+                            case "Financial":
+                            case "Operational":
+                                // case "Private":
+                                monthlycapcost = (parseFloat(price) / 100) + (60 - parseInt(months, 10)) * 2
+                                break;
+
+                            default:
+                                break;
+                        }
+                        break;
                     }
+
+                // case 1:
+                // {
+                //     switch (leasetype.type) {
+                //         case "Financial":
+                //         case "Operational":
+                //         case "Private":
+                //             monthlycapcost = (parseFloat(leasetype.price) / 100) + (60 - parseInt(months, 10)) * 2
+                //             break;
+
+                //         default:
+                //             break;
+                //     }
+
+                //     break;
+                // }
+
+                case 1:
+                    {
+                        if (!price) price = leaseobject["leasetypes"][0]["price"]
+                        monthlycapcost = parseFloat(price) / 100
+                        break;
+                    }
+                case 2:
+                    {
+                        monthlycapcost = parseFloat(price) / 150
+                        if (leasetype.type === "Operational")
+                            monthlyopcost = parseFloat("2500.00")
+                        break;
+                    }
+                case 3:
+                    {
+                        switch (leasetype.type) {
+                            case "Financial":
+                                monthlycapcost = parseFloat(price) / 150
+                                break;
+                            case "Operational":
+                                {
+                                    monthlycapcost = parseFloat(price) / 100
+                                    monthlyopcost = parseFloat("250.00")
+                                    break;
+                                }
+                            default:
+                                break;
+                        }
+                        break;
+                    }
+
+                // case 4:
+                //     {
+                //         switch (leasetype.type) {
+                //             case "Financial":
+                //             case "Private":
+                //                 monthlycapcost = parseFloat(leasetype.price) / 150
+                //                 break;
+
+                //             default:
+                //                 break;
+                //         }
+                //         break;
+                //     }
+
+                default:
                     break;
-                }
-
-            // case 4:
-            //     {
-            //         switch (leasetype.type) {
-            //             case "Financial":
-            //             case "Private":
-            //                 monthlycapcost = parseFloat(leasetype.price) / 150
-            //                 break;
-
-            //             default:
-            //                 break;
-            //         }
-            //         break;
-            //     }
-
-            default:
-                break;
-        }
+            }
         // }
 
         cc.log("LO: ", leaseobject, "LT: ", leasetype)
