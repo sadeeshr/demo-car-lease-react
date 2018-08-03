@@ -31,7 +31,7 @@ const mapStateToProps = (state) => {
         eventAddNewObject: state.eventAddNewObject,
         objectID: state.objectID,
         newObject: state.newObject,
-        newLeaseTokenObject: state.newLeaseTokenObject,
+        newCrowdFundToken: state.newCrowdFundToken,
         investInObjectTxID: state.investInObjectTxID,
         activateDeactivateObjectTxID: state.activateDeactivateObjectTxID,
         hashConfirmations: state.hashConfirmations,

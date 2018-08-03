@@ -27,10 +27,10 @@ class Members extends Component {
     componentWillMount() {
         cc.log("Members Props", this.props);
         this.props._fetchUsers(this.props, this.props.account)
-        if (!this.props.unClaimedRedemption && this.props.account) this.props._lcToClaimTotal(this.props.account)
+        // if (!this.props.unClaimedRedemption && this.props.account) this.props._lcToClaimTotal(this.props.account) // change
         if (!this.props.euroTokenBalance && this.props.account) this.props._euroBalanceOf(this.props.account)
         // let data = {
-        //     module: "membersdev2",
+        //     module: "membersdev3",
         //     result: "member",
         //     findone: true,
         //     query: {
@@ -57,7 +57,7 @@ class Members extends Component {
         // const townSelected = this.props.towns[this.props.town]
 
         let data = {
-            module: "membersobj",
+            module: "crowdfundobj",
             result: "members",
             query: {
                 // municipalityID: townSelected ? townSelected["municipalityID"] : ""
@@ -81,10 +81,10 @@ class Members extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        let refreshEvents = ["Transfer", "BoughtNewObject", "NewObject", "CreateNewUser", "AddNewObject", "NewMember", "NewLeaseTokenObject"]
+        let refreshEvents = ["Transfer", "BoughtNewObject", "NewObject", "CreateNewUser", "AddNewObject", "NewMember", "NewCrowdFundToken"]
         if (nextProps.newLeaseTokenAddress && (this.props.newLeaseTokenAddress !== nextProps.newLeaseTokenAddress)) {
             // let data = {
-            //     module: "membersobj",
+            //     module: "crowdfundobj",
             //     result: "members",
             //     data: this.props.newLifeObj
             // }
@@ -95,7 +95,7 @@ class Members extends Component {
 
 
             let data = {
-                module: "membersobj",
+                module: "crowdfundobj",
                 result: "members",
                 query: { "_id": this.props.members_new["_id"] },
                 data: {
@@ -107,7 +107,7 @@ class Members extends Component {
 
         }
 
-        if ((nextProps.AddNewUser && (nextProps.AddNewUser !== this.props.AddNewUser)) || (nextProps.newObject && (nextProps.newObject !== this.props.newObject)) || (nextProps.newLeaseTokenObject && (nextProps.newLeaseTokenObject !== this.props.newLeaseTokenObject))) {
+        if ((nextProps.AddNewUser && (nextProps.AddNewUser !== this.props.AddNewUser)) || (nextProps.newObject && (nextProps.newObject !== this.props.newObject)) || (nextProps.newCrowdFundToken && (nextProps.newCrowdFundToken !== this.props.newCrowdFundToken))) {
             this.setState({ pending: true })
         }
 
@@ -116,13 +116,13 @@ class Members extends Component {
             (
                 (nextProps.AddNewUser && (nextProps.event.transactionHash === nextProps.AddNewUser.txID))
                 || (nextProps.newObject && (nextProps.event.transactionHash === nextProps.newObject.txID))
-                || (nextProps.newLeaseTokenObject && (nextProps.event.transactionHash === nextProps.newLeaseTokenObject.txID))
+                || (nextProps.newCrowdFundToken && (nextProps.event.transactionHash === nextProps.newCrowdFundToken.txID))
                 || (refreshEvents.indexOf(nextProps.event.event) !== -1)
             )
         ) {
             this.setState({ pending: false })
 
-            if (this.props.account) this.props._lcToClaimTotal(this.props.account)
+            // if (this.props.account) this.props._lcToClaimTotal(this.props.account) // change
             if (this.props.account) this.props._euroBalanceOf(this.props.account)
 
             setTimeout(() => {
@@ -135,7 +135,7 @@ class Members extends Component {
             (
                 (nextProps.AddNewUser && (nextProps.event.transactionHash === nextProps.AddNewUser.txID))
                 || (nextProps.newObject && (nextProps.event.transactionHash === nextProps.newObject.txID))
-                || (nextProps.newLeaseTokenObject && (nextProps.event.transactionHash === nextProps.newLeaseTokenObject.txID))
+                || (nextProps.newCrowdFundToken && (nextProps.event.transactionHash === nextProps.newCrowdFundToken.txID))
             )
         ) {
             setTimeout(() => {
@@ -274,8 +274,8 @@ class Members extends Component {
                                 <span className="fs-20 fw-700" style={member.account === this.props.account ? { fontWeight: "bold" } : {}}>{member.username || ""}</span>
                                 <p>{member.town || ""}</p>
                                 <div className="mtableTokens">
-                                    {userObject.crowdsaleClosed ?
-                                        <span style={{ color: "green", fontSize: "15px", }}>{userObject.active ? "Active" : "Closed"}</span> : userObject.totalRaised ? "E " + userObject.totalRaised + " Totaal" : "E 0 Totaal"}
+                                    {userObject.crowdsaleclosed ?
+                                        <span style={{ color: "green", fontSize: "15px", }}>{userObject.active ? "Active" : "Closed"}</span> : userObject.raised ? "E " + userObject.raised + " Totaal" : "E 0 Totaal"}
                                     <p>{userObject.evTokens ? "E " + userObject.evTokens + " Van mij" : "-"}</p>
                                 </div>
                                 {!member.authorized && <div className="membersBtn">
@@ -294,8 +294,8 @@ class Members extends Component {
 
                             {(this.props.newObject && this.props.newObject["id"] === userObject["_id"]) &&
                                 (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newObject.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px", textAlign: "center", fontWeight: "600" }}>Confirmed</p> : <p className="p-euro" style={{ color: "#FF9800", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Pending</p>}</Link>)}
-                            {(this.props.newLeaseTokenObject && this.props.newLeaseTokenObject["hash"] === userObject["objectHash"]) &&
-                                (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newLeaseTokenObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newLeaseTokenObject.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Confirmed</p> : <p className="p-euro" style={{ color: "#FF9800", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Pending</p>}</Link>)}
+                            {(this.props.newCrowdFundToken && this.props.newCrowdFundToken["hash"] === userObject["objectHash"]) &&
+                                (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newCrowdFundToken.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newCrowdFundToken.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Confirmed</p> : <p className="p-euro" style={{ color: "#FF9800", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Pending</p>}</Link>)}
                         </div>
                     </div>
                 ]
@@ -303,13 +303,13 @@ class Members extends Component {
                 if (selected && this.props.account && this.props.registered) {
                     cc.log("Member Object: ", userObject, member.account, this.props.account);
                     cc.log("---------------------------------------------------------------------------")
-                    cc.log("CHECK 1 (crowdsale closed and user object not active and not owner address): ", (userObject.crowdsaleClosed && !userObject.active && (member.account !== this.props.account)) || "false");
+                    cc.log("CHECK 1 (crowdsale closed and user object not active and not owner address): ", (userObject.crowdsaleclosed && !userObject.active && (member.account !== this.props.account)) || "false");
                     cc.log("CHECK 2 (object hash and no lease token address and not owner address): ", (userObject.objectHash && !userObject.leaseTokenAddress && (member.account !== this.props.account)) || "false");
                     cc.log("CHECK 3 (lease token address and no object ID and not owner address): ", (userObject.leaseTokenAddress && !userObject.objectID && (member.account !== this.props.account)) || "false");
                     cc.log("CHECK 4 (object hash and no lease token address and no object ID): ", (userObject.objectHash && !userObject.leaseTokenAddress && !userObject.objectID) || "false");
                     cc.log("CHECK 5 (pending status in state due to awaiting transaction confirmation event): ", this.state.pending || "false");
 
-                    const disableDownButton = (userObject.crowdsaleClosed && !userObject.active && (member.account !== this.props.account)) || (userObject.objectHash && !userObject.leaseTokenAddress && (member.account !== this.props.account)) || (userObject.leaseTokenAddress && !userObject.objectID && (member.account !== this.props.account)) || (userObject.objectHash && !userObject.leaseTokenAddress && !userObject.objectID) || this.state.pending
+                    const disableDownButton = (userObject.crowdsaleclosed && !userObject.active && (member.account !== this.props.account)) || (userObject.objectHash && !userObject.leaseTokenAddress && (member.account !== this.props.account)) || (userObject.leaseTokenAddress && !userObject.objectID && (member.account !== this.props.account)) || (userObject.objectHash && !userObject.leaseTokenAddress && !userObject.objectID) || this.state.pending
                     cc.log("Disable button: ", disableDownButton || "false");
                     memberRows.push(
 
@@ -318,7 +318,7 @@ class Members extends Component {
                             {(userObject.objectID || userObject.leaseTokenAddress || userObject.objectHash) && <div className="memberMesBtns">
                                 {!disableDownButton && <div className="membersBtn">
                                     <button className="arrowBtn" onClick={() => {
-                                        userObject.crowdsaleClosed ?
+                                        userObject.crowdsaleclosed ?
                                             (userObject.active ?
                                                 this.props.history.push("/", { path: "invoices" })
                                                 :
@@ -369,12 +369,12 @@ class Members extends Component {
     sortMembers = () => {
         if (this.props.members) {
             const members = this.props.members.sort((a, b) => {
-                cc.log("Checking A: ", a.obj && a.obj.crowdsaleClosed, parseFloat(a.totalRaised), "----", "Checking B: ", b.obj && b.obj.crowdsaleClosed, parseFloat(b.totalRaised))
-                if (a.obj && a.obj.crowdsaleClosed)
+                cc.log("Checking A: ", a.obj && a.obj.crowdsaleclosed, parseFloat(a.raised), "----", "Checking B: ", b.obj && b.obj.crowdsaleclosed, parseFloat(b.raised))
+                if (a.obj && a.obj.crowdsaleclosed)
                     return 0
-                else if (a.totalRaised && b.totalRaised) {
-                    // cc.log(`Car Raised-${b.objectID}=> ${b.totalRaised} - Car Raised-${a.objectID}=> ${a.totalRaised}`);
-                    return b.totalRaised - a.totalRaised
+                else if (a.raised && b.raised) {
+                    // cc.log(`Car Raised-${b.objectID}=> ${b.raised} - Car Raised-${a.objectID}=> ${a.raised}`);
+                    return b.raised - a.raised
                 } else
                     return 0
             })
@@ -521,13 +521,13 @@ export default Members
 //                     <img src={require('../assets/add.jpg')} alt="addM" />
 //                 </button>
 //             </div>}
-//             <div className="mtableTokens">{member.crowdsaleClosed ? <span style={{ color: "green", fontSize: "12px" }}>Closed</span> : member.totalRaised || "0"} <p>{member.evTokens}</p></div>
+//             <div className="mtableTokens">{member.crowdsaleClosed ? <span style={{ color: "green", fontSize: "12px" }}>Closed</span> : member.raised || "0"} <p>{member.evTokens}</p></div>
 //             <div className="mtableUser"><span style={user.account === this.props.account ? { fontWeight: "bold" } : {}}>{user.username || ""}</span> <p>{user.town || ""}</p></div>
 //             {<div className="mtableCar"><img style={img} src={member.objectPic || user.profilePic || require('../assets/anonymous.png')} alt="carImage" /><span title="Car Raised" style={{ fontSize: "12px" }}>Euro {objectPrice}</span></div>}
 //             {(this.props.newObject && this.props.newObject["id"] === member["_id"]) &&
 //                 (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newObject.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red", marginLeft: "0px", marginTop: "15px" }}>pending</p>}</Link>)}
-//             {(this.props.newLeaseTokenObject && this.props.newLeaseTokenObject["hash"] === member["objectHash"]) &&
-//                 (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newLeaseTokenObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newLeaseTokenObject.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red", marginLeft: "0px", marginTop: "15px" }}>pending</p>}</Link>)}
+//             {(this.props.newCrowdFundToken && this.props.newCrowdFundToken["hash"] === member["objectHash"]) &&
+//                 (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newCrowdFundToken.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newCrowdFundToken.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red", marginLeft: "0px", marginTop: "15px" }}>pending</p>}</Link>)}
 //         </div>
 //     ]
 

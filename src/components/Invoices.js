@@ -45,7 +45,7 @@ class Invoices extends Component {
         // this.props._lcLeaseObjectCycle(this.props.member.objectID)
         // this.props._lcLeaseObjectRedemption(this.props.member.objectID)
 
-        if (!this.props.unClaimedRedemption && this.props.account) this.props._lcToClaimTotal(this.props.account)
+        // if (!this.props.unClaimedRedemption && this.props.account) this.props._lcToClaimTotal(this.props.account)
         if (!this.props.euroTokenBalance && this.props.account) this.props._euroBalanceOf(this.props.account)
 
     }
@@ -63,7 +63,7 @@ class Invoices extends Component {
 
     fetchInvoices = () => {
         let data = {
-            module: "invoicesdev2",
+            module: "invoicesdev3",
             result: "invoices",
             query: {
                 objectID: this.props.member.objectID
@@ -78,7 +78,7 @@ class Invoices extends Component {
     createInvoice = () => {
         // console.log("MONTH:", this.state);
         let data = {
-            module: "invoicesdev2",
+            module: "invoicesdev3",
             result: "invoices",
             data: {
                 objectID: this.props.member.objectID,
@@ -105,7 +105,7 @@ class Invoices extends Component {
 
     updateInvoice = (invoice, tariff, nextTariff, mileage, total) => {
         let data = {
-            module: "invoicesdev2",
+            module: "invoicesdev3",
             result: "invoices",
             query: { "_id": invoice["_id"] },
             data: {
@@ -173,7 +173,7 @@ class Invoices extends Component {
 
         if (nextProps.eventSubscription && !this.state.eventSubscription) { this.setState({ eventSubscription: nextProps.eventSubscription }) }
 
-        if (!nextProps.unClaimedRedemption) this.props._lcToClaimTotal(this.props.account)
+        // if (!nextProps.unClaimedRedemption) this.props._lcToClaimTotal(this.props.account)
         if (!nextProps.euroTokenBalance) this.props._euroBalanceOf(this.props.account)
 
         if (nextProps.member && nextProps.member.obj) {

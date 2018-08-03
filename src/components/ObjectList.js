@@ -25,7 +25,7 @@ class ObjectList extends Component {
         // const town = this.props.towns[this.props.town];
 
         let data = {
-            module: "membersdev2",
+            module: "membersdev3",
             result: "usernames",
             query: {
             },

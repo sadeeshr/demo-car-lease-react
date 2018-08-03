@@ -25,7 +25,7 @@ const mapStateToProps = (state) => {
         members: state.members,
         totalSupply: state.totalSupply,
         unClaimedRedemption: state.unClaimedRedemption,
-        crowdsaleClosed: state.crowdsaleClosed,
+        crowdsaleclosed: state.crowdsaleclosed,
         payFeeTxID: state.payFeeTxID,
         progress: state.progress ? state.progress : false,
         investInObjectTxID: state.investInObjectTxID,

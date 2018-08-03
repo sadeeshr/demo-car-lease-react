@@ -16,6 +16,7 @@ class AddNewLifeConfigurator extends Component {
         super(props)
         this.state = {
             progress: false,
+            coinName: '',
             lobjprice: '',
             lobjMileage: '',
             modalCondition: false,
@@ -100,8 +101,9 @@ class AddNewLifeConfigurator extends Component {
 
         let newLifeObj = {
             member: member["_id"],
+            objectName: this.state.coinName,
             objectType: leaseobject["objecttype"],
-            leaseType: leasetype.type,
+            // leaseType: leasetype.type,
             objectPic: leaseobject["image"],
             objectPrice: price,
             objectHash: objectHash,
@@ -113,21 +115,21 @@ class AddNewLifeConfigurator extends Component {
             municipalityID: "1"
         }
 
-        let data = {
-            module: "membersobj",
-            result: "members",
-            data: newLifeObj
-        }
+        // let data = {
+        //     module: "crowdfundobj",
+        //     result: "members",
+        //     data: newLifeObj
+        // }
 
-        cc.log(data)
+        // cc.log(data)
 
         // this.props._writeNewContractData(this.props, data)
-        this.props._updateSocketProps(this.props)
+        // this.props._updateSocketProps(this.props) //change
 
         this.props._setObject({ newLifeObj, progress: true })
 
-        this.state.lobjectSelected && this.props.account && this.props._lcCreateNewLeaseTokenObject(this.props, data, this.props.account)
-
+        // this.state.lobjectSelected && this.props.account && this.props._lcCreateNewCrowdFundToken(this.props, data, this.props.account) // change
+        this.state.lobjectSelected && this.props.account && this.props._lcCreateObject(this.props, this.state.coinName, months, "1", price, objectHash, 0, this.props.account, (parseFloat(monthlycapcost) * 100), (parseFloat(monthlyopcost) * 100), this.props.account)
         this.props.history.goBack()
 
         // this.props._writeNewContractData(data)
@@ -342,11 +344,12 @@ class AddNewLifeConfigurator extends Component {
                                                         </div>
                                                         <div className="mb-5 d-ib">
                                                             <div className="col-7">
-                                                                <label className="nl-label">Lease type</label>
+                                                                <label className="nl-label">Coin Name</label>
                                                             </div>
                                                             <div className="col-5">
                                                                 <div className="nl-inp">
-                                                                    <select value={ltypeId}
+                                                                    <input className="nl-inp" value={this.state.coinName} onChange={(e) => this.setState({ coinName: e.target.value })} type="text" />
+                                                                    {/*<select value={ltypeId}
                                                                         onChange={e => {
 
                                                                             this.setState({ leasetypeid: e.target.value })
@@ -356,7 +359,7 @@ class AddNewLifeConfigurator extends Component {
                                                                                 return <option key={j} value={j}>{lobj.type}</option>
                                                                             })
                                                                         }
-                                                                    </select>
+                                                                    </select>*/}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -392,7 +395,7 @@ class AddNewLifeConfigurator extends Component {
                                                             </div>
                                                             <div className="col-5">
                                                                 <div className="nl-inp">
-                                                                    <input value={price} onChange={(e) => this.setState({ lobjprice: e.target.value })} type="text" />
+                                                                    {leasetype && <input value={price} onChange={(e) => this.setState({ lobjprice: e.target.value })} type="text" />}
                                                                 </div>
                                                                 {/*<div className="nl-inp">{}</div>*/ /*formatNumber(parseInt(price, 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })*/}
                                                             </div>

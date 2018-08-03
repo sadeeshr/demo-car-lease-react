@@ -58,12 +58,12 @@ class Invest extends Component {
             // this.refreshValues()
             const member = nextProps.members && nextProps.members.find(memberO => memberO["_id"] === nextProps.member["_id"])
             this.props._euroBalanceOf(this.props.account)
-            this.props._lcLeaseObject(this.props.account, member.objectID)
-            this.props._lcLeaseObjectCycle(member.objectID)
-            this.props._ldGetRaised(member.objectID)
+            // this.props._lcLeaseObject(this.props.account, member.objectID) // change
+            // this.props._lcLeaseObjectCycle(member.objectID) // change
+            // this.props._ldGetRaised(member.objectID) // change
             // cc.log("i need to refresh here !!");
         }
-        if (!this.props.unClaimedRedemption && this.props.account) this.props._lcToClaimTotal(this.props.account)
+        // if (!this.props.unClaimedRedemption && this.props.account) this.props._lcToClaimTotal(this.props.account) //change
         if (!this.props.euroTokenBalance && this.props.account) this.props._euroBalanceOf(this.props.account)
 
         // this.setState({ refreshValues: !this.state.refreshValues })
@@ -115,7 +115,7 @@ class Invest extends Component {
         // this.props.account && this.props._euroAllowance(this.props.account) //sadeesh
 
         // fetch Object ID's To Claim Dividend Value
-        this.props.account && this.props._lcToClaimTotal(this.props.account)
+        // this.props.account && this.props._lcToClaimTotal(this.props.account)
 
         // fetch Object ID's Values
         // this.props._lcLeaseObject(this.props.member.objectID)
@@ -147,20 +147,21 @@ class Invest extends Component {
         const user = this.props.usernames && this.props.usernames.find(userO => userO["_id"] === this.props.member["member"])
         const member = this.props.members && this.props.members.find(memberO => memberO["_id"] === this.props.member["_id"])
         cc.log("User, Member Objects: ", user, member)
-        const buyAndActivate = member.crowdsaleClosed && !member.active && (user["account"] === this.props.account)
+        const buyAndActivate = member.crowdsaleclosed && !member.objectActive && (user["account"] === this.props.account)
         cc.log(buyAndActivate, this.props.account);
-        const amountRemaining = member.objectPrice - member.totalRaised
+        const amountRemaining = member.objectPrice - member.raised
         // const allowedAmountToInvest = Math.min(Math.min(amountRemaining, this.props.allowance), this.props.euroTokenBalance)
         // const euroTokenBalance = this.props.euroTokenBalance ? (this.props.euroTokenBalance.length > 5 ? this.props.euroTokenBalance.substring(0, 5) + "..." : this.props.euroTokenBalance) : ""
         // (this.state.euroTokenBalance || "").substring(0, 8) + "..."
         // const account = this.props.account ? this.props.account.substring(0, 7) + '.....' + this.props.account.substring(this.props.account.length - 5) : ""
-        // const hideInvest = (this.props.member.totalRaised >= this.props.member.objectPrice) ? true : false
+        // const hideInvest = (this.props.member.raised >= this.props.member.objectPrice) ? true : false
         const ethInvest = parseInt((this.state.ethInvest || "0"), 10)
-        const enableInvest = ((ethInvest <= amountRemaining) && (ethInvest <= (this.props.euroTokenBalance + this.props.unClaimedRedemption)) && (this.state.ethInvest !== "") && (this.state.ethInvest !== "0"))
+        const enableInvest = ((ethInvest <= amountRemaining) && (ethInvest <= (this.props.euroTokenBalance)) && (this.state.ethInvest !== "") && (this.state.ethInvest !== "0"))
+        // const enableInvest = ((ethInvest <= amountRemaining) && (ethInvest <= (this.props.euroTokenBalance + this.props.unClaimedRedemption)) && (this.state.ethInvest !== "") && (this.state.ethInvest !== "0")) // change
         // const enableInvest = ((ethInvest <= amountRemaining) && (ethInvest <= this.props.allowance) && (ethInvest <= this.props.euroTokenBalance) && (this.state.ethInvest !== "") && (this.state.ethInvest !== "0"))
         // cc.log("Enable Invest: ", ethInvest, enableInvest, (ethInvest <= amountRemaining), (ethInvest <= this.props.allowance), (ethInvest <= this.props.euroTokenBalance), (this.state.ethInvest !== ""));
         // (this.props.account || "").substring(0, 8) + "..."
-        cc.log("Object Price, Total Raised: ", member.objectPrice, member.totalRaised)
+        cc.log("Object Price, Total Raised: ", member.objectPrice, member.raised)
         cc.log("Allowed amount: ", amountRemaining, ethInvest, enableInvest);
 
         return (<div className="content-border mobile-margin">
@@ -203,7 +204,7 @@ class Invest extends Component {
                                             <div className="pt-25 pl-15 fs-20  tt-capital fw-600">
                                                 <span className="opacity07">{user.username}</span>
                                                 <p>{user.town}</p>
-                                                <span className="opacity07 fs-14"><span className="fw-900">{member.totalRaised}</span> Euro opgehaald</span>
+                                                <span className="opacity07 fs-14"><span className="fw-900">{member.raised}</span> Euro opgehaald</span>
                                             </div>
                                         </div>
                                         <div className="col-6 mtableLink">
@@ -214,7 +215,7 @@ class Invest extends Component {
                                         <div className="col-12">
                                             <div className="col-6 text-left pl-10 w6-10">
 
-                                                {/* <span style={{ width: "40px", display: "inline-block", textAlign: "right"}}>{member.totalRaised}</span>
+                                                {/* <span style={{ width: "40px", display: "inline-block", textAlign: "right"}}>{member.raised}</span>
                                                 <span className="ml-3">Totaal</span> */}
 
                                                 <p className="fs-15">
@@ -228,7 +229,7 @@ class Invest extends Component {
                                         </div>
                                         <div className="col-12 investAddCon border-2">
                                             <div className="col-12 mb-15">
-                                                <p className="fw-700 text-center" style={{ color: (member.crowdsaleClosed || member.active) ? "black" : "black" }}>{buyAndActivate ? ("AANSCHAF " + member.objectType.toUpperCase()) : (member.active ? "ACTIVE" : member.crowdsaleClosed ? "CLOSED" : "INVESTEER")}</p>
+                                                <p className="fw-700 text-center" style={{ color: (member.crowdsaleclosed || member.objectActive) ? "black" : "black" }}>{buyAndActivate ? ("AANSCHAF " + member.objectType.toUpperCase()) : (member.objectActive ? "ACTIVE" : member.crowdsaleclosed ? "CLOSED" : "INVESTEER")}</p>
                                             </div>
                                             <div className="col-12 text-center fs-13"> <span>{ buyAndActivate ? "Opleverdatum" : "Bedrag"}</span></div>
                                             <div className="col-3 lh-40">
@@ -238,11 +239,11 @@ class Invest extends Component {
                                                 {
                                                     buyAndActivate ?
                                                         <Calendar className="calInput" value={this.state.activedate || new Date()} onChange={(e) => this.setState({ activedate: e.value })}>Opleverdatum</Calendar>
-                                                        : <div className="investAddInput">{!member.crowdsaleClosed && <input style={{ color: (enableInvest ? "black" : "red") }} value={(typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest} onChange={(e) => this.setState({ ethInvest: e.target.value })} maxLength="20" type="text" placeholder="Euro Token" />}
+                                                        : <div className="investAddInput">{!member.crowdsaleclosed && <input style={{ color: (enableInvest ? "black" : "red") }} value={(typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest} onChange={(e) => this.setState({ ethInvest: e.target.value })} maxLength="20" type="text" placeholder="Euro Token" />}
                                                         </div>
                                                 }
                                             </div>
-                                            {!buyAndActivate && !member.crowdsaleClosed && <div className="col-3 lh-40">
+                                            {!buyAndActivate && !member.crowdsaleclosed && <div className="col-3 lh-40">
                                                 Euro
                                             </div>}
 
@@ -253,10 +254,10 @@ class Invest extends Component {
                                                 {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.investInObjectTxID)) ? <p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)}
                                                 {this.props.BuyAndActivateTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.BuyAndActivateTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.BuyAndActivateTxID)) ? <p className="p-euro" style={{ ccolor: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)}
 
-                                                <span className="flaticon-padlock unlock unlock-m" style={{ cursor: !this.state.pending && ((enableInvest && !member.crowdsaleClosed) || buyAndActivate) ? "pointer" : "not-allowed" }} onClick={() => {
+                                                <span className="flaticon-padlock unlock unlock-m" style={{ cursor: !this.state.pending && ((enableInvest && !member.crowdsaleclosed) || buyAndActivate) ? "pointer" : "not-allowed" }} onClick={() => {
                                                     buyAndActivate ?
                                                         !this.state.pending && this.state.activedate && this.props._lcBuyAndActivate(member.objectID, this.state.activedate, this.props.account)
-                                                        : !this.state.pending && this.props.account && !member.crowdsaleClosed && enableInvest && this.props._lcInvestInObject(member.objectID || (this.props.event && this.props.event.returnValues && this.props.event.returnValues.objectID), this.state.ethInvest || "0", this.props.account)
+                                                        : !this.state.pending && this.props.account && !member.crowdsaleclosed && enableInvest && this.props._lcInvestInObject(member.objectID || (this.props.event && this.props.event.returnValues && this.props.event.returnValues.objectID), this.state.ethInvest || "0", this.props.account)
                                                 }} ></span>
 
 

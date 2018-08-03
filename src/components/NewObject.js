@@ -27,7 +27,7 @@ class NewObject extends Component {
     componentWillMount() {
 
         let data = {
-            module: "membersobj",
+            module: "crowdfundobj",
             result: "member",
             findone: true,
             query: {
@@ -99,7 +99,7 @@ class NewObject extends Component {
                                         </div>
                                         <div className="col-12">
                                             <div className="col-3 text-right mtableTokens fs-16">&nbsp;
-                                                {member.totalRaised}
+                                                {member.raised}
                                                 <p style={{ color: 'green' }}>{member.evTokens}</p>
                                             </div>
                                             <div className="col-5 mtableUser text-center">{user.username}

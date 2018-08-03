@@ -79,7 +79,7 @@ class AddMember extends Component {
             }
 
             let data = {
-                module: "membersdev2",
+                module: "membersdev3",
                 result: "usernames",
                 query: {
                     "_id": this.state["_id"]
@@ -114,7 +114,7 @@ class AddMember extends Component {
             }
 
             let data = {
-                module: "membersdev2",
+                module: "membersdev3",
                 result: "usernames",
                 data: newMember
             }
@@ -160,28 +160,28 @@ class AddMember extends Component {
                                 <span className="form-input-containers">
                                     <input style={cursor} readOnly={this.state.profile} className="membership-input" maxLength="20" value={this.state.username || ""} onChange={(e) => this.setState({ username: e.target.value })} type="text" id="username" name="username" placeholder="Coin Name *" />
                                 </span>
-                                <span className="form-input-containers">
+                                {!this.state.profile && <span className="form-input-containers">
                                     <input style={cursor} readOnly={this.state.profile} className="membership-input" maxLength="20" value={this.state.fullname || ""} onChange={(e) => this.setState({ fullname: e.target.value })} type="text" id="fullname" name="fullname" placeholder="Full Name" />
-                                </span>
-                                <span className="form-input-containers">
+                                </span>}
+                                {!this.state.profile && <span className="form-input-containers">
                                     <input className="membership-input" maxLength="20" value={this.state.address || ""} onChange={(e) => this.setState({ address: e.target.value })} type="text" id="address" name="address" placeholder="Address" />
-                                </span>
+                                </span>}
                                 <span className="form-input-containers">
                                     <input maxLength="30" className="membership-input" value={this.state.town || ""} onChange={(e) => this.setState({ town: e.target.value })} type="text" id="town" name="town" placeholder="Town *" />
                                 </span>
-                                <span className="form-input-containers">
+                                {!this.state.profile && <span className="form-input-containers">
                                     <input maxLength="30" className="membership-input mb-15" value={this.state.zip || ""} onChange={(e) => this.setState({ zip: e.target.value })} type="text" placeholder="Zip Code" />
-                                </span>
-                                <span className="form-input-containers">
+                                </span>}
+                                {!this.state.profile && <span className="form-input-containers">
                                     <input style={cursor} readOnly={this.state.profile} pattern="\d*" maxLength="30" className="membership-input mb-15" value={this.state.iban || ""} onChange={(e) => this.setState({ iban: e.target.value })} type="text" placeholder="IBAN" />
-                                </span>
+                                </span>}
                                 <span className="form-input-containers">
                                     <input style={cursor} readOnly={this.state.profile} pattern="\d*" maxLength="30" className="membership-input mb-15" value={this.state.account || this.props.account || ""} onChange={(e) => this.setState({ account: e.target.value || this.props.account })} type="text" placeholder="Ether address" />
                                 </span>
                                 <span className="form-input-containers">
                                     <input pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" maxLength="30" className="membership-input mb-15" value={this.state.email || ""} onChange={(e) => this.setState({ email: e.target.value })} type="text" placeholder="Email" />
                                 </span>
-                                <span className="form-input-containers marginBttm inputAddbtn">
+                                {!this.state.profile && <span className="form-input-containers marginBttm inputAddbtn">
                                     {!this.state.profile && <div className="upload-selfieCon">
                                         <div className="image-upload" htmlFor="imageUpload">
                                             <label className="image-upload-selfieCon" style={{ "textAlign": "center", }} htmlFor="prPicIn">
@@ -192,10 +192,10 @@ class AddMember extends Component {
                                         <label >Upload Selfie</label>
                                     </div>}
                                     {this.state.profilePic && <img style={img} className="inputImg" src={this.state.profilePic} alt="intI" />}
-                                </span>
-                                <span className="form-input-containers">
+                                </span>}
+                                {!this.state.profile && <span className="form-input-containers">
                                     <textarea className="membership-input" rows="5" value={this.state.message || ""} onChange={(e) => this.setState({ message: e.target.value })} name="message" placeholder="Your message"></textarea>
-                                </span>
+                                </span>}
 
                                 {/* <span className="form-input-containers marginBttm inputAddbtn">
                                     <div style={{ "textAlign": "right" }} htmlFor="imageUpload">

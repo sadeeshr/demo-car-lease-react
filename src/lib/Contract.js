@@ -423,13 +423,13 @@ class Contract {
                         txID: result,
                         // id: id
                         // data: {
-                        // id: id,
-                        // municipalityID: municipalityID,
-                        // objectPic: objectImage,
-                        // months: months,
-                        // objectPrice: objectPrice,
-                        // objectHash: objectHash,
-                        // objectDealer: objectDealer,
+                        // objectName,
+                        // municipalityID,
+                        // months,
+                        // objectPrice,
+                        // objectHash,
+                        // objectDealer,
+                        // objectCurrencyID,
                         // objectMonthlyCapitalCost: objectMCCost,
                         // objectMonthlyOperatingCost: objectMOCost,
                         // account: account
@@ -510,50 +510,87 @@ class Contract {
             })
     }
 
-    lcLeaseObject = (objectID) => {
-        cc.log(`Fetch object Details for ID: ${objectID}`);
-        return this.CrowdFundData.leaseobject(objectID)
-            .then(result => {
-                cc.log(`Details of object ID ${objectID} => `, result);
-                return { id: objectID, result: result }
-            })
+    // lcLeaseObject = (objectID) => {
+    //     cc.log(`Fetch object Details for ID: ${objectID}`);
+    //     return this.CrowdFundData.leaseobject(objectID)
+    //         .then(result => {
+    //             cc.log(`Details of object ID ${objectID} => `, result);
+    //             return { id: objectID, result: result }
+    //         })
+    // }
+
+    crowdFundData = (objectID, type, name) => {
+        switch (type) {
+            case "string":
+                return this.CrowdFundData.getString(objectID, name)
+                    .then(result => {
+                        cc.log(`Get String Details of object ID ${objectID} ${name} => `, result[0]);
+                        return { id: objectID, result: { [name]: result[0] } }
+                    })
+            case "bytes":
+                return this.CrowdFundData.getBytes(objectID, name)
+                    .then(result => {
+                        cc.log(`Get Bytes Details of object ID ${objectID} ${name} => `, result[0]);
+                        return { id: objectID, result: { [name]: result[0] } }
+                    })
+            case "address":
+                return this.CrowdFundData.getAddr(objectID, name)
+                    .then(result => {
+                        cc.log(`Get Address Details of object ID ${objectID} ${name} => `, result[0]);
+                        return { id: objectID, result: { [name]: result[0] } }
+                    })
+            case "integer":
+                return this.CrowdFundData.getInt(objectID, name)
+                    .then(result => {
+                        cc.log(`Get Integer Details of object ID ${objectID} ${name} => `, result[0].toNumber());
+                        return { id: objectID, result: { [name]: result[0].toNumber() } }
+                    })
+            case "bool":
+                return this.CrowdFundData.getBool(objectID, name)
+                    .then(result => {
+                        cc.log(`Get Boolean Details of object ID ${objectID} ${name} => `, result[0]);
+                        return { id: objectID, result: { [name]: result[0] } }
+                    })
+            default:
+                return;
+        }
     }
 
-    lcLeaseObjectCycle = (objectID) => {
-        cc.log(`Fetch object Cycle Details for ID: ${objectID}`);
-        return this.CrowdFundData.leasecbjectcycle(objectID)
-            .then(result => {
-                cc.log(`Details of object cycle ID ${objectID} => `, result);
-                return {
-                    id: objectID,
-                    result: {
-                        crowdsaleClosed: result["crowdsaleClosed"],
-                        active: result["objectActive"],
-                        activeTime: result["objectActiveTime"].toNumber(),
-                        deactiveTime: result["objectDeactiveTime"].toNumber()
-                    }
-                }
-            })
-    }
+    // lcLeaseObjectCycle = (objectID) => {
+    //     cc.log(`Fetch object Cycle Details for ID: ${objectID}`);
+    //     return this.CrowdFundData.leasecbjectcycle(objectID)
+    //         .then(result => {
+    //             cc.log(`Details of object cycle ID ${objectID} => `, result);
+    //             return {
+    //                 id: objectID,
+    //                 result: {
+    //                     crowdsaleClosed: result["crowdsaleClosed"],
+    //                     active: result["objectActive"],
+    //                     activeTime: result["objectActiveTime"].toNumber(),
+    //                     deactiveTime: result["objectDeactiveTime"].toNumber()
+    //                 }
+    //             }
+    //         })
+    // }
 
-    lcLeaseObjectRedemption = (objectID) => {
-        cc.log(`Fetch object Redemption Details for ID: ${objectID}`);
-        return this.CrowdFundContract.leaseobjectredemption(objectID)
-            .then(result => {
-                cc.log(`Details of object redemption ID ${objectID} => `, result);
-                return {
-                    id: objectID,
-                    result: {
-                        totalRaised: result["totalRaised"].toNumber(),
-                        totalDividends: result["totalDividends"].toNumber(),
-                        paymonth: result["paymonth"].toNumber(),
-                        mileagesTotal: result["mileagesTotal"].toNumber(),
-                        mileagesAverage: result["mileagesAverage"].toNumber(),
-                        autoPay: result["autoPay"]
-                    }
-                }
-            })
-    }
+    // lcLeaseObjectRedemption = (objectID) => {
+    //     cc.log(`Fetch object Redemption Details for ID: ${objectID}`);
+    //     return this.CrowdFundContract.leaseobjectredemption(objectID)
+    //         .then(result => {
+    //             cc.log(`Details of object redemption ID ${objectID} => `, result);
+    //             return {
+    //                 id: objectID,
+    //                 result: {
+    //                     totalRaised: result["totalRaised"].toNumber(),
+    //                     totalDividends: result["totalDividends"].toNumber(),
+    //                     paymonth: result["paymonth"].toNumber(),
+    //                     mileagesTotal: result["mileagesTotal"].toNumber(),
+    //                     mileagesAverage: result["mileagesAverage"].toNumber(),
+    //                     autoPay: result["autoPay"]
+    //                 }
+    //             }
+    //         })
+    // }
 
     lcAmountObjects = () => {
         cc.log(`Fetch Crowd Sale Closed Objects Count:`);
@@ -609,15 +646,15 @@ class Contract {
             })
     }
 
-    lcToClaimTotal = (account) => {
-        cc.log(`Calling To Claim Total.`); // change included as transaction 
-        // return this.CrowdFundContract.toClaimTotal(account, { from: account })
-        return this.CrowdFundContract.toClaimTotal(account)
-            .then(result => {
-                cc.log(`ToClaimTotal RESULT: ${result[0].toNumber()}`);
-                return { unClaimedRedemption: result[0].toNumber() }
-            })
-    }
+    // lcToClaimTotal = (account) => {
+    //     cc.log(`Calling To Claim Total.`); // change included as transaction 
+    //     // return this.CrowdFundContract.toClaimTotal(account, { from: account })
+    //     return this.CrowdFundContract.toClaimTotal(account)
+    //         .then(result => {
+    //             cc.log(`ToClaimTotal RESULT: ${result[0].toNumber()}`);
+    //             return { unClaimedRedemption: result[0].toNumber() }
+    //         })
+    // }
 
 
     lcClaimDividend = (objectID, account) => {
@@ -690,19 +727,19 @@ class Contract {
 
     // Lease Data Methods:
 
-    ldGetRaised = (objectID) => {
-        cc.log(`Calling Total Raised.`);
-        return this.CrowdFundData.getRaised(objectID)
-            .then(result => {
-                cc.log(`getRaised RESULT: ${result[0].toNumber()}`);
-                return {
-                    id: objectID,
-                    result: {
-                        totalRaised: result[0].toNumber()
-                    }
-                }
-            })
-    }
+    // ldGetRaised = (objectID) => {
+    //     cc.log(`Calling Total Raised.`);
+    //     return this.CrowdFundData.getRaised(objectID)
+    //         .then(result => {
+    //             cc.log(`getRaised RESULT: ${result[0].toNumber()}`);
+    //             return {
+    //                 id: objectID,
+    //                 result: {
+    //                     totalRaised: result[0].toNumber()
+    //                 }
+    //             }
+    //         })
+    // }
 
     // lease token object methods:
 

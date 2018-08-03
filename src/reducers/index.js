@@ -191,26 +191,27 @@ const rootReducer = (state = initialState, action) => {
                 }
             }
 
-        case 'LEASE_OBJECT_RESULT':
-            {
-                let members = state.members.map(member => {
-                    if (member.objectID === action.payload.id)
-                        member["obj"] = action.payload.result
-                    return member
-                })
+        // case 'LEASE_OBJECT_RESULT':
+        //     {
+        //         let members = state.members.map(member => {
+        //             if (member.objectID === action.payload.id)
+        //                 member["obj"] = action.payload.result
+        //             return member
+        //         })
 
-                if (state.member && (state.member.objectID === action.payload.id))
-                    state.member["obj"] = action.payload.result
+        //         if (state.member && (state.member.objectID === action.payload.id))
+        //             state.member["obj"] = action.payload.result
 
-                return {
-                    ...state,
-                    members: members
-                }
-            }
+        //         return {
+        //             ...state,
+        //             members: members
+        //         }
+        //     }
 
-        case 'LEASE_OBJECT_CYCLE_RESULT':
-        case 'LEASE_OBJECT_REDEMPTION_RESULT':
-        case 'TOTAL_RAISED_RESULT':
+        // case 'LEASE_OBJECT_CYCLE_RESULT':
+        // case 'LEASE_OBJECT_REDEMPTION_RESULT':
+        // case 'TOTAL_RAISED_RESULT':
+        case 'CROWD_FUND_DATA':
             {
                 let members = state.members.map(member => {
                     if (member.objectID === action.payload.id)
@@ -256,13 +257,13 @@ const rootReducer = (state = initialState, action) => {
                 //     ...state.newObject,
                 //     txID: null
                 // },
-                // newLeaseTokenObject: {
-                //     ...state.newLeaseTokenObject,
+                // newCrowdFundToken: {
+                //     ...state.newCrowdFundToken,
                 //     txID: null
                 // },
                 newObject: null,
                 invoices: null,
-                newLeaseTokenObject: null,
+                newCrowdFundToken: null,
                 AddNewUser: null,
                 BuyAndActivate: null
             }

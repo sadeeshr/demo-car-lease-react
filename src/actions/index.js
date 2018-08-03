@@ -28,7 +28,7 @@ export const _sendUserEvent = (event) => {
 export const _fetchMembers = (props, municipalityID, account) => {
 
     let data = {
-        module: "membersobj",
+        module: "crowdfundobj",
         result: "members",
         query: {
             municipalityID: municipalityID
@@ -40,7 +40,7 @@ export const _fetchMembers = (props, municipalityID, account) => {
 export const _fetchUsers = (props, account) => {
 
     let data = {
-        module: "membersdev2",
+        module: "membersdev3",
         result: "usernames",
         query: {
         },
@@ -163,9 +163,23 @@ export const _contractDataResponse = (account, response) => {
                 // console.log("MEMBERS: ", member);
                 if (member.account) dispatch(_lcAuthorization(member.account))
                 if (member.objectID) {
-                    dispatch(_lcLeaseObject(account, member.objectID))
-                    dispatch(_lcLeaseObjectCycle(member.objectID))
-                    dispatch(_ldGetRaised(member.objectID))
+                    // dispatch(_lcLeaseObject(account, member.objectID)) //change
+                    // dispatch(_lcLeaseObjectCycle(member.objectID)) //change
+                    // dispatch(_ldGetRaised(member.objectID)) //change
+
+                    dispatch(_crowdFundData(member.objectID, "address", "fundtoken"))
+                    dispatch(_crowdFundData(member.objectID, "string", "fundtokenname"))
+                    dispatch(_crowdFundData(member.objectID, "address", "objectowner"))
+                    dispatch(_crowdFundData(member.objectID, "integer", "objectprice"))
+                    dispatch(_crowdFundData(member.objectID, "bytes", "objecthash"))
+                    dispatch(_crowdFundData(member.objectID, "address", "fundreceiver"))
+                    dispatch(_crowdFundData(member.objectID, "address", "currency"))
+                    dispatch(_crowdFundData(member.objectID, "integer", "monthlycapitalcost"))
+                    dispatch(_crowdFundData(member.objectID, "integer", "monthlyoperatingcost"))
+                    dispatch(_crowdFundData(member.objectID, "integer", "raised"))
+                    dispatch(_crowdFundData(member.objectID, "bool", "crowdsaleclosed"))
+                    dispatch(_crowdFundData(member.objectID, "bool", "objectActive"))
+                    dispatch(_crowdFundData(member.objectID, "integer", "objectActiveTime"))
                 }
                 // return 1
             })
@@ -350,15 +364,14 @@ export const _euroAllowance = (account) => {
     }
 }
 
-export const _lcLeaseObject = (account, objectID) => {
+
+export const _crowdFundData = (objectID, type, name) => {
     return (dispatch) => {
-        return contract.lcLeaseObject(objectID)
+        return contract.crowdFundData(objectID, type, name)
             .then(result => {
-                // console.log("LBO", result);
-                account && dispatch(_ltBalanceOf(objectID, account, result.result.leaseTokenAddress))
                 return dispatch(
                     {
-                        type: "LEASE_OBJECT_RESULT",
+                        type: "CROWD_FUND_DATA",
                         payload: result
                     }
                 )
@@ -366,33 +379,49 @@ export const _lcLeaseObject = (account, objectID) => {
     }
 }
 
-export const _lcLeaseObjectCycle = (objectID) => {
-    return (dispatch) => {
-        return contract.lcLeaseObjectCycle(objectID)
-            .then(result => {
-                return dispatch(
-                    {
-                        type: "LEASE_OBJECT_CYCLE_RESULT",
-                        payload: result
-                    }
-                )
-            })
-    }
-}
+// export const _lcLeaseObject = (account, objectID) => {
+//     return (dispatch) => {
+//         return contract.lcLeaseObject(objectID)
+//             .then(result => {
+//                 // console.log("LBO", result);
+//                 account && dispatch(_ltBalanceOf(objectID, account, result.result.leaseTokenAddress))
+//                 return dispatch(
+//                     {
+//                         type: "LEASE_OBJECT_RESULT",
+//                         payload: result
+//                     }
+//                 )
+//             })
+//     }
+// }
 
-export const _lcLeaseObjectRedemption = (objectID) => {
-    return (dispatch) => {
-        return contract.lcLeaseObjectRedemption(objectID)
-            .then(result => {
-                return dispatch(
-                    {
-                        type: "LEASE_OBJECT_REDEMPTION_RESULT",
-                        payload: result
-                    }
-                )
-            })
-    }
-}
+// export const _lcLeaseObjectCycle = (objectID) => {
+//     return (dispatch) => {
+//         return contract.lcLeaseObjectCycle(objectID)
+//             .then(result => {
+//                 return dispatch(
+//                     {
+//                         type: "LEASE_OBJECT_CYCLE_RESULT",
+//                         payload: result
+//                     }
+//                 )
+//             })
+//     }
+// }
+
+// export const _lcLeaseObjectRedemption = (objectID) => {
+//     return (dispatch) => {
+//         return contract.lcLeaseObjectRedemption(objectID)
+//             .then(result => {
+//                 return dispatch(
+//                     {
+//                         type: "LEASE_OBJECT_REDEMPTION_RESULT",
+//                         payload: result
+//                     }
+//                 )
+//             })
+//     }
+// }
 
 export const _lcAmountObjects = () => {
     return (dispatch) => {
@@ -408,9 +437,9 @@ export const _lcAmountObjects = () => {
     }
 }
 
-export const _lcCreateObject = (props, id, months, municipalityID, objectPrice, objectHash, objectLTAddress, objectDealer, objectMCCost, objectMOCost, account) => {
+export const _lcCreateObject = (props, name, months, municipalityID, objectPrice, objectHash, objectCurrencyID, objectDealer, objectMCCost, objectMOCost, account) => {
     return (dispatch) => {
-        return contract.lcCreateObject(props, id, months, municipalityID, objectPrice, objectHash, objectLTAddress, objectDealer, objectMCCost, objectMOCost, account)
+        return contract.lcCreateObject(props, name, months, municipalityID, objectPrice, objectHash, objectCurrencyID, objectDealer, objectMCCost, objectMOCost, account)
             .then(result => {
                 dispatch(push("/", { path: "members" }))
                 return dispatch(
@@ -567,19 +596,19 @@ export const _lcToClaimDividend = (objectID, account) => {
     }
 }
 
-export const _lcToClaimTotal = (account) => {
-    return (dispatch) => {
-        return contract.lcToClaimTotal(account)
-            .then(result => {
-                return dispatch(
-                    {
-                        type: "TO_CLAIM_TOTAL_RESULT",
-                        payload: result
-                    }
-                )
-            })
-    }
-}
+// export const _lcToClaimTotal = (account) => {
+//     return (dispatch) => {
+//         return contract.lcToClaimTotal(account)
+//             .then(result => {
+//                 return dispatch(
+//                     {
+//                         type: "TO_CLAIM_TOTAL_RESULT",
+//                         payload: result
+//                     }
+//                 )
+//             })
+//     }
+// }
 
 export const _lcClaimDividend = (objectID, account) => {
     return (dispatch) => {
@@ -595,11 +624,11 @@ export const _lcClaimDividend = (objectID, account) => {
     }
 }
 
-export const _lcCreateNewLeaseTokenObject = (props, data, account) => {
+export const _lcCreateNewCrowdFundToken = (props, data, account) => {
     return (dispatch) => {
         dispatch({
             type: "NEW_LEASETOKEN_ADDRESS_RESULT",
-            payload: contract.lcCreateNewLeaseTokenObject(props, data, account)
+            payload: contract.lcCreateNewCrowdFundToken(props, data, account)
         })
     }
 }
@@ -616,19 +645,19 @@ export const _resetEvent = () => ({
 // Lease Data Methods
 
 
-export const _ldGetRaised = (objectID) => {
-    return (dispatch) => {
-        return contract.ldGetRaised(objectID)
-            .then(result => {
-                return dispatch(
-                    {
-                        type: "TOTAL_RAISED_RESULT",
-                        payload: result
-                    }
-                )
-            })
-    }
-}
+// export const _ldGetRaised = (objectID) => {
+//     return (dispatch) => {
+//         return contract.ldGetRaised(objectID)
+//             .then(result => {
+//                 return dispatch(
+//                     {
+//                         type: "TOTAL_RAISED_RESULT",
+//                         payload: result
+//                     }
+//                 )
+//             })
+//     }
+// }
 
 // Lease token Object methods
 export const _ltBalanceOf = (objectID, account, address) => {

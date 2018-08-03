@@ -136,13 +136,15 @@ class Main extends Component {
                     {
                         const event = nextProps.event
                         const newObject = this.props.newObject || ""
-                        if (newObject && event.transactionHash === newObject.txID) {
+                        const newLifeObj = this.props.newLifeObj || ""
+
+                        if (newObject && newLifeObj && event.transactionHash === newObject.txID) {
                             let objectID = event.returnValues.objectID
                             // let newObjData = newObject.data
-                            // newObjData["objectID"] = objectID
+                            newLifeObj["objectID"] = objectID
 
                             // let data = {
-                            //     module: "membersobj",
+                            //     module: "crowdfundobj",
                             //     result: "members",
                             //     query: {
                             //         "_id": newObject["id"]
@@ -151,19 +153,27 @@ class Main extends Component {
                             // }
                             // cc.log(data)
 
-                            const member = this.props.member
-                            if (!member["objectID"]) {
-                                member["objectID"] = objectID
-                                this.props._setObject(member)
-                            }
+                            // const member = this.props.member
+                            // if (!member["objectID"]) {
+                            //     member["objectID"] = objectID
+                            //     this.props._setObject(member)
+                            // }
 
                             // this.props._updateContractData(this.props, data)
 
-                            // this.props._writeNewContractData(this.props, data)
+
+                            let data = {
+                                module: "crowdfundobj",
+                                result: "members",
+                                data: newLifeObj
+                            }
+
+                            cc.log(data)
+                            this.props._writeNewContractData(this.props, data)
 
                             // const townSelected = this.props.towns[this.props.town]
                             // setTimeout(() => this.props._fetchMembers(this.props, townSelected["municipalityID"], this.props.account), 1000)
-                            setTimeout(() => this.props._fetchMembers(this.props, "1", this.props.account), 1000)
+                            // setTimeout(() => this.props._fetchMembers(this.props, "1", this.props.account), 1000)
                             // this.props._setEventStatus({ eventAddNewObject: true, objectID: objectID }); setTimeout(() => { this.lcEventAddNewObjectUnsubscribe(); this.props._reloadTokens() }, 1000);
                         }
 
@@ -243,7 +253,7 @@ class Main extends Component {
                         break;
                     }
 
-                case "NewLeaseTokenObject":
+                case "NewCrowdFundToken":
                     {
                         let alert = {
                             title: "New Crowdfunding contract created !",
@@ -396,11 +406,11 @@ class Main extends Component {
                 <div className="beforeNav container smallText">
                     <div className={this.state.searchbarCondition ? "mainBody search-is-open" : "mainBody search-is-close"}>
                         <div className="body1">
-                            {
+                            {/*
                                 registered && <button className="profileicon flatcon pull-left" onClick={() => this.props.history.push("/", { path: "profile" })}>
                                     <span className="flaticon-man-user flatcon "></span>
                                 </button>
-                            }
+                            */}
                             Duurzame Zaken . IO
                     {
                                 (path === "members") && <span className="flaticon-search flatcon pull-right" onClick={() => this.handleClick()}></span>
@@ -424,6 +434,7 @@ class Main extends Component {
                     <span onClick={() => this.props.history.push("/", { path: "main" })} style={{ cursor: "pointer", fontWeight: (["main", "home"].indexOf(path) !== -1) ? "800" : "100" }}>Thuis</span> {" "}
                     <span onClick={() => this.props.history.push("/", { path: "addnewlife" })} style={{ cursor: "pointer", fontWeight: (path === "addnewlife") ? "800" : "100" }}>Duurzaam</span>{" "}
                     <span onClick={() => this.props.history.push("/", { path: "members" })} style={{ cursor: "pointer", fontWeight: (path === "members") ? "800" : "100" }}>Zaken</span>{" "}
+                    {registered && <span onClick={() => this.props.history.push("/", { path: "profile" })} style={{ cursor: "pointer", fontWeight: (path === "profile") ? "800" : "100" }}>IK</span>}{" "}
                     {/*<span onClick={() => this.props.towns && this.props.history.push("/", { path: "members" })} style={{ cursor: this.props.towns ? "pointer" : "not-allowed", fontWeight: (path === "members") ? "800" : "100" }}>LEDEN</span>{" "}*/}
                 </nav>
 
