@@ -24,7 +24,7 @@ app.listen(4567);
 web3.subscribeEvents(io) // subscribe to events
 
 // setTimeout(() => {
-//     web3.createNewLeaseTokenObject("0x423B7B8Da5ec685130670A978a1A680dFa27c879")
+//     web3.createNewCrowdFundToken("0x423B7B8Da5ec685130670A978a1A680dFa27c879")
 // }, 5000);
 
 /**

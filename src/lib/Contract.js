@@ -15,22 +15,22 @@ import cc from './utils';
 
 class Contract {
     constructor() {
-        this.spender = "0xA5609cfbb89129BA1e0a4D91f5CFFAd63fA00053" // Lease Token Contract address as spender for Approve / Allowance methods
+        this.spender = "0x8C0F39899b372090E41B3b2dec3b79821D8F000C" // Lease Token Contract address as spender for Approve / Allowance methods
         this.contracts = {
             euroToken: {
-                address: "0x7612d4Ad91829b166424c01ce616CEd9146ee69A",
-                abi: [{ "constant": false, "inputs": [{ "name": "_spender", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "approve", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_from", "type": "address" }, { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "transferFrom", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "newUser", "type": "address" }], "name": "addAuthorization", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_to", "type": "address" }, { "name": "_amount", "type": "uint256" }], "name": "mint", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_value", "type": "uint256" }], "name": "burn", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_owner", "type": "address" }, { "name": "_spender", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "approveByLeasecontract", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_owner", "type": "address" }], "name": "balanceOf", "outputs": [{ "name": "balance", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [{ "name": "", "type": "address", "value": "0x60516aa74f455f642c66fa1ed1e77c553da4be17" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "existingUser", "type": "address" }], "name": "removeAuthorization", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "transfer", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }], "name": "authorization", "outputs": [{ "name": "", "type": "bool", "value": false }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_owner", "type": "address" }, { "name": "_spender", "type": "address" }], "name": "allowance", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "newOwner", "type": "address" }], "name": "transferOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "from", "type": "address" }, { "indexed": true, "name": "to", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Transfer", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "owner", "type": "address" }, { "indexed": true, "name": "spender", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Approval", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "burner", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Burn", "type": "event" }]
+                address: "0xa90448636411D1fdb7ac9bb5337B28E717aaf27E",
+                abi: [{ "constant": false, "inputs": [{ "name": "_spender", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "approve", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_from", "type": "address" }, { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "transferFrom", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "newUser", "type": "address" }], "name": "addAuthorization", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_to", "type": "address" }, { "name": "_amount", "type": "uint256" }], "name": "mint", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_value", "type": "uint256" }], "name": "burn", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_owner", "type": "address" }], "name": "balanceOf", "outputs": [{ "name": "balance", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [{ "name": "", "type": "address", "value": "0x60516aa74f455f642c66fa1ed1e77c553da4be17" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "existingUser", "type": "address" }], "name": "removeAuthorization", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "transfer", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_owner", "type": "address" }, { "name": "_spender", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "approveByCrowdfundcontract", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }], "name": "authorization", "outputs": [{ "name": "", "type": "bool", "value": false }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_owner", "type": "address" }, { "name": "_spender", "type": "address" }], "name": "allowance", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "newOwner", "type": "address" }], "name": "transferOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "from", "type": "address" }, { "indexed": true, "name": "to", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Transfer", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "owner", "type": "address" }, { "indexed": true, "name": "spender", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Approval", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "burner", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Burn", "type": "event" }]
             },
-            LeaseData: {
-                address: "0xD8Bce5151Aa7ee3630b93B9A75825eb8E3Af83f6",
-                abi: [{ "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "getDealer", "outputs": [{ "name": "", "type": "address", "value": "0x" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_dealer", "type": "address" }], "name": "setDealer", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "getDriver", "outputs": [{ "name": "", "type": "address", "value": "0x" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "setDeactiveTime", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "getRaised", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_deliveryDate", "type": "uint256" }], "name": "setActiveTime", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "newUser", "type": "address" }], "name": "addAuthorization", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "uint256" }], "name": "leasecbjectcycle", "outputs": [{ "name": "crowdsaleClosed", "type": "bool", "value": false }, { "name": "objectActive", "type": "bool", "value": false }, { "name": "objectActiveTime", "type": "uint256", "value": "0" }, { "name": "objectDeactiveTime", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "uint256" }], "name": "leaseobject", "outputs": [{ "name": "leaseTokenAddress", "type": "address", "value": "0x0000000000000000000000000000000000000000" }, { "name": "objectDealerAddress", "type": "address", "value": "0x0000000000000000000000000000000000000000" }, { "name": "objectDriverAddress", "type": "address", "value": "0x0000000000000000000000000000000000000000" }, { "name": "objectPrice", "type": "uint256", "value": "0" }, { "name": "monthlyCapitalCost", "type": "uint256", "value": "0" }, { "name": "monthlyOperatingCost", "type": "uint256", "value": "0" }, { "name": "objectContractHash", "type": "bytes", "value": "0x" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "getCrowdsaleClosed", "outputs": [{ "name": "", "type": "bool", "value": false }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_owner", "type": "address" }], "name": "getLastCapitalPayout", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_leasetoken", "type": "address" }], "name": "setLeaseToken", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_hash", "type": "bytes" }], "name": "setHash", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "getHash", "outputs": [{ "name": "", "type": "bytes" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_driver", "type": "address" }], "name": "setDriver", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_operation", "type": "uint256" }], "name": "setOperationPaid", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "getOperatingCost", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [{ "name": "", "type": "address", "value": "0x60516aa74f455f642c66fa1ed1e77c553da4be17" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "existingUser", "type": "address" }], "name": "removeAuthorization", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_owner", "type": "address" }, { "name": "_lastCapitalPayout", "type": "uint256" }], "name": "setLastCapitalPayout", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_capital", "type": "uint256" }], "name": "setCapitalPaid", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_crowdsale", "type": "bool" }], "name": "setCrowdsaleClosed", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "getLeaseToken", "outputs": [{ "name": "", "type": "address", "value": "0x" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "getCapitalCost", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_capitalCost", "type": "uint256" }], "name": "setCapitalCost", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "uint256" }], "name": "leaseobjecttransactions", "outputs": [{ "name": "totalRaised", "type": "uint256", "value": "0" }, { "name": "totalCapitalPaid", "type": "uint256", "value": "0" }, { "name": "totalOperationPaid", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "getActiveTime", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "getActive", "outputs": [{ "name": "", "type": "bool", "value": false }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "getDeactiveTime", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }], "name": "authorization", "outputs": [{ "name": "", "type": "bool", "value": false }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "getOperationPaid", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "getCapitalPaid", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_active", "type": "bool" }], "name": "setActive", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "getPrice", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "newOwner", "type": "address" }], "name": "transferOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_monthlyOperatingCost", "type": "uint256" }], "name": "setOperatingCost", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_raised", "type": "uint256" }], "name": "setRaised", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_price", "type": "uint256" }], "name": "setPrice", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }]
+            CrowdFundData: {
+                address: "0x6b1e7436916b374cabAC9CF32388f2D6dc8BC807",
+                abi: [{ "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_key", "type": "string" }], "name": "getBytes", "outputs": [{ "name": "", "type": "bytes", "value": "0x" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_key", "type": "string" }, { "name": "_value", "type": "address" }], "name": "setAddr", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_TokenFactoryAddress", "type": "address" }], "name": "setTokenFactory", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_key", "type": "string" }], "name": "getAddr", "outputs": [{ "name": "", "type": "address", "value": "0x0000000000000000000000000000000000000000" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [], "name": "getObjectID", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_cid", "type": "uint256" }, { "name": "_existingCurrency", "type": "address" }], "name": "removeCurrencyType", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_key", "type": "string" }, { "name": "_value", "type": "string" }], "name": "setString", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_key", "type": "string" }, { "name": "_value", "type": "bytes" }], "name": "setBytes", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_key", "type": "string" }, { "name": "_owner", "type": "address" }], "name": "getExtraInt", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_key", "type": "string" }, { "name": "_value", "type": "bool" }], "name": "setBool", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [{ "name": "", "type": "address", "value": "0x60516aa74f455f642c66fa1ed1e77c553da4be17" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "getTokenFactory", "outputs": [{ "name": "", "type": "address", "value": "0xe8d66f160a8c9d604ac9b2291a6980720cbf9b19" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_key", "type": "string" }], "name": "getString", "outputs": [{ "name": "", "type": "string", "value": "" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_key", "type": "string" }], "name": "getInt", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_cid", "type": "uint256" }], "name": "viewCurrencyType", "outputs": [{ "name": "", "type": "address", "value": "0xa90448636411d1fdb7ac9bb5337b28e717aaf27e" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_cid", "type": "uint256" }, { "name": "_newCurrency", "type": "address" }], "name": "addCurrencyType", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_key", "type": "string" }, { "name": "_value", "type": "uint256" }], "name": "setInt", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_existingUser", "type": "address" }], "name": "removeUserAuthorization", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_key", "type": "string" }, { "name": "_owner", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "setExtraInt", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_key", "type": "string" }], "name": "getBool", "outputs": [{ "name": "", "type": "bool", "value": false }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_user", "type": "address" }], "name": "viewUserAuthorization", "outputs": [{ "name": "", "type": "bool", "value": false }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "objectID_", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_newUser", "type": "address" }], "name": "addUserAuthorization", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "newOwner", "type": "address" }], "name": "transferOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "name": "_tokenFactory", "type": "address", "index": 0, "typeShort": "address", "bits": "", "displayName": "&thinsp;<span class=\"punctuation\">_</span>&thinsp;token Factory", "template": "elements_input_address", "value": "0xE8d66F160a8c9d604AC9b2291A6980720CbF9b19" }, { "name": "_firstCurrency", "type": "address", "index": 1, "typeShort": "address", "bits": "", "displayName": "&thinsp;<span class=\"punctuation\">_</span>&thinsp;first Currency", "template": "elements_input_address", "value": "0xa90448636411D1fdb7ac9bb5337B28E717aaf27E" }], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }]
             },
-            LeaseTokenContract: {
+            CrowdFundContract: {
                 address: this.spender,
-                abi: [{ "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_amount", "type": "uint256" }], "name": "investInObject", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "claimInvestment", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_objectPrice", "type": "uint256" }, { "name": "_objectHash", "type": "bytes" }, { "name": "_objectDealerAddr", "type": "address" }, { "name": "_addressOfLeaseToken", "type": "address" }, { "name": "_monthlyCapitalCost", "type": "uint256" }, { "name": "_monthlyOperatingCost", "type": "uint256" }], "name": "createObject", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "newUser", "type": "address" }], "name": "addAuthorization", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_newUser", "type": "address" }], "name": "addUser", "outputs": [{ "name": "", "type": "bool" }], "payable": true, "stateMutability": "payable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_driver", "type": "address" }], "name": "updateDriver", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_capital", "type": "uint256" }, { "name": "_operation", "type": "uint256" }], "name": "payCapitalAndOperation", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "d", "outputs": [{ "name": "", "type": "address", "value": "0xd8bce5151aa7ee3630b93b9a75825eb8e3af83f6" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [{ "name": "", "type": "address", "value": "0x60516aa74f455f642c66fa1ed1e77c553da4be17" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "deactivate", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "existingUser", "type": "address" }], "name": "removeAuthorization", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_owner", "type": "address" }], "name": "sumBalanceOf", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "toggleCrowdsale", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_owner", "type": "address" }], "name": "toClaimTotal", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_owner", "type": "address" }], "name": "toClaimPerObject", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_operatingCost", "type": "uint256" }], "name": "updateOperationCost", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_deliveryDate", "type": "uint256" }], "name": "buyAndActivate", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }], "name": "authorization", "outputs": [{ "name": "", "type": "bool", "value": false }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "Euro", "outputs": [{ "name": "", "type": "address", "value": "0x7612d4ad91829b166424c01ce616ced9146ee69a" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_amount", "type": "uint256" }], "name": "updateCapitalCostInLifecycle", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "transferLeaseToken", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "newOwner", "type": "address" }], "name": "transferOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "name": "_addressOfEuroToken", "type": "address", "index": 0, "typeShort": "address", "bits": "", "displayName": "&thinsp;<span class=\"punctuation\">_</span>&thinsp;address Of Euro Token", "template": "elements_input_address", "value": "0x7612d4Ad91829b166424c01ce616CEd9146ee69A" }, { "name": "_addressOfLeaseData", "type": "address", "index": 1, "typeShort": "address", "bits": "", "displayName": "&thinsp;<span class=\"punctuation\">_</span>&thinsp;address Of Lease Data", "template": "elements_input_address", "value": "0xD8Bce5151Aa7ee3630b93B9A75825eb8E3Af83f6" }, { "name": "_objectIDlastVersion", "type": "uint256", "index": 2, "typeShort": "uint", "bits": "256", "displayName": "&thinsp;<span class=\"punctuation\">_</span>&thinsp;object I Dlast Version", "template": "elements_input_uint", "value": "" }], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "newUser", "type": "address" }], "name": "CreateNewUser", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "objectID", "type": "uint256" }], "name": "AddNewObject", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "objectID", "type": "uint256" }], "name": "BoughtNewObject", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "_id", "type": "uint256" }, { "indexed": false, "name": "_capital", "type": "uint256" }, { "indexed": false, "name": "_operation", "type": "uint256" }], "name": "PayCapitalAndOperation", "type": "event" }]
+                abi: [{ "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_amount", "type": "uint256" }], "name": "investInObject", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_objectPrice", "type": "uint256" }, { "name": "_objectHash", "type": "bytes" }, { "name": "_fundReceiver", "type": "address" }, { "name": "_currencyId", "type": "uint256" }, { "name": "_fundTokenName", "type": "string" }, { "name": "_monthlyCapitalCost", "type": "uint256" }, { "name": "_monthlyOperatingCost", "type": "uint256" }], "name": "createObject", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "transferCrowdfundToken", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "payCapitalAndOperation", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "d", "outputs": [{ "name": "", "type": "address", "value": "0x6b1e7436916b374cabac9cf32388f2d6dc8bc807" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [{ "name": "", "type": "address", "value": "0x60516aa74f455f642c66fa1ed1e77c553da4be17" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_owner", "type": "address" }], "name": "toClaimTotal", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_owner", "type": "address" }], "name": "toClaimPerObject", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_deliveryDate", "type": "uint256" }], "name": "buyAndActivate", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_currencyId", "type": "uint256" }, { "name": "_idArray", "type": "uint256[]" }], "name": "claimMultipleCapital", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_newUser", "type": "address" }, { "name": "_currencyId", "type": "uint256" }], "name": "addUser", "outputs": [{ "name": "", "type": "bool" }], "payable": true, "stateMutability": "payable", "type": "function" }, { "constant": false, "inputs": [{ "name": "newOwner", "type": "address" }], "name": "transferOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "name": "_addressOfCrowdfundData", "type": "address", "index": 0, "typeShort": "address", "bits": "", "displayName": "&thinsp;<span class=\"punctuation\">_</span>&thinsp;address Of Crowdfund Data", "template": "elements_input_address", "value": "0x6b1e7436916b374cabAC9CF32388f2D6dc8BC807" }], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "claimed", "type": "bool" }], "name": "Claim", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "newUser", "type": "address" }], "name": "CreateNewUser", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "objectID", "type": "uint256" }], "name": "AddNewObject", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "objectID", "type": "uint256" }, { "indexed": false, "name": "amount", "type": "uint256" }], "name": "InvestInObject", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "objectID", "type": "uint256" }], "name": "BoughtNewObject", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "objectID", "type": "uint256" }, { "indexed": false, "name": "capital", "type": "uint256" }, { "indexed": false, "name": "operation", "type": "uint256" }], "name": "PayCapitalAndOperation", "type": "event" }]
             },
-            LeaseTokenObject: {
-                abi: [{ "constant": true, "inputs": [], "name": "totalSupply", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_from", "type": "address" }, { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "transferFrom", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "newUser", "type": "address" }], "name": "addAuthorization", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_to", "type": "address" }, { "name": "_amount", "type": "uint256" }], "name": "mint", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_owner", "type": "address" }], "name": "balanceOf", "outputs": [{ "name": "balance", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "existingUser", "type": "address" }], "name": "removeAuthorization", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }], "name": "authorization", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "newOwner", "type": "address" }], "name": "transferOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "name": "_leasecontract", "type": "address" }, { "name": "_admin", "type": "address" }], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "from", "type": "address" }, { "indexed": true, "name": "to", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Transfer", "type": "event" }]
+            CrowdFundToken: {
+                abi: [{ "constant": false, "inputs": [{ "name": "_spender", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "approve", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_from", "type": "address" }, { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "transferFrom", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_owner", "type": "address" }], "name": "balanceOf", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "transfer", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_owner", "type": "address" }, { "name": "_spender", "type": "address" }], "name": "allowance", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "inputs": [{ "name": "_to", "type": "address", "index": 0, "typeShort": "address", "bits": "", "displayName": "&thinsp;<span class=\"punctuation\">_</span>&thinsp;to", "template": "elements_input_address", "value": "0x5de17631Cf829d754aBA3e78F6379aa1299aB2CE" }, { "name": "_amount", "type": "uint256", "index": 1, "typeShort": "uint", "bits": "256", "displayName": "&thinsp;<span class=\"punctuation\">_</span>&thinsp;amount", "template": "elements_input_uint", "value": "444" }], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "owner", "type": "address" }, { "indexed": true, "name": "spender", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Approval", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "from", "type": "address" }, { "indexed": true, "name": "to", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Transfer", "type": "event" }]
             }
         }
 
@@ -53,10 +53,10 @@ class Contract {
         this.investInObjectTxID = null
         this.claimDividendTxID = null
         this.payFeeTxID = null
-        this.LeaseTokenContract = null
+        this.CrowdFundContract = null
         this.euroToken = null
-        this.LeaseData = null
-        this.LeaseTokenObjectContract = null
+        this.CrowdFundData = null
+        this.CrowdFundTokenContract = null
     }
 
     getAccount = () => {
@@ -107,23 +107,23 @@ class Contract {
         // this.filter.new()
 
         const contract = new EthJsContract(eth)
-        // const LeaseTokenContract = 
+        // const CrowdFundContract = 
         this.euroToken = contract(this.contracts.euroToken.abi).at(this.contracts.euroToken.address)
-        this.LeaseTokenContract = contract(this.contracts.LeaseTokenContract.abi).at(this.contracts.LeaseTokenContract.address)
-        this.LeaseData = contract(this.contracts.LeaseData.abi).at(this.contracts.LeaseData.address)
-        this.LeaseTokenObjectContract = contract(this.contracts.LeaseTokenObject.abi);
+        this.CrowdFundContract = contract(this.contracts.CrowdFundContract.abi).at(this.contracts.CrowdFundContract.address)
+        this.CrowdFundData = contract(this.contracts.CrowdFundData.abi).at(this.contracts.CrowdFundData.address)
+        this.CrowdFundTokenContract = contract(this.contracts.CrowdFundToken.abi);
 
 
-        cc.log("LeaseData: ", this.LeaseData);
+        cc.log("CrowdFundData: ", this.CrowdFundData);
 
         // cc.log("Euro Token: ", this.euroToken);
-        //cc.log("Lease Token Contract: ", this.LeaseTokenContract);
+        cc.log("Crowd Fund Contract: ", this.CrowdFundContract);
         // this.evEventTransfer()
 
         return {
             // euroToken: this.euroToken,
-            // evToken: this.LeaseTokenContract,
-            // LeaseTokenContract: this.LeaseTokenContract
+            // evToken: this.CrowdFundContract,
+            // CrowdFundContract: this.CrowdFundContract
         }
     }
 
@@ -274,7 +274,7 @@ class Contract {
      * Lease Token Methods
      */
     evEventTransferSubscribe = () => {
-        this.filters.EevTransfer = this.LeaseTokenContract.Transfer()
+        this.filters.EevTransfer = this.CrowdFundContract.Transfer()
         this.filters.EevTransfer.new()
         this.filters.EevTransfer.watch((err, result) => {
             cc.log("EVToken Event Transfer() Result: ", err, result);
@@ -294,7 +294,7 @@ class Contract {
      */
     evMyTokens = (account, objectID) => {
         cc.log(`Fetching EV Tokens for: ${account}, objectID: ${objectID}`);
-        return this.LeaseTokenContract.objectBalanceOf(account, objectID)
+        return this.CrowdFundContract.objectBalanceOf(account, objectID)
             .then(result => {
                 cc.log(`EV TOKENS: ${result[0].toString()}`);
                 // this.setState({ ["evToken_" + objectID]: result[0].toString() })
@@ -304,7 +304,7 @@ class Contract {
 
     // evBalanceOf = (account) => {
     //     cc.log(`Fetching EV Tokens Balance for: ${account}`);
-    //     return this.LeaseTokenContract.balanceOf(account)
+    //     return this.CrowdFundContract.balanceOf(account)
     //         .then(result => {
     //             cc.log(`EV TOKENS BALANCE: ${result[0].toString()}`);
     //             return { evTokenBalance: result[0].toString() }
@@ -316,10 +316,10 @@ class Contract {
      */
 
     lcEventAddNewObjectSubscribe = () => {
-        this.filters.ElcAddNewObject = this.LeaseTokenContract.AddNewObject()
+        this.filters.ElcAddNewObject = this.CrowdFundContract.AddNewObject()
         this.filters.ElcAddNewObject.new()
         this.filters.ElcAddNewObject.watch((err, result) => {
-            cc.log("LeaseTokenContract Event AddNewObject() Result: ", err, result);
+            cc.log("CrowdFundContract Event AddNewObject() Result: ", err, result);
             if (err || result.length > 0) {
                 if (!err)
                     result.map(res => {
@@ -328,7 +328,7 @@ class Contract {
                             let newObjData = this.addNewObject
                             newObjData["objectID"] = objectID
                             let data = {
-                                module: "membersdev2",
+                                module: "membersdev3",
                                 result: "usernames",
                                 query: { "_id": this.addNewObjectID },
                                 data: this.addNewObject
@@ -347,7 +347,7 @@ class Contract {
 
     lcEventAddNewObjectUnsubscribe = () => {
         this.filters.ElcAddNewObject.uninstall((err, result) => {
-            cc.log("LeaseTokenContract Event AddNewObject() Unsubscribe: ", err, result);
+            cc.log("CrowdFundContract Event AddNewObject() Unsubscribe: ", err, result);
             this.addNewObjectTxID = null
             this.addNewObjectID = null
             this.addNewObject = null
@@ -355,10 +355,10 @@ class Contract {
     }
 
     lcEventClaimSubscribe = () => {
-        this.filters.lcClaim = this.LeaseTokenContract.Claim()
+        this.filters.lcClaim = this.CrowdFundContract.Claim()
         this.filters.lcClaim.new()
         this.filters.lcClaim.watch((err, result) => {
-            cc.log("LeaseTokenContract Event Claim() Result: ", err, result);
+            cc.log("CrowdFundContract Event Claim() Result: ", err, result);
             if (err || result.length > 0) { this.props._setEventStatus({ eventClaim: true }); setTimeout(this.lcEventClaimUnsubscribe, 1000); }
 
             // if (err || result.length > 0) {
@@ -378,7 +378,7 @@ class Contract {
 
     lcEventClaimUnsubscribe = () => {
         this.filters.lcClaim.uninstall((err, result) => {
-            cc.log("LeaseTokenContract Event Claim() Unsubscribe: ", err, result);
+            cc.log("CrowdFundContract Event Claim() Unsubscribe: ", err, result);
             this.claimDividendTxID = null
         })
     }
@@ -387,10 +387,10 @@ class Contract {
      * Lease Contract Methods
      */
 
-    lcCreateObject = (props, id, months, municipalityID, objectPrice, objectHash, objectLTAddress, objectDealer, objectMCCost, objectMOCost, account) => {
-        cc.log(`Adding New object for: ${objectPrice}, ${objectHash}, ${objectLTAddress}, ${objectDealer}, ${objectMCCost}, ${objectMOCost}, ${account}`);
+    lcCreateObject = (props, objectName, months, municipalityID, objectPrice, objectHash, objectCurrencyID, objectDealer, objectMCCost, objectMOCost, account) => {
+        cc.log(`Adding New object for: ${objectName}, ${objectPrice}, ${objectHash}, ${objectCurrencyID}, ${objectDealer}, ${objectMCCost}, ${objectMOCost}, ${account}`);
         if (props) this.props = props
-        return this.LeaseTokenContract.createObject(objectPrice, objectHash, objectDealer, objectLTAddress, objectMCCost, objectMOCost, { from: account })
+        return this.CrowdFundContract.createObject(objectPrice, objectHash, objectDealer, objectCurrencyID, objectName, objectMCCost, objectMOCost, { from: account })
             .then(result => {
                 cc.log(`ADD NEW object RESULT: ${result}`);
                 // this.lcEventAddNewObjectSubscribe() // development
@@ -408,20 +408,20 @@ class Contract {
                 // }
                 // return { addNewObjectTxID: result, addNewObjectHash: objectHash, progress: false }
 
-                let data = {
-                    module: "membersobj",
-                    result: "members",
-                    query: {
-                        "_id": id
-                    },
-                    data: { objectTxHash: result }
-                }
-                this.props._updateContractData(this.props, data)
+                // let data = {
+                //     module: "crowdfundobj",
+                //     result: "members",
+                //     query: {
+                //         "_id": id
+                //     },
+                //     data: { objectTxHash: result }
+                // }
+                // this.props._updateContractData(this.props, data)
 
                 return {
                     newObject: {
                         txID: result,
-                        id: id
+                        // id: id
                         // data: {
                         // id: id,
                         // municipalityID: municipalityID,
@@ -442,7 +442,7 @@ class Contract {
 
     lcSumBalanceOf = (account) => {
         cc.log(`Fetching Sum Balance Of: `);
-        return this.LeaseTokenContract.sumBalanceOf(account)
+        return this.CrowdFundContract.sumBalanceOf(account)
             .then(result => {
                 cc.log(`sumBalanceOf RESULT: ${result[0].toNumber()}`);
                 return { sumBalanceOf: result[0].toNumber(), progress: false }
@@ -451,7 +451,7 @@ class Contract {
 
     lcTotalSupply = () => {
         cc.log(`Fetching Total Amount Raised.`);
-        return this.LeaseTokenContract.totalSupply()
+        return this.CrowdFundContract.totalSupply()
             .then(result => {
                 cc.log(`Total Supply RESULT: ${result[0].toNumber()}`);
                 return { totalSupply: result[0].toNumber(), progress: false }
@@ -460,7 +460,7 @@ class Contract {
 
     lcAuthorization = (account) => {
         cc.log(`Checking Authorization for: ${account}`);
-        return this.LeaseTokenContract.authorization(account)
+        return this.CrowdFundData.viewUserAuthorization(account)
             .then(result => {
                 cc.log(`Authorization RESULT: ${result[0]}`);
                 return { account: account, result: result[0] }
@@ -469,7 +469,7 @@ class Contract {
 
     lcAddUser = (user, account) => {
         cc.log(`Add New User: ${user} Auth: ${account}`);
-        return this.LeaseTokenContract.addUser(user, { from: account })
+        return this.CrowdFundContract.addUser(user, { from: account })
             .then(result => {
                 cc.log(`Add New User RESULT: ${result}`);
                 return {
@@ -484,7 +484,7 @@ class Contract {
     lcBuyAndActivate = (objectID, activeDate, account) => {
         let timeStamp = Math.floor(activeDate.getTime() / 1000)
         cc.log(`Buy And Activate Object: ${objectID}, ${timeStamp}`);
-        return this.LeaseTokenContract.buyAndActivate(objectID, timeStamp, { from: account })
+        return this.CrowdFundContract.buyAndActivate(objectID, timeStamp, { from: account })
             .then(result => {
                 cc.log(`Buy And Activate RESULT: ${result}`);
                 return {
@@ -501,7 +501,7 @@ class Contract {
     lcPayCapitalAndOperation = (props, objectID, capital, operation, account) => {
         if (props) this.props = props
         cc.log(`Pay Capital And Operation: ${objectID}, ${capital}, ${operation}`);
-        return this.LeaseTokenContract.payCapitalAndOperation(objectID, capital, operation, { from: account })
+        return this.CrowdFundContract.payCapitalAndOperation(objectID, capital, operation, { from: account })
             .then(result => {
                 cc.log(`Pay Capital And Operation: ${result}`);
                 return {
@@ -512,7 +512,7 @@ class Contract {
 
     lcLeaseObject = (objectID) => {
         cc.log(`Fetch object Details for ID: ${objectID}`);
-        return this.LeaseData.leaseobject(objectID)
+        return this.CrowdFundData.leaseobject(objectID)
             .then(result => {
                 cc.log(`Details of object ID ${objectID} => `, result);
                 return { id: objectID, result: result }
@@ -521,7 +521,7 @@ class Contract {
 
     lcLeaseObjectCycle = (objectID) => {
         cc.log(`Fetch object Cycle Details for ID: ${objectID}`);
-        return this.LeaseData.leasecbjectcycle(objectID)
+        return this.CrowdFundData.leasecbjectcycle(objectID)
             .then(result => {
                 cc.log(`Details of object cycle ID ${objectID} => `, result);
                 return {
@@ -538,7 +538,7 @@ class Contract {
 
     lcLeaseObjectRedemption = (objectID) => {
         cc.log(`Fetch object Redemption Details for ID: ${objectID}`);
-        return this.LeaseTokenContract.leaseobjectredemption(objectID)
+        return this.CrowdFundContract.leaseobjectredemption(objectID)
             .then(result => {
                 cc.log(`Details of object redemption ID ${objectID} => `, result);
                 return {
@@ -557,7 +557,7 @@ class Contract {
 
     lcAmountObjects = () => {
         cc.log(`Fetch Crowd Sale Closed Objects Count:`);
-        return this.LeaseTokenContract.amountObjects()
+        return this.CrowdFundContract.amountObjects()
             .then(result => {
                 cc.log(`Crowd Sale Closed Objects Count => `, result, result[0].toNumber());
                 return { crowdsaleClosed: result[0].toNumber() }
@@ -566,7 +566,7 @@ class Contract {
 
     lcInvestInObject = (objectID, amount, account) => {
         cc.log(`Calling Invest In Object For object ID: ${objectID}, ${amount}, ${account}`);
-        return this.LeaseTokenContract.investInObject(objectID, amount || "0", { from: account })
+        return this.CrowdFundContract.investInObject(objectID, amount || "0", { from: account })
             .then(result => {
                 cc.log(`Invest In Object RESULT: ${result}`);
                 // this.lcEventAddNewObjectSubscribe()    // contract missing event call, not calling this 
@@ -580,7 +580,7 @@ class Contract {
     lcPayFee = (objectID, account) => {
         // account = "0xA30b6a96D652E99AA25162B2b9165f2c3f683ACc"
         cc.log(`Calling Pay Fee: ${objectID}, ${account}`);
-        return this.LeaseTokenContract.payFee(objectID, { from: account })
+        return this.CrowdFundContract.payFee(objectID, { from: account })
             .then(result => {
                 cc.log(`payFee RESULT: ${result}`);
                 // this.euroEventTransferSubscribe() //development
@@ -592,7 +592,7 @@ class Contract {
 
     lcActivateDeactivateObject = (objectID, account) => {
         cc.log(`Calling Activate Deactivate Object: ${objectID}, ${account}`);
-        return this.LeaseTokenContract.activateDeactivateObject(objectID, { from: account })
+        return this.CrowdFundContract.activateDeactivateObject(objectID, { from: account })
             .then(result => {
                 cc.log(`Activate Deactivate Object RESULT: ${result}`);
                 this.activateDeactivateObjectTxID = result
@@ -602,7 +602,7 @@ class Contract {
 
     lcToClaimDividend = (objectID, account) => {
         cc.log(`Calling Read Investor To Claim.`);
-        return this.LeaseTokenContract.toClaimDividend(account, objectID)
+        return this.CrowdFundContract.toClaimDividend(account, objectID)
             .then(result => {
                 cc.log(`ToClaimDividend RESULT: ${result[0].toString()}`);
                 return { unClaimedRedemption: result[0].toString(), progress: false }
@@ -610,8 +610,9 @@ class Contract {
     }
 
     lcToClaimTotal = (account) => {
-        cc.log(`Calling To Claim Total.`);
-        return this.LeaseTokenContract.toClaimTotal(account)
+        cc.log(`Calling To Claim Total.`); // change included as transaction 
+        // return this.CrowdFundContract.toClaimTotal(account, { from: account })
+        return this.CrowdFundContract.toClaimTotal(account)
             .then(result => {
                 cc.log(`ToClaimTotal RESULT: ${result[0].toNumber()}`);
                 return { unClaimedRedemption: result[0].toNumber() }
@@ -621,7 +622,7 @@ class Contract {
 
     lcClaimDividend = (objectID, account) => {
         cc.log(`Calling Claim Interest And Redemption.`);
-        return this.LeaseTokenContract.claimDividend(objectID, { from: account })
+        return this.CrowdFundContract.claimDividend(objectID, { from: account })
             .then(result => {
                 cc.log(`claimDividend RESULT: ${result}`);
                 // this.lcEventClaimSubscribe() //development
@@ -630,16 +631,16 @@ class Contract {
             })
     }
 
-    lcCreateNewLeaseTokenObject = (props, data, account) => {
+    lcCreateNewCrowdFundToken = (props, data, account) => {
         if (props) this.props = props
 
-        cc.log("Creating NewLeaseTokenObject");
+        cc.log("Creating NewCrowdFundToken");
         let self = this
         let _leasecontract = this.spender
         let _admin = "0x60516AA74F455f642C66FA1eD1e77C553da4be17"
         let hash = data["data"]["objectHash"]
 
-        this.LeaseTokenObjectContract.new(
+        this.CrowdFundTokenContract.new(
             _leasecontract,
             _admin,
             {
@@ -650,7 +651,7 @@ class Contract {
                 // cc.log(e, contract);
                 if (contract && !e) {
                     self.props._setObject({
-                        newLeaseTokenObject: {
+                        newCrowdFundToken: {
                             txID: contract,
                             hash: hash
                         }
@@ -671,7 +672,7 @@ class Contract {
                                     cc.log("CONTRACT ADDRESS: ", res.contractAddress)
                                     contractAddress = res.contractAddress
                                     if (contractAddress) {
-                                        let newEvent = { event: "NewLeaseTokenObject", ...res }
+                                        let newEvent = { event: "NewCrowdFundToken", ...res }
                                         self.props._newLeaseTokenAddress({ newLeaseTokenAddress: contractAddress })
                                         self.props._setEvent(newEvent)
                                         self.props._sendUserEvent(newEvent)
@@ -691,7 +692,7 @@ class Contract {
 
     ldGetRaised = (objectID) => {
         cc.log(`Calling Total Raised.`);
-        return this.LeaseData.getRaised(objectID)
+        return this.CrowdFundData.getRaised(objectID)
             .then(result => {
                 cc.log(`getRaised RESULT: ${result[0].toNumber()}`);
                 return {
@@ -708,7 +709,7 @@ class Contract {
     ltBalanceOf = (objectID, account, address) => {
         cc.log(`Fetching Lease Token Balance Of: `);
 
-        return this.LeaseTokenObjectContract.at(address).balanceOf(account)
+        return this.CrowdFundTokenContract.at(address).balanceOf(account)
             .then(result => {
                 cc.log(`EV TOKENS: ${result[0].toString()}`);
                 // this.setState({ ["evToken_" + objectID]: result[0].toString() })
@@ -719,7 +720,7 @@ class Contract {
     ltTotalSupply = (objectID, address) => {
         cc.log(`Fetching Lease Token Total Supply: `);
 
-        return this.LeaseTokenObjectContract.at(address).totalSupply()
+        return this.CrowdFundTokenContract.at(address).totalSupply()
             .then(result => {
                 cc.log(`TOTAL SUPPLY: ${result[0].toString()}`);
                 return { id: objectID, result: result[0].toString() }
