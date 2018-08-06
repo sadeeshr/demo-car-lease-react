@@ -9,6 +9,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 // import Slider from "react-slick";
 
+import Slider from 'react-rangeslider'
+import 'react-rangeslider/lib/index.css'
+
 import Swiper from 'react-id-swiper';
 
 class AddNewLifeConfigurator extends Component {
@@ -21,9 +24,46 @@ class AddNewLifeConfigurator extends Component {
             lobjMileage: '',
             modalCondition: false,
             // active: 0
+            valEuroPer: 25,		
+            valMaanden: 100,		
+            valKm: 9000,
+            valCar: 8,
+            valEuro: 40000,	
         }
 
     }
+
+    handleChangevalEuroPer = (value) => {
+        this.setState({
+            valEuroPer: value
+        })
+      }
+
+      handleChangevalMaanden = (value) => {
+        this.setState({
+            valMaanden: value
+        })
+      }
+
+      handleChangevalKm = (value) => {
+        this.setState({
+            valKm: value
+        })
+      }
+
+      handleChangevalCar = (value) => {
+        this.setState({
+            valCar: value
+        })
+      }
+
+      handleChangevalEuro = (value) => {
+        this.setState({
+            valEuro: value
+        })
+      }
+
+
 
     modalClick() {
         this.setState({
@@ -151,7 +191,7 @@ class AddNewLifeConfigurator extends Component {
         let monthlycapcost = ""
         let monthlyopcost = parseFloat("0.00")
 
-
+        const { valKm, valEuroPer, valMaanden, valCar, valEuro } = this.state
 
         if (!leasetype)
             leasetype = leaseobject && leaseobject["leasetypes"][0]
@@ -267,6 +307,7 @@ class AddNewLifeConfigurator extends Component {
 
         const params = {
             shouldSwiperUpdate: true,
+            noSwiping: true,
             navigation: {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev'
@@ -277,6 +318,11 @@ class AddNewLifeConfigurator extends Component {
 
         return (
             <div className="content-border">
+             <div className="border-bottom-1  fix-small-dev">
+                    <div className="container">
+                        <span className="lh-40">RENDEMENT INVESTEERDER: <strong className="fs-20 color-green"> 6.6 %</strong></span>
+                    </div>
+                </div>
                 <div className="mainContentCon foot">
 
                     <div hidden className="navCon">
@@ -309,6 +355,8 @@ class AddNewLifeConfigurator extends Component {
                                                     <div style={{ display: !lobject.active ? "none" : "" }} className="newLifeItem" onWheel={() => cc.log("KEY DOWN: ", i)} onClick={() => this.setState({ active: i, lobjectSelected: true })} tabIndex="0">
                                                         <div className="col-9">
                                                             <span className="newLifeItem-title">{lobject.name.toUpperCase()}</span>
+                                                            <p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p>
+                                                            {/* <p className="p-euro " style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p> */}
                                                         </div>
                                                         <div className="col-3" style={{ height: '29px' }}>
                                                             <div hidden={lobject.objecttype !== "Car"} className="text-right" >
@@ -320,9 +368,13 @@ class AddNewLifeConfigurator extends Component {
                                                         <div className="col-12">
                                                             <div className="newlifeImage" style={{ backgroundImage: `url(${lobject.image})` }}>
                                                                 {/* <img src={lobject.image} alt={lobject.name} /> */}
+                                                                <span className="target fs-13">
+                                                                    <strong className="fs-15">Target:</strong>
+                                                                    <span className="color-green"> 40.000 </span>
+                                                                    EUR</span>
                                                             </div>
                                                         </div>
-                                                        <div className="col-12 mb-15" style={{ height: "46px" }}>
+                                                        {/* <div className="col-12 mb-15" style={{ height: "46px" }}>
                                                             <div hidden={lobject.objecttype !== "Car"} className="col-12" >
                                                                 <div className="col-7">
                                                                     <div>
@@ -341,43 +393,79 @@ class AddNewLifeConfigurator extends Component {
                                                                     <span className="color-default color-blue"></span>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div className="mb-5 d-ib">
-                                                            <div className="col-7">
-                                                                <label className="nl-label">Coin Name</label>
-                                                            </div>
-                                                            <div className="col-5">
-                                                                <div className="nl-inp">
-                                                                    <input className="nl-inp" value={this.state.coinName} onChange={(e) => this.setState({ coinName: e.target.value })} type="text" />
-                                                                    {/*<select value={ltypeId}
-                                                                        onChange={e => {
+                                                        </div> */}
 
-                                                                            this.setState({ leasetypeid: e.target.value })
-                                                                        }}>
-                                                                        {
-                                                                            lobject.leasetypes.map((lobj, j) => {
-                                                                                return <option key={j} value={j}>{lobj.type}</option>
-                                                                            })
-                                                                        }
-                                                                    </select>*/}
+                                                         <div className="mb-5 d-ib fs-13">
+                                                            <div className="col-12">
+                                                                <div className='value'>
+                                                                    <div className="col-3 text-right"></div>
+                                                                    <div className="col-9 text-left ti-15">Kies &nbsp;
+                                                                        <strong className="fs-16">{valCar}{/* car name here */}</strong>
+                                                                    </div>
                                                                 </div>
+                                                            </div>
+                                                            <div className="col-12 slider-style2">
+                                                                <Slider
+                                                                min={0}
+                                                                max={20}
+                                                                value={valCar}
+                                                                orientation='horizontal'
+                                                                onChange={this.handleChangevalCar}
+                                                                />
                                                             </div>
                                                         </div>
-                                                        <div className="mb-5 d-ib opacity03">
-                                                            <div className="col-7">
-                                                                <label className="nl-label">Euro per Maand</label>
-                                                            </div>
-                                                            <div className="col-5">
-                                                                <div className="nl-inp">
-                                                                    {/*<input className="nl-inp" value={this.state.carFee || car.fee} onChange={(e) => this.setState({ carFee: e.target.value })} type="text" />*/}
-                                                                    {formatNumber(parseInt(monthlycapcost, 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}
+
+                                                        <div className="mb-5 d-ib fs-13">
+                                                            <div className="col-12">
+                                                                <div className='value'>
+                                                                    <div className="col-3 text-right">{valEuro}</div>
+                                                                    <div className="col-9 text-left ti-15">Prijs&nbsp;
+                                                                        <strong className="fs-16">Te Funden Bedrag</strong>
+                                                                    </div>
                                                                 </div>
+                                                            </div>
+
+                                                            <div className="col-12">
+                                                                {/* <div className="nl-inp">
+                                                                    {leasetype && <input value={price} onChange={(e) => this.setState({ lobjprice: e.target.value })} type="text" />}
+                                                                </div> */}
+                                                                {/*<div className="nl-inp">{}</div>*/ /*formatNumber(parseInt(price, 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })*/}
+                                                                <Slider
+                                                                min={0}
+                                                                max={100000}
+                                                                step={500}
+                                                                value={valEuro}
+                                                                orientation='horizontal'
+                                                                onChange={this.handleChangevalEuro}
+                                                                />
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="mb-5 d-ib fs-13">
+                                                            <div className="col-12">
+                                                                <div className='value'>
+                                                                    <div className="col-3 text-right">{valEuroPer}</div>
+                                                                    <div className="col-9 text-left ti-15">Euro per Maand</div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-12">
+                                                                {/* <div className="nl-inp"> */}
+                                                                    {/*<input className="nl-inp" value={this.state.carFee || car.fee} onChange={(e) => this.setState({ carFee: e.target.value })} type="text" />*/}
+                                                                    {/* {formatNumber(parseInt(monthlycapcost, 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}
+                                                                </div> */}
+                                                                <Slider
+                                                                min={0}
+                                                                max={100}
+                                                                value={valEuroPer}
+                                                                orientation='horizontal'
+                                                                onChange={this.handleChangevalEuroPer}
+                                                                />
                                                             </div>
                                                         </div>
                                                         <div className={
-                                                            (leasetype && leasetype.months === "60") ? "mb-5 d-i" : "mb-5 d-ib opacity03"
+                                                            (leasetype && leasetype.months === "60") ? "mb-5 d-ib fs-13" : "fs-13 mb-5 d-ib opacity03"
                                                         }>
-                                                            <div className="col-7">
+                                                            {/* <div className="col-7">
                                                                 <label className="nl-label">Maanden</label>
                                                             </div>
                                                             <div className="col-5">
@@ -386,25 +474,29 @@ class AddNewLifeConfigurator extends Component {
                                                                         <div className="nl-inp"><input value={this.state.lobjmonths || (leasetype && leasetype.months)} onChange={(e) => this.setState({ lobjmonths: e.target.value })} type="text" /></div>
                                                                         : <div className="nl-inp">{leasetype && leasetype.months}</div>
                                                                 }
-                                                            </div>
-                                                        </div>
-
-                                                        <div className="mb-5 d-ib">
-                                                            <div className="col-7">
-                                                                <label className="nl-label">Prijs</label>
-                                                            </div>
-                                                            <div className="col-5">
-                                                                <div className="nl-inp">
-                                                                    {leasetype && <input value={price} onChange={(e) => this.setState({ lobjprice: e.target.value })} type="text" />}
+                                                            </div> */}
+                                                            <div className="col-12">
+                                                                <div className='value'>
+                                                                    <div className="col-3 text-right">{valMaanden}</div>
+                                                                    <div className="col-9 text-left ti-15">Maanden</div>
                                                                 </div>
-                                                                {/*<div className="nl-inp">{}</div>*/ /*formatNumber(parseInt(price, 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })*/}
+                                                            </div>
+                                                            <div className="col-12">
+                                                                <Slider
+                                                                min={0}
+                                                                max={120}
+                                                                step={3}
+                                                                value={valMaanden}
+                                                                orientation='horizontal'
+                                                                onChange={this.handleChangevalMaanden}
+                                                                />
                                                             </div>
                                                         </div>
 
                                                         <div className={
-                                                            (leasetype && leasetype.type === "Operational") ? "mb-5 d-i" : "mb-5 d-ib opacity03"
+                                                            (leasetype && leasetype.type === "Operational") ? "mb-5 d-ib fs-13" : "mb-5 d-ib fs-13 opacity03"
                                                         }>
-                                                            <div className="col-7">
+                                                            {/* <div className="col-7">
                                                                 <label className="nl-label">{mileageLabel || " "}</label>
                                                             </div>
                                                             <div className="col-5">
@@ -416,10 +508,29 @@ class AddNewLifeConfigurator extends Component {
                                                                         : <div className="nl-inp">{formatNumber(monthlyopcost, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</div>
                                                                 }
 
+                                                            </div> */}
+
+                                                            <div className="col-12">
+                                                                <div className='value'>
+                                                                    <div className="col-3 text-right">{valKm}</div>
+                                                                    <div className="col-9 text-left ti-15">KM per Jaar <span className="fs-9">(10 cent per km)</span></div>
+                                                                </div>
                                                             </div>
+                                                            <div className="col-12">
+                                                                <Slider
+                                                                min={0}
+                                                                max={100000}
+                                                                step={1000}
+                                                                value={valKm}
+                                                                orientation='horizontal'
+                                                                onChange={this.handleChangevalKm}
+                                                                />
+                                                            </div>
+
+
                                                         </div>
 
-                                                        <div className="mb-5 d-ib opacity03">
+                                                        {/* <div className="mb-5 d-ib opacity03">
                                                             <div className="col-7">
                                                                 <label className="nl-label">Upload contract</label>
                                                             </div>
@@ -427,7 +538,7 @@ class AddNewLifeConfigurator extends Component {
                                                                 <div className="nl-inp">&nbsp;
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div> */}
 
                                                         <div className={this.state.modalCondition ? "infoPop is-open" : "infoPop is-close"} >
                                                             <span className="modalCloseBtn" onClick={() => this.modalClick()}>x</span>
@@ -450,27 +561,27 @@ class AddNewLifeConfigurator extends Component {
                                                                 </div> */}
                                                             <div className="container text-center">
                                                                 <div className="beforeFooter">
-                                                                    <div className="col-12 text-right">  <img style={img} src={(this.props.leaseobjects && this.props.leaseobjects[this.state.active || "0"]["image"])} alt="objectImage" /></div>
-                                                                    <div className="col-5 text-right">
+                                                                    {/* <div className="col-12 text-right">  <img style={img} src={(this.props.leaseobjects && this.props.leaseobjects[this.state.active || "0"]["image"])} alt="objectImage" /></div> */}
+                                                                    <div className="col-6 text-right">
                                                                         <button className="arrowBtn" title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected} onClick={() => this.createAccount(leasetype, price, months, monthlycapcost, monthlyopcost)}>
                                                                             <span className="flaticon-euro white-arrowBtn"></span>
                                                                         </button>
                                                                     </div>
 
 
-                                                                    <div className="col-7 text-right pv-10">
-
-                                                                        <span className="text-stroke-1">Start Crowdfunding<br></br>en verkoop je eigen coin</span>
+                                                                    <div className="col-4 text-right pv-18 cname-input">
+                                                                        <input className="ml-5 nl-inp" placeholder="Coin Naam" value={this.state.coinName} onChange={(e) => this.setState({ coinName: e.target.value })} type="text" />
+                                                             
                                                                         {/*<span>Start Crowdfunding en verkoop je eigen coin</span>*/}  {/* Change this text and edit css style to display entire line*/}
                                                                     </div>
 
                                                                 </div>
                                                             </div>
-
                                                         </div>}
                                                     </div>
-
                                                 </div>
+
+                                                
 
                                             )
                                             // }

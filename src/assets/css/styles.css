@@ -57,7 +57,7 @@ p {
 }
 
 .mainContentCon.foot {
-    height: 630px;
+    height: 587px;
 }
 
 .header {
@@ -122,11 +122,15 @@ img.addBtn {
    padding-bottom: 25px;
    padding-left: 5%;
    padding-right: 5%; */
-    font-size: 20px;
+    font-size: 17px;
     line-height: 30px;
     height: 30px;
     margin-top: 30px;
     /* margin-bottom: 40px; */
+}
+
+.navCon span{
+    padding: 0 10px;
 }
 
 .content-border {
@@ -229,7 +233,8 @@ img.addBtn {
     background-position: center center;
     background-repeat: no-repeat;
     background-size: contain;
-    height: 190px;
+    height: 120px;
+    position: relative;
 }
 
 .newlifeImage img {
@@ -356,7 +361,8 @@ img.addBtn {
     background: none;
     border: 0;
     outline: 0;
-    padding: 0;
+    padding: 0px;
+    border: 5px solid rgba(115, 186, 255, 0.0);
     /* position: relative;
    left: 65px;
    border-radius: 50%;
@@ -367,11 +373,14 @@ img.addBtn {
    border: 3px solid #808080; */
 }
 
-.footCon div button:hover,
-.footCon div a:hover {
-    /* border: 3px solid rgba(255, 215, 0, .3); */
+.footCon div button,
+.footCon div a {
+    border: 5px solid rgba(115, 186, 255, 0.26);
     cursor: pointer;
+    border-radius: 50%;
+    
 }
+
 
 .contentBtn button:hover {
     border: 5px solid rgba(255, 215, 0, .3);
@@ -1707,6 +1716,10 @@ span.inLeft input {
     line-height: 25px;
 }
 
+.fs-9 {
+    font-size: 9px;
+}
+
 .fs-12 {
     font-size: 12px;
 }
@@ -1788,6 +1801,10 @@ span.inLeft input {
     margin-left: 3px;
 }
 
+.ml-5 {
+    margin-left: 5px;
+}
+
 .no-padding {
     padding: 0;
 }
@@ -1807,6 +1824,10 @@ span.inLeft input {
 
 .ti-5-mobile{
   text-indent: 5px;
+}
+
+.ti-15{
+    text-indent: 15px;
 }
 
 .pt-8 {
@@ -1849,6 +1870,11 @@ span.inLeft input {
 .pv-10 {
     padding-top: 10px;
     padding-bottom: 10px;
+}
+
+.pv-18 {
+    padding-top: 18px;
+    padding-bottom: 18px;
 }
 
 .br-30 {
@@ -1928,6 +1954,10 @@ span.inLeft input {
     background: #000099;
 }
 
+.color-green {
+    color: #119f13;
+}
+
 .padding-10-0 {
     padding: 10px 0;
 }
@@ -1944,7 +1974,7 @@ background: rgba(0, 0, 0, 0) !important;
     background: url(../road-bg.png);
     background-position: center center;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
 }
 
 .seaBg {
@@ -1987,6 +2017,10 @@ background: rgba(0, 0, 0, 0) !important;
     font-size: 9px;
 }
 
+.cname-input input{
+width: 100%;
+}
+
 .modalCloseBtn {
     position: absolute;
     top: -10px;
@@ -2010,7 +2044,7 @@ background: rgba(0, 0, 0, 0) !important;
 .newLifeItem {
     width: 270px;
     margin: 0 auto;
-    margin-top: 20px;
+    margin-top: 5px;
 }
 
 .newLifeItem-title {
@@ -2964,4 +2998,58 @@ button.swiper-pagination-bullet {
     .membersCon .leaseCarCon:last-child {
       margin-bottom: 0;
   }
+}
+
+.rangeslider-horizontal .rangeslider__handle:after{
+    width: 20px !important;
+    height: 20px !important;
+    top: 5px !important;
+    left: 5px !important;
+    background-color: #ffffff !important;
+    box-shadow: none !important;
+}
+
+.rangeslider .rangeslider__handle{
+    background: #e6e6e6 !important;
+    box-shadow: none !important;
+    border: 0 !important
+}
+
+
+.slider-style2 .rangeslider-horizontal .rangeslider__fill{
+    background-color: #3a3aff !important;
+}
+
+.slider-style2 .rangeslider{
+    background-color: #119f13 !important;
+}
+
+.rangeslider-horizontal .rangeslider__fill{
+    background-color: #119f13 !important;
+}
+
+.rangeslider, .rangeslider .rangeslider__fill{
+    box-shadow: none !important;
+}
+.rangeslider-horizontal, .rangeslider-horizontal .rangeslider__fill{
+    height: 3px !important;
+}
+
+.rangeslider{
+    margin: 18px 0 !important;
+}
+
+.target{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: block;
+    text-align: right;
+}
+
+
+
+.newLifeItem .p-euro{
+    position: absolute;
+    z-index: 1;
 }
