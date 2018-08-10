@@ -22,7 +22,8 @@ const mapStateToProps = (state) => {
         eventAlert: state.eventAlert,
         initRoute: state.initRoute,
         newObject: state.newObject,
-        newLifeObj: state.newLifeObj
+        newLifeObj: state.newLifeObj,
+        networkVersion: state.networkVersion
     }
 }
 const mapActionsToProps = (dispatch) => { return bindActionCreators(Actions, dispatch) }

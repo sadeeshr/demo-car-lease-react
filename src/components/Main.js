@@ -29,12 +29,14 @@ class Main extends Component {
         // Check if Web3 has been injected by the browser:
         if (typeof web3 !== 'undefined') {
             // You have a web3 browser! Initiate Contract Object!
-            if (!this.props.LeaseContract) this.props._initContract(this.props, web3)
-
+            this.setState({ metamask: true }, () => {
+                if (!this.props.LeaseContract) this.props._initContract(this.props, web3)
+            })
         } else {
             // Warn the user that they need to get a web3 browser
             // Or install MetaMask, maybe with a nice graphic.
             cc.log("NO WEB3");
+            this.setState({ metamask: false })
 
         }
 
@@ -289,6 +291,7 @@ class Main extends Component {
     renderMain = () => {
         // console.log(this.props.usernames, this.props.registered, this.props.account);
         const nextScreen = ((this.props.usernames && this.props.registered) || !this.props.account) ? "members" : "addmember"
+        const isReady = this.state.metamask && (this.props.networkVersion === "4") && this.props.account
 
         cc.log("MEMBER ID: ", this.props.registered)
 
@@ -313,14 +316,26 @@ class Main extends Component {
                     <table>
                         <tbody>
                             <tr>
-                                <td><img style={{ maxHeight: "200px" }} src={require('../assets/main.png')} alt="logo" /></td>
+                                <td><img style={{ maxHeight: "200px" }} src={isReady ? require('../assets/main.png') : require('../assets/metamask.png')} alt="logo" /></td>
                             </tr>
                         </tbody>
                     </table>
 
-                    <p className="text-center fs-20">Investeer in andere Coins</p>
-                    <p className="text-center fs-20 mb-15">en bepaal je rendement</p>
-                    <p className="text-center fs-20">Elk moment Uitstapbaar</p>
+                    {isReady && <div>
+                        <p className="text-center fs-20">Investeer in andere Coins</p>
+                        <p className="text-center fs-20 mb-15">en bepaal je rendement</p>
+                        <p className="text-center fs-20">Elk moment Uitstapbaar</p>
+                    </div>}
+                    {!this.state.metamask ?
+                        <p className="text-center fs-20">Please <Link target="_self" to="https://metamask.io"><span style={{color:"red"}}>Download</span>
+                        </Link> Metamask Plugin.</p>
+                        :
+                        (this.props.networkVersion !== "4") ?
+                            <p className="text-center fs-20">Please use Rinkeby network only.</p>
+                            :
+                            !this.props.account && <p className="text-center fs-20">Please Login into MetaMask.</p>
+                    }
+
                 </div>
             </div>
             <div className="footBtn">
@@ -330,7 +345,7 @@ class Main extends Component {
                             &nbsp;
                             </div>
                         {<div className="col-2">
-                            <button disabled={!(this.props.usernames || !this.props.account)} className="arrowBtn" onClick={() => this.props.history.push("/", { path: nextScreen })}>
+                            <button disabled={!(this.props.usernames || !this.props.account) || !isReady} className="arrowBtn" onClick={() => this.props.history.push("/", { path: nextScreen })}>
                                 <span className="flaticon-right-arrow"></span>
                             </button>
                         </div>}
@@ -401,6 +416,8 @@ class Main extends Component {
         }
         const path = (this.props.location && this.props.location.state) ? this.props.location.state.path : "main"
         const registered = (this.props.account && this.props.usernames && (this.props.usernames.find(user => user.account === this.props.account)))
+        const isReady = this.state.metamask && (this.props.networkVersion === "4") && this.props.account
+
         return (
             <div>
                 <div className="beforeNav container smallText">
@@ -432,8 +449,8 @@ class Main extends Component {
                 {/* <div className="beforeNav container smallText"><span className="flaticon-man-user flatcon pull-left"></span>WESTLAND ENERGIE NEUTRAL , NL<span className="flaticon-search flatcon pull-right"></span></div> */}
                 <nav className="navCon" style={style.nav}>
                     <span onClick={() => this.props.history.push("/", { path: "main" })} style={{ cursor: "pointer", fontWeight: (["main", "home"].indexOf(path) !== -1) ? "800" : "100" }}>THUIS</span> {" "}
-                    <span onClick={() => this.props.history.push("/", { path: "addnewlife" })} style={{ cursor: "pointer", fontWeight: (path === "addnewlife") ? "800" : "100" }}>DUURZAAM</span>{" "}
-                    <span onClick={() => this.props.history.push("/", { path: "members" })} style={{ cursor: "pointer", fontWeight: (path === "members") ? "800" : "100" }}>ZAKEN</span>{" "}
+                    {isReady && <span onClick={() => this.props.history.push("/", { path: "addnewlife" })} style={{ cursor: "pointer", fontWeight: (path === "addnewlife") ? "800" : "100" }}>DUURZAAM</span>}{" "}
+                    {isReady && <span onClick={() => this.props.history.push("/", { path: "members" })} style={{ cursor: "pointer", fontWeight: (path === "members") ? "800" : "100" }}>ZAKEN</span>}{" "}
                     {registered && <span onClick={() => this.props.history.push("/", { path: "profile" })} style={{ cursor: "pointer", fontWeight: (path === "profile") ? "800" : "100" }}>IK</span>}{" "}
                     {/*<span onClick={() => this.props.towns && this.props.history.push("/", { path: "members" })} style={{ cursor: this.props.towns ? "pointer" : "not-allowed", fontWeight: (path === "members") ? "800" : "100" }}>LEDEN</span>{" "}*/}
                 </nav>

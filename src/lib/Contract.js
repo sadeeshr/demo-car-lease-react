@@ -15,7 +15,7 @@ import cc from './utils';
 
 class Contract {
     constructor() {
-        this.spender = "0xaE5D33E54685c868C82287E75F4DD2F7CD8568EB" // Lease Token Contract address as spender for Approve / Allowance methods
+        // this.spender =  // Lease Token Contract address as spender for Approve / Allowance methods
         this.contracts = {
             euroToken: {
                 address: "0x34a5c08d0b570E90243A2B3A8ad7F980A0DE83EC",
@@ -25,8 +25,8 @@ class Contract {
                 address: "0x1115C7573bd5FBa94EBAc8B86D222a23558F0e7a",
                 abi: [{ "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_key", "type": "string" }], "name": "getBytes", "outputs": [{ "name": "", "type": "bytes" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_key", "type": "string" }, { "name": "_value", "type": "address" }], "name": "setAddr", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_TokenFactoryAddress", "type": "address" }], "name": "setTokenFactory", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "newUser", "type": "address" }], "name": "addAuthorization", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_key", "type": "string" }], "name": "getAddr", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [], "name": "getObjectID", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_cid", "type": "uint256" }, { "name": "_existingCurrency", "type": "address" }], "name": "removeCurrencyType", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_key", "type": "string" }, { "name": "_value", "type": "string" }], "name": "setString", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_key", "type": "string" }, { "name": "_value", "type": "bytes" }], "name": "setBytes", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_key", "type": "string" }, { "name": "_owner", "type": "address" }], "name": "getExtraInt", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_key", "type": "string" }, { "name": "_value", "type": "bool" }], "name": "setBool", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "getTokenFactory", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "existingUser", "type": "address" }], "name": "removeAuthorization", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_key", "type": "string" }], "name": "getString", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_key", "type": "string" }], "name": "getInt", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_cid", "type": "uint256" }], "name": "viewCurrencyType", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_cid", "type": "uint256" }, { "name": "_newCurrency", "type": "address" }], "name": "addCurrencyType", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_key", "type": "string" }, { "name": "_value", "type": "uint256" }], "name": "setInt", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }], "name": "authorization", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_existingUser", "type": "address" }], "name": "removeUserAuthorization", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_key", "type": "string" }, { "name": "_owner", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "setExtraInt", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_key", "type": "string" }], "name": "getBool", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_user", "type": "address" }], "name": "viewUserAuthorization", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "objectID_", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_newUser", "type": "address" }], "name": "addUserAuthorization", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "newOwner", "type": "address" }], "name": "transferOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "name": "_tokenFactory", "type": "address", "index": 0, "typeShort": "address", "bits": "", "displayName": "&thinsp;<span class=\"punctuation\">_</span>&thinsp;token Factory", "template": "elements_input_address", "value": "0xc8b78175Cb1720D7466fe7f526e03E68a04f9cC8" }, { "name": "_firstCurrency", "type": "address", "index": 1, "typeShort": "address", "bits": "", "displayName": "&thinsp;<span class=\"punctuation\">_</span>&thinsp;first Currency", "template": "elements_input_address", "value": "0x34a5c08d0b570E90243A2B3A8ad7F980A0DE83EC" }], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }]
             },
-            CrowdFundContract: {
-                address: this.spender,
+            StartCrowdFunding: {
+                address: "0xaE5D33E54685c868C82287E75F4DD2F7CD8568EB",
                 abi: [{ "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_amount", "type": "uint256" }], "name": "investInObject", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_objectHash", "type": "bytes" }, { "name": "_currencyId", "type": "uint256" }, { "name": "_objectPrice", "type": "uint256" }, { "name": "_fundReceiver", "type": "address" }, { "name": "_serviceProvider", "type": "address" }, { "name": "_monthlyCapitalCost", "type": "uint256" }, { "name": "_monthlyOperatingCost", "type": "uint256" }, { "name": "_biddingTimeInDays", "type": "uint256" }], "name": "createObject", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "d", "outputs": [{ "name": "", "type": "address", "value": "0x1115c7573bd5fba94ebac8b86d222a23558f0e7a" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [{ "name": "", "type": "address", "value": "0x60516aa74f455f642c66fa1ed1e77c553da4be17" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_deliveryDate", "type": "uint256" }], "name": "buyAndActivate", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_newUser", "type": "address" }, { "name": "_currencyId", "type": "uint256" }], "name": "addUser", "outputs": [{ "name": "", "type": "bool" }], "payable": true, "stateMutability": "payable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "claimClosedCrowdsales", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "newOwner", "type": "address" }], "name": "transferOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "name": "_addressOfCrowdfundData", "type": "address", "index": 0, "typeShort": "address", "bits": "", "displayName": "&thinsp;<span class=\"punctuation\">_</span>&thinsp;address Of Crowdfund Data", "template": "elements_input_address", "value": "0x1115C7573bd5FBa94EBAc8B86D222a23558F0e7a" }], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "newUser", "type": "address" }], "name": "CreateNewUser", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "objectID", "type": "uint256" }], "name": "AddNewObject", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "objectID", "type": "uint256" }, { "indexed": false, "name": "amount", "type": "uint256" }], "name": "InvestInObject", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "objectID", "type": "uint256" }], "name": "BoughtNewObject", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "objectID", "type": "uint256" }], "name": "ClaimedCrowdsale", "type": "event" }]
             },
             CrowdFundToken: {
@@ -53,7 +53,7 @@ class Contract {
         this.investInObjectTxID = null
         this.claimDividendTxID = null
         this.payFeeTxID = null
-        this.CrowdFundContract = null
+        this.StartCrowdFunding = null
         this.euroToken = null
         this.CrowdFundData = null
         this.CrowdFundTokenContract = null
@@ -64,7 +64,7 @@ class Contract {
         let accountTimer = setInterval(() => {
             // cc.log("Checking Metamask Account");
             if (!this.account) {
-                console.log("NOT LOGGED IN")
+                // console.log("NOT LOGGED IN")
                 this.eth.coinbase().then(account => {
                     if (account) {
                         cc.log("ACCOUNT: ", account);
@@ -83,26 +83,27 @@ class Contract {
     }
 
     getVersion = () => {
-        this.eth.net_version().then(netId => {
-            switch (netId) {
-                case "1":
-                    console.log('This is mainnet')
-                    break
-                case "2":
-                    console.log('This is the deprecated Morden test network.')
-                    break
-                case "3":
-                    console.log('This is the ropsten test network.')
-                    break
-                case "4":
-                    console.log('This is the Rinkeby test network.')
-                    break
-                case "42":
-                    console.log('This is the Kovan test network.')
-                    break
-                default:
-                    console.log('This is an unknown network.')
-            }
+        this.eth.net_version().then(networkVersion => {
+            this.props._setObject({ networkVersion })
+            // switch (networkVersion) {
+            //     case "1":
+            //         console.log('This is mainnet')
+            //         break
+            //     case "2":
+            //         console.log('This is the deprecated Morden test network.')
+            //         break
+            //     case "3":
+            //         console.log('This is the ropsten test network.')
+            //         break
+            //     case "4":
+            //         console.log('This is the Rinkeby test network.')
+            //         break
+            //     case "42":
+            //         console.log('This is the Kovan test network.')
+            //         break
+            //     default:
+            //         console.log('This is an unknown network.')
+            // }
         })
     }
 
@@ -137,7 +138,7 @@ class Contract {
         const contract = new EthJsContract(eth)
         // const CrowdFundContract = 
         this.euroToken = contract(this.contracts.euroToken.abi).at(this.contracts.euroToken.address)
-        this.CrowdFundContract = contract(this.contracts.CrowdFundContract.abi).at(this.contracts.CrowdFundContract.address)
+        this.StartCrowdFunding = contract(this.contracts.StartCrowdFunding.abi).at(this.contracts.StartCrowdFunding.address)
         this.CrowdFundData = contract(this.contracts.CrowdFundData.abi).at(this.contracts.CrowdFundData.address)
         this.CrowdFundTokenContract = contract(this.contracts.CrowdFundToken.abi);
 
@@ -145,13 +146,13 @@ class Contract {
         cc.log("CrowdFundData: ", this.CrowdFundData);
 
         // cc.log("Euro Token: ", this.euroToken);
-        cc.log("Crowd Fund Contract: ", this.CrowdFundContract);
+        cc.log("Crowd Fund Contract: ", this.StartCrowdFunding);
         // this.evEventTransfer()
 
         return {
             // euroToken: this.euroToken,
-            // evToken: this.CrowdFundContract,
-            // CrowdFundContract: this.CrowdFundContract
+            // evToken: this.StartCrowdFunding,
+            // StartCrowdFunding: this.StartCrowdFunding
         }
     }
 
@@ -273,26 +274,26 @@ class Contract {
             })
     }
 
-    euroApprove = (value, account) => {
+    // euroApprove = (value, account) => {
 
-        cc.log(`Approve value: ${value * 1000000} to spend by: ${this.spender} from: ${account}`);
-        return this.euroToken.approve(this.spender, (value * 1000000), { from: account })
-            .then(result => {
-                cc.log(`Approval Result: ${result}`);
-                this.euroEventApprovalSubscribe()
-                this.approveTxID = result
-                return { approveTxID: result }
-            })
-    }
+    //     cc.log(`Approve value: ${value * 1000000} to spend by: ${this.spender} from: ${account}`);
+    //     return this.euroToken.approve(this.spender, (value * 1000000), { from: account })
+    //         .then(result => {
+    //             cc.log(`Approval Result: ${result}`);
+    //             this.euroEventApprovalSubscribe()
+    //             this.approveTxID = result
+    //             return { approveTxID: result }
+    //         })
+    // }
 
-    euroAllowance = (account) => {
-        cc.log(`Fetching Allowance for: ${account}`);
-        return this.euroToken.allowance(account, this.spender)
-            .then(result => {
-                cc.log(`Allowance Result: ${result[0].toString() / 1000000}`);
-                return { allowance: (result[0].toString() / 1000000) }
-            })
-    }
+    // euroAllowance = (account) => {
+    //     cc.log(`Fetching Allowance for: ${account}`);
+    //     return this.euroToken.allowance(account, this.spender)
+    //         .then(result => {
+    //             cc.log(`Allowance Result: ${result[0].toString() / 1000000}`);
+    //             return { allowance: (result[0].toString() / 1000000) }
+    //         })
+    // }
 
     /**
      * Lease Token Contract Methods
@@ -302,7 +303,7 @@ class Contract {
      * Lease Token Methods
      */
     evEventTransferSubscribe = () => {
-        this.filters.EevTransfer = this.CrowdFundContract.Transfer()
+        this.filters.EevTransfer = this.StartCrowdFunding.Transfer()
         this.filters.EevTransfer.new()
         this.filters.EevTransfer.watch((err, result) => {
             cc.log("EVToken Event Transfer() Result: ", err, result);
@@ -322,7 +323,7 @@ class Contract {
      */
     evMyTokens = (account, objectID) => {
         cc.log(`Fetching EV Tokens for: ${account}, objectID: ${objectID}`);
-        return this.CrowdFundContract.objectBalanceOf(account, objectID)
+        return this.StartCrowdFunding.objectBalanceOf(account, objectID)
             .then(result => {
                 cc.log(`EV TOKENS: ${result[0].toString()}`);
                 // this.setState({ ["evToken_" + objectID]: result[0].toString() })
@@ -332,7 +333,7 @@ class Contract {
 
     // evBalanceOf = (account) => {
     //     cc.log(`Fetching EV Tokens Balance for: ${account}`);
-    //     return this.CrowdFundContract.balanceOf(account)
+    //     return this.StartCrowdFunding.balanceOf(account)
     //         .then(result => {
     //             cc.log(`EV TOKENS BALANCE: ${result[0].toString()}`);
     //             return { evTokenBalance: result[0].toString() }
@@ -344,7 +345,7 @@ class Contract {
      */
 
     lcEventAddNewObjectSubscribe = () => {
-        this.filters.ElcAddNewObject = this.CrowdFundContract.AddNewObject()
+        this.filters.ElcAddNewObject = this.StartCrowdFunding.AddNewObject()
         this.filters.ElcAddNewObject.new()
         this.filters.ElcAddNewObject.watch((err, result) => {
             cc.log("CrowdFundContract Event AddNewObject() Result: ", err, result);
@@ -383,7 +384,7 @@ class Contract {
     }
 
     lcEventClaimSubscribe = () => {
-        this.filters.lcClaim = this.CrowdFundContract.Claim()
+        this.filters.lcClaim = this.StartCrowdFunding.Claim()
         this.filters.lcClaim.new()
         this.filters.lcClaim.watch((err, result) => {
             cc.log("CrowdFundContract Event Claim() Result: ", err, result);
@@ -418,7 +419,7 @@ class Contract {
     lcCreateObject = (props, objectName, months, municipalityID, objectPrice, objectHash, objectCurrencyID, objectDealer, objectMCCost, objectMOCost, account) => {
         cc.log(`Adding New object for: ${objectName}, ${objectPrice}, ${objectHash}, ${objectCurrencyID}, ${objectDealer}, ${objectMCCost}, ${objectMOCost}, ${account}`);
         if (props) this.props = props
-        return this.CrowdFundContract.createObject(objectPrice, objectHash, objectDealer, objectCurrencyID, objectName, objectMCCost, objectMOCost, { from: account })
+        return this.StartCrowdFunding.createObject(objectPrice, objectHash, objectDealer, objectCurrencyID, objectName, objectMCCost, objectMOCost, { from: account })
             .then(result => {
                 cc.log(`ADD NEW object RESULT: ${result}`);
                 // this.lcEventAddNewObjectSubscribe() // development
@@ -470,7 +471,7 @@ class Contract {
 
     lcSumBalanceOf = (account) => {
         cc.log(`Fetching Sum Balance Of: `);
-        return this.CrowdFundContract.sumBalanceOf(account)
+        return this.StartCrowdFunding.sumBalanceOf(account)
             .then(result => {
                 cc.log(`sumBalanceOf RESULT: ${result[0].toNumber()}`);
                 return { sumBalanceOf: result[0].toNumber(), progress: false }
@@ -479,7 +480,7 @@ class Contract {
 
     lcTotalSupply = () => {
         cc.log(`Fetching Total Amount Raised.`);
-        return this.CrowdFundContract.totalSupply()
+        return this.StartCrowdFunding.totalSupply()
             .then(result => {
                 cc.log(`Total Supply RESULT: ${result[0].toNumber()}`);
                 return { totalSupply: result[0].toNumber(), progress: false }
@@ -496,8 +497,9 @@ class Contract {
     }
 
     lcAddUser = (user, account) => {
-        cc.log(`Add New User: ${user} Auth: ${account}`);
-        return this.CrowdFundContract.addUser(user, { from: account })
+        let curID = 0
+        cc.log(`Add New User: ${user} Currency ID:${curID} Auth: ${account}`);
+        return this.StartCrowdFunding.addUser(user, curID, { from: account })
             .then(result => {
                 cc.log(`Add New User RESULT: ${result}`);
                 return {
@@ -512,7 +514,7 @@ class Contract {
     lcBuyAndActivate = (objectID, activeDate, account) => {
         let timeStamp = Math.floor(activeDate.getTime() / 1000)
         cc.log(`Buy And Activate Object: ${objectID}, ${timeStamp}`);
-        return this.CrowdFundContract.buyAndActivate(objectID, timeStamp, { from: account })
+        return this.StartCrowdFunding.buyAndActivate(objectID, timeStamp, { from: account })
             .then(result => {
                 cc.log(`Buy And Activate RESULT: ${result}`);
                 return {
@@ -529,7 +531,7 @@ class Contract {
     lcPayCapitalAndOperation = (props, objectID, capital, operation, account) => {
         if (props) this.props = props
         cc.log(`Pay Capital And Operation: ${objectID}, ${capital}, ${operation}`);
-        return this.CrowdFundContract.payCapitalAndOperation(objectID, capital, operation, { from: account })
+        return this.StartCrowdFunding.payCapitalAndOperation(objectID, capital, operation, { from: account })
             .then(result => {
                 cc.log(`Pay Capital And Operation: ${result}`);
                 return {
@@ -603,7 +605,7 @@ class Contract {
 
     // lcLeaseObjectRedemption = (objectID) => {
     //     cc.log(`Fetch object Redemption Details for ID: ${objectID}`);
-    //     return this.CrowdFundContract.leaseobjectredemption(objectID)
+    //     return this.StartCrowdFunding.leaseobjectredemption(objectID)
     //         .then(result => {
     //             cc.log(`Details of object redemption ID ${objectID} => `, result);
     //             return {
@@ -622,7 +624,7 @@ class Contract {
 
     lcAmountObjects = () => {
         cc.log(`Fetch Crowd Sale Closed Objects Count:`);
-        return this.CrowdFundContract.amountObjects()
+        return this.StartCrowdFunding.amountObjects()
             .then(result => {
                 cc.log(`Crowd Sale Closed Objects Count => `, result, result[0].toNumber());
                 return { crowdsaleClosed: result[0].toNumber() }
@@ -631,7 +633,7 @@ class Contract {
 
     lcInvestInObject = (objectID, amount, account) => {
         cc.log(`Calling Invest In Object For object ID: ${objectID}, ${amount}, ${account}`);
-        return this.CrowdFundContract.investInObject(objectID, amount || "0", { from: account })
+        return this.StartCrowdFunding.investInObject(objectID, amount || "0", { from: account })
             .then(result => {
                 cc.log(`Invest In Object RESULT: ${result}`);
                 // this.lcEventAddNewObjectSubscribe()    // contract missing event call, not calling this 
@@ -645,7 +647,7 @@ class Contract {
     lcPayFee = (objectID, account) => {
         // account = "0xA30b6a96D652E99AA25162B2b9165f2c3f683ACc"
         cc.log(`Calling Pay Fee: ${objectID}, ${account}`);
-        return this.CrowdFundContract.payFee(objectID, { from: account })
+        return this.StartCrowdFunding.payFee(objectID, { from: account })
             .then(result => {
                 cc.log(`payFee RESULT: ${result}`);
                 // this.euroEventTransferSubscribe() //development
@@ -657,7 +659,7 @@ class Contract {
 
     lcActivateDeactivateObject = (objectID, account) => {
         cc.log(`Calling Activate Deactivate Object: ${objectID}, ${account}`);
-        return this.CrowdFundContract.activateDeactivateObject(objectID, { from: account })
+        return this.StartCrowdFunding.activateDeactivateObject(objectID, { from: account })
             .then(result => {
                 cc.log(`Activate Deactivate Object RESULT: ${result}`);
                 this.activateDeactivateObjectTxID = result
@@ -667,7 +669,7 @@ class Contract {
 
     lcToClaimDividend = (objectID, account) => {
         cc.log(`Calling Read Investor To Claim.`);
-        return this.CrowdFundContract.toClaimDividend(account, objectID)
+        return this.StartCrowdFunding.toClaimDividend(account, objectID)
             .then(result => {
                 cc.log(`ToClaimDividend RESULT: ${result[0].toString()}`);
                 return { unClaimedRedemption: result[0].toString(), progress: false }
@@ -676,8 +678,8 @@ class Contract {
 
     // lcToClaimTotal = (account) => {
     //     cc.log(`Calling To Claim Total.`); // change included as transaction 
-    //     // return this.CrowdFundContract.toClaimTotal(account, { from: account })
-    //     return this.CrowdFundContract.toClaimTotal(account)
+    //     // return this.StartCrowdFunding.toClaimTotal(account, { from: account })
+    //     return this.StartCrowdFunding.toClaimTotal(account)
     //         .then(result => {
     //             cc.log(`ToClaimTotal RESULT: ${result[0].toNumber()}`);
     //             return { unClaimedRedemption: result[0].toNumber() }
@@ -687,7 +689,7 @@ class Contract {
 
     lcClaimDividend = (objectID, account) => {
         cc.log(`Calling Claim Interest And Redemption.`);
-        return this.CrowdFundContract.claimDividend(objectID, { from: account })
+        return this.StartCrowdFunding.claimDividend(objectID, { from: account })
             .then(result => {
                 cc.log(`claimDividend RESULT: ${result}`);
                 // this.lcEventClaimSubscribe() //development
@@ -696,62 +698,62 @@ class Contract {
             })
     }
 
-    lcCreateNewCrowdFundToken = (props, data, account) => {
-        if (props) this.props = props
+    // lcCreateNewCrowdFundToken = (props, data, account) => {
+    //     if (props) this.props = props
 
-        cc.log("Creating NewCrowdFundToken");
-        let self = this
-        let _leasecontract = this.spender
-        let _admin = "0x60516AA74F455f642C66FA1eD1e77C553da4be17"
-        let hash = data["data"]["objectHash"]
+    //     cc.log("Creating NewCrowdFundToken");
+    //     let self = this
+    //     let _leasecontract = this.spender
+    //     let _admin = "0x60516AA74F455f642C66FA1eD1e77C553da4be17"
+    //     let hash = data["data"]["objectHash"]
 
-        this.CrowdFundTokenContract.new(
-            _leasecontract,
-            _admin,
-            {
-                data: '0x608060405234801561001057600080fd5b50604051604080610baf8339810180604052810190808051906020019092919080519060200190929190505050336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555060018060003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060006101000a81548160ff021916908315150217905550806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555060018060008473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060006101000a81548160ff0219169083151502179055505050610a338061017c6000396000f300608060405260043610610099576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806318160ddd1461009e57806323b872dd146100c957806335b281531461014e57806340c10f191461019157806370a08231146101f65780638da5cb5b1461024d57806394f3f81d146102a4578063cbe12969146102e7578063f2fde38b14610342575b600080fd5b3480156100aa57600080fd5b506100b3610385565b6040518082815260200191505060405180910390f35b3480156100d557600080fd5b50610134600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803573ffffffffffffffffffffffffffffffffffffffff1690602001909291908035906020019092919050505061038f565b604051808215151515815260200191505060405180910390f35b34801561015a57600080fd5b5061018f600480360381019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506105b4565b005b34801561019d57600080fd5b506101dc600480360381019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291908035906020019092919050505061066d565b604051808215151515815260200191505060405180910390f35b34801561020257600080fd5b50610237600480360381019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506107ee565b6040518082815260200191505060405180910390f35b34801561025957600080fd5b50610262610837565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b3480156102b057600080fd5b506102e5600480360381019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061085c565b005b3480156102f357600080fd5b50610328600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610912565b604051808215151515815260200191505060405180910390f35b34801561034e57600080fd5b50610383600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610932565b005b6000600254905090565b60008073ffffffffffffffffffffffffffffffffffffffff168373ffffffffffffffffffffffffffffffffffffffff16141515156103cc57600080fd5b600360008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002054821115151561041a57600080fd5b61046c82600360008773ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020546109d090919063ffffffff16565b600360008673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000208190555061050182600360008673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020546109e990919063ffffffff16565b600360008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020819055508273ffffffffffffffffffffffffffffffffffffffff168473ffffffffffffffffffffffffffffffffffffffff167fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef846040518082815260200191505060405180910390a3600190509392505050565b60011515600160003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060009054906101000a900460ff16151514151561061357600080fd5b60018060008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060006101000a81548160ff02191690831515021790555050565b600060011515600160003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060009054906101000a900460ff1615151415156106ce57600080fd5b6106e3826002546109e990919063ffffffff16565b60028190555061073b82600360008673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020546109e990919063ffffffff16565b600360008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020819055508273ffffffffffffffffffffffffffffffffffffffff16600073ffffffffffffffffffffffffffffffffffffffff167fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef846040518082815260200191505060405180910390a36001905092915050565b6000600360008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020549050919050565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161415156108b757600080fd5b6000600160008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060006101000a81548160ff02191690831515021790555050565b60016020528060005260406000206000915054906101000a900460ff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561098d57600080fd5b806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555050565b60008282111515156109de57fe5b818303905092915050565b60008082840190508381101515156109fd57fe5b80915050929150505600a165627a7a72305820d087e880c18653c2ca34a3eba7bf5fdead1dd194f40aa49972d485ba1af0e4230029',
-                from: account,
-                gas: 4700000
-            }, function (e, contract) {
-                // cc.log(e, contract);
-                if (contract && !e) {
-                    self.props._setObject({
-                        newCrowdFundToken: {
-                            txID: contract,
-                            hash: hash
-                        }
-                    })
+    //     this.CrowdFundTokenContract.new(
+    //         _leasecontract,
+    //         _admin,
+    //         {
+    //             data: '0x608060405234801561001057600080fd5b50604051604080610baf8339810180604052810190808051906020019092919080519060200190929190505050336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555060018060003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060006101000a81548160ff021916908315150217905550806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555060018060008473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060006101000a81548160ff0219169083151502179055505050610a338061017c6000396000f300608060405260043610610099576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806318160ddd1461009e57806323b872dd146100c957806335b281531461014e57806340c10f191461019157806370a08231146101f65780638da5cb5b1461024d57806394f3f81d146102a4578063cbe12969146102e7578063f2fde38b14610342575b600080fd5b3480156100aa57600080fd5b506100b3610385565b6040518082815260200191505060405180910390f35b3480156100d557600080fd5b50610134600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803573ffffffffffffffffffffffffffffffffffffffff1690602001909291908035906020019092919050505061038f565b604051808215151515815260200191505060405180910390f35b34801561015a57600080fd5b5061018f600480360381019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506105b4565b005b34801561019d57600080fd5b506101dc600480360381019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291908035906020019092919050505061066d565b604051808215151515815260200191505060405180910390f35b34801561020257600080fd5b50610237600480360381019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506107ee565b6040518082815260200191505060405180910390f35b34801561025957600080fd5b50610262610837565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b3480156102b057600080fd5b506102e5600480360381019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061085c565b005b3480156102f357600080fd5b50610328600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610912565b604051808215151515815260200191505060405180910390f35b34801561034e57600080fd5b50610383600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610932565b005b6000600254905090565b60008073ffffffffffffffffffffffffffffffffffffffff168373ffffffffffffffffffffffffffffffffffffffff16141515156103cc57600080fd5b600360008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002054821115151561041a57600080fd5b61046c82600360008773ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020546109d090919063ffffffff16565b600360008673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000208190555061050182600360008673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020546109e990919063ffffffff16565b600360008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020819055508273ffffffffffffffffffffffffffffffffffffffff168473ffffffffffffffffffffffffffffffffffffffff167fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef846040518082815260200191505060405180910390a3600190509392505050565b60011515600160003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060009054906101000a900460ff16151514151561061357600080fd5b60018060008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060006101000a81548160ff02191690831515021790555050565b600060011515600160003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060009054906101000a900460ff1615151415156106ce57600080fd5b6106e3826002546109e990919063ffffffff16565b60028190555061073b82600360008673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020546109e990919063ffffffff16565b600360008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020819055508273ffffffffffffffffffffffffffffffffffffffff16600073ffffffffffffffffffffffffffffffffffffffff167fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef846040518082815260200191505060405180910390a36001905092915050565b6000600360008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020549050919050565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161415156108b757600080fd5b6000600160008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060006101000a81548160ff02191690831515021790555050565b60016020528060005260406000206000915054906101000a900460ff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561098d57600080fd5b806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555050565b60008282111515156109de57fe5b818303905092915050565b60008082840190508381101515156109fd57fe5b80915050929150505600a165627a7a72305820d087e880c18653c2ca34a3eba7bf5fdead1dd194f40aa49972d485ba1af0e4230029',
+    //             from: account,
+    //             gas: 4700000
+    //         }, function (e, contract) {
+    //             // cc.log(e, contract);
+    //             if (contract && !e) {
+    //                 self.props._setObject({
+    //                     newCrowdFundToken: {
+    //                         txID: contract,
+    //                         hash: hash
+    //                     }
+    //                 })
 
-                    // data["data"]["leaseTokenAddress"] = contractAddress
-                    self.props._writeNewContractData(self.props, data)
+    //                 // data["data"]["leaseTokenAddress"] = contractAddress
+    //                 self.props._writeNewContractData(self.props, data)
 
-                    let contractAddress = ""
-                    let timer = setInterval(() => {
-                        cc.log("CHECKING CONTRACT ADDRESS:");
-                        if (contractAddress)
-                            clearInterval(timer)
-                        self.eth.getTransactionReceipt(contract)
-                            .then(res => {
-                                if (res) {
-                                    cc.log("TX RECEIPT: ", res)
-                                    cc.log("CONTRACT ADDRESS: ", res.contractAddress)
-                                    contractAddress = res.contractAddress
-                                    if (contractAddress) {
-                                        let newEvent = { event: "NewCrowdFundToken", ...res }
-                                        self.props._newLeaseTokenAddress({ newLeaseTokenAddress: contractAddress })
-                                        self.props._setEvent(newEvent)
-                                        self.props._sendUserEvent(newEvent)
-                                    }
-                                }
-                            })
-                    }, 5000)
-                } else {
-                    cc.log("ERROR - Metamask Rejection: ", e)
-                }
+    //                 let contractAddress = ""
+    //                 let timer = setInterval(() => {
+    //                     cc.log("CHECKING CONTRACT ADDRESS:");
+    //                     if (contractAddress)
+    //                         clearInterval(timer)
+    //                     self.eth.getTransactionReceipt(contract)
+    //                         .then(res => {
+    //                             if (res) {
+    //                                 cc.log("TX RECEIPT: ", res)
+    //                                 cc.log("CONTRACT ADDRESS: ", res.contractAddress)
+    //                                 contractAddress = res.contractAddress
+    //                                 if (contractAddress) {
+    //                                     let newEvent = { event: "NewCrowdFundToken", ...res }
+    //                                     self.props._newLeaseTokenAddress({ newLeaseTokenAddress: contractAddress })
+    //                                     self.props._setEvent(newEvent)
+    //                                     self.props._sendUserEvent(newEvent)
+    //                                 }
+    //                             }
+    //                         })
+    //                 }, 5000)
+    //             } else {
+    //                 cc.log("ERROR - Metamask Rejection: ", e)
+    //             }
 
-            }
-        )
-    }
+    //         }
+    //     )
+    // }
 
     // Lease Data Methods:
 
