@@ -46,7 +46,7 @@ const rootReducer = (state = initialState, action) => {
                 invoices_edit: false,
                 eventAddNewObject: false,
                 objectID: false,
-                newObject: false
+                // newObject: false
             }
 
         case 'FETCH_CONTRACT_DATA':

@@ -417,9 +417,12 @@ class Contract {
      */
 
     lcCreateObject = (props, objectName, months, municipalityID, objectPrice, objectHash, objectCurrencyID, objectDealer, objectMCCost, objectMOCost, account) => {
-        cc.log(`Adding New object for: ${objectName}, ${objectPrice}, ${objectHash}, ${objectCurrencyID}, ${objectDealer}, ${objectMCCost}, ${objectMOCost}, ${account}`);
+        let serviceProvider = account
+        let biddingDays = 7
+        cc.log(`Adding New object for: ${objectName}, ${objectPrice}, ${objectHash}, ${objectCurrencyID}, ${objectDealer}, ${serviceProvider}, ${objectMCCost}, ${objectMOCost}, ${biddingDays}, ${account}`);
         if (props) this.props = props
-        return this.StartCrowdFunding.createObject(objectPrice, objectHash, objectDealer, objectCurrencyID, objectName, objectMCCost, objectMOCost, { from: account })
+        // return this.StartCrowdFunding.createObject(objectPrice, objectHash, objectDealer, objectCurrencyID, objectName, objectMCCost, objectMOCost, { from: account })
+        return this.StartCrowdFunding.createObject(objectHash, objectCurrencyID, objectPrice, objectDealer, serviceProvider, objectMCCost, objectMOCost, biddingDays, { from: account })
             .then(result => {
                 cc.log(`ADD NEW object RESULT: ${result}`);
                 // this.lcEventAddNewObjectSubscribe() // development

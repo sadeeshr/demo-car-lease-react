@@ -58,6 +58,24 @@ class Invest extends Component {
             // this.refreshValues()
             const member = nextProps.members && nextProps.members.find(memberO => memberO["_id"] === nextProps.member["_id"])
             this.props._euroBalanceOf(this.props.account)
+
+            this.props._crowdFundData(member.objectID, "address", "fundtoken")
+            this.props._crowdFundData(member.objectID, "string", "fundtokenname")
+            this.props._crowdFundData(member.objectID, "address", "objectowner")
+            this.props._crowdFundData(member.objectID, "integer", "objectprice")
+            this.props._crowdFundData(member.objectID, "bytes", "objecthash")
+            this.props._crowdFundData(member.objectID, "address", "fundreceiver")
+            this.props._crowdFundData(member.objectID, "address", "currency")
+            this.props._crowdFundData(member.objectID, "integer", "monthlycapitalcost")
+            this.props._crowdFundData(member.objectID, "integer", "monthlyoperatingcost")
+            this.props._crowdFundData(member.objectID, "integer", "raised")
+            this.props._crowdFundData(member.objectID, "bool", "crowdsaleclosed")
+            this.props._crowdFundData(member.objectID, "bool", "objectActive")
+            this.props._crowdFundData(member.objectID, "integer", "objectActiveTime")
+            this.props._crowdFundData(member.objectID, "bool", "claimedcrowdsale")
+            this.props._crowdFundData(member.objectID, "address", "serviceProvider")
+            this.props._crowdFundData(member.objectID, "integer", "biddingtime")
+
             // this.props._lcLeaseObject(this.props.account, member.objectID) // change
             // this.props._lcLeaseObjectCycle(member.objectID) // change
             // this.props._ldGetRaised(member.objectID) // change
@@ -138,6 +156,8 @@ class Invest extends Component {
         // if (!this.props.evTokenBalance) this.props._evBalanceOf(this.props.account) //sadeesh
         // if (!this.props.crowdsaleClosed) this.props._lcAmountObjects()
         // if (!this.props.allowance) this.props._euroAllowance(this.props.account) //sadeesh
+
+
     }
 
     render() {
@@ -167,7 +187,7 @@ class Invest extends Component {
         return (<div className="content-border mobile-margin">
             <div className="border-bottom-1  fix-small-dev">
                 <div className="container">
-                    <span className="lh-40">MIJN SALDO: <strong className="fs-20">{formatNumber(parseInt((this.props.euroTokenBalance + this.props.unClaimedRedemption), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</strong> Euro</span>
+                    <span className="lh-40">MIJN SALDO: <strong className="fs-20">{formatNumber(parseInt((this.props.euroTokenBalance), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</strong> Euro</span>
                     <span className="fr pt-8"><img className="infoImg" src={require('../assets/deal.png')} alt="deal" /></span>
                 </div>
             </div>
@@ -223,7 +243,7 @@ class Invest extends Component {
                                                     {/* <span className="ml-3">Mijn Investering</span> */}
                                                 </p>
                                             </div>
-                                            <div className="col-6 mtableMnd text-center" style={{fontSize: "14px"}}><span className="fw-900">Target: </span>{formatNumber(parseInt((member.objectPrice), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} EUR
+                                            <div className="col-6 mtableMnd text-center" style={{ fontSize: "14px" }}><span className="fw-900">Target: </span>{formatNumber(parseInt((member.objectPrice), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} EUR
                                                 {/* <p className="fs-12">{member.months} MND</p> */}
                                             </div>
                                         </div>
@@ -231,7 +251,7 @@ class Invest extends Component {
                                             <div className="col-12 mb-15">
                                                 <p className="fw-700 text-center" style={{ color: (member.crowdsaleclosed || member.objectActive) ? "black" : "black" }}>{buyAndActivate ? ("AANSCHAF " + member.objectType.toUpperCase()) : (member.objectActive ? "ACTIVE" : member.crowdsaleclosed ? "CLOSED" : "INVESTEER")}</p>
                                             </div>
-                                            <div className="col-12 text-center fs-13"> <span>{ buyAndActivate ? "Opleverdatum" : "Bedrag"}</span></div>
+                                            <div className="col-12 text-center fs-13"> <span>{buyAndActivate ? "Opleverdatum" : "Bedrag"}</span></div>
                                             <div className="col-3 lh-40">
                                                 &nbsp;
                                             </div>

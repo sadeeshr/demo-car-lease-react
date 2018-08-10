@@ -7,6 +7,8 @@ import cc from '../lib/utils';
 import formatNumber from 'accounting-js/lib/formatNumber.js'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Link } from 'react-router-dom'
+
 // import Slider from "react-slick";
 
 import Slider from 'react-rangeslider'
@@ -24,44 +26,44 @@ class AddNewLifeConfigurator extends Component {
             lobjMileage: '',
             modalCondition: false,
             // active: 0
-            valEuroPer: 25,		
-            valMaanden: 100,		
+            valEuroPer: 25,
+            valMaanden: 100,
             valKm: 9000,
             valCar: 8,
-            valEuro: 40000,	
+            valEuro: 40000,
         }
-
+        this.rinkebyStatsURL = "https://rinkeby.etherscan.io/tx/"
     }
 
     handleChangevalEuroPer = (value) => {
         this.setState({
             valEuroPer: value
         })
-      }
+    }
 
-      handleChangevalMaanden = (value) => {
+    handleChangevalMaanden = (value) => {
         this.setState({
             valMaanden: value
         })
-      }
+    }
 
-      handleChangevalKm = (value) => {
+    handleChangevalKm = (value) => {
         this.setState({
             valKm: value
         })
-      }
+    }
 
-      handleChangevalCar = (value) => {
+    handleChangevalCar = (value) => {
         this.setState({
             valCar: value
         })
-      }
+    }
 
-      handleChangevalEuro = (value) => {
+    handleChangevalEuro = (value) => {
         this.setState({
             valEuro: value
         })
-      }
+    }
 
 
 
@@ -89,7 +91,16 @@ class AddNewLifeConfigurator extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (nextProps.newObject && (nextProps.newObject !== this.props.newObject))
+            this.setState({ pending: true })
 
+        if (nextProps.newObject && nextProps.event && (nextProps.event !== this.props.event) && (nextProps.event.transactionHash === nextProps.newObject.txID)) {
+            this.setState({ pending: false })
+            setTimeout(() => {
+                this.props._resetTxIds()
+                this.props.history.push("/", { path: "members" })
+            }, 5000);
+        }
     }
 
 
@@ -170,7 +181,7 @@ class AddNewLifeConfigurator extends Component {
 
         // this.state.lobjectSelected && this.props.account && this.props._lcCreateNewCrowdFundToken(this.props, data, this.props.account) // change
         this.state.lobjectSelected && this.props.account && this.props._lcCreateObject(this.props, this.state.coinName, months, "1", price, objectHash, 0, this.props.account, (parseFloat(monthlycapcost) * 100), (parseFloat(monthlyopcost) * 100), this.props.account)
-        this.props.history.goBack()
+        // this.props.history.goBack()
 
         // this.props._writeNewContractData(data)
     }
@@ -196,7 +207,7 @@ class AddNewLifeConfigurator extends Component {
         if (!leasetype)
             leasetype = leaseobject && leaseobject["leasetypes"][0]
 
-        if ((this.state.active === 0) && (leasetype && (leasetype.type === "Operational")) && this.state.lobjMileage) {
+        if ((this.state.active === 0) && (leasetype) && this.state.lobjMileage) {   // && leasetype.type === "Operational"
             monthlyopcost = (parseInt(this.state.lobjMileage, 10) / 12) * 0.1
         }
 
@@ -218,6 +229,7 @@ class AddNewLifeConfigurator extends Component {
                                 break;
 
                             default:
+                                monthlycapcost = (parseFloat(price) / 100) + (60 - parseInt(months, 10)) * 2
                                 break;
                         }
                         break;
@@ -265,6 +277,7 @@ class AddNewLifeConfigurator extends Component {
                                     break;
                                 }
                             default:
+                                monthlycapcost = parseFloat(price) / 150
                                 break;
                         }
                         break;
@@ -309,8 +322,8 @@ class AddNewLifeConfigurator extends Component {
             shouldSwiperUpdate: true,
             noSwiping: true,
             navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev'
+                nextEl: this.state.pending ? undefined : '.swiper-button-next',
+                prevEl: this.state.pending ? undefined : '.swiper-button-prev'
             },
 
         }
@@ -318,7 +331,7 @@ class AddNewLifeConfigurator extends Component {
 
         return (
             <div className="content-border">
-             <div className="border-bottom-1  fix-small-dev">
+                <div className="border-bottom-1  fix-small-dev">
                     <div className="container">
                         <span className="lh-40">RENDEMENT INVESTEERDER: <strong className="fs-20 color-green"> 6.6 %</strong></span>
                     </div>
@@ -355,7 +368,9 @@ class AddNewLifeConfigurator extends Component {
                                                     <div style={{ display: !lobject.active ? "none" : "" }} className="newLifeItem" onWheel={() => cc.log("KEY DOWN: ", i)} onClick={() => this.setState({ active: i, lobjectSelected: true })} tabIndex="0">
                                                         <div className="col-9">
                                                             <span className="newLifeItem-title">{lobject.name.toUpperCase()}</span>
-                                                            <p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p>
+                                                            {this.props.newObject && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{this.state.pending ? <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p> : <p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p>}</Link>)}
+                                                            {/*this.props.newObject && this.props.newObject.txID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newObject.txID)) ? <p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)*/}
+                                                            {/*<p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p>*/}
                                                             {/* <p className="p-euro " style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p> */}
                                                         </div>
                                                         <div className="col-3" style={{ height: '29px' }}>
@@ -370,7 +385,7 @@ class AddNewLifeConfigurator extends Component {
                                                                 {/* <img src={lobject.image} alt={lobject.name} /> */}
                                                                 <span className="target fs-13">
                                                                     <strong className="fs-15">Target:</strong>
-                                                                    <span className="color-green"> 40.000 </span>
+                                                                    <span className="color-green"> {formatNumber(parseInt(price, 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} </span>
                                                                     EUR</span>
                                                             </div>
                                                         </div>
@@ -395,7 +410,7 @@ class AddNewLifeConfigurator extends Component {
                                                             </div>
                                                         </div> */}
 
-                                                         <div className="mb-5 d-ib fs-13">
+                                                        <div className="mb-5 d-ib fs-13">
                                                             <div className="col-12">
                                                                 <div className='value'>
                                                                     <div className="col-3 text-right"></div>
@@ -406,11 +421,13 @@ class AddNewLifeConfigurator extends Component {
                                                             </div>
                                                             <div className="col-12 slider-style2">
                                                                 <Slider
-                                                                min={0}
-                                                                max={20}
-                                                                value={valCar}
-                                                                orientation='horizontal'
-                                                                onChange={this.handleChangevalCar}
+                                                                    disabled={this.state.pending}
+                                                                    min={0}
+                                                                    max={20}
+                                                                    value={valCar}
+                                                                    disabled={this.state.pending}
+                                                                    orientation='horizontal'
+                                                                    onChange={this.handleChangevalCar}
                                                                 />
                                                             </div>
                                                         </div>
@@ -418,7 +435,7 @@ class AddNewLifeConfigurator extends Component {
                                                         <div className="mb-5 d-ib fs-13">
                                                             <div className="col-12">
                                                                 <div className='value'>
-                                                                    <div className="col-3 text-right">{valEuro}</div>
+                                                                    <div className="col-3 text-right">{formatNumber(parseInt(price, 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</div>
                                                                     <div className="col-9 text-left ti-15">Prijs&nbsp;
                                                                         <strong className="fs-16">Te Funden Bedrag</strong>
                                                                     </div>
@@ -431,12 +448,13 @@ class AddNewLifeConfigurator extends Component {
                                                                 </div> */}
                                                                 {/*<div className="nl-inp">{}</div>*/ /*formatNumber(parseInt(price, 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })*/}
                                                                 <Slider
-                                                                min={0}
-                                                                max={100000}
-                                                                step={500}
-                                                                value={valEuro}
-                                                                orientation='horizontal'
-                                                                onChange={this.handleChangevalEuro}
+                                                                    disabled={this.state.pending}
+                                                                    min={0}
+                                                                    max={this.state.active === 0 ? 100000 : this.state.active === 1 ? 10000 : this.state.active === 2 ? 10000000 : 5000000}
+                                                                    step={500}
+                                                                    value={parseInt(price, 10)}
+                                                                    orientation='horizontal'
+                                                                    onChange={(value) => this.setState({ lobjprice: value })}
                                                                 />
                                                             </div>
                                                         </div>
@@ -444,26 +462,28 @@ class AddNewLifeConfigurator extends Component {
                                                         <div className="mb-5 d-ib fs-13">
                                                             <div className="col-12">
                                                                 <div className='value'>
-                                                                    <div className="col-3 text-right">{valEuroPer}</div>
+                                                                    <div className="col-3 text-right">{formatNumber(this.state.monthlycapcost || parseInt(monthlycapcost, 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</div>
                                                                     <div className="col-9 text-left ti-15">Euro per Maand</div>
                                                                 </div>
                                                             </div>
                                                             <div className="col-12">
                                                                 {/* <div className="nl-inp"> */}
-                                                                    {/*<input className="nl-inp" value={this.state.carFee || car.fee} onChange={(e) => this.setState({ carFee: e.target.value })} type="text" />*/}
-                                                                    {/* {formatNumber(parseInt(monthlycapcost, 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}
+                                                                {/*<input className="nl-inp" value={this.state.carFee || car.fee} onChange={(e) => this.setState({ carFee: e.target.value })} type="text" />*/}
+                                                                {/* {formatNumber(parseInt(monthlycapcost, 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}
                                                                 </div> */}
                                                                 <Slider
-                                                                min={0}
-                                                                max={100}
-                                                                value={valEuroPer}
-                                                                orientation='horizontal'
-                                                                onChange={this.handleChangevalEuroPer}
+                                                                    disabled={this.state.pending}
+                                                                    min={0}
+                                                                    max={1000}
+                                                                    value={this.state.monthlycapcost || parseInt(monthlycapcost, 10)}
+                                                                    orientation='horizontal'
+                                                                    onChange={(value) => this.setState({ monthlycapcost: value })}
                                                                 />
                                                             </div>
                                                         </div>
                                                         <div className={
-                                                            (leasetype && leasetype.months === "60") ? "mb-5 d-ib fs-13" : "fs-13 mb-5 d-ib opacity03"
+                                                            "mb-5 d-ib fs-13"
+                                                            // (leasetype && leasetype.months === "60") ? "mb-5 d-ib fs-13" : "fs-13 mb-5 d-ib opacity03"
                                                         }>
                                                             {/* <div className="col-7">
                                                                 <label className="nl-label">Maanden</label>
@@ -477,27 +497,29 @@ class AddNewLifeConfigurator extends Component {
                                                             </div> */}
                                                             <div className="col-12">
                                                                 <div className='value'>
-                                                                    <div className="col-3 text-right">{valMaanden}</div>
+                                                                    <div className="col-3 text-right">{this.state.lobjmonths || (leasetype && leasetype.months)}</div>
                                                                     <div className="col-9 text-left ti-15">Maanden</div>
                                                                 </div>
                                                             </div>
                                                             <div className="col-12">
                                                                 <Slider
-                                                                min={0}
-                                                                max={120}
-                                                                step={3}
-                                                                value={valMaanden}
-                                                                orientation='horizontal'
-                                                                onChange={this.handleChangevalMaanden}
+                                                                    disabled={this.state.pending}
+                                                                    min={0}
+                                                                    max={120}
+                                                                    step={3}
+                                                                    value={this.state.lobjmonths || (leasetype && parseInt(leasetype.months, 10))}
+                                                                    orientation='horizontal'
+                                                                    onChange={(value) => this.setState({ lobjmonths: value })}
                                                                 />
                                                             </div>
                                                         </div>
 
                                                         <div className={
-                                                            (leasetype && leasetype.type === "Operational") ? "mb-5 d-ib fs-13" : "mb-5 d-ib fs-13 opacity03"
+                                                            "mb-5 d-ib fs-13"
+                                                            // (leasetype && leasetype.type === "Operational") ? "mb-5 d-ib fs-13" : "mb-5 d-ib fs-13 opacity03"
                                                         }>
                                                             {/* <div className="col-7">
-                                                                <label className="nl-label">{mileageLabel || " "}</label>
+                                                                <label className="nl-label">{mileageLabel || " KM per Jaar"}</label>
                                                             </div>
                                                             <div className="col-5">
                                                                 {
@@ -512,18 +534,19 @@ class AddNewLifeConfigurator extends Component {
 
                                                             <div className="col-12">
                                                                 <div className='value'>
-                                                                    <div className="col-3 text-right">{valKm}</div>
-                                                                    <div className="col-9 text-left ti-15">KM per Jaar <span className="fs-9">(10 cent per km)</span></div>
+                                                                    <div className="col-3 text-right">{this.state.lobjMileage || monthlyopcost}</div>
+                                                                    <div className="col-9 text-left ti-15">{mileageLabel}<span className="fs-9">(10 cent per km)</span></div>
                                                                 </div>
                                                             </div>
                                                             <div className="col-12">
                                                                 <Slider
-                                                                min={0}
-                                                                max={100000}
-                                                                step={1000}
-                                                                value={valKm}
-                                                                orientation='horizontal'
-                                                                onChange={this.handleChangevalKm}
+                                                                    disabled={this.state.pending}
+                                                                    min={0}
+                                                                    max={100000}
+                                                                    step={1000}
+                                                                    value={this.state.lobjMileage || monthlyopcost}
+                                                                    orientation='horizontal'
+                                                                    onChange={(value) => this.setState({ lobjMileage: value })}
                                                                 />
                                                             </div>
 
@@ -563,15 +586,15 @@ class AddNewLifeConfigurator extends Component {
                                                                 <div className="beforeFooter">
                                                                     {/* <div className="col-12 text-right">  <img style={img} src={(this.props.leaseobjects && this.props.leaseobjects[this.state.active || "0"]["image"])} alt="objectImage" /></div> */}
                                                                     <div className="col-6 text-right">
-                                                                        <button className="arrowBtn" title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected} onClick={() => this.createAccount(leasetype, price, months, monthlycapcost, monthlyopcost)}>
+                                                                        <button className="arrowBtn" title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected || this.state.pending} onClick={() => this.createAccount(leasetype, price, months, (this.state.monthlycapcost || monthlycapcost), monthlyopcost)}>
                                                                             <span className="flaticon-euro white-arrowBtn"></span>
                                                                         </button>
                                                                     </div>
 
 
                                                                     <div className="col-4 text-right pv-18 cname-input">
-                                                                        <input className="ml-5 nl-inp" placeholder="Coin Naam" value={this.state.coinName} onChange={(e) => this.setState({ coinName: e.target.value })} type="text" />
-                                                             
+                                                                        <input disabled={this.state.pending} className="ml-5 nl-inp" placeholder="Coin Naam" value={this.state.coinName} onChange={(e) => this.setState({ coinName: e.target.value })} type="text" />
+
                                                                         {/*<span>Start Crowdfunding en verkoop je eigen coin</span>*/}  {/* Change this text and edit css style to display entire line*/}
                                                                     </div>
 
@@ -581,7 +604,7 @@ class AddNewLifeConfigurator extends Component {
                                                     </div>
                                                 </div>
 
-                                                
+
 
                                             )
                                             // }

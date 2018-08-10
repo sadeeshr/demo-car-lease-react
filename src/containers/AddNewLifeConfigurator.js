@@ -22,6 +22,7 @@ const mapStateToProps = (state) => {
         members_new: state.members_new,
         eventAddNewObject: state.eventAddNewObject,
         objectID: state.objectID,
+        event: state.event,
         newObject: state.newObject,
         progress: state.progress ? state.progress : false,
         usernames: state.usernames,

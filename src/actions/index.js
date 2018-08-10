@@ -180,6 +180,9 @@ export const _contractDataResponse = (account, response) => {
                     dispatch(_crowdFundData(member.objectID, "bool", "crowdsaleclosed"))
                     dispatch(_crowdFundData(member.objectID, "bool", "objectActive"))
                     dispatch(_crowdFundData(member.objectID, "integer", "objectActiveTime"))
+                    dispatch(_crowdFundData(member.objectID, "bool", "claimedcrowdsale"))
+                    dispatch(_crowdFundData(member.objectID, "address", "serviceProvider"))
+                    dispatch(_crowdFundData(member.objectID, "integer", "biddingtime"))
                 }
                 // return 1
             })
@@ -441,7 +444,7 @@ export const _lcCreateObject = (props, name, months, municipalityID, objectPrice
     return (dispatch) => {
         return contract.lcCreateObject(props, name, months, municipalityID, objectPrice, objectHash, objectCurrencyID, objectDealer, objectMCCost, objectMOCost, account)
             .then(result => {
-                dispatch(push("/", { path: "members" }))
+                // dispatch(push("/", { path: "members" }))
                 return dispatch(
                     {
                         type: "ADD_NEW_OBJECT_RESULT",
