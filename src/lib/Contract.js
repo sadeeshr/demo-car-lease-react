@@ -64,12 +64,15 @@ class Contract {
         let accountTimer = setInterval(() => {
             // cc.log("Checking Metamask Account");
             if (!this.account) {
+                console.log("NOT LOGGED IN")
                 this.eth.coinbase().then(account => {
                     if (account) {
                         cc.log("ACCOUNT: ", account);
+                        console.log("LOGGED IN")
                         // this.getConfirmationsHash("0xf290b3e19ad0dc1bed93831bb04781af173f4643c55b270efb82235c55088150")
                         this.account = account;
                         this.props._setAccount({ account })
+                        this.getVersion()
                         clearInterval(accountTimer)
                     }
                 })
@@ -77,6 +80,30 @@ class Contract {
                 clearInterval(accountTimer)
         }, 1000)
 
+    }
+
+    getVersion = () => {
+        this.eth.net_version().then(netId => {
+            switch (netId) {
+                case "1":
+                    console.log('This is mainnet')
+                    break
+                case "2":
+                    console.log('This is the deprecated Morden test network.')
+                    break
+                case "3":
+                    console.log('This is the ropsten test network.')
+                    break
+                case "4":
+                    console.log('This is the Rinkeby test network.')
+                    break
+                case "42":
+                    console.log('This is the Kovan test network.')
+                    break
+                default:
+                    console.log('This is an unknown network.')
+            }
+        })
     }
 
     getBalance = (address) => {
@@ -99,6 +126,7 @@ class Contract {
         const eth = new EthJs(web3.currentProvider)
         this.eth = eth
         // let account = eth.coinbase()
+        this.getVersion()
         this.getAccount()
         //this.props._setAccount({ account: "0x423B7B8Da5ec685130670A978a1A680dFa27c879" })
         // cc.log("ACC: ", account);
