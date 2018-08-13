@@ -184,179 +184,208 @@ class Invest extends Component {
         cc.log("Object Price, Total Raised: ", member.objectPrice, member.raised)
         cc.log("Allowed amount: ", amountRemaining, ethInvest, enableInvest);
 
-        return (<div className="content-border mobile-margin">
-            <div className="border-bottom-1  fix-small-dev">
-                <div className="container">
-                    <span className="lh-40">MIJN SALDO: <strong className="fs-20">{formatNumber(parseInt((this.props.euroTokenBalance), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</strong> Euro</span>
-                    <span className="fr pt-8"><img className="infoImg" src={require('../assets/deal.png')} alt="deal" /></span>
-                </div>
+        return (<div className="col-12">
+            <div className="col-12 mb-15">
+                <p className="fw-700 text-center" style={{ color: (member.crowdsaleclosed || member.objectActive) ? "black" : "black" }}>{buyAndActivate ? ("AANSCHAF " + member.objectType.toUpperCase()) : (member.objectActive ? "ACTIVE" : member.crowdsaleclosed ? "CLOSED" : "INVESTEER")}</p>
             </div>
-            <div className="mainContentCon mainContentCon-43">
-                {/* <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
-                <div className="float-right">
-                    <i title="Invoices" className="flaticon-invoice" onClick={() => this.props.history.push("/", { path: "invoices" })}></i>
-                    <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
-                </div> */}
-                <div hidden className="navCon">
-                    <h1 id="header">
-                        <div hidden className="fl">
-                            <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
+            <div className="col-12 text-center fs-13"> <span>{buyAndActivate ? "Opleverdatum" : !member.crowdsaleclosed ? "Bedrag" : ""}</span></div>
+            <div className="col-3 lh-40"> &nbsp; </div>
+            <div className="col-6">
+                {
+                    buyAndActivate ?
+                        <Calendar className="calInput" value={this.state.activedate || new Date()} onChange={(e) => this.setState({ activedate: e.value })}>Opleverdatum</Calendar>
+                        : <div className="investAddInput">{!member.crowdsaleclosed && <input style={{ color: (enableInvest ? "black" : "red") }} value={(typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest} onChange={(e) => this.setState({ ethInvest: e.target.value })} maxLength="20" type="text" placeholder="Euro Token" />}
                         </div>
-                        Invest
-                        <div hidden className="fr">
-                            <i title="Invoices" className="flaticon-invoice marIcon" onClick={() => this.props.history.push("/", { path: "invoices" })}></i>
-                            <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
-                        </div></h1>
-                </div>
-                <Slide right opposite when={this.state.reveal}>
-                    <div className="contentCon bg-none overflow contentCon-8 pt-8">
-                        <BlockUi tag="div" blocking={this.props.progress}>
-                            <div className="carIntestCon">
-                                <div className="membersCon text-center pt-5-mobile">
-                                    <div className="leaseCarCon br-30 main-i invest">
-                                        {/* <div className="balance d-ib inv">
-                                            <div className="col-6 balanceName lh-25 text-right">MIJN SALDO : </div>
-                                            <div className="col-6 balanceNum lh-25 text-left">{formatNumber(parseInt((this.props.euroTokenBalance + this.props.unClaimedRedemption), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}<span> Euro</span></div> */}
-                                        {/* <div className="col-6">&nbsp;</div>
-                                            <div className="col-6 minusBal text-left">-2.500</div> */}
-                                        {/* </div> */}
-                                        <div className="col-6">
-                                            <div className="pt-25 pl-15 fs-20  tt-capital fw-600">
-                                                <span className="opacity07">{user.username}</span>
-                                                <p>{user.town}</p>
-                                                <span className="opacity07 fs-14"><span className="fw-900">{member.raised}</span> Euro opgehaald</span>
-                                            </div>
-                                        </div>
-                                        <div className="col-6 mtableLink">
-                                            <div className="mtableCar" style={{ backgroundImage: `url(${member.objectPic})` }}>
-                                                {/* <img src={this.props.member.objectPic} alt="carImage" /> */}
-                                            </div>
-                                        </div>
-                                        <div className="col-12">
-                                            <div className="col-6 text-left pl-10 w6-10">
-
-                                                {/* <span style={{ width: "40px", display: "inline-block", textAlign: "right"}}>{member.raised}</span>
-                                                <span className="ml-3">Totaal</span> */}
-
-                                                <p className="fs-15">
-                                                    <span style={{ display: "inline-block", textAlign: "right" }}>waarvan <span className="fw-900">{member.evTokens}</span> door mij</span>
-                                                    {/* <span className="ml-3">Mijn Investering</span> */}
-                                                </p>
-                                            </div>
-                                            <div className="col-6 mtableMnd text-center" style={{ fontSize: "14px" }}><span className="fw-900">Target: </span>{formatNumber(parseInt((member.objectPrice), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} EUR
-                                                {/* <p className="fs-12">{member.months} MND</p> */}
-                                            </div>
-                                        </div>
-                                        <div className="col-12 investAddCon border-2">
-                                            <div className="col-12 mb-15">
-                                                <p className="fw-700 text-center" style={{ color: (member.crowdsaleclosed || member.objectActive) ? "black" : "black" }}>{buyAndActivate ? ("AANSCHAF " + member.objectType.toUpperCase()) : (member.objectActive ? "ACTIVE" : member.crowdsaleclosed ? "CLOSED" : "INVESTEER")}</p>
-                                            </div>
-                                            <div className="col-12 text-center fs-13"> <span>{buyAndActivate ? "Opleverdatum" : "Bedrag"}</span></div>
-                                            <div className="col-3 lh-40">
-                                                &nbsp;
-                                            </div>
-                                            <div className="col-6">
-                                                {
-                                                    buyAndActivate ?
-                                                        <Calendar className="calInput" value={this.state.activedate || new Date()} onChange={(e) => this.setState({ activedate: e.value })}>Opleverdatum</Calendar>
-                                                        : <div className="investAddInput">{!member.crowdsaleclosed && <input style={{ color: (enableInvest ? "black" : "red") }} value={(typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest} onChange={(e) => this.setState({ ethInvest: e.target.value })} maxLength="20" type="text" placeholder="Euro Token" />}
-                                                        </div>
-                                                }
-                                            </div>
-                                            {!buyAndActivate && !member.crowdsaleclosed && <div className="col-3 lh-40">
-                                                Euro
-                                            </div>}
-
-                                            <div className="col-12 text-center">
-
-                                                {/* <span className="flaticon-padlock unlock"></span>  */}
-                                                {/* <span className="minusBal">Pending</span> */}
-                                                {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.investInObjectTxID)) ? <p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)}
-                                                {this.props.BuyAndActivateTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.BuyAndActivateTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.BuyAndActivateTxID)) ? <p className="p-euro" style={{ ccolor: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)}
-
-                                                <span className="flaticon-padlock unlock unlock-m" style={{ cursor: !this.state.pending && ((enableInvest && !member.crowdsaleclosed) || buyAndActivate) ? "pointer" : "not-allowed" }} onClick={() => {
-                                                    buyAndActivate ?
-                                                        !this.state.pending && this.state.activedate && this.props._lcBuyAndActivate(member.objectID, this.state.activedate, this.props.account)
-                                                        : !this.state.pending && this.props.account && !member.crowdsaleclosed && enableInvest && this.props._lcInvestInObject(member.objectID || (this.props.event && this.props.event.returnValues && this.props.event.returnValues.objectID), this.state.ethInvest || "0", this.props.account)
-                                                }} ></span>
-
-
-                                                {/* <span className="confirmBal">Confirmed</span> */}
-                                            </div>
-
-                                            {/* <div className="arrowBtn">
-                                                <img style={{ cursor: ((enableInvest && !this.props.member.crowdsaleClosed) || buyAndActivate) ? "pointer" : "not-allowed" }} onClick={() => {
-                                                    buyAndActivate ?
-                                                        this.state.activedate && this.props._lcBuyAndActivate(this.props.member.objectID, this.state.activedate, this.props.account)
-                                                        : this.props.account && !this.props.member.crowdsaleClosed && enableInvest && this.props._lcInvestInObject(this.props.member.objectID || (this.props.event && this.props.event.returnValues && this.props.event.returnValues.objectID), this.state.ethInvest || "0", this.props.account)
-                                                }} src={require('../assets/add.jpg')} alt="add2" />
-                                            </div>
- */}
-
-
-                                            {/* <div className="investAddStatus">
-
-                                                {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.investInObjectTxID)) ? <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red" }}>pending</p>}</Link>)}
-                                                {this.props.BuyAndActivate && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.BuyAndActivateTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.BuyAndActivateTxID)) ? <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red" }}>pending</p>}</Link>)}
-                                            </div> */}
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </BlockUi>
-                    </div>
-                </Slide>
+                }
             </div>
-            <div className={this.state.modalCondition ? "infoPop is-open" : "infoPop is-close"} >
-                <span className="modalCloseBtn" onClick={() => this.modalClick()}>x</span>
-                Vandaag 20 euro,
-                morgen 19.99,
-                overmorgen 19.98,
-                over 3 jaar 10
-                ...of 1 euro per uur
-                    </div>
-            <div className="footBtn container">
-                <div className="container text-center">
-                    <div className="beforeFooter">
-                        <div className="col-2 text-left">
-                            <button className="arrowBtn" onClick={this.doExit.bind(this)}>
-                                <span className="flaticon-left-arrow"></span>
-                            </button>
-                        </div>
-                        <div className="col-8 lh-54 text-left ti-5-mobile">
-                            Ga Terug
-                        </div>
-                        <div className="col-2 text-left padding-10-0">
-                            <div className="text-right" style={{ float: 'right' }}>
-                                <span onClick={() => this.modalClick()}>
-                                    <img className="infoImg" src={require('../assets/info.png')} alt="info" />
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            {!buyAndActivate && !member.crowdsaleclosed && <div className="col-3 lh-40"> Euro </div>}
+            <div className="col-12 text-center">
+                {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.investInObjectTxID)) ? <p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)}
+                {this.props.BuyAndActivateTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.BuyAndActivateTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.BuyAndActivateTxID)) ? <p className="p-euro" style={{ ccolor: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)}
+                <span className="flaticon-padlock unlock unlock-m" style={{ cursor: !this.state.pending && ((enableInvest && !member.crowdsaleclosed) || buyAndActivate) ? "pointer" : "not-allowed" }}
+                    onClick={() => {
+                        buyAndActivate ?
+                            !this.state.pending && this.state.activedate && this.props._lcBuyAndActivate(member.objectID, this.state.activedate, this.props.account)
+                            : !this.state.pending && this.props.account && !member.crowdsaleclosed && enableInvest && this.props._lcInvestInObject(member.objectID || (this.props.event && this.props.event.returnValues && this.props.event.returnValues.objectID), this.state.ethInvest || "0", this.props.account)
+                    }} >
+                </span>
             </div>
-            <div className="footCon-bottom">
-                <div className="social bg-lightgrey">
-                    <div className="container">
-                        <span className="smallText">VOLG ONS</span>
-
-                        <span className="flaticon-twitter-logo-on-black-background"></span>
-                        <span className="flaticon-facebook-logo"></span>
-                        <span className="flaticon-social-media"></span>
-                    </div>
-                </div>
-                <div className="contact bg-grey textWhite">
-                    <div className="container">
-                        <span className="smallText">CONTACT</span>
-                    </div>
-                </div>
-            </div>
-            <div className={this.state.modalCondition ? "modalOverlay is-open" : "modalOverlay is-close"} onClick={() => this.modalClick()}></div>
         </div>
         )
     }
 }
 
 export default Invest
+
+// old render
+// <div className="content-border mobile-margin">
+// <div className="border-bottom-1  fix-small-dev">
+//     <div className="container">
+//         <span className="lh-40">MIJN SALDO: <strong className="fs-20">{formatNumber(parseInt((this.props.euroTokenBalance), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</strong> Euro</span>
+//         <span className="fr pt-8"><img className="infoImg" src={require('../assets/deal.png')} alt="deal" /></span>
+//     </div>
+// </div>
+// <div className="mainContentCon mainContentCon-43">
+//     {/* <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
+// <div className="float-right">
+//     <i title="Invoices" className="flaticon-invoice" onClick={() => this.props.history.push("/", { path: "invoices" })}></i>
+//     <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
+// </div> */}
+//     <div hidden className="navCon">
+//         <h1 id="header">
+//             <div hidden className="fl">
+//                 <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i>
+//             </div>
+//             Invest
+//         <div hidden className="fr">
+//                 <i title="Invoices" className="flaticon-invoice marIcon" onClick={() => this.props.history.push("/", { path: "invoices" })}></i>
+//                 <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
+//             </div></h1>
+//     </div>
+//     <Slide right opposite when={this.state.reveal}>
+//         <div className="contentCon bg-none overflow contentCon-8 pt-8">
+//             <BlockUi tag="div" blocking={this.props.progress}>
+//                 <div className="carIntestCon">
+//                     <div className="membersCon text-center pt-5-mobile">
+//                         <div className="leaseCarCon br-30 main-i invest">
+//                             {/* <div className="balance d-ib inv">
+//                             <div className="col-6 balanceName lh-25 text-right">MIJN SALDO : </div>
+//                             <div className="col-6 balanceNum lh-25 text-left">{formatNumber(parseInt((this.props.euroTokenBalance + this.props.unClaimedRedemption), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}<span> Euro</span></div> */}
+//                             {/* <div className="col-6">&nbsp;</div>
+//                             <div className="col-6 minusBal text-left">-2.500</div> */}
+//                             {/* </div> */}
+//                             <div className="col-6">
+//                                 <div className="pt-25 pl-15 fs-20  tt-capital fw-600">
+//                                     <span className="opacity07">{user.username}</span>
+//                                     <p>{user.town}</p>
+//                                     <span className="opacity07 fs-14"><span className="fw-900">{member.raised}</span> Euro opgehaald</span>
+//                                 </div>
+//                             </div>
+//                             <div className="col-6 mtableLink">
+//                                 <div className="mtableCar" style={{ backgroundImage: `url(${member.objectPic})` }}>
+//                                     {/* <img src={this.props.member.objectPic} alt="carImage" /> */}
+//                                 </div>
+//                             </div>
+//                             <div className="col-12">
+//                                 <div className="col-6 text-left pl-10 w6-10">
+
+//                                     {/* <span style={{ width: "40px", display: "inline-block", textAlign: "right"}}>{member.raised}</span>
+//                                 <span className="ml-3">Totaal</span> */}
+
+//                                     <p className="fs-15">
+//                                         <span style={{ display: "inline-block", textAlign: "right" }}>waarvan <span className="fw-900">{member.evTokens}</span> door mij</span>
+//                                         {/* <span className="ml-3">Mijn Investering</span> */}
+//                                     </p>
+//                                 </div>
+//                                 <div className="col-6 mtableMnd text-center" style={{ fontSize: "14px" }}><span className="fw-900">Target: </span>{formatNumber(parseInt((member.objectPrice), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} EUR
+//                                 {/* <p className="fs-12">{member.months} MND</p> */}
+//                                 </div>
+//                             </div>
+//                             <div className="col-12 investAddCon border-2">
+//                                 <div className="col-12 mb-15">
+//                                     <p className="fw-700 text-center" style={{ color: (member.crowdsaleclosed || member.objectActive) ? "black" : "black" }}>{buyAndActivate ? ("AANSCHAF " + member.objectType.toUpperCase()) : (member.objectActive ? "ACTIVE" : member.crowdsaleclosed ? "CLOSED" : "INVESTEER")}</p>
+//                                 </div>
+//                                 <div className="col-12 text-center fs-13"> <span>{buyAndActivate ? "Opleverdatum" : "Bedrag"}</span></div>
+//                                 <div className="col-3 lh-40">
+//                                     &nbsp;
+//                             </div>
+//                                 <div className="col-6">
+//                                     {
+//                                         buyAndActivate ?
+//                                             <Calendar className="calInput" value={this.state.activedate || new Date()} onChange={(e) => this.setState({ activedate: e.value })}>Opleverdatum</Calendar>
+//                                             : <div className="investAddInput">{!member.crowdsaleclosed && <input style={{ color: (enableInvest ? "black" : "red") }} value={(typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest} onChange={(e) => this.setState({ ethInvest: e.target.value })} maxLength="20" type="text" placeholder="Euro Token" />}
+//                                             </div>
+//                                     }
+//                                 </div>
+//                                 {!buyAndActivate && !member.crowdsaleclosed && <div className="col-3 lh-40">
+//                                     Euro
+//                             </div>}
+
+//                                 <div className="col-12 text-center">
+
+//                                     {/* <span className="flaticon-padlock unlock"></span>  */}
+//                                     {/* <span className="minusBal">Pending</span> */}
+//                                     {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.investInObjectTxID)) ? <p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)}
+//                                     {this.props.BuyAndActivateTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.BuyAndActivateTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.BuyAndActivateTxID)) ? <p className="p-euro" style={{ ccolor: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)}
+
+//                                     <span className="flaticon-padlock unlock unlock-m" style={{ cursor: !this.state.pending && ((enableInvest && !member.crowdsaleclosed) || buyAndActivate) ? "pointer" : "not-allowed" }} onClick={() => {
+//                                         buyAndActivate ?
+//                                             !this.state.pending && this.state.activedate && this.props._lcBuyAndActivate(member.objectID, this.state.activedate, this.props.account)
+//                                             : !this.state.pending && this.props.account && !member.crowdsaleclosed && enableInvest && this.props._lcInvestInObject(member.objectID || (this.props.event && this.props.event.returnValues && this.props.event.returnValues.objectID), this.state.ethInvest || "0", this.props.account)
+//                                     }} ></span>
+
+
+//                                     {/* <span className="confirmBal">Confirmed</span> */}
+//                                 </div>
+
+//                                 {/* <div className="arrowBtn">
+//                                 <img style={{ cursor: ((enableInvest && !this.props.member.crowdsaleClosed) || buyAndActivate) ? "pointer" : "not-allowed" }} onClick={() => {
+//                                     buyAndActivate ?
+//                                         this.state.activedate && this.props._lcBuyAndActivate(this.props.member.objectID, this.state.activedate, this.props.account)
+//                                         : this.props.account && !this.props.member.crowdsaleClosed && enableInvest && this.props._lcInvestInObject(this.props.member.objectID || (this.props.event && this.props.event.returnValues && this.props.event.returnValues.objectID), this.state.ethInvest || "0", this.props.account)
+//                                 }} src={require('../assets/add.jpg')} alt="add2" />
+//                             </div>
+// */}
+
+
+//                                 {/* <div className="investAddStatus">
+
+//                                 {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.investInObjectTxID)) ? <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red" }}>pending</p>}</Link>)}
+//                                 {this.props.BuyAndActivate && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.BuyAndActivateTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.BuyAndActivateTxID)) ? <p className="p-euro" style={{ color: "green" }}><i>Confirmed</i></p> : <p className="p-euro" style={{ color: "red" }}>pending</p>}</Link>)}
+//                             </div> */}
+
+//                             </div>
+//                         </div>
+//                     </div>
+//                 </div>
+//             </BlockUi>
+//         </div>
+//     </Slide>
+// </div>
+// <div className={this.state.modalCondition ? "infoPop is-open" : "infoPop is-close"} >
+//     <span className="modalCloseBtn" onClick={() => this.modalClick()}>x</span>
+//     Vandaag 20 euro,
+//     morgen 19.99,
+//     overmorgen 19.98,
+//     over 3 jaar 10
+//     ...of 1 euro per uur
+//     </div>
+// <div className="footBtn container">
+//     <div className="container text-center">
+//         <div className="beforeFooter">
+//             <div className="col-2 text-left">
+//                 <button className="arrowBtn" onClick={this.doExit.bind(this)}>
+//                     <span className="flaticon-left-arrow"></span>
+//                 </button>
+//             </div>
+//             <div className="col-8 lh-54 text-left ti-5-mobile">
+//                 Ga Terug
+//         </div>
+//             <div className="col-2 text-left padding-10-0">
+//                 <div className="text-right" style={{ float: 'right' }}>
+//                     <span onClick={() => this.modalClick()}>
+//                         <img className="infoImg" src={require('../assets/info.png')} alt="info" />
+//                     </span>
+//                 </div>
+//             </div>
+//         </div>
+//     </div>
+// </div>
+// <div className="footCon-bottom">
+//     <div className="social bg-lightgrey">
+//         <div className="container">
+//             <span className="smallText">VOLG ONS</span>
+
+//             <span className="flaticon-twitter-logo-on-black-background"></span>
+//             <span className="flaticon-facebook-logo"></span>
+//             <span className="flaticon-social-media"></span>
+//         </div>
+//     </div>
+//     <div className="contact bg-grey textWhite">
+//         <div className="container">
+//             <span className="smallText">CONTACT</span>
+//         </div>
+//     </div>
+// </div>
+// <div className={this.state.modalCondition ? "modalOverlay is-open" : "modalOverlay is-close"} onClick={() => this.modalClick()}></div>
+// </div>

@@ -4,6 +4,8 @@ import 'react-block-ui/style.css';
 import { Link } from 'react-router-dom'
 import cc from '../lib/utils';
 import formatNumber from 'accounting-js/lib/formatNumber.js'
+import Invest from '../containers/Invest';
+import Invoices from '../containers/Invoices';
 
 // import { pseudoRandomBytes } from 'crypto';
 
@@ -229,7 +231,96 @@ class Members extends Component {
         }
     }
 
-    renderMember = (member, i) => {
+    renderMember = (userObject, i) => {
+
+        // cc.log("member object: ", member)
+
+        // const userObjects = this.props.members && this.props.members.filter(userO => userO["member"] === member["_id"])
+        const member = this.props.usernames && this.props.usernames.find(member => member["_id"] === userObject["member"])
+
+        // console.log("UO", userObject, userObject.objectPrice);
+        // const objectPrice = userObject.obj ? userObject.obj.objectPrice.toNumber() : "0"
+        const objectPrice = parseInt(userObject.objectPrice, 10) || 0
+        const img = userObject.objectPic ? { "display": "block" } : { "maxHeight": "50px", "maxWidth": "118px", height: "auto", width: "auto" }
+        const selected = this.props.member && (this.props.member["_id"] === userObject["_id"]) ? true : false
+        // const selected = true
+        let memberRows = [
+            <div className="mtableLink" key={i} onClick={() => member.authorized ? this.props._objectSelected(userObject, this.props.account) : cc.log("MEMBER NOT AUTHORIZED")}>
+                <div className="col-5">
+                    <div className="mtableUser">
+                        <span className="fs-20 fw-700" style={member.account === this.props.account ? { fontWeight: "bold" } : {}}>{userObject.objectName || ""}</span>
+                        <p>{member.town || ""}</p>
+                        <div className="mtableTokens">
+                            {userObject.crowdsaleclosed ?
+                                <span style={{ color: "green", fontSize: "15px", }}>{userObject.objectActive ? "Active" : "Closed"}</span> : userObject.raised ? "E " + userObject.raised + " Totaal" : "E 0 Totaal"}
+                            <p>{userObject.evTokens ? "E " + userObject.evTokens + " Van mij" : "-"}</p>
+                        </div>
+                        {!member.authorized && <div className="membersBtn">
+                            <button title="Authorize" className="arrowBtn" onClick={() => member.account !== this.props.account ? this.props._lcAddUser(member.account, this.props.account) : cc.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
+                                <span className="flaticon-padlock-1 unlock unlock-m"></span>
+                            </button>
+                        </div>}
+                    </div>
+                </div>
+                <div className="col-7">
+
+                    {<div className="mtableCar" style={{ backgroundImage: `url(${userObject.objectPic || member.profilePic || require('../assets/anonymous.png')})` }}>
+                        {/* <img style={img} src={userObject.objectPic || member.profilePic || require('../assets/anonymous.png')} alt="carImage" /> */}
+                    </div>}
+                    <span title="Car Raised" className="carRaised">Euro {objectPrice}</span>
+
+                    {(this.props.newObject && this.props.newObject["id"] === userObject["_id"]) &&
+                        (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newObject.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px", textAlign: "center", fontWeight: "600" }}>Confirmed</p> : <p className="p-euro" style={{ color: "#FF9800", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Pending</p>}</Link>)}
+                    {(this.props.newCrowdFundToken && this.props.newCrowdFundToken["hash"] === userObject["objectHash"]) &&
+                        (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newCrowdFundToken.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newCrowdFundToken.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Confirmed</p> : <p className="p-euro" style={{ color: "#FF9800", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Pending</p>}</Link>)}
+                </div>
+            </div>
+        ]
+
+        if (selected && this.props.account && this.props.registered) {
+            cc.log("Member Object: ", userObject, member.account, this.props.account);
+            cc.log("---------------------------------------------------------------------------")
+            cc.log("CHECK 1 (crowdsale closed and user object not active and not owner address): ", (userObject.crowdsaleclosed && !userObject.objectActive && (member.account !== this.props.account)) || "false");
+            cc.log("CHECK 2 (object hash and no lease token address and not owner address): ", (userObject.objectHash && !userObject.leaseTokenAddress && (member.account !== this.props.account)) || "false");
+            cc.log("CHECK 3 (lease token address and no object ID and not owner address): ", (userObject.leaseTokenAddress && !userObject.objectID && (member.account !== this.props.account)) || "false");
+            cc.log("CHECK 4 (object hash and no lease token address and no object ID): ", (userObject.objectHash && !userObject.leaseTokenAddress && !userObject.objectID) || "false");
+            cc.log("CHECK 5 (pending status in state due to awaiting transaction confirmation event): ", this.state.pending || "false");
+
+            const disableDownButton = (userObject.crowdsaleclosed && !userObject.objectActive && (member.account !== this.props.account)) || (userObject.objectHash && !userObject.leaseTokenAddress && (member.account !== this.props.account)) || (userObject.leaseTokenAddress && !userObject.objectID && (member.account !== this.props.account)) || (userObject.objectHash && !userObject.leaseTokenAddress && !userObject.objectID) || this.state.pending
+            cc.log("Disable button: ", disableDownButton || "false");
+            memberRows.push(
+
+                <div className="rowSelect mb-5" key={'invest-' + i}>
+
+
+                    {/*<div style={{ cursor: (userObject.objectID || member.authorized) ? "pointer" : "not-allowed" }} className="memberMesCon">{member.message}</div>*/}
+                    {(userObject.objectID || userObject.leaseTokenAddress || userObject.objectHash) && <div className="">   {/*memberMesBtns*/}
+                        {
+                            !disableDownButton &&
+                                userObject.crowdsaleclosed ?
+                                userObject.objectActive ?
+                                    <Invoices />
+                                    :
+                                    (member.account === this.props.account) ?
+                                        <Invest />
+                                        : cc.log("MEMBER CAN ONLY BUY AND ACTIVATE HIS OBJECT")
+                                :
+                                (member.authorized) ?
+                                    <Invest />
+                                    :
+                                    cc.log("NO OBJECT CONFIGURED")
+                        }
+                    </div>}
+                </div>
+            )
+        }
+
+        return <div className="leaseCarCon ph-5" key={i}>{memberRows}</div>
+
+
+    }
+
+    oldRenderMember = (member, i) => {
 
         // cc.log("member object: ", member)
 
@@ -275,7 +366,7 @@ class Members extends Component {
                                 <p>{member.town || ""}</p>
                                 <div className="mtableTokens">
                                     {userObject.crowdsaleclosed ?
-                                        <span style={{ color: "green", fontSize: "15px", }}>{userObject.active ? "Active" : "Closed"}</span> : userObject.raised ? "E " + userObject.raised + " Totaal" : "E 0 Totaal"}
+                                        <span style={{ color: "green", fontSize: "15px", }}>{userObject.objectActive ? "Active" : "Closed"}</span> : userObject.raised ? "E " + userObject.raised + " Totaal" : "E 0 Totaal"}
                                     <p>{userObject.evTokens ? "E " + userObject.evTokens + " Van mij" : "-"}</p>
                                 </div>
                                 {!member.authorized && <div className="membersBtn">
@@ -303,20 +394,37 @@ class Members extends Component {
                 if (selected && this.props.account && this.props.registered) {
                     cc.log("Member Object: ", userObject, member.account, this.props.account);
                     cc.log("---------------------------------------------------------------------------")
-                    cc.log("CHECK 1 (crowdsale closed and user object not active and not owner address): ", (userObject.crowdsaleclosed && !userObject.active && (member.account !== this.props.account)) || "false");
+                    cc.log("CHECK 1 (crowdsale closed and user object not active and not owner address): ", (userObject.crowdsaleclosed && !userObject.objectActive && (member.account !== this.props.account)) || "false");
                     cc.log("CHECK 2 (object hash and no lease token address and not owner address): ", (userObject.objectHash && !userObject.leaseTokenAddress && (member.account !== this.props.account)) || "false");
                     cc.log("CHECK 3 (lease token address and no object ID and not owner address): ", (userObject.leaseTokenAddress && !userObject.objectID && (member.account !== this.props.account)) || "false");
                     cc.log("CHECK 4 (object hash and no lease token address and no object ID): ", (userObject.objectHash && !userObject.leaseTokenAddress && !userObject.objectID) || "false");
                     cc.log("CHECK 5 (pending status in state due to awaiting transaction confirmation event): ", this.state.pending || "false");
 
-                    const disableDownButton = (userObject.crowdsaleclosed && !userObject.active && (member.account !== this.props.account)) || (userObject.objectHash && !userObject.leaseTokenAddress && (member.account !== this.props.account)) || (userObject.leaseTokenAddress && !userObject.objectID && (member.account !== this.props.account)) || (userObject.objectHash && !userObject.leaseTokenAddress && !userObject.objectID) || this.state.pending
+                    const disableDownButton = (userObject.crowdsaleclosed && !userObject.objectActive && (member.account !== this.props.account)) || (userObject.objectHash && !userObject.leaseTokenAddress && (member.account !== this.props.account)) || (userObject.leaseTokenAddress && !userObject.objectID && (member.account !== this.props.account)) || (userObject.objectHash && !userObject.leaseTokenAddress && !userObject.objectID) || this.state.pending
                     cc.log("Disable button: ", disableDownButton || "false");
                     memberRows.push(
 
                         <div className="rowSelect mb-5" key={'invest-' + i}>
-                            <div style={{ cursor: (userObject.objectID || member.authorized) ? "pointer" : "not-allowed" }} className="memberMesCon">{member.message}</div>
-                            {(userObject.objectID || userObject.leaseTokenAddress || userObject.objectHash) && <div className="memberMesBtns">
-                                {!disableDownButton && <div className="membersBtn">
+
+
+                            {/*<div style={{ cursor: (userObject.objectID || member.authorized) ? "pointer" : "not-allowed" }} className="memberMesCon">{member.message}</div>*/}
+                            {(userObject.objectID || userObject.leaseTokenAddress || userObject.objectHash) && <div className="">   {/*memberMesBtns*/}
+                                {
+                                    !disableDownButton &&
+                                        userObject.crowdsaleclosed ?
+                                        userObject.objectActive ?
+                                            <Invoices />
+                                            :
+                                            (member.account === this.props.account) ?
+                                                <Invest />
+                                                : cc.log("MEMBER CAN ONLY BUY AND ACTIVATE HIS OBJECT")
+                                        :
+                                        (member.authorized) ?
+                                            <Invest />
+                                            :
+                                            cc.log("NO OBJECT CONFIGURED")
+                                }
+                                {/*!disableDownButton && <div className="membersBtn">
                                     <button className="arrowBtn" onClick={() => {
                                         userObject.crowdsaleclosed ?
                                             (userObject.active ?
@@ -344,13 +452,9 @@ class Members extends Component {
                                                         cc.log("NO OBJECT CONFIGURED")
                                             )
                                     }}>
-                                        {/* <img src={require('../assets/arrow.jpg')} alt="addM" /> */}
                                         <span className="flaticon-right-arrow fs-25"></span>
-                                    </button>
-                                    {/*<button title="Invoices (testing)" className="arrowBtn" onClick={() => { member.authorized ? this.props.history.push("/", { path: "invoices" }) : cc.log("NO OBJECT CONFIGURED") }}>
-                                        <img src={require('../assets/add.jpg')} alt="addI" />
-                                </button>*/}
-                                </div>}
+                                    </button>                                    
+                            </div>*/}
                             </div>}
                         </div>
                     )
@@ -392,10 +496,24 @@ class Members extends Component {
         // const members = this.props.members ? this.props.members.filter(member => ((member.username && member.username.startsWith(this.state.filter)) || member.objectID === parseInt(this.state.filter, 10))) : []
 
 
-        // const members = this.props.members || []
+        const memberObjs = this.props.members || []
         // const members = this.props.usernames || []
-        const members = this.props.usernames ? this.props.filter ? this.props.usernames.filter(user => ((user.username && user.username.toLowerCase().startsWith(this.props.filter && this.props.filter.toLowerCase())))) : this.props.usernames : []
+        // const members = this.props.usernames ? this.props.filter ? this.props.usernames.filter(user => ((user.username && user.username.toLowerCase().startsWith(this.props.filter && this.props.filter.toLowerCase())))) : this.props.usernames : []
         // console.log("Members: ", members);
+        let investObjs = []
+        let invoiceObjs = []
+        let buyObjs = []
+
+        memberObjs && memberObjs.forEach(mobj => mobj.crowdsaleclosed ? mobj.objectActive ? invoiceObjs.push(mobj) : buyObjs.push(mobj) : investObjs.push(mobj))
+
+        const authMembers = this.props.usernames ? this.props.usernames.filter(user => user.authorized) : []
+        const nauthMembers = this.props.usernames ? this.props.usernames.filter(user => !user.authorized) : []
+        const header = {
+            color: "white",
+            backgroundColor: "black",
+            padding: "5px 5px",
+            borderRadius: "5px"
+        }
 
         // TESTING DIV FOCUS
         // if (members && members[4] && members[4].car) members[4].car.crowdsaleClosed = true
@@ -429,11 +547,59 @@ class Members extends Component {
                     <div className="contentCon overflow bg-none contentCon-8 pt-8">
                         <BlockUi tag="div" blocking={this.props.progress}>
                             <div className="membersCon pb-20 pt-5-mobile pv-5-mobile">
+                                <div style={header}>Investeer</div>
+                                {investObjs && investObjs.sort((a, b) => parseFloat(b.objectID) - parseFloat(a.objectID)).map((mObj, i) => this.renderMember(mObj, i))}
+                                <div style={header}>Betaal rekening (Invoice)</div>
+                                {invoiceObjs && invoiceObjs.sort((a, b) => parseFloat(b.objectID) - parseFloat(a.objectID)).map((mObj, i) => this.renderMember(mObj, i))}
+                                <div style={header}>Aanschaf duurzaam item (buy)</div>
+                                {buyObjs && buyObjs.sort((a, b) => parseFloat(b.objectID) - parseFloat(a.objectID)).map((mObj, i) => this.renderMember(mObj, i))}
+                                {/*<div style={header}>Menigte-verkoop is verlopen</div>*/}
+                                <div style={header}>Leden (members)</div>
                                 {
-                                    members && members.map((member, i) => {
-                                        return this.renderMember(member, i)
+                                    authMembers && authMembers.reverse().map((member, i) => {
+                                        return <div className="leaseCarCon" key={i}>
+                                            <div className="mtableLink">
+                                                <div className="col-5">
+                                                    <div className="mtableUser">
+                                                        <span className="fs-20 fw-700" style={member.account === this.props.account ? { fontWeight: "bold" } : {}}>{member.username || ""}</span>
+                                                        <p>{member.town || ""}</p>
+                                                    </div>
+                                                </div>
+                                                <div className="col-7">
+                                                    <div className="mtableCar" style={{ backgroundImage: `url(${member.profilePic || require('../assets/anonymous.png')})` }}></div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     })
                                 }
+                                <div style={header}>Autoriseer nievuwe leden</div>
+                                {
+                                    nauthMembers && nauthMembers.reverse().map((member, i) => {
+                                        return <div className="leaseCarCon" key={i}>
+                                            <div className="mtableLink" onClick={() => member.authorized ? cc.log("MEMBER AUTHORIZED, NO OBJECTS") : cc.log("MEMBER NOT AUTHORIZED")}>
+                                                <div className="col-5">
+                                                    <div className="mtableUser">
+                                                        <span className="fs-20 fw-700" style={member.account === this.props.account ? { fontWeight: "bold" } : {}}>{member.username || ""}</span>
+                                                        <p>{member.town || ""}</p>
+                                                        {!member.authorized && <div className="membersBtn">
+                                                            <button title="Authorize" className="arrowBtn" onClick={() => member.account !== this.props.account ? this.props._lcAddUser(member.account, this.props.account) : cc.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
+                                                                <span className="flaticon-padlock-1 unlock unlock-m"></span>
+                                                            </button>
+                                                        </div>}
+                                                    </div>
+                                                </div>
+                                                <div className="col-7">
+                                                    <div className="mtableCar" style={{ backgroundImage: `url(${member.profilePic || require('../assets/anonymous.png')})` }}>
+                                                        {/* <img style={{ "maxHeight": "50px", "maxWidth": "118px", height: "auto", width: "auto" }} src={member.profilePic || require('../assets/anonymous.png')} alt="carImage" /> */}
+                                                    </div>
+                                                    {(this.props.AddNewUser && this.props.AddNewUser["account"] === member["account"]) &&
+                                                        (<Link target="_blank" to={this.rinkebyStatsURL + this.props.AddNewUser.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.AddNewUser.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Confirmed</p> : <p className="p-euro" style={{ color: "#FF9800", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Pending</p>}</Link>)}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    })
+                                }
+
                             </div>
                             {/* <div className="contentBtn">
                             {this.props.addNewObjectTxID && (!this.state.eventAddNewObject ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>)}

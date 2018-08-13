@@ -73,6 +73,20 @@ class AddNewLifeConfigurator extends Component {
         });
     }
 
+    resetValues = () => {
+        // this.setState({
+        //     coinName: '',
+        //     leasetypeid: '',
+        //     lobjectSelected: '',
+        //     lobjmonths: '',
+        //     lobjprice: '',
+        //     lobjMileage: '',
+        //     monthlycapcost: '',
+        // })
+
+        console.log("RESET: ", this.state.active);
+    }
+
     componentDidMount() {
         setTimeout(() => {
             this.setState({ active: 0 })
@@ -320,17 +334,33 @@ class AddNewLifeConfigurator extends Component {
 
         const params = {
             shouldSwiperUpdate: true,
+            // rebuildOnUpdate: true,
             noSwiping: true,
             navigation: {
                 nextEl: this.state.pending ? undefined : '.swiper-button-next',
                 prevEl: this.state.pending ? undefined : '.swiper-button-prev'
             },
+            on: {
+                'slideChange': () => {
+                    if (this.swiper && this.state.active !== this.swiper.activeIndex)
+                        this.setState({
+                            active: this.swiper.activeIndex,
+                            coinName: '',
+                            leasetypeid: '',
+                            lobjectSelected: '',
+                            lobjmonths: '',
+                            lobjprice: '',
+                            lobjMileage: '',
+                            monthlycapcost: ''
+                        })
+                }
+            }
 
         }
 
 
         return (
-            <div className="content-border">
+            <div className="content-border" >
                 <div className="border-bottom-1  fix-small-dev">
                     <div className="container">
                         <span className="lh-40">RENDEMENT INVESTEERDER: <strong className="fs-20 color-green"> 6.6 %</strong></span>
@@ -346,7 +376,7 @@ class AddNewLifeConfigurator extends Component {
                         <div style={{ height: "auto" }} className="contentCon overflow bg-none padding-none"> {/* */}
                             <div className="newLifeCon">
 
-                                <Swiper {...params}>
+                                <Swiper {...params} ref={node => this.swiper = node ? node.swiper : null}>
                                     {
                                         leaseobjects.map((lobject, i) => {
                                             let mileageLabel = ""
