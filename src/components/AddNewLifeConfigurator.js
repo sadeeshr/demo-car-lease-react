@@ -25,7 +25,7 @@ class AddNewLifeConfigurator extends Component {
             lobjprice: '',
             lobjMileage: '',
             modalCondition: false,
-            // active: 0
+            active: 0,
             valEuroPer: 25,
             valMaanden: 100,
             valKm: 9000,
@@ -97,10 +97,10 @@ class AddNewLifeConfigurator extends Component {
     componentWillMount() {
         // cc.log("ADD OBJECT:", this.props);
         let data = {
-            module: "leaseobjects"
+            module: "duurzamobjects"
         }
 
-        if (!this.props.leaseobjects && this.props.socket) this.props._fetchContractData(this.props, data, this.props.account)
+        if (!this.props.duurzamobjects && this.props.socket) this.props._fetchContractData(this.props, data, this.props.account)
 
     }
 
@@ -143,7 +143,7 @@ class AddNewLifeConfigurator extends Component {
     createAccount = (leasetype, price, months, monthlycapcost, monthlyopcost) => {
         this.setState({ progress: true })
 
-        const leaseobject = this.props.leaseobjects && this.props.leaseobjects[this.state.active]
+        const leaseobject = this.props.duurzamobjects && this.props.duurzamobjects[this.state.active]
 
         const member = this.props.usernames && this.props.usernames.find(userO => userO["_id"] === this.props.registered)
 
@@ -205,21 +205,21 @@ class AddNewLifeConfigurator extends Component {
         // if (this.props.members_new) this.props.history.goBack()
         cc.log("Add new life state, props: ", this.state, this.props)
         cc.log(this.props.member, `ACTIVE: ${this.state.active}`);
-        const leaseobjects = this.props.leaseobjects || []
-        cc.log("LEASE OBJECTS: ", leaseobjects);
+        const duurzamobjects = this.props.duurzamobjects || []
+        cc.log("LEASE OBJECTS: ", duurzamobjects);
         const img = { "maxHeight": "25px", "maxWidth": "59px", "marginLeft": "60%", "display": "block", "width": "auto", "height": "auto" }
         const ltypeId = this.state.leasetypeid || 0
-        let leaseobject = this.props.leaseobjects && this.props.leaseobjects[this.state.active]
-        let leasetype = leaseobject && leaseobject["leasetypes"][ltypeId]
+        let leaseobject = this.props.duurzamobjects && this.props.duurzamobjects[this.state.active]
+        let leasetype = leaseobject && leaseobject["objects"][ltypeId]
         let months = this.state.lobjmonths || (leasetype && leasetype.months)
-        let price = this.state.lobjprice || (leasetype && leasetype.price)
+        let price = this.state.lobjprice || (leasetype && leasetype.price) || 0
         let monthlycapcost = ""
         let monthlyopcost = parseFloat("0.00")
 
         const { valKm, valEuroPer, valMaanden, valCar, valEuro } = this.state
 
         if (!leasetype)
-            leasetype = leaseobject && leaseobject["leasetypes"][0]
+            leasetype = leaseobject && leaseobject["objects"][0]
 
         if ((this.state.active === 0) && (leasetype) && this.state.lobjMileage) {   // && leasetype.type === "Operational"
             monthlyopcost = (parseInt(this.state.lobjMileage, 10) / 12) * 0.1
@@ -267,7 +267,7 @@ class AddNewLifeConfigurator extends Component {
 
                 case 1:
                     {
-                        if (!price) price = leaseobject["leasetypes"][0]["price"]
+                        if (!price) price = leaseobject["objects"][0]["price"]
                         monthlycapcost = parseFloat(price) / 100
                         break;
                     }
@@ -351,7 +351,8 @@ class AddNewLifeConfigurator extends Component {
                             lobjmonths: '',
                             lobjprice: '',
                             lobjMileage: '',
-                            monthlycapcost: ''
+                            monthlycapcost: '',
+                            leasetypeid: 0
                         })
                 }
             }
@@ -378,7 +379,7 @@ class AddNewLifeConfigurator extends Component {
 
                                 <Swiper {...params} ref={node => this.swiper = node ? node.swiper : null}>
                                     {
-                                        leaseobjects.map((lobject, i) => {
+                                        duurzamobjects.map((lobject, i) => {
                                             let mileageLabel = ""
                                             switch (lobject.objecttype) {
                                                 case "Car":
@@ -395,9 +396,9 @@ class AddNewLifeConfigurator extends Component {
                                             // if (lobject.active) {
                                             return (
                                                 <div key={i}>
-                                                    <div style={{ display: !lobject.active ? "none" : "" }} className="newLifeItem" onWheel={() => cc.log("KEY DOWN: ", i)} onClick={() => this.setState({ active: i, lobjectSelected: true })} tabIndex="0">
+                                                    <div className="newLifeItem" onWheel={() => cc.log("KEY DOWN: ", i)} onClick={() => this.setState({ active: i, lobjectSelected: true })} tabIndex="0"> {/*style={{ display: !leasetype.active ? "none" : "" }}*/}
                                                         <div className="col-9">
-                                                            <span className="newLifeItem-title">{lobject.name.toUpperCase()}</span>
+                                                            {/*<span className="newLifeItem-title">{leasetype.model.toUpperCase()}</span>*/}
                                                             {this.props.newObject && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{this.state.pending ? <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p> : <p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p>}</Link>)}
                                                             {/*this.props.newObject && this.props.newObject.txID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newObject.txID)) ? <p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)*/}
                                                             {/*<p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p>*/}
@@ -411,7 +412,7 @@ class AddNewLifeConfigurator extends Component {
                                                             </div>
                                                         </div>
                                                         <div className="col-12">
-                                                            <div className="newlifeImage" style={{ backgroundImage: `url(${lobject.image})` }}>
+                                                            <div className="newlifeImage" style={{ backgroundImage: `url(${leasetype.image})` }}>
                                                                 {/* <img src={lobject.image} alt={lobject.name} /> */}
                                                                 <span className="target fs-13">
                                                                     <strong className="fs-15">Target:</strong>
@@ -445,7 +446,7 @@ class AddNewLifeConfigurator extends Component {
                                                                 <div className='value'>
                                                                     <div className="col-3 text-right"></div>
                                                                     <div className="col-9 text-left ti-15">Kies &nbsp;
-                                                                        <strong className="fs-16">{valCar}{/* car name here */}</strong>
+                                                                        <strong className="fs-16">{leasetype.model}</strong>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -453,11 +454,11 @@ class AddNewLifeConfigurator extends Component {
                                                                 <Slider
                                                                     disabled={this.state.pending}
                                                                     min={0}
-                                                                    max={20}
-                                                                    value={valCar}
+                                                                    max={(leaseobject["objects"].length - 1)}
+                                                                    value={this.state.leasetypeid}
                                                                     disabled={this.state.pending}
                                                                     orientation='horizontal'
-                                                                    onChange={this.handleChangevalCar}
+                                                                    onChange={(value) => this.setState({ leasetypeid: value })}
                                                                 />
                                                             </div>
                                                         </div>
@@ -610,11 +611,11 @@ class AddNewLifeConfigurator extends Component {
                                                                     <button title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected} className="arrowBtn" onClick={() => this.createAccount(leasetype, price, months, monthlycapcost, monthlyopcost)}>
                                                                         <img src={require('../assets/add.jpg')} alt="addM" />
                                                                     </button>
-                                                                    <img style={img} src={(this.props.leaseobjects && this.props.leaseobjects[this.state.active || "0"]["image"])} alt="objectImage" />
+                                                                    <img style={img} src={(this.props.duurzamobjects && this.props.duurzamobjects[this.state.active || "0"]["image"])} alt="objectImage" />
                                                                 </div> */}
                                                             <div className="container text-center">
                                                                 <div className="beforeFooter">
-                                                                    {/* <div className="col-12 text-right">  <img style={img} src={(this.props.leaseobjects && this.props.leaseobjects[this.state.active || "0"]["image"])} alt="objectImage" /></div> */}
+                                                                    {/* <div className="col-12 text-right">  <img style={img} src={(this.props.duurzamobjects && this.props.duurzamobjects[this.state.active || "0"]["image"])} alt="objectImage" /></div> */}
                                                                     <div className="col-6 text-right">
                                                                         <button className="arrowBtn" title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected || this.state.pending} onClick={() => this.createAccount(leasetype, price, months, (this.state.monthlycapcost || monthlycapcost), monthlyopcost)}>
                                                                             <span className="flaticon-euro white-arrowBtn"></span>

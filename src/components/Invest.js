@@ -7,11 +7,14 @@ import cc from '../lib/utils';
 import formatNumber from 'accounting-js/lib/formatNumber.js'
 import { Calendar } from 'primereact/components/calendar/Calendar';
 
+import Slider from 'react-rangeslider'
+import 'react-rangeslider/lib/index.css'
+
 class Invest extends Component {
 
     constructor(props) {
         super(props)
-        this.state = { reveal: false, activedate: new Date() }
+        this.state = { reveal: false, activedate: new Date(), ethInvest: 0 }
         // this.confTimer = null
         this.rinkebyStatsURL = "https://rinkeby.etherscan.io/tx/"
     }
@@ -176,7 +179,7 @@ class Invest extends Component {
         // const account = this.props.account ? this.props.account.substring(0, 7) + '.....' + this.props.account.substring(this.props.account.length - 5) : ""
         // const hideInvest = (this.props.member.raised >= this.props.member.objectPrice) ? true : false
         const ethInvest = parseInt((this.state.ethInvest || "0"), 10)
-        const enableInvest = ((ethInvest <= amountRemaining) && (ethInvest <= (this.props.euroTokenBalance)) && (this.state.ethInvest !== "") && (this.state.ethInvest !== "0"))
+        const enableInvest = ((ethInvest <= amountRemaining) && (ethInvest <= (this.props.euroTokenBalance)) && (this.state.ethInvest !== "") && (this.state.ethInvest !== 0))
         // const enableInvest = ((ethInvest <= amountRemaining) && (ethInvest <= (this.props.euroTokenBalance + this.props.unClaimedRedemption)) && (this.state.ethInvest !== "") && (this.state.ethInvest !== "0")) // change
         // const enableInvest = ((ethInvest <= amountRemaining) && (ethInvest <= this.props.allowance) && (ethInvest <= this.props.euroTokenBalance) && (this.state.ethInvest !== "") && (this.state.ethInvest !== "0"))
         // cc.log("Enable Invest: ", ethInvest, enableInvest, (ethInvest <= amountRemaining), (ethInvest <= this.props.allowance), (ethInvest <= this.props.euroTokenBalance), (this.state.ethInvest !== ""));
@@ -188,17 +191,42 @@ class Invest extends Component {
             <div className="col-12 mb-15">
                 <p className="fw-700 text-center" style={{ color: (member.crowdsaleclosed || member.objectActive) ? "black" : "black" }}>{buyAndActivate ? ("AANSCHAF " + member.objectType.toUpperCase()) : (member.objectActive ? "ACTIVE" : member.crowdsaleclosed ? "CLOSED" : "INVESTEER")}</p>
             </div>
-            <div className="col-12 text-center fs-13"> <span>{buyAndActivate ? "Opleverdatum" : !member.crowdsaleclosed ? "Bedrag" : ""}</span></div>
+            <div className="col-12 text-center fs-13"> <span>{buyAndActivate ? "Opleverdatum" : ""}</span></div>
             <div className="col-3 lh-40"> &nbsp; </div>
+
             <div className="col-6">
                 {
                     buyAndActivate ?
                         <Calendar className="calInput" value={this.state.activedate || new Date()} onChange={(e) => this.setState({ activedate: e.value })}>Opleverdatum</Calendar>
-                        : <div className="investAddInput">{!member.crowdsaleclosed && <input style={{ color: (enableInvest ? "black" : "red") }} value={(typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest} onChange={(e) => this.setState({ ethInvest: e.target.value })} maxLength="20" type="text" placeholder="Euro Token" />}
+                        : <div className="investAddInput">
+                            {
+                                !member.crowdsaleclosed &&
+                                <div className="mb-5 d-ib fs-13">
+                                    <div className="col-12">
+                                        <div className='value'>
+                                            <div className="col-3 text-right">{formatNumber((typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</div>
+                                            <div className="col-9 text-left ti-15">Euro&nbsp;</div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-12">
+                                        <Slider
+                                            disabled={this.state.pending}
+                                            min={0}
+                                            max={amountRemaining}
+                                            step={500}
+                                            value={(typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest}
+                                            orientation='horizontal'
+                                            onChange={(value) => this.setState({ ethInvest: value })}
+                                        />
+                                    </div>
+                                </div>
+                                /*<input style={{ color: (enableInvest ? "black" : "red") }} value={(typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest} onChange={(e) => this.setState({ ethInvest: e.target.value })} maxLength="20" type="text" placeholder="Euro Token" />*/
+                            }
                         </div>
                 }
             </div>
-            {!buyAndActivate && !member.crowdsaleclosed && <div className="col-3 lh-40"> Euro </div>}
+            {/*!buyAndActivate && !member.crowdsaleclosed && <div className="col-3 lh-40"> Euro </div>*/}
             <div className="col-12 text-center">
                 {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.investInObjectTxID)) ? <p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)}
                 {this.props.BuyAndActivateTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.BuyAndActivateTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.BuyAndActivateTxID)) ? <p className="p-euro" style={{ ccolor: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)}
