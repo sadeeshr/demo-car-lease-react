@@ -143,6 +143,8 @@ class AddNewLifeConfigurator extends Component {
     createAccount = (leasetype, price, months, monthlycapcost, monthlyopcost) => {
         this.setState({ progress: true })
 
+        const ltypeId = this.state.leasetypeid || 0
+
         const leaseobject = this.props.duurzamobjects && this.props.duurzamobjects[this.state.active]
 
         const member = this.props.usernames && this.props.usernames.find(userO => userO["_id"] === this.props.registered)
@@ -169,11 +171,11 @@ class AddNewLifeConfigurator extends Component {
             objectName: this.state.coinName,
             objectType: leaseobject["objecttype"],
             // leaseType: leasetype.type,
-            objectPic: leaseobject["image"],
+            objectPic: leaseobject["objects"][ltypeId]["image"],
             objectPrice: price,
             objectHash: objectHash,
             months: months,
-            objectDealer: leaseobject["dealer"],
+            objectDealer: leaseobject["objects"][ltypeId]["dealer"],
             objectMonthlyCapitalCost: monthlycapcost,
             objectMonthlyOperatingCost: monthlyopcost,
             // municipalityID: townSelected ? townSelected["municipalityID"] : ""
