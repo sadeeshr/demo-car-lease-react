@@ -17,7 +17,7 @@ class Members extends Component {
         this.state = {
             // filter: '',
             modalCondition: false,
-            activeIndex: 0,
+            activeIndex: null,
         }
         this.rinkebyStatsURL = "https://rinkeby.etherscan.io/tx/"
     }
@@ -29,7 +29,14 @@ class Members extends Component {
     }
 
     toggleClass(index, e) {
-        this.setState({ activeIndex: index });
+    
+        if(index === this.state.activeIndex){
+            this.setState({ activeIndex: null });
+        }
+        else{
+            this.setState({ activeIndex: index });
+        }
+       
     };
 
     componentWillMount() {
@@ -306,7 +313,7 @@ class Members extends Component {
 
 
                     {/*<div style={{ cursor: (userObject.objectID || member.authorized) ? "pointer" : "not-allowed" }} className="memberMesCon">{member.message}</div>*/}
-                    {(userObject.objectID || userObject.leaseTokenAddress || userObject.objectHash) && <div className="">   {/*memberMesBtns*/}
+                    {(userObject.objectID || userObject.leaseTokenAddress || userObject.objectHash) && <div className="col-12">   {/*memberMesBtns*/}
                         {
                             !disableDownButton &&
                                 userObject.crowdsaleclosed ?
@@ -327,9 +334,7 @@ class Members extends Component {
             )
         }
 
-        return <div className="leaseCarCon ph-5" key={i}>{memberRows}</div>
-
-
+        return <div key={i} className={this.state.activeIndex==i ? 'leaseCarCon ph-5 active': 'leaseCarCon ph-5'}    onClick={this.toggleClass.bind(this, i)}>{memberRows}</div>
     }
 
     oldRenderMember = (member, i) => {
@@ -420,7 +425,7 @@ class Members extends Component {
 
 
                             {/*<div style={{ cursor: (userObject.objectID || member.authorized) ? "pointer" : "not-allowed" }} className="memberMesCon">{member.message}</div>*/}
-                            {(userObject.objectID || userObject.leaseTokenAddress || userObject.objectHash) && <div className="">   {/*memberMesBtns*/}
+                            {(userObject.objectID || userObject.leaseTokenAddress || userObject.objectHash) && <div className="col-12">   {/*memberMesBtns*/}
                                 {
                                     !disableDownButton &&
                                         userObject.crowdsaleclosed ?
@@ -524,10 +529,10 @@ class Members extends Component {
         const header = {
             color: "white",
             backgroundColor: "black",
-            padding: "3px 5px",
+            padding: "5px 5px",
             fontSize: "14px",
-            // borderRadius: "5px",
-            borderBottom: "1px solid #ffffff"
+            borderRadius: "5px",
+            // borderBottom: "1px solid #ffffff"
         }
 
         // TESTING DIV FOCUS
@@ -563,35 +568,35 @@ class Members extends Component {
                         <BlockUi tag="div" blocking={this.props.progress}>
                             <div className="membersCon pb-20 pt-5-mobile pv-5-mobile">
 
-                                <div className={this.state.activeIndex==0 ? 'accordion active': 'accordion'}  onClick={this.toggleClass.bind(this, 0)}>
+                                <div >
                                     <div style={header}>Investeer</div>
                                     <div className="accordionContent">
                                         {investObjs && investObjs.sort((a, b) => parseFloat(b.objectID) - parseFloat(a.objectID)).map((mObj, i) => this.renderMember(mObj, i))} 
                                     </div>
                                 </div>
                                 
-                                <div className={this.state.activeIndex==1 ? 'accordion active': 'accordion'}  onClick={this.toggleClass.bind(this, 1)}>
+                                <div >
                                     <div style={header}>Betaal rekening (Invoice)</div>
                                     <div className="accordionContent">
                                         {invoiceObjs && invoiceObjs.sort((a, b) => parseFloat(b.objectID) - parseFloat(a.objectID)).map((mObj, i) => this.renderMember(mObj, i))}
                                     </div>
                                 </div>
 
-                                <div className={this.state.activeIndex==2 ? 'accordion active': 'accordion'}  onClick={this.toggleClass.bind(this, 2)}>
+                                <div >
                                     <div style={header}>Aanschaf duurzaam item (buy)</div>
                                     <div className="accordionContent">
                                         {buyObjs && buyObjs.sort((a, b) => parseFloat(b.objectID) - parseFloat(a.objectID)).map((mObj, i) => this.renderMember(mObj, i))}
                                     </div>
                                 </div>
 
-                                <div className={this.state.activeIndex==3 ? 'accordion active': 'accordion'}  onClick={this.toggleClass.bind(this, 3)}>
+                                <div >
                                     <div style={header}>Menigte-verkoop is verlopen</div>
                                     <div className="accordionContent">
                                         {expiredObjs && expiredObjs.sort((a, b) => parseFloat(b.objectID) - parseFloat(a.objectID)).map((mObj, i) => this.renderMember(mObj, i))}
                                     </div>
                                 </div>
 
-                                <div className={this.state.activeIndex==4 ? 'accordion active': 'accordion'}  onClick={this.toggleClass.bind(this, 4)}>
+                                <div>
                                     <div style={header}>Leden (members)</div>
                                     <div className="accordionContent">
                                         {
@@ -614,7 +619,7 @@ class Members extends Component {
                                     </div>
                                 </div>
 
-                                <div className={this.state.activeIndex==5 ? 'accordion active': 'accordion'}  onClick={this.toggleClass.bind(this, 5)}>
+                                <div>
                                     <div style={header}>Autoriseer nieuwe leden</div>
                                     <div className="accordionContent">
                                         {

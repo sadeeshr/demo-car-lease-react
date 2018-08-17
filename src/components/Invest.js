@@ -188,17 +188,17 @@ class Invest extends Component {
         cc.log("Allowed amount: ", amountRemaining, ethInvest, enableInvest);
 
         return (<div className="col-12">
-            <div className="col-12 mb-15">
+            <div className="col-12 mt-15 mb-15">
                 <p className="fw-700 text-center" style={{ color: (member.crowdsaleclosed || member.objectActive) ? "black" : "black" }}>{buyAndActivate ? ("AANSCHAF " + member.objectType.toUpperCase()) : (member.objectActive ? "ACTIVE" : member.crowdsaleclosed ? "CLOSED" : "INVESTEER")}</p>
             </div>
             <div className="col-12 text-center fs-13"> <span>{buyAndActivate ? "Opleverdatum" : ""}</span></div>
-            <div className="col-3 lh-40"> &nbsp; </div>
+            <div className="col-2 lh-40"> &nbsp; </div>
 
-            <div className="col-6">
+            <div className="col-8">
                 {
                     buyAndActivate ?
                         <Calendar className="calInput" value={this.state.activedate || new Date()} onChange={(e) => this.setState({ activedate: e.value })}>Opleverdatum</Calendar>
-                        : <div className="investAddInput">
+                        : <div className="investAddInput" style={{width: '100%'}}>
                             {
                                 !member.crowdsaleclosed &&
                                 <div className="mb-5 d-ib fs-13">
