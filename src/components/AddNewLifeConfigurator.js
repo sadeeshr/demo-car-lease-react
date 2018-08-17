@@ -421,8 +421,8 @@ class AddNewLifeConfigurator extends Component {
                                                             <div className="col-12">
                                                                 <div className='value'>
                                                                     <div className="col-3 text-right"></div>
-                                                                    <div className="col-9 text-left ti-15">Kies &nbsp;
-                                                                        <strong className="fs-16">{leasetype.model}</strong>
+                                                                    <div className="col-9 text-left ti-5">Kies &nbsp;
+                                                                        <strong className="fs-15">{leasetype.model}</strong>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -443,8 +443,8 @@ class AddNewLifeConfigurator extends Component {
                                                             <div className="col-12">
                                                                 <div className='value'>
                                                                     <div className="col-3 text-right">{formatNumber(parseInt(price, 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</div>
-                                                                    <div className="col-9 text-left ti-15">Prijs&nbsp;
-                                                                        <strong className="fs-16">Te Funden Bedrag</strong>
+                                                                    <div className="col-9 text-left ti-5">Prijs&nbsp;
+                                                                        <strong className="fs-15">Te Funden Bedrag</strong>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -470,7 +470,7 @@ class AddNewLifeConfigurator extends Component {
                                                             <div className="col-12">
                                                                 <div className='value'>
                                                                     <div className="col-3 text-right">{formatNumber(this.state.monthlycapcost || 0, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</div>
-                                                                    <div className="col-9 text-left ti-15">Euro per Maand</div>
+                                                                    <div className="col-9 text-left ti-5">Euro per Maand</div>
                                                                 </div>
                                                             </div>
                                                             <div className="col-12">
@@ -506,7 +506,7 @@ class AddNewLifeConfigurator extends Component {
                                                             <div className="col-12">
                                                                 <div className='value'>
                                                                     <div className="col-3 text-right">{this.state.lobjmonths || (leasetype && leasetype.months)}</div>
-                                                                    <div className="col-9 text-left ti-15">Maanden</div>
+                                                                    <div className="col-9 text-left ti-5">Maanden</div>
                                                                 </div>
                                                             </div>
                                                             <div className="col-12">
@@ -543,7 +543,7 @@ class AddNewLifeConfigurator extends Component {
                                                             <div className="col-12">
                                                                 <div className='value'>
                                                                     <div className="col-3 text-right">{this.state.lobjMileage || monthlyopcost}</div>
-                                                                    <div className="col-9 text-left ti-15">{mileageLabel}<span className="fs-9">(10 cent per km)</span></div>
+                                                                    <div className="col-9 text-left ti-5">{mileageLabel}<span className="fs-9">(10 cent per km)</span></div>
                                                                 </div>
                                                             </div>
                                                             <div className="col-12">

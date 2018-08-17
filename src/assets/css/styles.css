@@ -57,7 +57,8 @@ p {
 }
 
 .mainContentCon.foot {
-    height: 650px; /*sadeesh edited from 587 to adjust restwaarde slider*/
+    /*height: 650px; sadeesh edited from 587 to adjust restwaarde slider*/
+    height: 587px;
 }
 
 .header {
@@ -1026,7 +1027,7 @@ table tr td {
 .mtableUser p {
     font-size: 15px;
     margin: 0 0 10px 0;
-    color: #717171;
+    /* color: #717171; */
 }
 
 .mtableCar {
@@ -1048,6 +1049,10 @@ table tr td {
     /* border: 2px solid #9c9c9c; */
     border-radius: 5px;
     padding: 5px;
+}
+
+.carRaised.tar{
+    width: initial;
 }
 
 .mtableCar img {
@@ -1761,6 +1766,10 @@ span.inLeft input {
     font-weight: 900
 }
 
+.fw-800 {
+    font-weight: 800
+}
+
 .fw-700 {
     font-weight: 700
 }
@@ -1824,6 +1833,10 @@ span.inLeft input {
 
 .ti-5-mobile{
   text-indent: 5px;
+}
+
+.ti-5{
+    text-indent: 5px;
 }
 
 .ti-15{
@@ -1947,15 +1960,23 @@ span.inLeft input {
 }
 
 .color-white {
-    background: #ffffff;
+    color: #ffffff;
 }
 
 .color-blue {
-    background: #000099;
+    color: #000099;
 }
 
 .color-green {
     color: #119f13;
+}
+
+.color-black{
+    color: black;
+}
+
+.color-orange{
+    color: #ff8000;
 }
 
 .padding-10-0 {
@@ -1974,7 +1995,7 @@ background: rgba(0, 0, 0, 0) !important;
     background: url(../road-bg.png);
     background-position: center center;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
 }
 
 .seaBg {
@@ -3001,10 +3022,10 @@ button.swiper-pagination-bullet {
 }
 
 .rangeslider-horizontal .rangeslider__handle:after{
-    width: 20px !important;
-    height: 20px !important;
-    top: 5px !important;
-    left: 5px !important;
+    width: 14px !important;
+    height: 14px !important;
+    top: 3px !important;
+    left: 3px !important;
     background-color: #ffffff !important;
     box-shadow: none !important;
 }
@@ -3012,7 +3033,9 @@ button.swiper-pagination-bullet {
 .rangeslider .rangeslider__handle{
     background: #e6e6e6 !important;
     box-shadow: none !important;
-    border: 0 !important
+    border: 0 !important;
+    width: 20px !important;
+    height: 20px !important;
 }
 
 
@@ -3036,7 +3059,7 @@ button.swiper-pagination-bullet {
 }
 
 .rangeslider{
-    margin: 18px 0 !important;
+    margin: 13px 0 !important;
 }
 
 .target{
@@ -3047,9 +3070,35 @@ button.swiper-pagination-bullet {
     text-align: right;
 }
 
+.swiper-button-next, .swiper-container-rtl .swiper-button-prev{
+    right: 10px;
+    left: initial;
+}
+.swiper-button-prev, .swiper-container-rtl .swiper-button-next{
+    left: 10px;
+    right: initial;
+}
 
+.swiper-button-prev, .swiper-button-next{
+    position: fixed;
+    top: 45%;
+}
 
 .newLifeItem .p-euro{
     position: absolute;
     z-index: 1;
+}
+
+.accordion .accordionContent{
+    height: 0;
+    visibility: hidden;
+    transition-property: height;
+    transition-timing-function: cubic-bezier(.86, 0, .07, 1);
+    transition-duration: .3s;
+    overflow-y: scroll;
+}
+
+.accordion.active .accordionContent{
+    height: 337px;
+    visibility: visible;
 }

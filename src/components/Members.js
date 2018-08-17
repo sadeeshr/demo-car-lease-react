@@ -13,9 +13,11 @@ class Members extends Component {
 
     constructor(props) {
         super(props);
+        this.toggleClass= this.toggleClass.bind(this);
         this.state = {
             // filter: '',
             modalCondition: false,
+            activeIndex: 0,
         }
         this.rinkebyStatsURL = "https://rinkeby.etherscan.io/tx/"
     }
@@ -25,6 +27,10 @@ class Members extends Component {
             modalCondition: !this.state.modalCondition
         });
     }
+
+    toggleClass(index, e) {
+        this.setState({ activeIndex: index });
+    };
 
     componentWillMount() {
         cc.log("Members Props", this.props);
@@ -248,12 +254,12 @@ class Members extends Component {
             <div className="mtableLink" key={i} onClick={() => member.authorized ? this.props._objectSelected(userObject, this.props.account) : cc.log("MEMBER NOT AUTHORIZED")}>
                 <div className="col-5">
                     <div className="mtableUser">
-                        <span className="fs-20 fw-700" style={member.account === this.props.account ? { fontWeight: "bold" } : {}}>{userObject.objectName || ""}</span>
+                        <span className="fs-20" style={member.account === this.props.account ? { fontWeight: "bold" } : {}}>{userObject.objectName || ""}</span>
                         <p>{member.town || ""}</p>
                         <div className="mtableTokens">
                             {userObject.crowdsaleclosed ?
-                                <span style={{ color: "green", fontSize: "15px", }}>{userObject.objectActive ? "Active" : "Closed"}</span> : userObject.raised ? "E " + userObject.raised + " Totaal" : "E 0 Totaal"}
-                            <p>{userObject.evTokens ? "E " + userObject.evTokens + " Van mij" : "-"}</p>
+                                <span style={{ color: "green", fontSize: "15px", }}>{userObject.objectActive ? "Active" : "Closed"}</span> : userObject.raised ? <span><span className="fw-800 color-black">{userObject.raised}</span> Euro opgehaald </span>  : "0 Euro opgehaald"}
+                            <p style={{marginTop:' 12px'}}>{userObject.evTokens ? <span>waarvan <span className="fw-800 color-black">{userObject.evTokens}</span> van mij</span> : "-"}</p>
                         </div>
                         {!member.authorized && <div className="membersBtn">
                             <button title="Authorize" className="arrowBtn" onClick={() => member.account !== this.props.account ? this.props._lcAddUser(member.account, this.props.account) : cc.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
@@ -267,13 +273,19 @@ class Members extends Component {
                     {<div className="mtableCar" style={{ backgroundImage: `url(${userObject.objectPic || member.profilePic || require('../assets/anonymous.png')})` }}>
                         {/* <img style={img} src={userObject.objectPic || member.profilePic || require('../assets/anonymous.png')} alt="carImage" /> */}
                     </div>}
-                    <span title="Car Raised" className="carRaised">Euro {objectPrice}</span>
+                    <span title="Car Raised" className="carRaised tar fs-13">
+                        <strong className="fs-15">Target:</strong>
+                        <span className="">  {objectPrice} </span>
+                        EUR
+                    </span>
 
                     {(this.props.newObject && this.props.newObject["id"] === userObject["_id"]) &&
                         (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newObject.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px", textAlign: "center", fontWeight: "600" }}>Confirmed</p> : <p className="p-euro" style={{ color: "#FF9800", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Pending</p>}</Link>)}
                     {(this.props.newCrowdFundToken && this.props.newCrowdFundToken["hash"] === userObject["objectHash"]) &&
                         (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newCrowdFundToken.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newCrowdFundToken.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Confirmed</p> : <p className="p-euro" style={{ color: "#FF9800", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Pending</p>}</Link>)}
                 </div>
+
+               
             </div>
         ]
 
@@ -512,8 +524,10 @@ class Members extends Component {
         const header = {
             color: "white",
             backgroundColor: "black",
-            padding: "5px 5px",
-            borderRadius: "5px"
+            padding: "3px 5px",
+            fontSize: "14px",
+            // borderRadius: "5px",
+            borderBottom: "1px solid #ffffff"
         }
 
         // TESTING DIV FOCUS
@@ -548,59 +562,89 @@ class Members extends Component {
                     <div className="contentCon overflow bg-none contentCon-8 pt-8">
                         <BlockUi tag="div" blocking={this.props.progress}>
                             <div className="membersCon pb-20 pt-5-mobile pv-5-mobile">
-                                <div style={header}>Investeer</div>
-                                {investObjs && investObjs.sort((a, b) => parseFloat(b.objectID) - parseFloat(a.objectID)).map((mObj, i) => this.renderMember(mObj, i))}
-                                <div style={header}>Betaal rekening (Invoice)</div>
-                                {invoiceObjs && invoiceObjs.sort((a, b) => parseFloat(b.objectID) - parseFloat(a.objectID)).map((mObj, i) => this.renderMember(mObj, i))}
-                                <div style={header}>Aanschaf duurzaam item (buy)</div>
-                                {buyObjs && buyObjs.sort((a, b) => parseFloat(b.objectID) - parseFloat(a.objectID)).map((mObj, i) => this.renderMember(mObj, i))}
-                                <div style={header}>Menigte-verkoop is verlopen</div>
-                                {expiredObjs && expiredObjs.sort((a, b) => parseFloat(b.objectID) - parseFloat(a.objectID)).map((mObj, i) => this.renderMember(mObj, i))}
-                                <div style={header}>Leden (members)</div>
-                                {
-                                    authMembers && authMembers.reverse().map((member, i) => {
-                                        return <div className="leaseCarCon" key={i}>
-                                            <div className="mtableLink">
-                                                <div className="col-5">
-                                                    <div className="mtableUser">
-                                                        <span className="fs-20 fw-700" style={member.account === this.props.account ? { fontWeight: "bold" } : {}}>{member.username || ""}</span>
-                                                        <p>{member.town || ""}</p>
+
+                                <div className={this.state.activeIndex==0 ? 'accordion active': 'accordion'}  onClick={this.toggleClass.bind(this, 0)}>
+                                    <div style={header}>Investeer</div>
+                                    <div className="accordionContent">
+                                        {investObjs && investObjs.sort((a, b) => parseFloat(b.objectID) - parseFloat(a.objectID)).map((mObj, i) => this.renderMember(mObj, i))} 
+                                    </div>
+                                </div>
+                                
+                                <div className={this.state.activeIndex==1 ? 'accordion active': 'accordion'}  onClick={this.toggleClass.bind(this, 1)}>
+                                    <div style={header}>Betaal rekening (Invoice)</div>
+                                    <div className="accordionContent">
+                                        {invoiceObjs && invoiceObjs.sort((a, b) => parseFloat(b.objectID) - parseFloat(a.objectID)).map((mObj, i) => this.renderMember(mObj, i))}
+                                    </div>
+                                </div>
+
+                                <div className={this.state.activeIndex==2 ? 'accordion active': 'accordion'}  onClick={this.toggleClass.bind(this, 2)}>
+                                    <div style={header}>Aanschaf duurzaam item (buy)</div>
+                                    <div className="accordionContent">
+                                        {buyObjs && buyObjs.sort((a, b) => parseFloat(b.objectID) - parseFloat(a.objectID)).map((mObj, i) => this.renderMember(mObj, i))}
+                                    </div>
+                                </div>
+
+                                <div className={this.state.activeIndex==3 ? 'accordion active': 'accordion'}  onClick={this.toggleClass.bind(this, 3)}>
+                                    <div style={header}>Menigte-verkoop is verlopen</div>
+                                    <div className="accordionContent">
+                                        {expiredObjs && expiredObjs.sort((a, b) => parseFloat(b.objectID) - parseFloat(a.objectID)).map((mObj, i) => this.renderMember(mObj, i))}
+                                    </div>
+                                </div>
+
+                                <div className={this.state.activeIndex==4 ? 'accordion active': 'accordion'}  onClick={this.toggleClass.bind(this, 4)}>
+                                    <div style={header}>Leden (members)</div>
+                                    <div className="accordionContent">
+                                        {
+                                            authMembers && authMembers.reverse().map((member, i) => {
+                                                return <div className="leaseCarCon" key={i}>
+                                                    <div className="mtableLink">
+                                                        <div className="col-5">
+                                                            <div className="mtableUser">
+                                                                <span className="fs-20 fw-700" style={member.account === this.props.account ? { fontWeight: "bold" } : {}}>{member.username || ""}</span>
+                                                                <p>{member.town || ""}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-7">
+                                                            <div className="mtableCar" style={{ backgroundImage: `url(${member.profilePic || require('../assets/anonymous.png')})` }}></div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div className="col-7">
-                                                    <div className="mtableCar" style={{ backgroundImage: `url(${member.profilePic || require('../assets/anonymous.png')})` }}></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    })
-                                }
-                                <div style={header}>Autoriseer nieuwe leden</div>
-                                {
-                                    nauthMembers && nauthMembers.reverse().map((member, i) => {
-                                        return <div className="leaseCarCon" key={i}>
-                                            <div className="mtableLink" onClick={() => member.authorized ? cc.log("MEMBER AUTHORIZED, NO OBJECTS") : cc.log("MEMBER NOT AUTHORIZED")}>
-                                                <div className="col-5">
-                                                    <div className="mtableUser">
-                                                        <span className="fs-20 fw-700" style={member.account === this.props.account ? { fontWeight: "bold" } : {}}>{member.username || ""}</span>
-                                                        <p>{member.town || ""}</p>
-                                                        {!member.authorized && <div className="membersBtn">
-                                                            <button title="Authorize" className="arrowBtn" onClick={() => member.account !== this.props.account ? this.props._lcAddUser(member.account, this.props.account) : cc.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
-                                                                <span className="flaticon-padlock-1 unlock unlock-m"></span>
-                                                            </button>
-                                                        </div>}
+                                            })
+                                        }
+                                    </div>
+                                </div>
+
+                                <div className={this.state.activeIndex==5 ? 'accordion active': 'accordion'}  onClick={this.toggleClass.bind(this, 5)}>
+                                    <div style={header}>Autoriseer nieuwe leden</div>
+                                    <div className="accordionContent">
+                                        {
+                                            nauthMembers && nauthMembers.reverse().map((member, i) => {
+                                                return <div className="leaseCarCon" key={i}>
+                                                    <div className="mtableLink" onClick={() => member.authorized ? cc.log("MEMBER AUTHORIZED, NO OBJECTS") : cc.log("MEMBER NOT AUTHORIZED")}>
+                                                        <div className="col-5">
+                                                            <div className="mtableUser">
+                                                                <span className="fs-20 fw-700" style={member.account === this.props.account ? { fontWeight: "bold" } : {}}>{member.username || ""}</span>
+                                                                <p>{member.town || ""}</p>
+                                                                {!member.authorized && <div className="membersBtn">
+                                                                    <button title="Authorize" className="arrowBtn" onClick={() => member.account !== this.props.account ? this.props._lcAddUser(member.account, this.props.account) : cc.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
+                                                                        <span className="flaticon-padlock-1 unlock unlock-m"></span>
+                                                                    </button>
+                                                                </div>}
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-7">
+                                                            <div className="mtableCar" style={{ backgroundImage: `url(${member.profilePic || require('../assets/anonymous.png')})` }}>
+                                                                {/* <img style={{ "maxHeight": "50px", "maxWidth": "118px", height: "auto", width: "auto" }} src={member.profilePic || require('../assets/anonymous.png')} alt="carImage" /> */}
+                                                            </div>
+                                                            {(this.props.AddNewUser && this.props.AddNewUser["account"] === member["account"]) &&
+                                                                (<Link target="_blank" to={this.rinkebyStatsURL + this.props.AddNewUser.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.AddNewUser.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Confirmed</p> : <p className="p-euro" style={{ color: "#FF9800", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Pending</p>}</Link>)}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div className="col-7">
-                                                    <div className="mtableCar" style={{ backgroundImage: `url(${member.profilePic || require('../assets/anonymous.png')})` }}>
-                                                        {/* <img style={{ "maxHeight": "50px", "maxWidth": "118px", height: "auto", width: "auto" }} src={member.profilePic || require('../assets/anonymous.png')} alt="carImage" /> */}
-                                                    </div>
-                                                    {(this.props.AddNewUser && this.props.AddNewUser["account"] === member["account"]) &&
-                                                        (<Link target="_blank" to={this.rinkebyStatsURL + this.props.AddNewUser.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.AddNewUser.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Confirmed</p> : <p className="p-euro" style={{ color: "#FF9800", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Pending</p>}</Link>)}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    })
-                                }
+                                            })
+                                        }
+                                    </div>
+                                </div>
 
                             </div>
                             {/* <div className="contentBtn">
