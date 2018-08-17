@@ -75,7 +75,7 @@ class Home extends Component {
                                 <span>{" "}wordt</span><br></br>
                                 <span>100% Duurzaam...</span>
                                 <div>
-                                    <img src={require('../assets/Crowd.png')} alt={"crowd"} />
+                                   {/* <img src={require('../assets/Crowd.png')} alt={"crowd"} />*/}
                                 </div>
                                 <div className="text-center fs-20 mb-50">
                                     <span>voor</span>{" "}

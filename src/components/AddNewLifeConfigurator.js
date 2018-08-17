@@ -25,46 +25,10 @@ class AddNewLifeConfigurator extends Component {
             lobjprice: '',
             lobjMileage: '',
             modalCondition: false,
-            active: 0,
-            valEuroPer: 25,
-            valMaanden: 100,
-            valKm: 9000,
-            valCar: 8,
-            valEuro: 40000,
+            active: 0
         }
         this.rinkebyStatsURL = "https://rinkeby.etherscan.io/tx/"
     }
-
-    handleChangevalEuroPer = (value) => {
-        this.setState({
-            valEuroPer: value
-        })
-    }
-
-    handleChangevalMaanden = (value) => {
-        this.setState({
-            valMaanden: value
-        })
-    }
-
-    handleChangevalKm = (value) => {
-        this.setState({
-            valKm: value
-        })
-    }
-
-    handleChangevalCar = (value) => {
-        this.setState({
-            valCar: value
-        })
-    }
-
-    handleChangevalEuro = (value) => {
-        this.setState({
-            valEuro: value
-        })
-    }
-
 
 
     modalClick() {
@@ -169,6 +133,7 @@ class AddNewLifeConfigurator extends Component {
         let newLifeObj = {
             member: member["_id"],
             objectName: this.state.coinName,
+            objectRest: this.state.rest,
             objectType: leaseobject["objecttype"],
             // leaseType: leasetype.type,
             objectPic: leaseobject["objects"][ltypeId]["image"],
@@ -231,24 +196,24 @@ class AddNewLifeConfigurator extends Component {
             switch (this.state.active) {
                 case 0:
                     {
-                        switch (leasetype.type) {
-                            case "Per Dag":
-                                monthlycapcost = parseFloat(price) / 2000
-                                break;
-                            // case "Per uur":
-                            //     monthlycapcost = parseFloat(leasetype.price) / 20000
-                            //     break;
-                            case "Financial":
-                            case "Operational":
-                                // case "Private":
-                                monthlycapcost = (parseFloat(price) / 100) + (60 - parseInt(months, 10)) * 2
-                                break;
+                        // switch (leasetype.type) {
+                        //     case "Per Dag":
+                        //         monthlycapcost = parseFloat(price) / 2000
+                        //         break;
+                        //     // case "Per uur":
+                        //     //     monthlycapcost = parseFloat(leasetype.price) / 20000
+                        //     //     break;
+                        //     case "Financial":
+                        //     case "Operational":
+                        //         // case "Private":
+                        //         monthlycapcost = (parseFloat(price) / 100) + (60 - parseInt(months, 10)) * 2
+                        //         break;
 
-                            default:
-                                monthlycapcost = (parseFloat(price) / 100) + (60 - parseInt(months, 10)) * 2
-                                break;
-                        }
-                        break;
+                        //     default:
+                        monthlycapcost = (parseFloat(price) / 100) + (60 - parseInt(months, 10)) * 2
+                        //         break;
+                        // }
+                        // break;
                     }
 
                 // case 1:
@@ -276,26 +241,26 @@ class AddNewLifeConfigurator extends Component {
                 case 2:
                     {
                         monthlycapcost = parseFloat(price) / 150
-                        if (leasetype.type === "Operational")
-                            monthlyopcost = parseFloat("2500.00")
+                        // if (leasetype.type === "Operational")
+                        //     monthlyopcost = parseFloat("2500.00")
                         break;
                     }
                 case 3:
                     {
-                        switch (leasetype.type) {
-                            case "Financial":
-                                monthlycapcost = parseFloat(price) / 150
-                                break;
-                            case "Operational":
-                                {
-                                    monthlycapcost = parseFloat(price) / 100
-                                    monthlyopcost = parseFloat("250.00")
-                                    break;
-                                }
-                            default:
-                                monthlycapcost = parseFloat(price) / 150
-                                break;
-                        }
+                        // switch (leasetype.type) {
+                        //     case "Financial":
+                        //         monthlycapcost = parseFloat(price) / 150
+                        //         break;
+                        //     case "Operational":
+                        //         {
+                        //             monthlycapcost = parseFloat(price) / 100
+                        //             monthlyopcost = parseFloat("250.00")
+                        //             break;
+                        //         }
+                        //     default:
+                        monthlycapcost = parseFloat(price) / 150
+                        //         break;
+                        // }
                         break;
                     }
 
@@ -318,8 +283,16 @@ class AddNewLifeConfigurator extends Component {
             }
         // }
 
+
+        //Restwaarde = (((Months x PayPerMonth) - (Total - Rest)) / (Months/12))
+        //                       /
+        //              ((Total - Rest /2)/100)
+
+        cc.log(`(((${months} * (${this.state.monthlycapcost || parseInt(monthlycapcost, 10)})) - (${price} - (${this.state.rest || 0}))) / (${months} / 12)) / ((${price} - (${this.state.rest || 0}) / 2) / 100)`);
+        const restWaarde = (((months * (this.state.monthlycapcost || parseInt(monthlycapcost, 10))) - (price - (this.state.rest || 0))) / (months / 12)) / ((price - (this.state.rest || 0) / 2) / 100)
+
         cc.log("LO: ", leaseobject, "LT: ", leasetype)
-        cc.log("MON: ", months, "MCAP: ", monthlycapcost, "MOP: ", monthlyopcost.toString());
+        console.log("MON: ", months, "MCAP: ", monthlycapcost, "MOP: ", monthlyopcost.toString(), "RESTWARDEE: ", restWaarde);
 
         // const sliderOpts = {
         //     dots: true,
@@ -354,6 +327,7 @@ class AddNewLifeConfigurator extends Component {
                             lobjprice: '',
                             lobjMileage: '',
                             monthlycapcost: '',
+                            rest: 0,
                             leasetypeid: 0
                         })
                 }
@@ -366,7 +340,7 @@ class AddNewLifeConfigurator extends Component {
             <div className="content-border" >
                 <div className="border-bottom-1  fix-small-dev">
                     <div className="container">
-                        <span className="lh-40">RENDEMENT INVESTEERDER: <strong className="fs-20 color-green"> 6.6 %</strong></span>
+                        <span className="lh-40">RENDEMENT INVESTEERDER: <strong className={restWaarde > 0 ? "fs-20 color-green" : "fs-20 color-red"}>{restWaarde ? restWaarde.toFixed(2) : 0}%</strong></span>
                     </div>
                 </div>
                 <div className="mainContentCon foot">
@@ -508,6 +482,7 @@ class AddNewLifeConfigurator extends Component {
                                                                     disabled={this.state.pending}
                                                                     min={0}
                                                                     max={1000}
+                                                                    step={100}
                                                                     value={this.state.monthlycapcost || parseInt(monthlycapcost, 10)}
                                                                     orientation='horizontal'
                                                                     onChange={(value) => this.setState({ monthlycapcost: value })}
@@ -584,6 +559,25 @@ class AddNewLifeConfigurator extends Component {
                                                             </div>
 
 
+                                                        </div>
+                                                        <div className={"mb-5 d-ib fs-13"}>
+                                                            <div className="col-12">
+                                                                <div className='value'>
+                                                                    <div className="col-3 text-right">{this.state.rest || 0}</div>
+                                                                    <div className="col-9 text-left ti-15">{"Restwaarde"}</div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-12">
+                                                                <Slider
+                                                                    disabled={this.state.pending}
+                                                                    min={0}
+                                                                    max={100000}
+                                                                    step={1000}
+                                                                    value={this.state.rest || 0}
+                                                                    orientation='horizontal'
+                                                                    onChange={(value) => this.setState({ rest: value })}
+                                                                />
+                                                            </div>
                                                         </div>
 
                                                         {/* <div className="mb-5 d-ib opacity03">

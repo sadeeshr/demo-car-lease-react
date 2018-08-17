@@ -113,7 +113,7 @@ class ObjectList extends Component {
                             </div>
                             <div className="container dp-block">
                                 <div className="col-5 text-center">
-                                    <img style={imageStyle} src={require('../assets/carwhite.png')} alt={"car"} />
+                                    {/*<img style={imageStyle} src={require('../assets/carwhite.png')} alt={"car"} />*/}
                                 </div>
                                 <div className="col-7 mt-30">
                                     <p style={style.p}>{evs + " "} Electrisch</p>
@@ -123,7 +123,7 @@ class ObjectList extends Component {
                             </div>
                             <div className="container dp-block">
                                 <div className="col-5 text-center">
-                                    <img style={imageStyle} src={require('../assets/energy.png')} alt={"energy"} />
+                                    {/*<img style={imageStyle} src={require('../assets/energy.png')} alt={"energy"} />*/}
                                 </div>
                                 <div className="col-7 mt-30">
                                     <p style={style.p}>{neutral + " "} Energie</p>
@@ -133,7 +133,7 @@ class ObjectList extends Component {
                             </div>
                             <div className="container dp-block">
                                 <div className="col-5 text-center">
-                                    <img style={imageStyle} src={require('../assets/solar.png')} alt={"solar"} />
+                                    {/*<img style={imageStyle} src={require('../assets/solar.png')} alt={"solar"} />*/}
                                 </div>
                                 <div className="col-7 mt-30">
                                     <p style={style.p}>{solar + " "} Zonnedaken</p>
@@ -142,7 +142,7 @@ class ObjectList extends Component {
                             </div>
                             <div className="container dp-block">
                                 <div className="col-5 text-center">
-                                    <img style={imageStyle} src={require('../assets/wind.png')} alt={"wind"} />
+                                    {/*<img style={imageStyle} src={require('../assets/wind.png')} alt={"wind"} />*/}
                                 </div>
                                 <div className="col-7 mt-30">
                                     <p style={style.p}>{wind + " "} Noordzee</p>

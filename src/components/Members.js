@@ -572,7 +572,7 @@ class Members extends Component {
                                         </div>
                                     })
                                 }
-                                <div style={header}>Autoriseer nievuwe leden</div>
+                                <div style={header}>Autoriseer nieuwe leden</div>
                                 {
                                     nauthMembers && nauthMembers.reverse().map((member, i) => {
                                         return <div className="leaseCarCon" key={i}>

@@ -57,7 +57,7 @@ p {
 }
 
 .mainContentCon.foot {
-    height: 587px;
+    height: 650px; /*sadeesh edited from 587 to adjust restwaarde slider*/
 }
 
 .header {
@@ -1943,7 +1943,7 @@ span.inLeft input {
 }
 
 .color-red {
-    background: #FF0000;
+    color: #FF0000;
 }
 
 .color-white {

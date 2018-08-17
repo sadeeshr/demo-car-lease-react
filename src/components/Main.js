@@ -327,13 +327,13 @@ class Main extends Component {
                         <p className="text-center fs-20">Elk moment Uitstapbaar</p>
                     </div>}
                     {!this.state.metamask ?
-                        <p className="text-center fs-20">Please <Link target="_self" to="https://metamask.io"><span style={{color:"red"}}>Download</span>
-                        </Link> Metamask Plugin.</p>
+                        <p className="text-center fs-20">Start hier : <Link target="_self" to="https://metamask.io"><span style={{ color: "red" }}>Installeer Metamask</span>
+                        </Link></p>
                         :
                         (this.props.networkVersion !== "4") ?
-                            <p className="text-center fs-20">Please use Rinkeby network only.</p>
+                            <p className="text-center fs-20">Wijzig network naar Rinkeby</p>
                             :
-                            !this.props.account && <p className="text-center fs-20">Please Login into MetaMask.</p>
+                            !this.props.account && <p className="text-center fs-20">Login je Metamask account</p>
                     }
 
                 </div>
