@@ -292,7 +292,7 @@ class AddNewLifeConfigurator extends Component {
         const restWaarde = (((months * (this.state.monthlycapcost || parseInt(monthlycapcost, 10))) - (price - (this.state.rest || 0))) / (months / 12)) / ((price - (this.state.rest || 0) / 2) / 100)
 
         cc.log("LO: ", leaseobject, "LT: ", leasetype)
-        console.log("MON: ", months, "MCAP: ", monthlycapcost, "MOP: ", monthlyopcost.toString(), "RESTWARDEE: ", restWaarde);
+        cc.log("MON: ", months, "MCAP: ", monthlycapcost, "MOP: ", monthlyopcost.toString(), "RESTWARDEE: ", restWaarde);
 
         // const sliderOpts = {
         //     dots: true,
@@ -469,7 +469,7 @@ class AddNewLifeConfigurator extends Component {
                                                         <div className="mb-5 d-ib fs-13">
                                                             <div className="col-12">
                                                                 <div className='value'>
-                                                                    <div className="col-3 text-right">{formatNumber(this.state.monthlycapcost || parseInt(monthlycapcost, 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</div>
+                                                                    <div className="col-3 text-right">{formatNumber(this.state.monthlycapcost || 0, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</div>
                                                                     <div className="col-9 text-left ti-15">Euro per Maand</div>
                                                                 </div>
                                                             </div>
@@ -481,9 +481,9 @@ class AddNewLifeConfigurator extends Component {
                                                                 <Slider
                                                                     disabled={this.state.pending}
                                                                     min={0}
-                                                                    max={1000}
-                                                                    step={100}
-                                                                    value={this.state.monthlycapcost || parseInt(monthlycapcost, 10)}
+                                                                    max={5000}
+                                                                    step={10}
+                                                                    value={this.state.monthlycapcost || 0}
                                                                     orientation='horizontal'
                                                                     onChange={(value) => this.setState({ monthlycapcost: value })}
                                                                 />

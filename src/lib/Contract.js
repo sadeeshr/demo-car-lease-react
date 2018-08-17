@@ -569,6 +569,8 @@ class Contract {
             case "address":
                 return this.CrowdFundData.getAddr(objectID, name)
                     .then(result => {
+                        if (name === "fundtoken")
+                            this.props._ltBalanceOf(objectID, this.account, result[0])
                         cc.log(`Get Address Details of object ID ${objectID} ${name} => `, result[0]);
                         return { id: objectID, result: { [name]: result[0] } }
                     })
@@ -777,7 +779,7 @@ class Contract {
     // lease token object methods:
 
     ltBalanceOf = (objectID, account, address) => {
-        cc.log(`Fetching Lease Token Balance Of: `);
+        cc.log(`Fetching Lease Token Balance Of: ${objectID}, ${account}, ${address}`);
 
         return this.CrowdFundTokenContract.at(address).balanceOf(account)
             .then(result => {

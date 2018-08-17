@@ -503,8 +503,9 @@ class Members extends Component {
         let investObjs = []
         let invoiceObjs = []
         let buyObjs = []
+        let expiredObjs = []
 
-        memberObjs && memberObjs.forEach(mobj => mobj.crowdsaleclosed ? mobj.objectActive ? invoiceObjs.push(mobj) : buyObjs.push(mobj) : investObjs.push(mobj))
+        memberObjs && memberObjs.forEach(mobj => mobj.crowdsaleclosed ? mobj.objectActive ? invoiceObjs.push(mobj) : buyObjs.push(mobj) : (mobj.biddingtime > Math.round((new Date()).getTime() / 1000)) ? investObjs.push(mobj) : !mobj.claimedcrowdsale && expiredObjs.push(mobj))
 
         const authMembers = this.props.usernames ? this.props.usernames.filter(user => user.authorized) : []
         const nauthMembers = this.props.usernames ? this.props.usernames.filter(user => !user.authorized) : []
@@ -553,7 +554,8 @@ class Members extends Component {
                                 {invoiceObjs && invoiceObjs.sort((a, b) => parseFloat(b.objectID) - parseFloat(a.objectID)).map((mObj, i) => this.renderMember(mObj, i))}
                                 <div style={header}>Aanschaf duurzaam item (buy)</div>
                                 {buyObjs && buyObjs.sort((a, b) => parseFloat(b.objectID) - parseFloat(a.objectID)).map((mObj, i) => this.renderMember(mObj, i))}
-                                {/*<div style={header}>Menigte-verkoop is verlopen</div>*/}
+                                <div style={header}>Menigte-verkoop is verlopen</div>
+                                {expiredObjs && expiredObjs.sort((a, b) => parseFloat(b.objectID) - parseFloat(a.objectID)).map((mObj, i) => this.renderMember(mObj, i))}
                                 <div style={header}>Leden (members)</div>
                                 {
                                     authMembers && authMembers.reverse().map((member, i) => {

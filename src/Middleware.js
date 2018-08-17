@@ -95,7 +95,7 @@ handleNew = (socket, request) => {
                 } else {
                     socket.emit('data', { module: ((request.result || request.module) + "_new"), result: result })
                     if (request.result === "usernames") io.sockets.emit('event', { event: "NewMember" })
-                    if (request.result === "members") io.sockets.emit('event', { event: "NewObject" })
+                    // if (request.result === "members") io.sockets.emit('event', { event: "NewObject" })
                     if (request.result === "invoices") io.sockets.emit('event', { event: "NewInvoice" })
                 }
             })
