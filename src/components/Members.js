@@ -178,7 +178,7 @@ class Members extends Component {
         // }
         // if (this.props.eventAddNewObject && !this.state.eventAddNewObject) this.setState({ eventAddNewObject: this.props.eventAddNewObject })
 
-        if (this.props.members) {
+        if (this.props.members && this.props.members !== this.state.members) {
             // let members = this.sortMembers()
             let members = this.props.members
             let usernames = this.props.usernames
