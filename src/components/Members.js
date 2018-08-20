@@ -13,9 +13,10 @@ class Members extends Component {
 
     constructor(props) {
         super(props);
-        this.toggleClass= this.toggleClass.bind(this);
+        this.toggleClass = this.toggleClass.bind(this);
         this.state = {
             // filter: '',
+            progress: true,
             modalCondition: false,
             activeIndex: null,
         }
@@ -29,19 +30,19 @@ class Members extends Component {
     }
 
     toggleClass(index, e) {
-    
-        if(index === this.state.activeIndex){
+
+        if (index === this.state.activeIndex) {
             this.setState({ activeIndex: null });
         }
-        else{
+        else {
             this.setState({ activeIndex: index });
         }
-       
+
     };
 
     componentWillMount() {
         cc.log("Members Props", this.props);
-        this.props._fetchUsers(this.props, this.props.account)
+        // this.props._fetchUsers(this.props, this.props.account)
         // if (!this.props.unClaimedRedemption && this.props.account) this.props._lcToClaimTotal(this.props.account) // change
         if (!this.props.euroTokenBalance && this.props.account) this.props._euroBalanceOf(this.props.account)
         // let data = {
@@ -59,6 +60,7 @@ class Members extends Component {
     }
 
     componentWillUnmount() {
+        this.setState({ members: undefined, usernames: undefined })
         this.props._resetTxIds()
     }
 
@@ -179,6 +181,7 @@ class Members extends Component {
         if (this.props.members) {
             // let members = this.sortMembers()
             let members = this.props.members
+            let usernames = this.props.usernames
 
             // cc.log("######## SORTED MEMBERS ###########", members);
             // if (members.length >= 3) {
@@ -186,7 +189,8 @@ class Members extends Component {
             // members[1].car ? members[1].car.crowdsaleClosed = true : ""
             //     // members[2].car ? members[2].car.crowdsaleClosed = true : ""
             // }
-            this.setState({ members })
+
+            this.setState({ members, usernames, progress: true }, () => setTimeout(() => this.setState({ progress: false }), 2500))
             // if (!this.props.lcCars)
             // for (let i = 1; i <= this.props.members.length; i++) {
             //     // this.fetchCar(i)
@@ -244,7 +248,7 @@ class Members extends Component {
         }
     }
 
-    renderMember = (userObject, i) => {
+    renderMember = (userObject, i, hide) => {
 
         // cc.log("member object: ", member)
 
@@ -265,8 +269,8 @@ class Members extends Component {
                         <p>{member.town || ""}</p>
                         <div className="mtableTokens">
                             {userObject.crowdsaleclosed ?
-                                <span style={{ color: "green", fontSize: "15px", }}>{userObject.objectActive ? "Active" : "Closed"}</span> : userObject.raised ? <span><span className="fw-800 color-black">{userObject.raised}</span> Euro opgehaald </span>  : "0 Euro opgehaald"}
-                            <p style={{marginTop:' 12px'}}>{userObject.evTokens ? <span>waarvan <span className="fw-800 color-black">{userObject.evTokens}</span> van mij</span> : "-"}</p>
+                                <span style={{ color: "green", fontSize: "15px", }}>{userObject.objectActive ? "Active" : "Closed"}</span> : userObject.raised ? <span><span className="fw-800 color-black">{userObject.raised}</span> Euro opgehaald </span> : "0 Euro opgehaald"}
+                            <p style={{ marginTop: ' 12px' }}>{userObject.evTokens ? <span>waarvan <span className="fw-800 color-black">{userObject.evTokens}</span> van mij</span> : "-"}</p>
                         </div>
                         {!member.authorized && <div className="membersBtn">
                             <button title="Authorize" className="arrowBtn" onClick={() => member.account !== this.props.account ? this.props._lcAddUser(member.account, this.props.account) : cc.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
@@ -292,11 +296,11 @@ class Members extends Component {
                         (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newCrowdFundToken.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newCrowdFundToken.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Confirmed</p> : <p className="p-euro" style={{ color: "#FF9800", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Pending</p>}</Link>)}
                 </div>
 
-               
+
             </div>
         ]
 
-        if (selected && this.props.account && this.props.registered) {
+        if (selected && this.props.account && this.props.registered && !hide) {
             cc.log("Member Object: ", userObject, member.account, this.props.account);
             cc.log("---------------------------------------------------------------------------")
             cc.log("CHECK 1 (crowdsale closed and user object not active and not owner address): ", (userObject.crowdsaleclosed && !userObject.objectActive && (member.account !== this.props.account)) || "false");
@@ -334,7 +338,7 @@ class Members extends Component {
             )
         }
 
-        return <div key={i} className={this.state.activeIndex==i ? 'leaseCarCon ph-5 active': 'leaseCarCon ph-5'}    onClick={this.toggleClass.bind(this, i)}>{memberRows}</div>
+        return <div key={i} className={this.state.activeIndex == i ? 'leaseCarCon ph-5 active' : 'leaseCarCon ph-5'} onClick={this.toggleClass.bind(this, i)}>{memberRows}</div>
     }
 
     oldRenderMember = (member, i) => {
@@ -513,7 +517,8 @@ class Members extends Component {
         // const members = this.props.members ? this.props.members.filter(member => ((member.username && member.username.startsWith(this.state.filter)) || member.objectID === parseInt(this.state.filter, 10))) : []
 
 
-        const memberObjs = this.props.members || []
+        // const memberObjs = this.props.members || []
+        const memberObjs = this.state.members || []
         // const members = this.props.usernames || []
         // const members = this.props.usernames ? this.props.filter ? this.props.usernames.filter(user => ((user.username && user.username.toLowerCase().startsWith(this.props.filter && this.props.filter.toLowerCase())))) : this.props.usernames : []
         // console.log("Members: ", members);
@@ -522,10 +527,10 @@ class Members extends Component {
         let buyObjs = []
         let expiredObjs = []
 
-        memberObjs && memberObjs.forEach(mobj => mobj.crowdsaleclosed ? mobj.objectActive ? invoiceObjs.push(mobj) : buyObjs.push(mobj) : (mobj.biddingtime > Math.round((new Date()).getTime() / 1000)) ? investObjs.push(mobj) : !mobj.claimedcrowdsale && expiredObjs.push(mobj))
+        memberObjs && memberObjs.forEach(mobj => mobj.crowdsaleclosed ? mobj.objectActive ? invoiceObjs.push(mobj) : buyObjs.push(mobj) : (mobj.biddingtime > Math.round((new Date()).getTime() / 1000)) ? investObjs.push(mobj) : mobj.biddingtime && !mobj.claimedcrowdsale && expiredObjs.push(mobj))
 
-        const authMembers = this.props.usernames ? this.props.usernames.filter(user => user.authorized) : []
-        const nauthMembers = this.props.usernames ? this.props.usernames.filter(user => !user.authorized) : []
+        const authMembers = this.state.usernames ? this.state.usernames.filter(user => user.authorized) : []
+        const nauthMembers = this.state.usernames ? this.state.usernames.filter(user => !user.authorized) : []
         const header = {
             color: "white",
             backgroundColor: "black",
@@ -565,16 +570,16 @@ class Members extends Component {
                         <h1 id="header"><div className="fl"><i className="flaticon-back" onClick={() => this.props.history.push("/", { path: "main" })}></i></div>Members<div className="fr"><i onClick={() => this.fetchMembers()} className="flaticon-rotate marIcon"></i><i onClick={() => this.props.history.push("/")} className="flaticon-home"></i></div></h1>
                     </div>
                     <div className="contentCon overflow bg-none contentCon-8 pt-8">
-                        <BlockUi tag="div" blocking={this.props.progress}>
+                        <BlockUi tag="div" blocking={this.state.progress} renderChildren={false}>
                             <div className="membersCon pb-20 pt-5-mobile pv-5-mobile">
 
                                 <div >
                                     <div style={header}>Investeer</div>
                                     <div className="accordionContent">
-                                        {investObjs && investObjs.sort((a, b) => parseFloat(b.objectID) - parseFloat(a.objectID)).map((mObj, i) => this.renderMember(mObj, i))} 
+                                        {investObjs && investObjs.sort((a, b) => parseFloat(b.objectID) - parseFloat(a.objectID)).map((mObj, i) => this.renderMember(mObj, i))}
                                     </div>
                                 </div>
-                                
+
                                 <div >
                                     <div style={header}>Betaal rekening (Invoice)</div>
                                     <div className="accordionContent">
@@ -592,7 +597,7 @@ class Members extends Component {
                                 <div >
                                     <div style={header}>Menigte-verkoop is verlopen</div>
                                     <div className="accordionContent">
-                                        {expiredObjs && expiredObjs.sort((a, b) => parseFloat(b.objectID) - parseFloat(a.objectID)).map((mObj, i) => this.renderMember(mObj, i))}
+                                        {expiredObjs && expiredObjs.sort((a, b) => parseFloat(b.objectID) - parseFloat(a.objectID)).map((mObj, i) => this.renderMember(mObj, i, true))}
                                     </div>
                                 </div>
 
