@@ -3075,11 +3075,11 @@ button.swiper-pagination-bullet {
 }
 
 .swiper-button-next, .swiper-container-rtl .swiper-button-prev{
-    right: 10px;
+    right: calc(50% - 168px);
     left: initial;
 }
 .swiper-button-prev, .swiper-container-rtl .swiper-button-next{
-    left: 10px;
+    left: calc(50% - 168px);
     right: initial;
 }
 
@@ -3119,4 +3119,13 @@ button.swiper-pagination-bullet {
 .leaseCarCon.active .rowSelect{
     height: 167px;
     visibility: visible;
+}
+
+@media only screen and (max-width: 362px) {
+    .swiper-button-next, .swiper-container-rtl .swiper-button-prev {
+        right: calc(50% - 160px);
+    }
+    .swiper-button-prev, .swiper-container-rtl .swiper-button-next{
+        left: calc(50% - 160px);
+    }
 }
