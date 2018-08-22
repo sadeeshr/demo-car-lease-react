@@ -65,7 +65,7 @@ class Main extends Component {
 
 
     componentWillReceiveProps(nextProps) {
-        cc.log("Main Update Props: ", nextProps, nextProps.socket, !nextProps.usernames);
+        // cc.log("Main Update Props: ", nextProps, nextProps.socket, !nextProps.usernames);
         // if (nextProps.account && nextProps.socket && !nextProps.usernames) this.fetchUserData()
         // this.props.event && (this.props.event.transactionHash !== nextProps.event.transactionHash)
 
@@ -86,9 +86,13 @@ class Main extends Component {
         if (nextProps.towns) this.props._setObject({ town: 0 })
         if ((nextProps.event && !this.props.event) || (nextProps.event && this.props.event && (this.props.event.transactionHash !== nextProps.event.transactionHash))) {
             switch (nextProps.event.event) {
-                case "Transfer":
+                case "InvestInObject":
                     {
-                        let message = "Awesome, an investment made just now !"
+                        const objectID = nextProps.event.returnValues.objectID
+                        const amount = nextProps.event.returnValues.amount
+                        const member = nextProps.members && nextProps.members.find(member => member.objectID && (member.objectID === objectID))
+                        // let message = "Awesome, an investment made just now !"
+                        let message = (member.objectName || "Coin") + " heeft " + ((member.raised || 0) + parseInt(amount, 10)) + " euro ontvangen, nog " + amount + " te gaan"
                         // if (this.props.members) {
                         //     const txFrom = this.props.members.find(member => member.account && (member.account.toLowerCase() === nextProps.event.returnValues.to.toLowerCase()))
                         //     const txTo = this.props.members.find(member => member.objectID && (member.objectID.toString() === nextProps.event.returnValues.objectId))
@@ -98,8 +102,8 @@ class Main extends Component {
                         // }
 
                         let event = {
-                            title: "Investment Update",
-                            message: message,
+                            title: message,
+                            message: "",
                             level: "info",
                             position: "tr",
                             autoDismiss: 0

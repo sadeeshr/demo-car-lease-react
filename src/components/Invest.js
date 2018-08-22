@@ -44,8 +44,9 @@ class Invest extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        const member = nextProps.members && nextProps.members.find(memberO => memberO["_id"] === nextProps.member["_id"])
+
         if (nextProps.payFeeTxID) {
-            const member = nextProps.members && nextProps.members.find(memberO => memberO["_id"] === nextProps.member["_id"])
             nextProps._lcToClaimDividend(member.objectID, nextProps.account)
         }
 
@@ -56,10 +57,11 @@ class Invest extends Component {
         if ((nextProps.investInObjectTxID && (nextProps.investInObjectTxID !== this.props.investInObjectTxID)) || (nextProps.BuyAndActivateTxID && (nextProps.BuyAndActivateTxID !== this.props.BuyAndActivateTxID))) {
             // console.log("### PENDING ###");
             this.setState({ pending: true })
+            this.props._setObject({ textStyle: { id: member["_id"], color: "color-orange" } })
         }
-        if (nextProps.event && (nextProps.event !== this.props.event) && ((nextProps.event.event === "Transfer") || (nextProps.event.event === "AddNewObject") || (nextProps.event.event === "BoughtNewObject") || (nextProps.event.transactionHash === nextProps.investInObjectTxID) || (nextProps.event.transactionHash === nextProps.BuyAndActivateTxID))) {
+        if (nextProps.event && (nextProps.event !== this.props.event) && ((nextProps.event.event === "InvestInObject") || (nextProps.event.event === "AddNewObject") || (nextProps.event.event === "BoughtNewObject") || (nextProps.event.transactionHash === nextProps.investInObjectTxID) || (nextProps.event.transactionHash === nextProps.BuyAndActivateTxID))) {
             // this.refreshValues()
-            const member = nextProps.members && nextProps.members.find(memberO => memberO["_id"] === nextProps.member["_id"])
+            // const member = nextProps.members && nextProps.members.find(memberO => memberO["_id"] === nextProps.member["_id"])
             this.props._euroBalanceOf(this.props.account)
 
             this.props._crowdFundData(member.objectID, "address", "fundtoken")
@@ -104,9 +106,13 @@ class Invest extends Component {
         // if (nextProps.member.crowdsaleClosed && !nextProps.member.active) this.props._resetTxIds()
 
         if (nextProps.event && (nextProps.event !== this.props.event) && ((nextProps.event.transactionHash === nextProps.investInObjectTxID) || (nextProps.event.transactionHash === nextProps.BuyAndActivateTxID))) {
-            this.setState({ pending: false }, () => setTimeout(() => {
-                this.props._resetTxIds()
-            }, 5000))
+            this.setState({ pending: false }, () => {
+                this.props._setObject({ textStyle: { id: member["_id"], color: "color-green" } })
+                setTimeout(() => {
+                    this.props._setObject({ textStyle: { id: member["_id"], color: "color-black" } })
+                    this.props._resetTxIds()
+                }, 5000)
+            })
         }
         // }
         this.props = nextProps
@@ -198,7 +204,7 @@ class Invest extends Component {
                 {
                     buyAndActivate ?
                         <Calendar className="calInput" value={this.state.activedate || new Date()} onChange={(e) => this.setState({ activedate: e.value })}>Opleverdatum</Calendar>
-                        : <div className="investAddInput" style={{width: '100%'}}>
+                        : <div className="investAddInput" style={{ width: '100%' }}>
                             {
                                 !member.crowdsaleclosed &&
                                 <div className="mb-5 d-ib fs-13">
@@ -213,8 +219,8 @@ class Invest extends Component {
                                         <Slider
                                             disabled={this.state.pending}
                                             min={0}
-                                            max={amountRemaining}
-                                            step={500}
+                                            max={Math.min(amountRemaining, this.props.euroTokenBalance)}
+                                            step={5}
                                             value={(typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest}
                                             orientation='horizontal'
                                             onChange={(value) => this.setState({ ethInvest: value })}

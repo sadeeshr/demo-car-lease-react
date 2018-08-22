@@ -7,7 +7,7 @@ import cc from '../lib/utils';
 
 const initialState = {}
 const rootReducer = (state = initialState, action) => {
-    cc.log(action)
+    cc.log(action.type)
     switch (action.type) {
         // case '@@redux/INIT':
         //     return {

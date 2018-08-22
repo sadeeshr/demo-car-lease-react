@@ -340,7 +340,7 @@ class AddNewLifeConfigurator extends Component {
             <div className="content-border" >
                 <div className="border-bottom-1  fix-small-dev">
                     <div className="container">
-                        <span className="lh-40">RENDEMENT INVESTEERDER: <strong className={restWaarde > 0 ? "fs-20 color-green" : "fs-20 color-red"}>{restWaarde ? restWaarde.toFixed(2) : 0}%</strong></span>
+                        <span className="lh-40">RENDEMENT INVESTEERDER: <strong className={restWaarde > 0 ? "fs-20 color-green" : "fs-20 color-red"}>{restWaarde ? restWaarde.toFixed(1) : 0}%</strong></span>
                     </div>
                 </div>
                 <div className="mainContentCon foot">
