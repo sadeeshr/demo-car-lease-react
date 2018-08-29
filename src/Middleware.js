@@ -109,7 +109,11 @@ handleUpdate = (socket, data) => {
             update: { $set: data.data },
             new: true
         },
-        (err, result) => { console.log("RESULT: ", result); socket.emit('data', { module: ((data.result || data.module) + "_edit"), result: true }) });
+        (err, result) => {
+            console.log("RESULT: ", result);
+            socket.emit('data', { module: ((data.result || data.module) + "_edit"), result: true })
+            if (request.result === "usernames") io.sockets.emit('event', { event: "UpdateMember" })
+        });
 }
 
 

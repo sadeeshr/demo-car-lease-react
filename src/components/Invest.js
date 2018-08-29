@@ -6,6 +6,7 @@ import Slide from 'react-reveal/Slide';
 import cc from '../lib/utils';
 import formatNumber from 'accounting-js/lib/formatNumber.js'
 import { Calendar } from 'primereact/components/calendar/Calendar';
+import { Button } from 'primereact/components/button/Button';
 
 import Slider from 'react-rangeslider'
 import 'react-rangeslider/lib/index.css'
@@ -190,7 +191,8 @@ class Invest extends Component {
         // const enableInvest = ((ethInvest <= amountRemaining) && (ethInvest <= this.props.allowance) && (ethInvest <= this.props.euroTokenBalance) && (this.state.ethInvest !== "") && (this.state.ethInvest !== "0"))
         // cc.log("Enable Invest: ", ethInvest, enableInvest, (ethInvest <= amountRemaining), (ethInvest <= this.props.allowance), (ethInvest <= this.props.euroTokenBalance), (this.state.ethInvest !== ""));
         // (this.props.account || "").substring(0, 8) + "..."
-        cc.log("Object Price, Total Raised: ", member.objectPrice, member.raised)
+        const perMaand = member.objectMonthlyCapitalCost / (member.objectPrice / ethInvest)
+        cc.log("Object Price, Total Raised, perMaand: ", member.objectPrice, member.raised, perMaand)
         cc.log("Allowed amount: ", amountRemaining, ethInvest, enableInvest);
 
         return (<div className="col-12">
@@ -209,6 +211,14 @@ class Invest extends Component {
                                 !member.crowdsaleclosed &&
                                 <div className="mb-5 d-ib fs-13">
                                     <div className="col-12">
+                                        <span>Rendement: {member.objectInterest || 0}%</span>
+                                        <span>Maanden: {member.months}</span>
+                                        <span>Per maand: {perMaand} Euro</span>
+                                        <span>Restwaarde: {member.objectRest}</span>
+                                    </div>
+                                    <div className="col-12">
+                                        <Button label="+" icon="fa fa-check" onClick={() => this.setState({ ethInvest: this.state.ethInvest ? (this.state.ethInvest + 1) : 0 })} />
+                                        <Button lable="--" icon="fa fa-check" onClick={() => this.setState({ ethInvest: this.state.ethInvest ? (this.state.ethInvest - 1) : 0 })} />
                                         <div className='value'>
                                             <div className="col-3 text-right">{formatNumber((typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</div>
                                             <div className="col-9 text-left ti-15">Euro&nbsp;</div>

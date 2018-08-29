@@ -104,7 +104,7 @@ class AddNewLifeConfigurator extends Component {
 
     checkMandatory = () => this.mandatory.every(item => this.state[item])
 
-    createAccount = (leasetype, price, months, monthlycapcost, monthlyopcost) => {
+    createAccount = (leasetype, price, months, monthlycapcost, monthlyopcost, restWaarde) => {
         this.setState({ progress: true })
 
         const ltypeId = this.state.leasetypeid || 0
@@ -134,6 +134,7 @@ class AddNewLifeConfigurator extends Component {
             member: member["_id"],
             objectName: this.state.coinName,
             objectRest: this.state.rest,
+            objectInterest: restWaarde ? restWaarde.toFixed(1) : 0,
             objectType: leaseobject["objecttype"],
             // leaseType: leasetype.type,
             objectPic: leaseobject["objects"][ltypeId]["image"],
@@ -613,7 +614,7 @@ class AddNewLifeConfigurator extends Component {
                                                                 <div className="beforeFooter">
                                                                     {/* <div className="col-12 text-right">  <img style={img} src={(this.props.duurzamobjects && this.props.duurzamobjects[this.state.active || "0"]["image"])} alt="objectImage" /></div> */}
                                                                     <div className="col-6 text-right">
-                                                                        <button className="arrowBtn" title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected || this.state.pending} onClick={() => this.createAccount(leasetype, price, months, (this.state.monthlycapcost || monthlycapcost), monthlyopcost)}>
+                                                                        <button className="arrowBtn" title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected || this.state.pending} onClick={() => this.createAccount(leasetype, price, months, (this.state.monthlycapcost || monthlycapcost), monthlyopcost, restWaarde)}>
                                                                             <span className="flaticon-euro white-arrowBtn"></span>
                                                                         </button>
                                                                     </div>
