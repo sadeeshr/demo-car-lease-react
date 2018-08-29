@@ -69,7 +69,7 @@ class Main extends Component {
         // if (nextProps.account && nextProps.socket && !nextProps.usernames) this.fetchUserData()
         // this.props.event && (this.props.event.transactionHash !== nextProps.event.transactionHash)
 
-        if (nextProps.socket && !nextProps.towns) this.fetchMunicipalityData()
+        // if (nextProps.socket && !nextProps.towns) this.fetchMunicipalityData()
         if (nextProps.socket && nextProps.account && !nextProps.usernames) this.props._fetchUsers(nextProps, nextProps.account)
         if (nextProps.account && nextProps.usernames) {
             if (nextProps.usernames) {
