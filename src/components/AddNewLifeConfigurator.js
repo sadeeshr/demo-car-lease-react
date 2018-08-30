@@ -613,14 +613,16 @@ class AddNewLifeConfigurator extends Component {
                                                             <div className="container text-center">
                                                                 <div className="beforeFooter">
                                                                     {/* <div className="col-12 text-right">  <img style={img} src={(this.props.duurzamobjects && this.props.duurzamobjects[this.state.active || "0"]["image"])} alt="objectImage" /></div> */}
-                                                                    <div className="col-6 text-right">
+                                                                    <div className="col-4">
+                                                                    </div>
+                                                                    <div className="col-4 arrowHover-s2">
                                                                         <button className="arrowBtn" title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected || this.state.pending} onClick={() => this.createAccount(leasetype, price, months, (this.state.monthlycapcost || monthlycapcost), monthlyopcost, restWaarde)}>
                                                                             <span className="flaticon-euro white-arrowBtn"></span>
                                                                         </button>
                                                                     </div>
 
 
-                                                                    <div className="col-4 text-right pv-18 cname-input">
+                                                                    <div className="col-4 text-left pv-18 cname-input">
                                                                         <input disabled={this.state.pending} className="ml-5 nl-inp" placeholder="Coin Naam" value={this.state.coinName} onChange={(e) => this.setState({ coinName: e.target.value })} type="text" />
 
                                                                         {/*<span>Start Crowdfunding en verkoop je eigen coin</span>*/}  {/* Change this text and edit css style to display entire line*/}

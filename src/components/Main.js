@@ -346,15 +346,15 @@ class Main extends Component {
             <div className="footBtn">
                 <div className="container text-center">
                     <div className="beforeFooter">
-                        <div className="col-5">
+                        <div className="col-4">
                             &nbsp;
                             </div>
-                        {<div className="col-2">
+                        {<div className="col-4 arrowHover-s2">
                             <button disabled={!(this.props.usernames || !this.props.account) || !isReady} className="arrowBtn" onClick={() => this.props.history.push("/", { path: nextScreen })}>
                                 <span className="flaticon-right-arrow"></span>
                             </button>
                         </div>}
-                        <div className="col-5 lh-54 text-left pl-5-mobile">
+                        <div className="col-4 pt-30 text-left">
                             <span><strong>ZAKEN</strong></span>
                         </div>
 

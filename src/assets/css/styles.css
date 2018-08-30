@@ -131,7 +131,7 @@ img.addBtn {
 }
 
 .navCon span{
-    padding: 0 10px;
+    padding: 0 5px;
 }
 
 .content-border {
@@ -376,9 +376,9 @@ img.addBtn {
 
 .footCon div button,
 .footCon div a {
-    border: 5px solid rgba(115, 186, 255, 0.26);
+    /* border: 5px solid rgba(115, 186, 255, 0.26);
     cursor: pointer;
-    border-radius: 50%;
+    border-radius: 50%; */
     
 }
 
@@ -1410,9 +1410,10 @@ span.inLeft input {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    border: 1px solid #404040;
+    border: 2px solid #404040;
     text-align: center;
     line-height: 50px;
+    background: #fff;
 }
 
 .unlock-m {
@@ -1428,7 +1429,7 @@ span.inLeft input {
 .investAddInput {
     float: left;
     margin-right: 10px;
-    text-align: right;
+    /* text-align: right; */
 }
 
 .investAddInput input {
@@ -1798,6 +1799,10 @@ span.inLeft input {
     margin-bottom: 15px;
 }
 
+.mb-10 {
+    margin-bottom: 10px;
+}
+
 .mt-15 {
     margin-top: 15px;
 }
@@ -1859,6 +1864,10 @@ span.inLeft input {
     padding-top: 25px
 }
 
+.pt-30 {
+    padding-top: 30px
+}
+
 .pb-20 {
     padding-bottom: 20px
 }
@@ -1888,10 +1897,17 @@ span.inLeft input {
     padding-top: 10px;
     padding-bottom: 10px;
 }
-
+.ph-10{
+    padding: 0 15px;
+}
 .pv-18 {
     padding-top: 18px;
     padding-bottom: 18px;
+}
+
+.pv-20 {
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .br-30 {
@@ -3128,4 +3144,68 @@ button.swiper-pagination-bullet {
     .swiper-button-prev, .swiper-container-rtl .swiper-button-next{
         left: calc(50% - 160px);
     }
+}
+.sliderBtn button{
+    border: 0;
+    background: none;
+}
+.sliderBtn button.sliderMinus{
+    font-weight: 700;
+    font-size: 30px;
+}
+
+.sliderBtn button.sliderAdd{
+    font-weight: 900;
+    font-size: 20px;
+}
+
+.sliderBtn button:hover{
+    color: #119f13;
+    cursor: pointer;
+}
+
+
+.btnPadlock{
+    background: #fff;
+    width: 54px;
+    padding: 7px;
+    text-align: center;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    margin: 0 auto;
+}
+
+.btnPadlock:hover{
+    background: #eaf0ff;
+    width: 54px;
+    padding: 7px;
+    text-align: center;
+    border-radius: 50%;
+    border: 2px solid #d2d2d2;
+}
+
+.arrowHover-s2 span{
+    width: 50px;
+    height: 52px;
+    background: #fff;
+    display: block;
+    border-radius: 50%;
+}
+
+.arrowHover-s2 button{
+    padding: 7px;
+    text-align: center;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0);
+    margin: 0 auto;
+    background: rgba(255,255,255,0);
+}
+
+
+.arrowHover-s2 button:hover{
+    padding: 7px;
+    text-align: center;
+    border-radius: 50%;
+    border: 2px solid #d2d2d2;
+    background: #eaf0ff;
 }

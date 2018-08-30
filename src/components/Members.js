@@ -273,9 +273,9 @@ class Members extends Component {
                                 <span style={{ color: "green", fontSize: "15px", }}>{userObject.objectActive ? "Active" : "Closed"}</span> : <span><span className={textStyle}>{userObject.raised || 0}</span> Euro opgehaald </span>}
                             <p style={{ marginTop: ' 12px' }}>{userObject.evTokens ? <span>waarvan <span className={textStyle}>{userObject.evTokens}</span> door mij</span> : "-"}</p>
                         </div>
-                        {!member.authorized && <div className="membersBtn">
+                        {!member.authorized && <div className="membersBtn arrowHover-s2">
                             <button title="Authorize" className="arrowBtn" onClick={() => member.account !== this.props.account ? this.props._lcAddUser(member.account, this.props.account) : cc.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
-                                <span className="flaticon-padlock-1 unlock unlock-m"></span>
+                                <span className="flaticon-padlock-1 unlock"></span>
                             </button>
                         </div>}
                     </div>
@@ -487,9 +487,9 @@ class Members extends Component {
                                                             <div className="mtableUser">
                                                                 <span className="fs-20 fw-700" style={member.account === this.props.account ? { fontWeight: "bold" } : {}}>{member.username || ""}</span>
                                                                 <p>{member.town || ""}</p>
-                                                                {!member.authorized && selfAuth && <div className="membersBtn">
+                                                                {!member.authorized && selfAuth && <div className="membersBtn arrowHover-s2">
                                                                     <button title="Authorize" className="arrowBtn" onClick={() => member.account !== this.props.account ? this.props._lcAddUser(member.account, this.props.account) : cc.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
-                                                                        <span className="flaticon-padlock-1 unlock unlock-m"></span>
+                                                                        <span className="flaticon-padlock-1 unlock"></span>
                                                                     </button>
                                                                 </div>}
                                                             </div>
@@ -528,18 +528,18 @@ class Members extends Component {
                 <div className="footBtn">
                     <div className="container text-center">
                         <div className="beforeFooter">
-                            <div className="col-2 text-left">
+                            <div className="col-4 arrowHover-s2">
                                 <button className="arrowBtn" onClick={() => this.props.history.push("/", { path: "addnewlife" })}>
                                     <span className="flaticon-right-arrow"></span>
                                 </button>
                             </div>
-                            <div className="col-8 lh-54 text-left ti-5-mobile">
+                            <div className="col-4 pt-30 text-left">
                                 Ga duurzaam
 
                                 {/* <span>Ga duurzaam</span> */}
                                 {/*this.props.AddNewUser && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.AddNewUser}>{!this.state.eventAddNewUser ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>} </Link>)*/}
                             </div>
-                            <div className="col-2 text-left padding-10-0">
+                            <div className="col-4 text-left padding-10-0">
 
                                 <div className="text-right" style={{ float: 'right' }}>
                                     <span onClick={() => this.modalClick()}>

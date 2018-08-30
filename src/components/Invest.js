@@ -205,9 +205,9 @@ class Invest extends Component {
                 <p className="fw-700 text-center" style={{ color: (member.crowdsaleclosed || member.objectActive) ? "black" : "black" }}>{buyAndActivate ? ("AANSCHAF " + member.objectType.toUpperCase()) : (member.objectActive ? "ACTIVE" : member.crowdsaleclosed ? "CLOSED" : "INVESTEER")}</p>
             </div>
             <div className="col-12 text-center fs-13"> <span>{buyAndActivate ? "Opleverdatum" : ""}</span></div>
-            <div className="col-2 lh-40"> &nbsp; </div>
+            {/* <div className="col-2 lh-40"> &nbsp; </div> */}
 
-            <div className="col-8">
+            <div className="col-12">
                 {
                     buyAndActivate ?
                         <Calendar className="calInput" value={this.state.activedate || new Date()} onChange={(e) => this.setState({ activedate: e.value })}>Opleverdatum</Calendar>
@@ -215,18 +215,33 @@ class Invest extends Component {
                             {
                                 !member.crowdsaleclosed &&
                                 <div className="mb-5 d-ib fs-13">
-                                    <div className="col-12">
-                                        <p>Rendement: {member.objectInterest || 0}%</p>
+                                 
+                                    <div className="col-7 mb-10">
+                                        <p>Rendement: <span className="fw-900">{member.objectInterest || 0}% </span></p>
+                                    </div>
+                                    <div className="col-5 mb-10">
                                         <p>Maanden: {member.months}</p>
-                                        <p>Per maand: {perMaand.toFixed(2)} Euro</p>
+                                    </div>
+                                
+                                    <div className="col-7 mb-15">
+                                        <p>Per maand: <span className="fw-900">{perMaand.toFixed(2)} Euro</span></p>
+                                    </div>
+                                    <div className="col-5 mb-15">
                                         <p>Restwaarde: {formatNumber(member.objectRest, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</p>
                                     </div>
-                                    <button onClick={() => this.incDecInvestValue("dec")} >{" - "}</button>
-                                    <button onClick={() => this.incDecInvestValue("inc")} >{" + "}</button>
+                                  
                                     <div className="col-12">
                                         <div className='value'>
-                                            <div className="col-3 text-right">{formatNumber((typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</div>
-                                            <div className="col-9 text-left ti-15">Euro&nbsp;</div>
+                                            <div className="text-center sliderBtn">
+
+                                                <button className="sliderMinus" onClick={() => this.incDecInvestValue("dec")} >{" - "}</button>
+                                                <div className="fs-20 ph-10" style={{display: 'inline-block'}}>
+                                                    <span className="fw-900">{formatNumber((typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</span> Euro
+                                                </div>
+                                               <button  className="sliderAdd" onClick={() => this.incDecInvestValue("inc")} >{" + "}</button>
+
+                                            </div>
+                                            {/* <div className="col-9 text-left ti-15">&nbsp;</div> */}
                                         </div>
                                     </div>
 
@@ -249,15 +264,25 @@ class Invest extends Component {
             </div>
             {/*!buyAndActivate && !member.crowdsaleclosed && <div className="col-3 lh-40"> Euro </div>*/}
             <div className="col-12 text-center">
-                {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.investInObjectTxID)) ? <p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)}
-                {this.props.BuyAndActivateTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.BuyAndActivateTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.BuyAndActivateTxID)) ? <p className="p-euro" style={{ ccolor: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)}
-                <span className="flaticon-padlock unlock unlock-m" style={{ cursor: !this.state.pending && ((enableInvest && !member.crowdsaleclosed) || buyAndActivate) ? "pointer" : "not-allowed" }}
-                    onClick={() => {
-                        buyAndActivate ?
-                            !this.state.pending && this.state.activedate && this.props._lcBuyAndActivate(member.objectID, this.state.activedate, this.props.account)
-                            : !this.state.pending && this.props.account && !member.crowdsaleclosed && enableInvest && this.props._lcInvestInObject(member.objectID || (this.props.event && this.props.event.returnValues && this.props.event.returnValues.objectID), this.state.ethInvest || "0", this.props.account)
-                    }} >
-                </span>
+               
+                <div className="col-4">
+                
+                </div>
+                <div className="col-4">
+                    <div className="btnPadlock">
+                        <span className="flaticon-padlock unlock" style={{ cursor: !this.state.pending && ((enableInvest && !member.crowdsaleclosed) || buyAndActivate) ? "pointer" : "not-allowed" }}
+                            onClick={() => {
+                                buyAndActivate ?
+                                    !this.state.pending && this.state.activedate && this.props._lcBuyAndActivate(member.objectID, this.state.activedate, this.props.account)
+                                    : !this.state.pending && this.props.account && !member.crowdsaleclosed && enableInvest && this.props._lcInvestInObject(member.objectID || (this.props.event && this.props.event.returnValues && this.props.event.returnValues.objectID), this.state.ethInvest || "0", this.props.account)
+                            }} >
+                        </span>
+                    </div>
+                </div>
+                <div className="col-4 pv-20">
+                    {this.props.investInObjectTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.investInObjectTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.investInObjectTxID)) ? <p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)}
+                    {this.props.BuyAndActivateTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.BuyAndActivateTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.BuyAndActivateTxID)) ? <p className="p-euro" style={{ ccolor: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)}
+                </div>
             </div>
         </div>
         )
