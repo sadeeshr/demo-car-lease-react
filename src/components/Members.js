@@ -127,14 +127,14 @@ class Members extends Component {
                 || (refreshEvents.indexOf(nextProps.event.event) !== -1)
             )
         ) {
-            this.setState({ pending: false })
-
-            // if (this.props.account) this.props._lcToClaimTotal(this.props.account) // change
-            if (this.props.account) this.props._euroBalanceOf(this.props.account)
-
-            setTimeout(() => {
+            this.setState({ pending: false }, () => {
+                // setTimeout(() => {
                 this.fetchMembers()
-            }, 1000);
+                // }, 1000);
+            })
+            if (this.props.account) this.props._euroBalanceOf(this.props.account)
+            // if (this.props.account) this.props._lcToClaimTotal(this.props.account) // change
+
         }
 
         // if (nextProps.event && (nextProps.event !== this.props.event) && (nextProps.event.event === "InvestInObject")) {
@@ -163,7 +163,7 @@ class Members extends Component {
             this.checkRegistered()
 
 
-        if (nextProps.members_edit || nextProps.usernames_new) this.fetchMembers()
+        // if (nextProps.members_edit || nextProps.usernames_new) this.fetchMembers()
 
         // cc.log("Members Update Props", nextProps.members, this.state.members);
         // if (this.props.members && ) this.props._reloadTokens()
@@ -263,7 +263,7 @@ class Members extends Component {
         const selected = this.props.member && (this.props.member["_id"] === userObject["_id"]) ? true : false
         // const selected = true
         let memberRows = [
-            <div className="mtableLink" key={i} onClick={() => this.setState({ activeIndex: this.state.activeIndex === i ? null : i }, () => { (this.props.newObject && (this.props.event.transactionHash === this.props.newObject.txID) && this.props._resetTxIds()); return member.authorized ? this.props._objectSelected(userObject, this.props.account) : cc.log("MEMBER NOT AUTHORIZED") })}>
+            <div className="mtableLink" key={i} onClick={() => this.setState({ activeIndex: this.state.activeIndex === i ? null : i }, () => { (this.props.newObject && (this.props.addNewObjectTxID === this.props.newObject.txID) && this.props._resetTxIds()); return member.authorized ? this.props._objectSelected(userObject, this.props.account) : cc.log("MEMBER NOT AUTHORIZED") })}>
                 <div className="col-5">
                     <div className="mtableUser">
                         <span className="fs-20" style={member.account === this.props.account ? { fontWeight: "bold" } : {}}>{userObject.objectName || ""}</span>
@@ -290,9 +290,9 @@ class Members extends Component {
                         <span className="">  {objectPrice} </span>
                         EUR
                     </span>
-
-                    {(this.props.newObject && this.props.newObject["id"] === userObject["_id"]) &&
-                        (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newObject.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px", textAlign: "center", fontWeight: "600" }}>Confirmed</p> : <p className="p-euro" style={{ color: "#FF9800", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Pending</p>}</Link>)}
+                    {/*this.props.newObject  && this.props.newObject["id"] === userObject["_id"] && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{this.state.pending ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px", textAlign: "center", fontWeight: "600" }}>Confirmed</p> : <p className="p-euro" style={{ color: "#FF9800", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Pending</p>}</Link>)*/}
+                    {(this.props.newObject && this.props.addNewObjectID === userObject["objectID"]) &&
+                        (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{((this.props.addNewObjectTxID === this.props.newObject.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px", textAlign: "center", fontWeight: "600" }}>Confirmed</p> : <p className="p-euro" style={{ color: "#FF9800", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Pending</p>}</Link>)}
                     {(this.props.newCrowdFundToken && this.props.newCrowdFundToken["hash"] === userObject["objectHash"]) &&
                         (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newCrowdFundToken.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newCrowdFundToken.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Confirmed</p> : <p className="p-euro" style={{ color: "#FF9800", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Pending</p>}</Link>)}
                 </div>

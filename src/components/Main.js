@@ -185,6 +185,7 @@ class Main extends Component {
                             cc.log(data)
                             this.props._writeNewContractData(this.props, data)
 
+                            this.props._setObject({ addNewObjectTxID: event.transactionHash, addNewObjectID: objectID })
                             // const townSelected = this.props.towns[this.props.town]
                             // setTimeout(() => this.props._fetchMembers(this.props, townSelected["municipalityID"], this.props.account), 1000)
                             // setTimeout(() => this.props._fetchMembers(this.props, "1", this.props.account), 1000)
