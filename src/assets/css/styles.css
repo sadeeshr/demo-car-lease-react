@@ -3117,7 +3117,7 @@ button.swiper-pagination-bullet {
 }
 
 .leaseCarCon.active .rowSelect{
-    height: 167px;
+    height: auto; /*sadeesh changed from 167 px to show button*/
     visibility: visible;
 }
 

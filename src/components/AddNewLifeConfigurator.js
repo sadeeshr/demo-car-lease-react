@@ -75,9 +75,9 @@ class AddNewLifeConfigurator extends Component {
         if (nextProps.newObject && nextProps.event && (nextProps.event !== this.props.event) && (nextProps.event.transactionHash === nextProps.newObject.txID)) {
             this.setState({ pending: false })
             setTimeout(() => {
-                this.props._resetTxIds()
+                // this.props._resetTxIds()
                 this.props.history.push("/", { path: "members" })
-            }, 5000);
+            }, 2000);
         }
     }
 
@@ -113,7 +113,7 @@ class AddNewLifeConfigurator extends Component {
 
         const member = this.props.usernames && this.props.usernames.find(userO => userO["_id"] === this.props.registered)
 
-        const townSelected = this.props.towns[this.props.town]
+        // const townSelected = this.props.towns[this.props.town]
 
         var crypto = require('crypto');
 

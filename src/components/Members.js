@@ -150,7 +150,7 @@ class Members extends Component {
             nextProps.event && (nextProps.event !== this.props.event) &&
             (
                 (nextProps.AddNewUser && (nextProps.event.transactionHash === nextProps.AddNewUser.txID))
-                || (nextProps.newObject && (nextProps.event.transactionHash === nextProps.newObject.txID))
+                // || (nextProps.newObject && (nextProps.event.transactionHash === nextProps.newObject.txID))
                 || (nextProps.newCrowdFundToken && (nextProps.event.transactionHash === nextProps.newCrowdFundToken.txID))
             )
         ) {
@@ -263,7 +263,7 @@ class Members extends Component {
         const selected = this.props.member && (this.props.member["_id"] === userObject["_id"]) ? true : false
         // const selected = true
         let memberRows = [
-            <div className="mtableLink" key={i} onClick={() => this.setState({ activeIndex: this.state.activeIndex === i ? null : i }, () => member.authorized ? this.props._objectSelected(userObject, this.props.account) : cc.log("MEMBER NOT AUTHORIZED"))}>
+            <div className="mtableLink" key={i} onClick={() => this.setState({ activeIndex: this.state.activeIndex === i ? null : i }, () => { (this.props.newObject && (this.props.event.transactionHash === this.props.newObject.txID) && this.props._resetTxIds()); return member.authorized ? this.props._objectSelected(userObject, this.props.account) : cc.log("MEMBER NOT AUTHORIZED") })}>
                 <div className="col-5">
                     <div className="mtableUser">
                         <span className="fs-20" style={member.account === this.props.account ? { fontWeight: "bold" } : {}}>{userObject.objectName || ""}</span>

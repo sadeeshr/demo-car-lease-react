@@ -126,6 +126,11 @@ class Invest extends Component {
         }, 500);
     }
 
+    incDecInvestValue = (type) => {
+        let invest = this.state.ethInvest || 0
+        this.setState({ ethInvest: (type === "inc") ? (invest + 1) : (invest > 0) ? (invest - 1) : 0 })
+    }
+
     refreshValues = () => {
         // fetch Total Supply
         // this.props._lcTotalSupply() //sadeesh
@@ -211,14 +216,14 @@ class Invest extends Component {
                                 !member.crowdsaleclosed &&
                                 <div className="mb-5 d-ib fs-13">
                                     <div className="col-12">
-                                        <span>Rendement: {member.objectInterest || 0}%</span>
-                                        <span>Maanden: {member.months}</span>
-                                        <span>Per maand: {perMaand} Euro</span>
-                                        <span>Restwaarde: {member.objectRest}</span>
+                                        <p>Rendement: {member.objectInterest || 0}%</p>
+                                        <p>Maanden: {member.months}</p>
+                                        <p>Per maand: {perMaand.toFixed(2)} Euro</p>
+                                        <p>Restwaarde: {formatNumber(member.objectRest, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</p>
                                     </div>
+                                    <button onClick={() => this.incDecInvestValue("dec")} >{" - "}</button>
+                                    <button onClick={() => this.incDecInvestValue("inc")} >{" + "}</button>
                                     <div className="col-12">
-                                        <Button label="+" icon="fa fa-check" onClick={() => this.setState({ ethInvest: this.state.ethInvest ? (this.state.ethInvest + 1) : 0 })} />
-                                        <Button lable="--" icon="fa fa-check" onClick={() => this.setState({ ethInvest: this.state.ethInvest ? (this.state.ethInvest - 1) : 0 })} />
                                         <div className='value'>
                                             <div className="col-3 text-right">{formatNumber((typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</div>
                                             <div className="col-9 text-left ti-15">Euro&nbsp;</div>

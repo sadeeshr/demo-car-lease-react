@@ -5,6 +5,7 @@ import cc from './utils';
 
 // const SOCKET_URL = "https://blockchain.techiearea.com:3456"; // for development
 const SOCKET_URL = "https://smartjuice.apayaa.com:4567";
+// const SOCKET_URL = "https://duurzamezaken.io:4567";
 const SOCKET_OPTIONS = {
     // secure: true,
     // rejectUnauthorized: false

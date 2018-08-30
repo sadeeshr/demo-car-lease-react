@@ -7,6 +7,7 @@ import Invest from '../containers/Invest';
 import Invoices from '../containers/Invoices';
 import NewObject from '../containers/NewObject';
 import AddNewLifeConfigurator from '../containers/AddNewLifeConfigurator';
+import formatNumber from 'accounting-js/lib/formatNumber.js'
 import { Link } from 'react-router-dom'
 import NotificationSystem from 'react-notification-system';
 import cc from '../lib/utils';
@@ -93,7 +94,9 @@ class Main extends Component {
                         const member = nextProps.members && nextProps.members.find(member => member.objectID && (member.objectID === objectID))
                         // let message = "Awesome, an investment made just now !"
                         // let message = (member.objectName || "Coin") + " heeft " + ((member.raised || 0) + parseInt(amount, 10)) + " euro ontvangen, nog " + amount + " te gaan"
-                        let message = "Er is " + ((member.raised || 0) + parseInt(amount, 10)) + " euro in " + (member.objectName || "Coin") + " geïnvesteerd, nog 28.845 euro te gaan."
+                        const raised = formatNumber(((member.raised || 0) + parseInt(amount, 10)), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })
+                        const remaining = formatNumber(((member.objectprice || 0) - raised), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })
+                        let message = "Er is " + raised + " euro in " + (member.objectName || "Coin") + " geïnvesteerd, nog " + remaining + " euro te gaan."
                         // if (this.props.members) {
                         //     const txFrom = this.props.members.find(member => member.account && (member.account.toLowerCase() === nextProps.event.returnValues.to.toLowerCase()))
                         //     const txTo = this.props.members.find(member => member.objectID && (member.objectID.toString() === nextProps.event.returnValues.objectId))
@@ -188,14 +191,6 @@ class Main extends Component {
                             // this.props._setEventStatus({ eventAddNewObject: true, objectID: objectID }); setTimeout(() => { this.lcEventAddNewObjectUnsubscribe(); this.props._reloadTokens() }, 1000);
                         }
 
-                        let alert = {
-                            title: "<coiname> aangemaakt, investeer nu!",
-                            message: ``,
-                            level: "info",
-                            position: "tr",
-                            autoDismiss: 0
-                        }
-                        this.props._setEventAlert(alert)
                         break;
 
                     }
@@ -238,18 +233,18 @@ class Main extends Component {
                         break;
                     }
 
-                // case "NewObject":
-                //     {
-                //         let alert = {
-                //             title: "New Object created !",
-                //             message: "",
-                //             level: "info",
-                //             position: "tr",
-                //             autoDismiss: 0
-                //         }
-                //         this.props._setEventAlert(alert)
-                //         break;
-                //     }
+                case "NewObject":
+                    {
+                        let alert = {
+                            title: nextProps.event.data + " aangemaakt, investeer nu!",
+                            message: ``,
+                            level: "info",
+                            position: "tr",
+                            autoDismiss: 0
+                        }
+                        this.props._setEventAlert(alert)
+                        break;
+                    }
 
                 case "NewInvoice":
                     {

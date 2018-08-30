@@ -76,6 +76,7 @@ class AddMember extends Component {
                 zip: self.zip || '',
                 email: self.email || '',
                 message: self.message || '',
+                profilePic: self.profilePic || ''
             }
 
             let data = {
@@ -129,7 +130,7 @@ class AddMember extends Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.usernames_new || nextProps.usernames_edit) {
             this.props._fetchUsers(nextProps, nextProps.account)
-            this.props.history.push("/", { path: "members" })
+            // this.props.history.push("/", { path: "members" })
         }
     }
 
