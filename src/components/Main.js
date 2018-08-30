@@ -94,25 +94,41 @@ class Main extends Component {
                         const member = nextProps.members && nextProps.members.find(member => member.objectID && (member.objectID === objectID))
                         // let message = "Awesome, an investment made just now !"
                         // let message = (member.objectName || "Coin") + " heeft " + ((member.raised || 0) + parseInt(amount, 10)) + " euro ontvangen, nog " + amount + " te gaan"
-                        const raised = formatNumber(((member.raised || 0) + parseInt(amount, 10)), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })
-                        const remaining = formatNumber(((member.objectprice || 0) - raised), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })
-                        let message = "Er is " + raised + " euro in " + (member.objectName || "Coin") + " geïnvesteerd, nog " + remaining + " euro te gaan."
-                        // if (this.props.members) {
-                        //     const txFrom = this.props.members.find(member => member.account && (member.account.toLowerCase() === nextProps.event.returnValues.to.toLowerCase()))
-                        //     const txTo = this.props.members.find(member => member.objectID && (member.objectID.toString() === nextProps.event.returnValues.objectId))
-                        //     const value = nextProps.event.returnValues.value
-                        //     // cc.log(txFrom, txTo, value);
-                        //     message = (txFrom && txTo) ? `Awesome, ${txFrom.username} ${txFrom.town} has just invested ${value} euros on ${txTo.username} ${txTo.town}` : `Awesome, an investment made just now !`
-                        // }
 
-                        let event = {
-                            title: message,
-                            message: "",
-                            level: "info",
-                            position: "tr",
-                            autoDismiss: 0
-                        }
-                        this.props._setEventAlert(event)
+                        // if (member) {
+                        //     const raised = formatNumber(((member.raised || 0) + parseInt(amount, 10)), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })
+                        //     const remaining = formatNumber(((member.objectprice || 0) - raised), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })
+                        //     let message = "Er is " + raised + " euro in " + (member.objectName || "Coin") + " geïnvesteerd, nog " + remaining + " euro te gaan."
+                        //     // if (this.props.members) {
+                        //     //     const txFrom = this.props.members.find(member => member.account && (member.account.toLowerCase() === nextProps.event.returnValues.to.toLowerCase()))
+                        //     //     const txTo = this.props.members.find(member => member.objectID && (member.objectID.toString() === nextProps.event.returnValues.objectId))
+                        //     //     const value = nextProps.event.returnValues.value
+                        //     //     // cc.log(txFrom, txTo, value);
+                        //     //     message = (txFrom && txTo) ? `Awesome, ${txFrom.username} ${txFrom.town} has just invested ${value} euros on ${txTo.username} ${txTo.town}` : `Awesome, an investment made just now !`
+                        //     // }
+
+                        //     let event = {
+                        //         title: message,
+                        //         message: "",
+                        //         level: "info",
+                        //         position: "tr",
+                        //         autoDismiss: 0
+                        //     }
+                        //     this.props._setEventAlert(event)
+                        // } else {
+                            this.props._crowdFundData(objectID, "integer", "objectprice")
+                            this.props._crowdFundData(objectID, "integer", "raised")
+
+                            let data = {
+                                module: "crowdfundobj",
+                                result: "member",
+                                findone: true,
+                                query: {
+                                    objectID: objectID
+                                }
+                            }
+                            this.props._fetchContractData(this.props, data, this.props.account)
+                        // }
                         break;
                     }
 
