@@ -271,7 +271,6 @@ class Members extends Component {
                         <div className="mtableTokens">
                             {userObject.crowdsaleclosed ?
                                 <span style={{ color: "green", fontSize: "15px", }}>{userObject.objectActive ? "Active" : "Closed"}</span> : <span><span className={textStyle}>{userObject.raised || 0}</span> Euro opgehaald </span>}
-                            <p style={{ marginTop: ' 12px' }}>{userObject.evTokens ? <span>waarvan <span className={textStyle}>{userObject.evTokens}</span> door mij</span> : "-"}</p>
                         </div>
                         {!member.authorized && <div className="membersBtn arrowHover-s2">
                             <button title="Authorize" className="arrowBtn" onClick={() => member.account !== this.props.account ? this.props._lcAddUser(member.account, this.props.account) : cc.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
@@ -285,19 +284,24 @@ class Members extends Component {
                     {<div className="mtableCar" style={{ backgroundImage: `url(${userObject.objectPic || member.profilePic || require('../assets/anonymous.png')})` }}>
                         {/* <img style={img} src={userObject.objectPic || member.profilePic || require('../assets/anonymous.png')} alt="carImage" /> */}
                     </div>}
-                    <span title="Car Raised" className="carRaised tar fs-13">
-                        <strong className="fs-15">Target:</strong>
-                        <span className="">  {objectPrice} </span>
-                        EUR
-                    </span>
                     {/*this.props.newObject  && this.props.newObject["id"] === userObject["_id"] && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{this.state.pending ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px", textAlign: "center", fontWeight: "600" }}>Confirmed</p> : <p className="p-euro" style={{ color: "#FF9800", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Pending</p>}</Link>)*/}
                     {(this.props.newObject && this.props.addNewObjectID === userObject["objectID"]) &&
                         (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{((this.props.addNewObjectTxID === this.props.newObject.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px", textAlign: "center", fontWeight: "600" }}>Confirmed</p> : <p className="p-euro" style={{ color: "#FF9800", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Pending</p>}</Link>)}
                     {(this.props.newCrowdFundToken && this.props.newCrowdFundToken["hash"] === userObject["objectHash"]) &&
                         (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newCrowdFundToken.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newCrowdFundToken.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Confirmed</p> : <p className="p-euro" style={{ color: "#FF9800", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Pending</p>}</Link>)}
                 </div>
-
-
+                              
+                <div className="col-7">
+                    <p className="fs-13" style={{ marginTop: '5px' }}>{userObject.evTokens ? <span>waarvan <span className={textStyle}>{userObject.evTokens}</span> door mij</span> : "-"}</p>
+                </div>
+                <div className="col-5">
+                    <span title="Car Raised" className="carRaised tar fs-13">
+                        <strong>Target:</strong>
+                        <span className="">  {objectPrice} </span>
+                        EUR
+                    </span>
+                </div>
+                
             </div>
         ]
 

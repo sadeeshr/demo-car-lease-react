@@ -354,7 +354,7 @@ class Main extends Component {
                     <table>
                         <tbody>
                             <tr>
-                                <td><img style={{ maxHeight: "200px" }} src={isReady ? require('../assets/main.png') : require('../assets/metamask.png')} alt="logo" /></td>
+                                <td style={{ textAlign: "center"}}><img style={{ width: "250px", height: "auto" }} src={isReady ? require('../assets/thuis.png') : require('../assets/metamask.png')} alt="logo" /></td>
                             </tr>
                         </tbody>
                     </table>
