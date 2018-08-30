@@ -50,7 +50,7 @@ export const _fetchUsers = (props, account) => {
             // account: 1,
             // town: 1,
             // message: 1,
-            // profilePic: 1
+            profilePic: 0 // for testing performance
         }
     }
 
@@ -190,6 +190,11 @@ export const _contractDataResponse = (account, response) => {
             response.usernames.map(user => {
                 if (user.account) dispatch(_lcAuthorization(user.account))
             })
+
+        if (response.member) {
+            dispatch(_crowdFundData(response.member.objectID, "integer", "objectprice"))
+            dispatch(_crowdFundData(response.member.objectID, "integer", "raised"))
+        }
 
         return dispatch({
             type: "CONTRACT_DATA_RESPONSE",

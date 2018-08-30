@@ -81,7 +81,7 @@ handleGet = (socket, data) => {
     mongo.db[data.module].findOne(
         query,
         filter,
-        (err, result) => { console.log("RESULT: ", result.length); socket.emit('data', { module: data.result || data.module, result: result }) });
+        (err, result) => { console.log("RESULT: ", result); socket.emit('data', { module: data.result || data.module, result: result }) });
 }
 
 handleNew = (socket, request) => {
