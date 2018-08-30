@@ -50,7 +50,7 @@ export const _fetchUsers = (props, account) => {
             // account: 1,
             // town: 1,
             // message: 1,
-            profilePic: 0 // for testing performance
+            // profilePic: 0 // for testing performance
         }
     }
 
