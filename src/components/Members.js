@@ -15,7 +15,7 @@ class Members extends Component {
         super(props);
         this.state = {
             // filter: '',
-            progress: true,
+            // progress: true,
             modalCondition: false,
             activeIndex: null,
         }
@@ -33,7 +33,8 @@ class Members extends Component {
         // this.props._fetchUsers(this.props, this.props.account)
         // if (!this.props.unClaimedRedemption && this.props.account) this.props._lcToClaimTotal(this.props.account) // change
         if (!this.props.euroTokenBalance && this.props.account) this.props._euroBalanceOf(this.props.account)
-        if (!this.state.members) this.setState({ progress: true })
+        // if (!this.state.members) this.setState({ progress: true }) 
+        if (!this.state.members && this.props.members) this.setState({ members: this.props.members })
         // let data = {
         //     module: "membersdev3",
         //     result: "member",
@@ -49,20 +50,20 @@ class Members extends Component {
     }
 
     componentWillUnmount() {
-        this.setState({ members: undefined, usernames: undefined })
+        // this.setState({ members: undefined, usernames: undefined })
         this.props._resetTxIds()
     }
 
     componentDidMount() {
-        // if (!this.props.members) {
-        this.setState({ progress: true })
-        this.fetchMembers()
-        // }
+        if (!this.props.members) {
+            // console.log("Y u call me !!!")
+            this.setState({ progress: true }, () => this.fetchMembers())
+        }
     }
 
     fetchMembers = () => {
         // const townSelected = this.props.towns[this.props.town]
-
+        // console.log("how many times call me !!!");
         let data = {
             module: "crowdfundobj",
             result: "members",
@@ -188,7 +189,7 @@ class Members extends Component {
             //     // members[2].car ? members[2].car.crowdsaleClosed = true : ""
             // }
 
-            this.setState({ members, usernames }, () => setTimeout(() => this.setState({ progress: false }), 2500))
+            this.setState({ members, usernames }, () => setTimeout(() => this.setState({ progress: false }), 3500))
             // if (!this.props.lcCars)
             // for (let i = 1; i <= this.props.members.length; i++) {
             //     // this.fetchCar(i)
@@ -290,7 +291,7 @@ class Members extends Component {
                     {(this.props.newCrowdFundToken && this.props.newCrowdFundToken["hash"] === userObject["objectHash"]) &&
                         (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newCrowdFundToken.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newCrowdFundToken.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Confirmed</p> : <p className="p-euro" style={{ color: "#FF9800", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Pending</p>}</Link>)}
                 </div>
-                              
+
                 <div className="col-7">
                     <p className="fs-13" style={{ marginTop: '5px' }}>{userObject.evTokens ? <span>waarvan <span className={textStyle}>{userObject.evTokens}</span> door mij</span> : "-"}</p>
                 </div>
@@ -301,7 +302,7 @@ class Members extends Component {
                         EUR
                     </span>
                 </div>
-                
+
             </div>
         ]
 
@@ -421,10 +422,10 @@ class Members extends Component {
                     <div className="float-right">
                         <i onClick={() => this.fetchMembers()} className="flaticon-rotate"></i>
                         <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
-                    </div> */}
+                    </div> 
                     <div hidden className="navCon">
                         <h1 id="header"><div className="fl"><i className="flaticon-back" onClick={() => this.props.history.push("/", { path: "main" })}></i></div>Members<div className="fr"><i onClick={() => this.fetchMembers()} className="flaticon-rotate marIcon"></i><i onClick={() => this.props.history.push("/")} className="flaticon-home"></i></div></h1>
-                    </div>
+                    </div>*/}
                     <div className="contentCon overflow bg-none contentCon-8 pt-8">
                         <BlockUi tag="div" blocking={this.state.progress} renderChildren={false}>
                             <div className="membersCon pb-20 pt-5-mobile pv-5-mobile">
