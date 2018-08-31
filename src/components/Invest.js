@@ -15,7 +15,7 @@ class Invest extends Component {
 
     constructor(props) {
         super(props)
-        this.state = { reveal: false, activedate: new Date(), ethInvest: 0 }
+        this.state = { reveal: false, activedate: new Date(), ethInvest: 5 }
         // this.confTimer = null
         this.rinkebyStatsURL = "https://rinkeby.etherscan.io/tx/"
     }
@@ -215,30 +215,30 @@ class Invest extends Component {
                             {
                                 !member.crowdsaleclosed &&
                                 <div className="mb-5 d-ib fs-13">
-                                 
+
                                     <div className="col-7 mb-10">
                                         <p>Rendement: <span className="fw-900">{member.objectInterest || 0}% </span></p>
                                     </div>
                                     <div className="col-5 mb-10">
                                         <p>Maanden: {member.months}</p>
                                     </div>
-                                
+
                                     <div className="col-7 mb-15">
                                         <p>Per maand: <span className="fw-900">{perMaand.toFixed(2)} Euro</span></p>
                                     </div>
                                     <div className="col-5 mb-15">
                                         <p>Restwaarde: {formatNumber(member.objectRest, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</p>
                                     </div>
-                                  
+
                                     <div className="col-12">
                                         <div className='value'>
                                             <div className="text-center sliderBtn">
 
-                                                <button className="sliderMinus" onClick={() => this.incDecInvestValue("dec")} >{" - "}</button>
-                                                <div className="fs-20 ph-10" style={{display: 'inline-block'}}>
+                                                <button className="sliderMinus" onClick={() => (this.state.ethInvest > 5) && this.incDecInvestValue("dec")} >{" - "}</button>
+                                                <div className="fs-20 ph-10" style={{ display: 'inline-block' }}>
                                                     <span className="fw-900">{formatNumber((typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</span> Euro
                                                 </div>
-                                               <button  className="sliderAdd" onClick={() => this.incDecInvestValue("inc")} >{" + "}</button>
+                                                <button className="sliderAdd" onClick={() => (this.state.ethInvest < Math.min(amountRemaining, this.props.euroTokenBalance)) && this.incDecInvestValue("inc")} >{" + "}</button>
 
                                             </div>
                                             {/* <div className="col-9 text-left ti-15">&nbsp;</div> */}
@@ -248,10 +248,10 @@ class Invest extends Component {
                                     <div className="col-12">
                                         <Slider
                                             disabled={this.state.pending}
-                                            min={0}
+                                            min={5}
                                             max={Math.min(amountRemaining, this.props.euroTokenBalance)}
                                             step={5}
-                                            value={(typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest}
+                                            value={this.state.ethInvest}
                                             orientation='horizontal'
                                             onChange={(value) => this.setState({ ethInvest: value })}
                                         />
@@ -264,9 +264,9 @@ class Invest extends Component {
             </div>
             {/*!buyAndActivate && !member.crowdsaleclosed && <div className="col-3 lh-40"> Euro </div>*/}
             <div className="col-12 text-center">
-               
+
                 <div className="col-4">
-                
+
                 </div>
                 <div className="col-4">
                     <div className="btnPadlock">

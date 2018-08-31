@@ -122,7 +122,7 @@ class Main extends Component {
                                 result: "member",
                                 findone: true,
                                 query: {
-                                    objectID: objectID
+                                    objectID: parseInt(objectID)
                                 }
                             }
                             this.props._fetchContractData(this.props, data, this.props.account)
@@ -166,10 +166,10 @@ class Main extends Component {
                         const newObject = this.props.newObject || ""
                         const newLifeObj = this.props.newLifeObj || ""
 
-                        if (newObject && newLifeObj && event.transactionHash === newObject.txID) {
+                        if (newObject && newLifeObj && !newLifeObj["objectID"] && event.transactionHash === newObject.txID) {
                             let objectID = event.returnValues.objectID
                             // let newObjData = newObject.data
-                            newLifeObj["objectID"] = objectID
+                            newLifeObj["objectID"] = parseInt(objectID)
 
                             // let data = {
                             //     module: "crowdfundobj",
@@ -354,7 +354,7 @@ class Main extends Component {
                     <table>
                         <tbody>
                             <tr>
-                                <td style={{ textAlign: "center"}}><img style={{ width: "250px", height: "auto" }} src={isReady ? require('../assets/thuis.png') : require('../assets/metamask.png')} alt="logo" /></td>
+                                <td style={{ textAlign: "center" }}><img style={{ width: "250px", height: "auto" }} src={isReady ? require('../assets/thuis.png') : require('../assets/metamask.png')} alt="logo" /></td>
                             </tr>
                         </tbody>
                     </table>
@@ -362,7 +362,7 @@ class Main extends Component {
                     {isReady && <div>
                         <p className="text-center fs-20">Investeer in andere Coins</p>
                         <p className="text-center fs-20 mb-15">en bepaal je rendement</p>
-                        <p className="text-center fs-20">Elk moment Uitstapbaar</p>
+                        {/*<p className="text-center fs-20">Elk moment Uitstapbaar</p>*/}
                     </div>}
                     {!this.state.metamask ?
                         <p className="text-center fs-20">Start hier : <Link target="_self" to="https://metamask.io"><span style={{ color: "red" }}>Installeer Metamask</span>

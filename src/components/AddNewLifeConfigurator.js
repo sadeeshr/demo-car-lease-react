@@ -77,7 +77,7 @@ class AddNewLifeConfigurator extends Component {
             setTimeout(() => {
                 // this.props._resetTxIds()
                 this.props.history.push("/", { path: "members" })
-            }, 2000);
+            }, 5000);
         }
     }
 
@@ -544,15 +544,15 @@ class AddNewLifeConfigurator extends Component {
                                                             <div className="col-12">
                                                                 <div className='value'>
                                                                     <div className="col-3 text-right">{this.state.lobjMileage || monthlyopcost}</div>
-                                                                    <div className="col-9 text-left ti-5">{mileageLabel}<span className="fs-9">(10 cent per km)</span></div>
+                                                                    <div className="col-9 text-left ti-5">{mileageLabel}<span className="fs-9">{this.state.active === 0 && "(10 cent per km)"}</span></div>
                                                                 </div>
                                                             </div>
                                                             <div className="col-12">
                                                                 <Slider
                                                                     disabled={this.state.pending}
                                                                     min={0}
-                                                                    max={100000}
-                                                                    step={1000}
+                                                                    max={this.state.active === 0 ? 100000 : 2000}
+                                                                    step={this.state.active === 0 ?1000 : 100}
                                                                     value={this.state.lobjMileage || monthlyopcost}
                                                                     orientation='horizontal'
                                                                     onChange={(value) => this.setState({ lobjMileage: value })}
@@ -572,7 +572,7 @@ class AddNewLifeConfigurator extends Component {
                                                                 <Slider
                                                                     disabled={this.state.pending}
                                                                     min={0}
-                                                                    max={100000}
+                                                                    max={parseInt(price, 10)}
                                                                     step={1000}
                                                                     value={this.state.rest || 0}
                                                                     orientation='horizontal'
