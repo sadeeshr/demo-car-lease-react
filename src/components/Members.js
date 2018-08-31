@@ -273,11 +273,11 @@ class Members extends Component {
                             {userObject.crowdsaleclosed ?
                                 <span style={{ color: "green", fontSize: "15px", }}>{userObject.objectActive ? "Active" : "Closed"}</span> : <span><span className={textStyle}>{userObject.raised || 0}</span> Euro opgehaald </span>}
                         </div>
-                        {!member.authorized && <div className="membersBtn arrowHover-s2">
+                        {/*!member.authorized && <div className="membersBtn arrowHover-s2">
                             <button title="Authorize" className="arrowBtn" onClick={() => member.account !== this.props.account ? this.props._lcAddUser(member.account, this.props.account) : cc.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
                                 <span className="flaticon-padlock-1 unlock"></span>
                             </button>
-                        </div>}
+                            </div>*/}
                     </div>
                 </div>
                 <div className="col-7">
