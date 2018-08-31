@@ -15,7 +15,7 @@ class Members extends Component {
         super(props);
         this.state = {
             // filter: '',
-            // progress: true,
+            progress: true,
             modalCondition: false,
             activeIndex: null,
         }
@@ -33,8 +33,8 @@ class Members extends Component {
         // this.props._fetchUsers(this.props, this.props.account)
         // if (!this.props.unClaimedRedemption && this.props.account) this.props._lcToClaimTotal(this.props.account) // change
         if (!this.props.euroTokenBalance && this.props.account) this.props._euroBalanceOf(this.props.account)
-        // if (!this.state.members) this.setState({ progress: true }) 
-        if (!this.state.members && this.props.members) this.setState({ members: this.props.members })
+        if (!this.state.members) this.setState({ progress: true })
+        // if (!this.state.members && this.props.members) this.setState({ members: this.props.members })
         // let data = {
         //     module: "membersdev3",
         //     result: "member",
@@ -50,15 +50,16 @@ class Members extends Component {
     }
 
     componentWillUnmount() {
-        // this.setState({ members: undefined, usernames: undefined })
+        this.setState({ members: undefined, usernames: undefined })
         this.props._resetTxIds()
     }
 
     componentDidMount() {
-        if (!this.props.members) {
-            // console.log("Y u call me !!!")
-            this.setState({ progress: true }, () => this.fetchMembers())
-        }
+        // if (!this.props.members) {
+        // console.log("Y u call me !!!")
+        this.setState({ progress: true })
+        this.fetchMembers()
+        // }
     }
 
     fetchMembers = () => {
@@ -130,7 +131,7 @@ class Members extends Component {
         ) {
             this.setState({ pending: false }, () => {
                 // setTimeout(() => {
-                this.fetchMembers()
+                // this.fetchMembers()
                 // }, 1000);
             })
             if (this.props.account) this.props._euroBalanceOf(this.props.account)
@@ -427,7 +428,7 @@ class Members extends Component {
                         <h1 id="header"><div className="fl"><i className="flaticon-back" onClick={() => this.props.history.push("/", { path: "main" })}></i></div>Members<div className="fr"><i onClick={() => this.fetchMembers()} className="flaticon-rotate marIcon"></i><i onClick={() => this.props.history.push("/")} className="flaticon-home"></i></div></h1>
                     </div>*/}
                     <div className="contentCon overflow bg-none contentCon-8 pt-8">
-                        <BlockUi tag="div" blocking={this.state.progress} renderChildren={false}>
+                        <BlockUi tag="div" blocking={this.state.progress || investObjs.length === 0} renderChildren={false}>
                             <div className="membersCon pb-20 pt-5-mobile pv-5-mobile">
 
                                 <div >
