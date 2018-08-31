@@ -89,12 +89,11 @@ class Main extends Component {
             switch (nextProps.event.event) {
                 case "InvestInObject":
                     {
-                        const objectID = nextProps.event.returnValues.objectID
+                        const objectID = parseInt(nextProps.event.returnValues.objectID, 10)
                         const amount = nextProps.event.returnValues.amount
                         const member = nextProps.members && nextProps.members.find(member => member.objectID && (member.objectID === objectID))
                         // let message = "Awesome, an investment made just now !"
                         // let message = (member.objectName || "Coin") + " heeft " + ((member.raised || 0) + parseInt(amount, 10)) + " euro ontvangen, nog " + amount + " te gaan"
-
                         if (member) {
                             const raised = formatNumber(((member.raised || 0) + parseInt(amount, 10)), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })
                             const remaining = formatNumber(((member.objectprice || 0) - ((member.raised || 0) + parseInt(amount, 10))), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })
