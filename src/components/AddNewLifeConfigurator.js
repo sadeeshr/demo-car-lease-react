@@ -374,9 +374,9 @@ class AddNewLifeConfigurator extends Component {
                                             return (
                                                 <div key={i}>
                                                     <div className="newLifeItem" onWheel={() => cc.log("KEY DOWN: ", i)} onClick={() => this.setState({ active: i, lobjectSelected: true })} tabIndex="0"> {/*style={{ display: !leasetype.active ? "none" : "" }}*/}
-                                                        <div className="col-9">
+                                                        <div className="col-9">                                                          
                                                             {/*<span className="newLifeItem-title">{leasetype.model.toUpperCase()}</span>*/}
-                                                            {this.props.newObject && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{this.state.pending ? <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "160px", marginTop: "500px" }}>Pending</p> : <p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "160px", marginTop: "500px" }}>Confirmed</p>}</Link>)}
+                                                           
                                                             {/*this.props.newObject && this.props.newObject.txID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newObject.txID)) ? <p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)*/}
                                                             {/*<p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p>*/}
                                                             {/* <p className="p-euro " style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p> */}
@@ -621,8 +621,10 @@ class AddNewLifeConfigurator extends Component {
                                                                         </button>
                                                                     </div>
 
+                                                                     {this.props.newObject && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{this.state.pending ? <p  style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600"}}>Pending</p> : <p  style={{ color: "green", fontSize: "18px", fontWeight: "600" }}>Confirmed</p>}</Link>)}
 
-                                                                    <div className="col-4 text-left pv-18 cname-input">
+                                                                    <div className="col-4 text-left pv-5-18 cname-input">
+                                                                    
                                                                         <input disabled={this.state.pending} className="ml-5 nl-inp" placeholder="Coin Naam" value={this.state.coinName} onChange={(e) => this.setState({ coinName: e.target.value })} type="text" />
 
                                                                         {/*<span>Start Crowdfunding en verkoop je eigen coin</span>*/}  {/* Change this text and edit css style to display entire line*/}
