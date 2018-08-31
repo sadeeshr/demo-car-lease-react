@@ -1905,6 +1905,11 @@ span.inLeft input {
     padding-bottom: 18px;
 }
 
+.pv-5-18 {
+    padding-top: 5px;
+    padding-bottom: 18px;
+}
+
 .pv-20 {
     padding-top: 20px;
     padding-bottom: 20px;
@@ -2059,7 +2064,7 @@ background: rgba(0, 0, 0, 0) !important;
 }
 
 .cname-input input{
-width: 100%;
+width: 106px;
 }
 
 .modalCloseBtn {
