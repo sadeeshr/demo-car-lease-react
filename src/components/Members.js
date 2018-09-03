@@ -299,7 +299,7 @@ class Members extends Component {
                 <div className="col-5">
                     <span title="Car Raised" className="carRaised tar fs-13">
                         <strong className="fs-15">Target:</strong>
-                        <span className="">{formatNumber(parseInt(objectPrice, { precision: 2, thousand: ".", decimal: ",", stripZeros: true }))} </span>
+                        <span className="">{formatNumber(objectPrice, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} </span>
                         EUR
                     </span>
                 </div>

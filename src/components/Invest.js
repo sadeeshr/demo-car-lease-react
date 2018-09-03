@@ -15,7 +15,7 @@ class Invest extends Component {
 
     constructor(props) {
         super(props)
-        this.state = { reveal: false, activedate: new Date(), ethInvest: 5 }
+        this.state = { reveal: false, activedate: new Date(), ethInvest: 1 }
         // this.confTimer = null
         this.rinkebyStatsURL = "https://rinkeby.etherscan.io/tx/"
     }
@@ -234,7 +234,7 @@ class Invest extends Component {
                                         <div className='value'>
                                             <div className="text-center sliderBtn">
 
-                                                <button className="sliderMinus" onClick={() => (this.state.ethInvest > 5) && this.incDecInvestValue("dec")} >{" - "}</button>
+                                                <button className="sliderMinus" onClick={() => (this.state.ethInvest > 1) && this.incDecInvestValue("dec")} >{" - "}</button>
                                                 <div className="fs-20 ph-10" style={{ display: 'inline-block' }}>
                                                     <span className="fw-900">{formatNumber((typeof this.state.ethInvest === 'undefined') ? 0 : this.state.ethInvest, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</span> Euro
                                                 </div>
@@ -248,7 +248,7 @@ class Invest extends Component {
                                     <div className="col-12">
                                         <Slider
                                             disabled={this.state.pending}
-                                            min={5}
+                                            min={1}
                                             max={Math.min(amountRemaining, this.props.euroTokenBalance)}
                                             step={5}
                                             value={this.state.ethInvest}
