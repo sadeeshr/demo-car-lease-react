@@ -132,9 +132,10 @@ handleEvent = (io, event) => {
 getConfirmationsHash = (event, cb) => {
     let hash = event["transactionHash"]
     console.log("HASH: ", hash);
-    if (txHash !== hash) {
-        txHash = hash
-        eventToSend = event
+    // if (txHash !== hash) {
+    //     txHash = hash
+    //     eventToSend = event
+    if (event.event !== "Transfer") {
         let blockStart, blockEnd;
         let timer = setInterval(() => {
             console.log("CHECKING HASH CONFIRMATIONS:");
@@ -162,12 +163,13 @@ getConfirmationsHash = (event, cb) => {
                         })
                 )
         }, 5000)
-
-    } else {
-        if (eventToSend && (eventToSend.event === "Transfer") && (eventToSend.event !== event.event))
-            eventToSend = event
-        console.log("DUPLICATE HASH: ", hash);
     }
+
+    // } else {
+    //     if (eventToSend && (eventToSend.event === "Transfer") && (eventToSend.event !== event.event))
+    //         eventToSend = event
+    //     console.log("DUPLICATE HASH: ", hash);
+    // }
 
 }
 

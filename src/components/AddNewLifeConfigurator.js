@@ -75,7 +75,7 @@ class AddNewLifeConfigurator extends Component {
         if (nextProps.newObject && nextProps.event && (nextProps.event !== this.props.event) && (nextProps.event.transactionHash === nextProps.newObject.txID)) {
             this.setState({ pending: false })
             setTimeout(() => {
-                this.props._resetTxIds()
+                // this.props._resetTxIds()
                 this.props.history.push("/", { path: "members" })
             }, 5000);
         }
@@ -113,7 +113,7 @@ class AddNewLifeConfigurator extends Component {
 
         const member = this.props.usernames && this.props.usernames.find(userO => userO["_id"] === this.props.registered)
 
-        const townSelected = this.props.towns[this.props.town]
+        // const townSelected = this.props.towns[this.props.town]
 
         var crypto = require('crypto');
 
@@ -374,9 +374,9 @@ class AddNewLifeConfigurator extends Component {
                                             return (
                                                 <div key={i}>
                                                     <div className="newLifeItem" onWheel={() => cc.log("KEY DOWN: ", i)} onClick={() => this.setState({ active: i, lobjectSelected: true })} tabIndex="0"> {/*style={{ display: !leasetype.active ? "none" : "" }}*/}
-                                                        <div className="col-9">
+                                                        <div className="col-9">                                                          
                                                             {/*<span className="newLifeItem-title">{leasetype.model.toUpperCase()}</span>*/}
-                                                            {this.props.newObject && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{this.state.pending ? <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p> : <p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p>}</Link>)}
+                                                           
                                                             {/*this.props.newObject && this.props.newObject.txID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newObject.txID)) ? <p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)*/}
                                                             {/*<p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p>*/}
                                                             {/* <p className="p-euro " style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p> */}
@@ -544,15 +544,15 @@ class AddNewLifeConfigurator extends Component {
                                                             <div className="col-12">
                                                                 <div className='value'>
                                                                     <div className="col-3 text-right">{this.state.lobjMileage || monthlyopcost}</div>
-                                                                    <div className="col-9 text-left ti-5">{mileageLabel}<span className="fs-9">(10 cent per km)</span></div>
+                                                                    <div className="col-9 text-left ti-5">{mileageLabel}<span className="fs-9">{this.state.active === 0 && "(10 cent per km)"}</span></div>
                                                                 </div>
                                                             </div>
                                                             <div className="col-12">
                                                                 <Slider
                                                                     disabled={this.state.pending}
                                                                     min={0}
-                                                                    max={100000}
-                                                                    step={1000}
+                                                                    max={this.state.active === 0 ? 100000 : 2000}
+                                                                    step={this.state.active === 0 ?1000 : 100}
                                                                     value={this.state.lobjMileage || monthlyopcost}
                                                                     orientation='horizontal'
                                                                     onChange={(value) => this.setState({ lobjMileage: value })}
@@ -572,7 +572,7 @@ class AddNewLifeConfigurator extends Component {
                                                                 <Slider
                                                                     disabled={this.state.pending}
                                                                     min={0}
-                                                                    max={100000}
+                                                                    max={parseInt(price, 10)}
                                                                     step={1000}
                                                                     value={this.state.rest || 0}
                                                                     orientation='horizontal'
@@ -613,14 +613,18 @@ class AddNewLifeConfigurator extends Component {
                                                             <div className="container text-center">
                                                                 <div className="beforeFooter">
                                                                     {/* <div className="col-12 text-right">  <img style={img} src={(this.props.duurzamobjects && this.props.duurzamobjects[this.state.active || "0"]["image"])} alt="objectImage" /></div> */}
-                                                                    <div className="col-6 text-right">
+                                                                    <div className="col-4">
+                                                                    </div>
+                                                                    <div className="col-4 arrowHover-s2">
                                                                         <button className="arrowBtn" title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected || this.state.pending} onClick={() => this.createAccount(leasetype, price, months, (this.state.monthlycapcost || monthlycapcost), monthlyopcost, restWaarde)}>
                                                                             <span className="flaticon-euro white-arrowBtn"></span>
                                                                         </button>
                                                                     </div>
 
+                                                                     {this.props.newObject && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{this.state.pending ? <p  style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600"}}>Pending</p> : <p  style={{ color: "green", fontSize: "18px", fontWeight: "600" }}>Confirmed</p>}</Link>)}
 
-                                                                    <div className="col-4 text-right pv-18 cname-input">
+                                                                    <div className="col-4 text-left pv-5-18 cname-input">
+                                                                    
                                                                         <input disabled={this.state.pending} className="ml-5 nl-inp" placeholder="Coin Naam" value={this.state.coinName} onChange={(e) => this.setState({ coinName: e.target.value })} type="text" />
 
                                                                         {/*<span>Start Crowdfunding en verkoop je eigen coin</span>*/}  {/* Change this text and edit css style to display entire line*/}

@@ -76,6 +76,7 @@ class AddMember extends Component {
                 zip: self.zip || '',
                 email: self.email || '',
                 message: self.message || '',
+                profilePic: self.profilePic || ''
             }
 
             let data = {
@@ -129,7 +130,8 @@ class AddMember extends Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.usernames_new || nextProps.usernames_edit) {
             this.props._fetchUsers(nextProps, nextProps.account)
-            this.props.history.push("/", { path: "members" })
+            if (nextProps.usernames_new)
+                this.props.history.push("/", { path: "members" })
         }
     }
 
@@ -145,7 +147,7 @@ class AddMember extends Component {
                         <span className="lh-40"><strong>MIJN > PROFIEL</strong></span>
                     </div>
                 </div>
-                <div className="mainContentCon mainContentCon-40">
+                <div className="mainContentCon">
                     {/* <i className="flaticon-back" onClick={() => this.props.history.goBack()}></i> */}
                     {/* <div className="float-right">
                             <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
@@ -251,15 +253,15 @@ class AddMember extends Component {
                 <div className="footBtn container">
                     <div className="container text-center">
                         <div className="beforeFooter">
-                            <div className="col-5">
+                            <div className="col-4">
                                 &nbsp;
                             </div>
-                            <div className="col-2">
+                            <div className="col-4 arrowHover-s2">
                                 <button disabled={this.state.profile ? false : (!this.checkMandatory() || (usernames.indexOf(this.state.username) !== -1))} title={this.state.profile ? "Update" : (!this.checkMandatory() ? "Please fill mandatory fields" : (usernames.indexOf(this.state.username) !== -1 ? "Username already exists" : "New Life Configuration"))} className="arrowBtn" onClick={this.createAccount.bind(this)}>
                                     <span className="flaticon-right-arrow"></span>
                                 </button>
                             </div>
-                            <div className="col-5 text-left padding-10-0">
+                            <div className="col-4 text-left padding-10-0">
                                 <span> &nbsp;</span>
                             </div>
                         </div>

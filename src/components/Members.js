@@ -34,6 +34,7 @@ class Members extends Component {
         // if (!this.props.unClaimedRedemption && this.props.account) this.props._lcToClaimTotal(this.props.account) // change
         if (!this.props.euroTokenBalance && this.props.account) this.props._euroBalanceOf(this.props.account)
         if (!this.state.members) this.setState({ progress: true })
+        // if (!this.state.members && this.props.members) this.setState({ members: this.props.members })
         // let data = {
         //     module: "membersdev3",
         //     result: "member",
@@ -55,6 +56,7 @@ class Members extends Component {
 
     componentDidMount() {
         // if (!this.props.members) {
+        // console.log("Y u call me !!!")
         this.setState({ progress: true })
         this.fetchMembers()
         // }
@@ -62,7 +64,7 @@ class Members extends Component {
 
     fetchMembers = () => {
         // const townSelected = this.props.towns[this.props.town]
-
+        // console.log("how many times call me !!!");
         let data = {
             module: "crowdfundobj",
             result: "members",
@@ -127,14 +129,14 @@ class Members extends Component {
                 || (refreshEvents.indexOf(nextProps.event.event) !== -1)
             )
         ) {
-            this.setState({ pending: false })
-
-            // if (this.props.account) this.props._lcToClaimTotal(this.props.account) // change
+            this.setState({ pending: false }, () => {
+                // setTimeout(() => {
+                // this.fetchMembers()
+                // }, 1000);
+            })
             if (this.props.account) this.props._euroBalanceOf(this.props.account)
+            // if (this.props.account) this.props._lcToClaimTotal(this.props.account) // change
 
-            setTimeout(() => {
-                this.fetchMembers()
-            }, 1000);
         }
 
         // if (nextProps.event && (nextProps.event !== this.props.event) && (nextProps.event.event === "InvestInObject")) {
@@ -150,7 +152,7 @@ class Members extends Component {
             nextProps.event && (nextProps.event !== this.props.event) &&
             (
                 (nextProps.AddNewUser && (nextProps.event.transactionHash === nextProps.AddNewUser.txID))
-                || (nextProps.newObject && (nextProps.event.transactionHash === nextProps.newObject.txID))
+                // || (nextProps.newObject && (nextProps.event.transactionHash === nextProps.newObject.txID))
                 || (nextProps.newCrowdFundToken && (nextProps.event.transactionHash === nextProps.newCrowdFundToken.txID))
             )
         ) {
@@ -163,7 +165,7 @@ class Members extends Component {
             this.checkRegistered()
 
 
-        if (nextProps.members_edit || nextProps.usernames_new) this.fetchMembers()
+        // if (nextProps.members_edit || nextProps.usernames_new) this.fetchMembers()
 
         // cc.log("Members Update Props", nextProps.members, this.state.members);
         // if (this.props.members && ) this.props._reloadTokens()
@@ -188,7 +190,7 @@ class Members extends Component {
             //     // members[2].car ? members[2].car.crowdsaleClosed = true : ""
             // }
 
-            this.setState({ members, usernames }, () => setTimeout(() => this.setState({ progress: false }), 2500))
+            this.setState({ members, usernames }, () => setTimeout(() => this.setState({ progress: false }), 3500))
             // if (!this.props.lcCars)
             // for (let i = 1; i <= this.props.members.length; i++) {
             //     // this.fetchCar(i)
@@ -263,7 +265,7 @@ class Members extends Component {
         const selected = this.props.member && (this.props.member["_id"] === userObject["_id"]) ? true : false
         // const selected = true
         let memberRows = [
-            <div className="mtableLink" key={i} onClick={() => this.setState({ activeIndex: this.state.activeIndex === i ? null : i }, () => member.authorized ? this.props._objectSelected(userObject, this.props.account) : cc.log("MEMBER NOT AUTHORIZED"))}>
+            <div className="mtableLink" key={i} onClick={() => this.setState({ activeIndex: this.state.activeIndex === i ? null : i }, () => { (this.props.newObject && (this.props.addNewObjectTxID === this.props.newObject.txID) && this.props._resetTxIds()); return member.authorized ? this.props._objectSelected(userObject, this.props.account) : cc.log("MEMBER NOT AUTHORIZED") })}>
                 <div className="col-5">
                     <div className="mtableUser">
                         <span className="fs-20" style={member.account === this.props.account ? { fontWeight: "bold" } : {}}>{userObject.objectName || ""}</span>
@@ -271,13 +273,12 @@ class Members extends Component {
                         <div className="mtableTokens">
                             {userObject.crowdsaleclosed ?
                                 <span style={{ color: "green", fontSize: "15px", }}>{userObject.objectActive ? "Active" : "Closed"}</span> : <span><span className={textStyle}>{userObject.raised || 0}</span> Euro opgehaald </span>}
-                            <p style={{ marginTop: ' 12px' }}>{userObject.evTokens ? <span>waarvan <span className={textStyle}>{userObject.evTokens}</span> door mij</span> : "-"}</p>
                         </div>
-                        {!member.authorized && <div className="membersBtn">
+                        {/*!member.authorized && <div className="membersBtn arrowHover-s2">
                             <button title="Authorize" className="arrowBtn" onClick={() => member.account !== this.props.account ? this.props._lcAddUser(member.account, this.props.account) : cc.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
-                                <span className="flaticon-padlock-1 unlock unlock-m"></span>
+                                <span className="flaticon-padlock-1 unlock"></span>
                             </button>
-                        </div>}
+                            </div>*/}
                     </div>
                 </div>
                 <div className="col-7">
@@ -285,18 +286,23 @@ class Members extends Component {
                     {<div className="mtableCar" style={{ backgroundImage: `url(${userObject.objectPic || member.profilePic || require('../assets/anonymous.png')})` }}>
                         {/* <img style={img} src={userObject.objectPic || member.profilePic || require('../assets/anonymous.png')} alt="carImage" /> */}
                     </div>}
+                    {/*this.props.newObject  && this.props.newObject["id"] === userObject["_id"] && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{this.state.pending ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px", textAlign: "center", fontWeight: "600" }}>Confirmed</p> : <p className="p-euro" style={{ color: "#FF9800", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Pending</p>}</Link>)*/}
+                    {(this.props.newObject && this.props.addNewObjectID === userObject["objectID"]) &&
+                        (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{((this.props.addNewObjectTxID === this.props.newObject.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px", textAlign: "center", fontWeight: "600" }}>Confirmed</p> : <p className="p-euro" style={{ color: "#FF9800", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Pending</p>}</Link>)}
+                    {(this.props.newCrowdFundToken && this.props.newCrowdFundToken["hash"] === userObject["objectHash"]) &&
+                        (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newCrowdFundToken.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newCrowdFundToken.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Confirmed</p> : <p className="p-euro" style={{ color: "#FF9800", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Pending</p>}</Link>)}
+                </div>
+
+                <div className="col-7">
+                    <p className="fs-13" style={{ marginTop: '5px' }}>{userObject.evTokens ? <span>waarvan <span className={textStyle}>{userObject.evTokens}</span> door mij</span> : "-"}</p>
+                </div>
+                <div className="col-5">
                     <span title="Car Raised" className="carRaised tar fs-13">
                         <strong className="fs-15">Target:</strong>
                         <span className="">{formatNumber(parseInt(objectPrice, { precision: 2, thousand: ".", decimal: ",", stripZeros: true }))} </span>
                         EUR
                     </span>
-
-                    {(this.props.newObject && this.props.newObject["id"] === userObject["_id"]) &&
-                        (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newObject.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px", textAlign: "center", fontWeight: "600" }}>Confirmed</p> : <p className="p-euro" style={{ color: "#FF9800", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Pending</p>}</Link>)}
-                    {(this.props.newCrowdFundToken && this.props.newCrowdFundToken["hash"] === userObject["objectHash"]) &&
-                        (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newCrowdFundToken.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newCrowdFundToken.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Confirmed</p> : <p className="p-euro" style={{ color: "#FF9800", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Pending</p>}</Link>)}
                 </div>
-
 
             </div>
         ]
@@ -417,12 +423,12 @@ class Members extends Component {
                     <div className="float-right">
                         <i onClick={() => this.fetchMembers()} className="flaticon-rotate"></i>
                         <i onClick={() => this.props.history.push("/")} className="flaticon-home"></i>
-                    </div> */}
+                    </div> 
                     <div hidden className="navCon">
                         <h1 id="header"><div className="fl"><i className="flaticon-back" onClick={() => this.props.history.push("/", { path: "main" })}></i></div>Members<div className="fr"><i onClick={() => this.fetchMembers()} className="flaticon-rotate marIcon"></i><i onClick={() => this.props.history.push("/")} className="flaticon-home"></i></div></h1>
-                    </div>
+                    </div>*/}
                     <div className="contentCon overflow bg-none contentCon-8 pt-8">
-                        <BlockUi tag="div" blocking={this.state.progress} renderChildren={false}>
+                        <BlockUi tag="div" blocking={this.state.progress || investObjs.length === 0} renderChildren={false}>
                             <div className="membersCon pb-20 pt-5-mobile pv-5-mobile">
 
                                 <div >
@@ -487,9 +493,9 @@ class Members extends Component {
                                                             <div className="mtableUser">
                                                                 <span className="fs-20 fw-700" style={member.account === this.props.account ? { fontWeight: "bold" } : {}}>{member.username || ""}</span>
                                                                 <p>{member.town || ""}</p>
-                                                                {!member.authorized && selfAuth && <div className="membersBtn">
+                                                                {!member.authorized && selfAuth && <div className="membersBtn arrowHover-s2">
                                                                     <button title="Authorize" className="arrowBtn" onClick={() => member.account !== this.props.account ? this.props._lcAddUser(member.account, this.props.account) : cc.log("MEMBER NOT AUTHORIZED, NO SELF AUTHORIZE")}>
-                                                                        <span className="flaticon-padlock-1 unlock unlock-m"></span>
+                                                                        <span className="flaticon-padlock-1 unlock"></span>
                                                                     </button>
                                                                 </div>}
                                                             </div>
@@ -528,18 +534,18 @@ class Members extends Component {
                 <div className="footBtn">
                     <div className="container text-center">
                         <div className="beforeFooter">
-                            <div className="col-2 text-left">
+                            <div className="col-4 arrowHover-s2">
                                 <button className="arrowBtn" onClick={() => this.props.history.push("/", { path: "addnewlife" })}>
                                     <span className="flaticon-right-arrow"></span>
                                 </button>
                             </div>
-                            <div className="col-8 lh-54 text-left ti-5-mobile">
+                            <div className="col-4 pt-30 text-left">
                                 Ga duurzaam
 
                                 {/* <span>Ga duurzaam</span> */}
                                 {/*this.props.AddNewUser && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.AddNewUser}>{!this.state.eventAddNewUser ? <p style={{ color: "red" }}>pending</p> : <p style={{ color: "green" }}><i>Confirmed</i></p>} </Link>)*/}
                             </div>
-                            <div className="col-2 text-left padding-10-0">
+                            <div className="col-4 text-left padding-10-0">
 
                                 <div className="text-right" style={{ float: 'right' }}>
                                     <span onClick={() => this.modalClick()}>

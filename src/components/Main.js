@@ -7,6 +7,7 @@ import Invest from '../containers/Invest';
 import Invoices from '../containers/Invoices';
 import NewObject from '../containers/NewObject';
 import AddNewLifeConfigurator from '../containers/AddNewLifeConfigurator';
+import formatNumber from 'accounting-js/lib/formatNumber.js'
 import { Link } from 'react-router-dom'
 import NotificationSystem from 'react-notification-system';
 import cc from '../lib/utils';
@@ -69,7 +70,7 @@ class Main extends Component {
         // if (nextProps.account && nextProps.socket && !nextProps.usernames) this.fetchUserData()
         // this.props.event && (this.props.event.transactionHash !== nextProps.event.transactionHash)
 
-        if (nextProps.socket && !nextProps.towns) this.fetchMunicipalityData()
+        // if (nextProps.socket && !nextProps.towns) this.fetchMunicipalityData()
         if (nextProps.socket && nextProps.account && !nextProps.usernames) this.props._fetchUsers(nextProps, nextProps.account)
         if (nextProps.account && nextProps.usernames) {
             if (nextProps.usernames) {
@@ -88,28 +89,43 @@ class Main extends Component {
             switch (nextProps.event.event) {
                 case "InvestInObject":
                     {
-                        const objectID = nextProps.event.returnValues.objectID
+                        const objectID = parseInt(nextProps.event.returnValues.objectID, 10)
                         const amount = nextProps.event.returnValues.amount
                         const member = nextProps.members && nextProps.members.find(member => member.objectID && (member.objectID === objectID))
                         // let message = "Awesome, an investment made just now !"
                         // let message = (member.objectName || "Coin") + " heeft " + ((member.raised || 0) + parseInt(amount, 10)) + " euro ontvangen, nog " + amount + " te gaan"
-                        let message = "Er is " + ((member.raised || 0) + parseInt(amount, 10)) + " euro in " + (member.objectName || "Coin") + " geïnvesteerd, nog 28.845 euro te gaan."
-                        // if (this.props.members) {
-                        //     const txFrom = this.props.members.find(member => member.account && (member.account.toLowerCase() === nextProps.event.returnValues.to.toLowerCase()))
-                        //     const txTo = this.props.members.find(member => member.objectID && (member.objectID.toString() === nextProps.event.returnValues.objectId))
-                        //     const value = nextProps.event.returnValues.value
-                        //     // cc.log(txFrom, txTo, value);
-                        //     message = (txFrom && txTo) ? `Awesome, ${txFrom.username} ${txFrom.town} has just invested ${value} euros on ${txTo.username} ${txTo.town}` : `Awesome, an investment made just now !`
-                        // }
+                        if (member) {
+                            const raised = formatNumber(((member.raised || 0) + parseInt(amount, 10)), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })
+                            const remaining = formatNumber(((member.objectprice || 0) - ((member.raised || 0) + parseInt(amount, 10))), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })
+                            let message = "Er is " + raised + " euro in " + (member.objectName || "Coin") + " geïnvesteerd, nog " + remaining + " euro te gaan."
+                            // if (this.props.members) {
+                            //     const txFrom = this.props.members.find(member => member.account && (member.account.toLowerCase() === nextProps.event.returnValues.to.toLowerCase()))
+                            //     const txTo = this.props.members.find(member => member.objectID && (member.objectID.toString() === nextProps.event.returnValues.objectId))
+                            //     const value = nextProps.event.returnValues.value
+                            //     // cc.log(txFrom, txTo, value);
+                            //     message = (txFrom && txTo) ? `Awesome, ${txFrom.username} ${txFrom.town} has just invested ${value} euros on ${txTo.username} ${txTo.town}` : `Awesome, an investment made just now !`
+                            // }
 
-                        let event = {
-                            title: message,
-                            message: "",
-                            level: "info",
-                            position: "tr",
-                            autoDismiss: 0
+                            let event = {
+                                title: message,
+                                message: "",
+                                level: "info",
+                                position: "tr",
+                                autoDismiss: 0
+                            }
+                            this.props._setEventAlert(event)
+                        } else {
+
+                            let data = {
+                                module: "crowdfundobj",
+                                result: "member",
+                                findone: true,
+                                query: {
+                                    objectID: parseInt(objectID)
+                                }
+                            }
+                            this.props._fetchContractData(this.props, data, this.props.account)
                         }
-                        this.props._setEventAlert(event)
                         break;
                     }
 
@@ -149,10 +165,10 @@ class Main extends Component {
                         const newObject = this.props.newObject || ""
                         const newLifeObj = this.props.newLifeObj || ""
 
-                        if (newObject && newLifeObj && event.transactionHash === newObject.txID) {
+                        if (newObject && newLifeObj && !newLifeObj["objectID"] && event.transactionHash === newObject.txID) {
                             let objectID = event.returnValues.objectID
                             // let newObjData = newObject.data
-                            newLifeObj["objectID"] = objectID
+                            newLifeObj["objectID"] = parseInt(objectID)
 
                             // let data = {
                             //     module: "crowdfundobj",
@@ -182,20 +198,13 @@ class Main extends Component {
                             cc.log(data)
                             this.props._writeNewContractData(this.props, data)
 
+                            this.props._setObject({ addNewObjectTxID: event.transactionHash, addNewObjectID: objectID })
                             // const townSelected = this.props.towns[this.props.town]
                             // setTimeout(() => this.props._fetchMembers(this.props, townSelected["municipalityID"], this.props.account), 1000)
                             // setTimeout(() => this.props._fetchMembers(this.props, "1", this.props.account), 1000)
                             // this.props._setEventStatus({ eventAddNewObject: true, objectID: objectID }); setTimeout(() => { this.lcEventAddNewObjectUnsubscribe(); this.props._reloadTokens() }, 1000);
                         }
 
-                        let alert = {
-                            title: "<coiname> aangemaakt, investeer nu!",
-                            message: ``,
-                            level: "info",
-                            position: "tr",
-                            autoDismiss: 0
-                        }
-                        this.props._setEventAlert(alert)
                         break;
 
                     }
@@ -238,18 +247,18 @@ class Main extends Component {
                         break;
                     }
 
-                // case "NewObject":
-                //     {
-                //         let alert = {
-                //             title: "New Object created !",
-                //             message: "",
-                //             level: "info",
-                //             position: "tr",
-                //             autoDismiss: 0
-                //         }
-                //         this.props._setEventAlert(alert)
-                //         break;
-                //     }
+                case "NewObject":
+                    {
+                        let alert = {
+                            title: nextProps.event.data + " aangemaakt, investeer nu!",
+                            message: ``,
+                            level: "info",
+                            position: "tr",
+                            autoDismiss: 0
+                        }
+                        this.props._setEventAlert(alert)
+                        break;
+                    }
 
                 case "NewInvoice":
                     {
@@ -293,8 +302,27 @@ class Main extends Component {
             this.refs.notificationSystem.addNotification(nextProps.eventAlert);
         }
 
+
+
         if (nextProps.location.state) this.renderComponent()
         this.props = nextProps
+
+        if (this.props.event && !this.props.eventAlert && this.props.event.event === "InvestInObject" && this.props.member && this.props.member.raised && this.props.member.objectprice) {
+            const amount = ((this.props.member.raised || 0) + parseInt(this.props.event.returnValues.amount, 10))
+            const raised = formatNumber(amount, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })
+            const remaining = formatNumber(((this.props.member.objectprice || 0) - amount), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })
+            let message = "Er is " + raised + " euro in " + (this.props.member.objectName || "Coin") + " geïnvesteerd, nog " + remaining + " euro te gaan."
+
+            let event = {
+                title: message,
+                message: "",
+                level: "info",
+                position: "tr",
+                autoDismiss: 0,
+                uid: this.props.member.objectID
+            }
+            this.props._setEventAlert(event)
+        }
     }
 
     renderMain = () => {
@@ -325,7 +353,7 @@ class Main extends Component {
                     <table>
                         <tbody>
                             <tr>
-                                <td><img style={{ maxHeight: "200px" }} src={isReady ? require('../assets/main.png') : require('../assets/metamask.png')} alt="logo" /></td>
+                                <td style={{ textAlign: "center" }}><img style={{ width: "250px", height: "auto" }} src={isReady ? require('../assets/thuis.png') : require('../assets/metamask.png')} alt="logo" /></td>
                             </tr>
                         </tbody>
                     </table>
@@ -333,7 +361,7 @@ class Main extends Component {
                     {isReady && <div>
                         <p className="text-center fs-20">Investeer in andere Coins</p>
                         <p className="text-center fs-20 mb-15">en bepaal je rendement</p>
-                        <p className="text-center fs-20">Elk moment Uitstapbaar</p>
+                        {/*<p className="text-center fs-20">Elk moment Uitstapbaar</p>*/}
                     </div>}
                     {!this.state.metamask ?
                         <p className="text-center fs-20">Start hier : <Link target="_self" to="https://metamask.io"><span style={{ color: "red" }}>Installeer Metamask</span>
@@ -350,15 +378,15 @@ class Main extends Component {
             <div className="footBtn">
                 <div className="container text-center">
                     <div className="beforeFooter">
-                        <div className="col-5">
+                        <div className="col-4">
                             &nbsp;
                             </div>
-                        {<div className="col-2">
+                        {<div className="col-4 arrowHover-s2">
                             <button disabled={!(this.props.usernames || !this.props.account) || !isReady} className="arrowBtn" onClick={() => this.props.history.push("/", { path: nextScreen })}>
                                 <span className="flaticon-right-arrow"></span>
                             </button>
                         </div>}
-                        <div className="col-5 lh-54 text-left pl-5-mobile">
+                        <div className="col-4 pt-30 text-left">
                             <span><strong>ZAKEN</strong></span>
                         </div>
 

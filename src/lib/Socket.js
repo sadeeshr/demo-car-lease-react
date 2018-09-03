@@ -5,6 +5,7 @@ import cc from './utils';
 
 // const SOCKET_URL = "https://blockchain.techiearea.com:3456"; // for development
 const SOCKET_URL = "https://smartjuice.apayaa.com:4567";
+// const SOCKET_URL = "https://duurzamezaken.io:4567";
 const SOCKET_OPTIONS = {
     // secure: true,
     // rejectUnauthorized: false
@@ -78,7 +79,7 @@ class Socket {
                 if ((data.event !== "Transfer") && this.props.town) {
                     // const townSelected = this.props.towns[this.props.town]
                     // this.props._fetchMembers(this.props, (townSelected ? townSelected["municipalityID"] : "1"), this.account)
-                    this.props._fetchMembers(this.props, "1", this.account)
+                    // this.props._fetchMembers(this.props, "1", this.account) // avoid multiple refresh on members page
                 }
                 this.props._setEvent(data)
 

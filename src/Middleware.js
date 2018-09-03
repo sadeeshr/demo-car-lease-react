@@ -81,7 +81,7 @@ handleGet = (socket, data) => {
     mongo.db[data.module].findOne(
         query,
         filter,
-        (err, result) => { console.log("RESULT: ", result.length); socket.emit('data', { module: data.result || data.module, result: result }) });
+        (err, result) => { console.log("RESULT: ", result); socket.emit('data', { module: data.result || data.module, result: result }) });
 }
 
 handleNew = (socket, request) => {
@@ -95,7 +95,7 @@ handleNew = (socket, request) => {
                 } else {
                     socket.emit('data', { module: ((request.result || request.module) + "_new"), result: result })
                     if (request.result === "usernames") io.sockets.emit('event', { event: "NewMember" })
-                    // if (request.result === "members") io.sockets.emit('event', { event: "NewObject" })
+                    if (request.result === "members") io.sockets.emit('event', { event: "NewObject", data: request.data.objectName })
                     if (request.result === "invoices") io.sockets.emit('event', { event: "NewInvoice" })
                 }
             })
@@ -112,7 +112,7 @@ handleUpdate = (socket, data) => {
         (err, result) => {
             console.log("RESULT: ", result);
             socket.emit('data', { module: ((data.result || data.module) + "_edit"), result: true })
-            if (request.result === "usernames") io.sockets.emit('event', { event: "UpdateMember" })
+            // if (request.result === "usernames") io.sockets.emit('event', { event: "UpdateMember" })
         });
 }
 
