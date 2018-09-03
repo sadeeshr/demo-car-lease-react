@@ -388,9 +388,30 @@ class AddNewLifeConfigurator extends Component {
                                                                 </span>
                                                             </div>
                                                         </div>
+
+
                                                         <div className="col-12">
                                                             <div className="newlifeImage" style={{ backgroundImage: `url(${leasetype.image})` }}>
                                                                 {/* <img src={lobject.image} alt={lobject.name} /> */}
+                                                            </div>
+                                                        </div>
+                                                        <div className="mb-5 d-ib fs-13">
+                                                            <div className="col-12">
+                                                                {/* <div className="nl-inp">
+                                                                    {leasetype && <input value={price} onChange={(e) => this.setState({ lobjprice: e.target.value })} type="text" />}
+                                                                </div> */}
+                                                                {/*<div className="nl-inp">{}</div>*/ /*formatNumber(parseInt(price, 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })*/}
+                                                                <Slider
+                                                                    disabled={this.state.pending}
+                                                                    min={0}
+                                                                    max={this.state.active === 0 ? 100000 : this.state.active === 1 ? 10000 : this.state.active === 2 ? 10000000 : 5000000}
+                                                                    step={500}
+                                                                    value={parseInt(price, 10)}
+                                                                    orientation='horizontal'
+                                                                    onChange={(value) => this.setState({ lobjprice: value })}
+                                                                />
+                                                            </div>
+                                                            <div className="col-12">
                                                                 <span className="target fs-13">
                                                                     <strong className="fs-15">Target:</strong>
                                                                     <span className="color-green"> {formatNumber(parseInt(price, 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} </span>
@@ -436,33 +457,6 @@ class AddNewLifeConfigurator extends Component {
                                                                     disabled={this.state.pending}
                                                                     orientation='horizontal'
                                                                     onChange={(value) => this.setState({ leasetypeid: value })}
-                                                                />
-                                                            </div>
-                                                        </div>
-
-                                                        <div className="mb-5 d-ib fs-13">
-                                                            <div className="col-12">
-                                                                <div className='value'>
-                                                                    <div className="col-3 text-right">{formatNumber(parseInt(price, 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</div>
-                                                                    <div className="col-9 text-left ti-5">Prijs&nbsp;
-                                                                        <strong className="fs-15">Te Funden Bedrag</strong>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div className="col-12">
-                                                                {/* <div className="nl-inp">
-                                                                    {leasetype && <input value={price} onChange={(e) => this.setState({ lobjprice: e.target.value })} type="text" />}
-                                                                </div> */}
-                                                                {/*<div className="nl-inp">{}</div>*/ /*formatNumber(parseInt(price, 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })*/}
-                                                                <Slider
-                                                                    disabled={this.state.pending}
-                                                                    min={0}
-                                                                    max={this.state.active === 0 ? 100000 : this.state.active === 1 ? 10000 : this.state.active === 2 ? 10000000 : 5000000}
-                                                                    step={500}
-                                                                    value={parseInt(price, 10)}
-                                                                    orientation='horizontal'
-                                                                    onChange={(value) => this.setState({ lobjprice: value })}
                                                                 />
                                                             </div>
                                                         </div>
