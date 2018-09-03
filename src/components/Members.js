@@ -300,7 +300,7 @@ class Members extends Component {
                     <span title="Car Raised" className="carRaised tar fs-13">
                         <strong className="fs-15">Target:</strong>
                         <span className="">{formatNumber(objectPrice, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} </span>
-                        EUR
+                        Euro
                     </span>
                 </div>
 
