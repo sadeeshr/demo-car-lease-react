@@ -457,10 +457,10 @@ class AddNewLifeConfigurator extends Component {
                                                                 {/*<div className="nl-inp">{}</div>*/ /*formatNumber(parseInt(price, 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })*/}
                                                                 <Slider
                                                                     disabled={this.state.pending}
-                                                                    min={0}
+                                                                    min={this.state.active === 0 ? 35000 : 0}
                                                                     max={this.state.active === 0 ? 100000 : this.state.active === 1 ? 10000 : this.state.active === 2 ? 10000000 : 5000000}
                                                                     step={500}
-                                                                    value={parseInt(price, 10)}
+                                                                    value={((this.state.active === 0) && !this.state.lobjprice) ? 40000 : parseInt(price, 10)}
                                                                     orientation='horizontal'
                                                                     onChange={(value) => this.setState({ lobjprice: value })}
                                                                 />
