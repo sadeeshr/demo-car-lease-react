@@ -481,7 +481,7 @@ class AddNewLifeConfigurator extends Component {
                                                         <div className="mb-5 d-ib fs-13">
                                                             <div className="col-12">
                                                                 <div className='value'>
-                                                                    <div className="col-3 text-right">{formatNumber(this.state.monthlycapcost || (parseInt(price, 10) / 100), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</div>
+                                                                    <div className="col-3 text-right">{formatNumber(this.state.monthlycapcost === 0 ? 0 : (this.state.monthlycapcost || (parseInt(price, 10) / 100)), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</div>
                                                                     <div className="col-9 text-left ti-5">Euro per Maand</div>
                                                                 </div>
                                                             </div>
@@ -495,7 +495,7 @@ class AddNewLifeConfigurator extends Component {
                                                                     min={0}
                                                                     max={((3 / 100) * parseInt(price, 10))}
                                                                     step={10}
-                                                                    value={this.state.monthlycapcost || (parseInt(price, 10) / 100)}
+                                                                    value={this.state.monthlycapcost === 0 ? 0 : (this.state.monthlycapcost || (parseInt(price, 10) / 100))}
                                                                     orientation='horizontal'
                                                                     onChange={(value) => this.setState({ monthlycapcost: value })}
                                                                 />
@@ -517,7 +517,7 @@ class AddNewLifeConfigurator extends Component {
                                                             </div> */}
                                                             <div className="col-12">
                                                                 <div className='value'>
-                                                                    <div className="col-3 text-right">{this.state.lobjmonths || (leasetype && leasetype.months)}</div>
+                                                                    <div className="col-3 text-right">{this.state.lobjmonths === 0 ? 0 : (this.state.lobjmonths || (leasetype && leasetype.months))}</div>
                                                                     <div className="col-9 text-left ti-5">Maanden</div>
                                                                 </div>
                                                             </div>
@@ -527,7 +527,7 @@ class AddNewLifeConfigurator extends Component {
                                                                     min={0}
                                                                     max={120}
                                                                     step={3}
-                                                                    value={this.state.lobjmonths || (leasetype && parseInt(leasetype.months, 10))}
+                                                                    value={this.state.lobjmonths === 0 ? 0 : (this.state.lobjmonths || (leasetype && parseInt(leasetype.months, 10)))}
                                                                     orientation='horizontal'
                                                                     onChange={(value) => this.setState({ lobjmonths: value })}
                                                                 />
@@ -536,7 +536,7 @@ class AddNewLifeConfigurator extends Component {
                                                         <div className={"mb-5 d-ib fs-13"}>
                                                             <div className="col-12">
                                                                 <div className='value'>
-                                                                    <div className="col-3 text-right">{this.state.rest || (parseInt(price, 10) / 2)}</div>
+                                                                    <div className="col-3 text-right">{this.state.rest === 0 ? 0 : (this.state.rest || (parseInt(price, 10) / 2))}</div>
                                                                     <div className="col-9 text-left ti-15">{"Restwaarde"}</div>
                                                                 </div>
                                                             </div>
@@ -546,7 +546,7 @@ class AddNewLifeConfigurator extends Component {
                                                                     min={0}
                                                                     max={parseInt(price, 10)}
                                                                     step={1000}
-                                                                    value={this.state.rest || (parseInt(price, 10) / 2)}
+                                                                    value={this.state.rest === 0 ? 0 : (this.state.rest || (parseInt(price, 10) / 2))}
                                                                     orientation='horizontal'
                                                                     onChange={(value) => this.setState({ rest: value })}
                                                                 />
@@ -572,7 +572,7 @@ class AddNewLifeConfigurator extends Component {
 
                                                             <div className="col-12">
                                                                 <div className='value'>
-                                                                    <div className="col-3 text-right">{(!this.state.lobjMileage && this.state.active === 0) ? 25000 : (this.state.lobjMileage || monthlyopcost)}</div>
+                                                                    <div className="col-3 text-right">{(!this.state.lobjMileage && this.state.active === 0) ? 25000 : (this.state.lobjMileage === 0 ? 0 : (this.state.lobjMileage || monthlyopcost))}</div>
                                                                     <div className="col-9 text-left ti-5">{mileageLabel}<span className="fs-9">{this.state.active === 0 && "(10 cent per km)"}</span></div>
                                                                 </div>
                                                             </div>
@@ -582,7 +582,7 @@ class AddNewLifeConfigurator extends Component {
                                                                     min={0}
                                                                     max={this.state.active === 0 ? 100000 : 2000}
                                                                     step={this.state.active === 0 ? 1000 : 100}
-                                                                    value={(!this.state.lobjMileage && this.state.active === 0) ? 25000 : (this.state.lobjMileage || monthlyopcost)}
+                                                                    value={(!this.state.lobjMileage && this.state.active === 0) ? 25000 : (this.state.lobjMileage === 0 ? 0 : (this.state.lobjMileage || monthlyopcost))}
                                                                     orientation='horizontal'
                                                                     onChange={(value) => this.setState({ lobjMileage: value })}
                                                                 />
