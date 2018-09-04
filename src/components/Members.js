@@ -439,14 +439,14 @@ class Members extends Component {
                                 </div>
 
                                 <div >
-                                    <div style={header}>Betaal rekening (Invoice)</div>
+                                    <div style={header}>Betaal rekening</div>
                                     <div className="accordionContent">
                                         {invoiceObjs && invoiceObjs.sort((a, b) => parseFloat(b.objectID) - parseFloat(a.objectID)).map((mObj, i) => this.renderMember(mObj, i))}
                                     </div>
                                 </div>
 
                                 <div >
-                                    <div style={header}>Aanschaf duurzaam item (buy)</div>
+                                    <div style={header}>Aanschaf duurzaam item</div>
                                     <div className="accordionContent">
                                         {buyObjs && buyObjs.sort((a, b) => parseFloat(b.objectID) - parseFloat(a.objectID)).map((mObj, i) => this.renderMember(mObj, i))}
                                     </div>
@@ -460,7 +460,7 @@ class Members extends Component {
                                 </div>
 
                                 <div>
-                                    <div style={header}>Leden (members)</div>
+                                    <div style={header}>Leden</div>
                                     <div className="accordionContent">
                                         {
                                             authMembers && authMembers.reverse().map((member, i) => {
