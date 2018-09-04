@@ -374,9 +374,9 @@ class AddNewLifeConfigurator extends Component {
                                             return (
                                                 <div key={i}>
                                                     <div className="newLifeItem" onWheel={() => cc.log("KEY DOWN: ", i)} onClick={() => this.setState({ active: i, lobjectSelected: true })} tabIndex="0"> {/*style={{ display: !leasetype.active ? "none" : "" }}*/}
-                                                        <div className="col-9">                                                          
+                                                        <div className="col-9">
                                                             {/*<span className="newLifeItem-title">{leasetype.model.toUpperCase()}</span>*/}
-                                                           
+
                                                             {/*this.props.newObject && this.props.newObject.txID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.newObject.txID)) ? <p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p className="p-euro" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)*/}
                                                             {/*<p className="p-euro" style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p>*/}
                                                             {/* <p className="p-euro " style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p> */}
@@ -388,13 +388,35 @@ class AddNewLifeConfigurator extends Component {
                                                                 </span>
                                                             </div>
                                                         </div>
+
+
                                                         <div className="col-12">
                                                             <div className="newlifeImage" style={{ backgroundImage: `url(${leasetype.image})` }}>
                                                                 {/* <img src={lobject.image} alt={lobject.name} /> */}
+                                                            </div>
+                                                        </div>
+                                                        <div className="mb-5 d-ib fs-13">
+                                                            <div className="col-12">
+                                                                {/* <div className="nl-inp">
+                                                                    {leasetype && <input value={price} onChange={(e) => this.setState({ lobjprice: e.target.value })} type="text" />}
+                                                                </div> */}
+                                                                {/*<div className="nl-inp">{}</div>*/ /*formatNumber(parseInt(price, 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })*/}
+                                                                <Slider
+                                                                    disabled={this.state.pending}
+                                                                    min={0}
+                                                                    max={(leaseobject["objects"].length - 1)}
+                                                                    value={this.state.leasetypeid}
+                                                                    disabled={this.state.pending}
+                                                                    orientation='horizontal'
+                                                                    onChange={(value) => this.setState({ leasetypeid: value })}
+                                                                />
+
+                                                            </div>
+                                                            <div className="col-12">
                                                                 <span className="target fs-13">
                                                                     <strong className="fs-15">Target:</strong>
                                                                     <span className="color-green"> {formatNumber(parseInt(price, 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} </span>
-                                                                    EUR</span>
+                                                                    Euro</span>
                                                             </div>
                                                         </div>
                                                         {/* <div className="col-12 mb-15" style={{ height: "46px" }}>
@@ -418,28 +440,19 @@ class AddNewLifeConfigurator extends Component {
                                                             </div>
                                                         </div> */}
 
-                                                        <div className="mb-5 d-ib fs-13">
+                                                        {/*<div className="mb-5 d-ib fs-13">
                                                             <div className="col-12">
                                                                 <div className='value'>
                                                                     <div className="col-3 text-right"></div>
-                                                                    <div className="col-9 text-left ti-5">Kies &nbsp;
+                                                                   <div className="col-9 text-left ti-5">Kies &nbsp;
                                                                         <strong className="fs-15">{leasetype.model}</strong>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div className="col-12 slider-style2">
-                                                                <Slider
-                                                                    disabled={this.state.pending}
-                                                                    min={0}
-                                                                    max={(leaseobject["objects"].length - 1)}
-                                                                    value={this.state.leasetypeid}
-                                                                    disabled={this.state.pending}
-                                                                    orientation='horizontal'
-                                                                    onChange={(value) => this.setState({ leasetypeid: value })}
-                                                                />
-                                                            </div>
-                                                        </div>
 
+                                                            </div>
+                                                    </div>*/}
                                                         <div className="mb-5 d-ib fs-13">
                                                             <div className="col-12">
                                                                 <div className='value'>
@@ -449,28 +462,26 @@ class AddNewLifeConfigurator extends Component {
                                                                     </div>
                                                                 </div>
                                                             </div>
-
                                                             <div className="col-12">
-                                                                {/* <div className="nl-inp">
-                                                                    {leasetype && <input value={price} onChange={(e) => this.setState({ lobjprice: e.target.value })} type="text" />}
+                                                                {/* <div className="nl-inp">	
+                                                                    {leasetype && <input value={price} onChange={(e) => this.setState({ lobjprice: e.target.value })} type="text" />}	
                                                                 </div> */}
                                                                 {/*<div className="nl-inp">{}</div>*/ /*formatNumber(parseInt(price, 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })*/}
                                                                 <Slider
                                                                     disabled={this.state.pending}
-                                                                    min={0}
-                                                                    max={this.state.active === 0 ? 100000 : this.state.active === 1 ? 10000 : this.state.active === 2 ? 10000000 : 5000000}
+                                                                    min={(this.state.active === 0) ? 35000 : (this.state.active === 3) ? 5000 : 0}
+                                                                    max={(this.state.active === 0) ? 100000 : (this.state.active === 1) ? 10000 : (this.state.active === 2) ? 10000000 : 100000}
                                                                     step={500}
-                                                                    value={parseInt(price, 10)}
+                                                                    value={(!this.state.lobjprice && (this.state.active === 0)) ? 40000 : parseInt(price, 10)}
                                                                     orientation='horizontal'
                                                                     onChange={(value) => this.setState({ lobjprice: value })}
                                                                 />
                                                             </div>
                                                         </div>
-
                                                         <div className="mb-5 d-ib fs-13">
                                                             <div className="col-12">
                                                                 <div className='value'>
-                                                                    <div className="col-3 text-right">{formatNumber(this.state.monthlycapcost || 0, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</div>
+                                                                    <div className="col-3 text-right">{formatNumber(this.state.monthlycapcost || (parseInt(price, 10) / 100), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</div>
                                                                     <div className="col-9 text-left ti-5">Euro per Maand</div>
                                                                 </div>
                                                             </div>
@@ -482,9 +493,9 @@ class AddNewLifeConfigurator extends Component {
                                                                 <Slider
                                                                     disabled={this.state.pending}
                                                                     min={0}
-                                                                    max={5000}
+                                                                    max={((3 / 100) * parseInt(price, 10))}
                                                                     step={10}
-                                                                    value={this.state.monthlycapcost || 0}
+                                                                    value={this.state.monthlycapcost || (parseInt(price, 10) / 100)}
                                                                     orientation='horizontal'
                                                                     onChange={(value) => this.setState({ monthlycapcost: value })}
                                                                 />
@@ -522,7 +533,25 @@ class AddNewLifeConfigurator extends Component {
                                                                 />
                                                             </div>
                                                         </div>
-
+                                                        <div className={"mb-5 d-ib fs-13"}>
+                                                            <div className="col-12">
+                                                                <div className='value'>
+                                                                    <div className="col-3 text-right">{this.state.rest || (parseInt(price, 10) / 2)}</div>
+                                                                    <div className="col-9 text-left ti-15">{"Restwaarde"}</div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-12">
+                                                                <Slider
+                                                                    disabled={this.state.pending}
+                                                                    min={0}
+                                                                    max={parseInt(price, 10)}
+                                                                    step={1000}
+                                                                    value={this.state.rest || (parseInt(price, 10) / 2)}
+                                                                    orientation='horizontal'
+                                                                    onChange={(value) => this.setState({ rest: value })}
+                                                                />
+                                                            </div>
+                                                        </div>
                                                         <div className={
                                                             "mb-5 d-ib fs-13"
                                                             // (leasetype && leasetype.type === "Operational") ? "mb-5 d-ib fs-13" : "mb-5 d-ib fs-13 opacity03"
@@ -543,7 +572,7 @@ class AddNewLifeConfigurator extends Component {
 
                                                             <div className="col-12">
                                                                 <div className='value'>
-                                                                    <div className="col-3 text-right">{this.state.lobjMileage || monthlyopcost}</div>
+                                                                    <div className="col-3 text-right">{(!this.state.lobjMileage && this.state.active === 0) ? 25000 : (this.state.lobjMileage || monthlyopcost)}</div>
                                                                     <div className="col-9 text-left ti-5">{mileageLabel}<span className="fs-9">{this.state.active === 0 && "(10 cent per km)"}</span></div>
                                                                 </div>
                                                             </div>
@@ -552,33 +581,14 @@ class AddNewLifeConfigurator extends Component {
                                                                     disabled={this.state.pending}
                                                                     min={0}
                                                                     max={this.state.active === 0 ? 100000 : 2000}
-                                                                    step={this.state.active === 0 ?1000 : 100}
-                                                                    value={this.state.lobjMileage || monthlyopcost}
+                                                                    step={this.state.active === 0 ? 1000 : 100}
+                                                                    value={(!this.state.lobjMileage && this.state.active === 0) ? 25000 : (this.state.lobjMileage || monthlyopcost)}
                                                                     orientation='horizontal'
                                                                     onChange={(value) => this.setState({ lobjMileage: value })}
                                                                 />
                                                             </div>
 
 
-                                                        </div>
-                                                        <div className={"mb-5 d-ib fs-13"}>
-                                                            <div className="col-12">
-                                                                <div className='value'>
-                                                                    <div className="col-3 text-right">{this.state.rest || 0}</div>
-                                                                    <div className="col-9 text-left ti-15">{"Restwaarde"}</div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-12">
-                                                                <Slider
-                                                                    disabled={this.state.pending}
-                                                                    min={0}
-                                                                    max={parseInt(price, 10)}
-                                                                    step={1000}
-                                                                    value={this.state.rest || 0}
-                                                                    orientation='horizontal'
-                                                                    onChange={(value) => this.setState({ rest: value })}
-                                                                />
-                                                            </div>
                                                         </div>
 
                                                         {/* <div className="mb-5 d-ib opacity03">
@@ -621,10 +631,10 @@ class AddNewLifeConfigurator extends Component {
                                                                         </button>
                                                                     </div>
 
-                                                                     {this.props.newObject && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{this.state.pending ? <p  style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600"}}>Pending</p> : <p  style={{ color: "green", fontSize: "18px", fontWeight: "600" }}>Confirmed</p>}</Link>)}
+                                                                    {this.props.newObject && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{this.state.pending ? <p style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600" }}>Pending</p> : <p style={{ color: "green", fontSize: "18px", fontWeight: "600" }}>Confirmed</p>}</Link>)}
 
                                                                     <div className="col-4 text-left pv-5-18 cname-input">
-                                                                    
+
                                                                         <input disabled={this.state.pending} className="ml-5 nl-inp" placeholder="Coin Naam" value={this.state.coinName} onChange={(e) => this.setState({ coinName: e.target.value })} type="text" />
 
                                                                         {/*<span>Start Crowdfunding en verkoop je eigen coin</span>*/}  {/* Change this text and edit css style to display entire line*/}

@@ -234,7 +234,7 @@ img.addBtn {
     background-position: center center;
     background-repeat: no-repeat;
     background-size: contain;
-    height: 120px;
+    height: 100px;
     position: relative;
 }
 
@@ -3047,8 +3047,8 @@ button.swiper-pagination-bullet {
 }
 
 .rangeslider-horizontal .rangeslider__handle:after{
-    width: 14px !important;
-    height: 14px !important;
+    width: 28px !important;
+    height: 28px !important;
     top: 3px !important;
     left: 3px !important;
     background-color: #ffffff !important;
@@ -3059,8 +3059,8 @@ button.swiper-pagination-bullet {
     background: #e6e6e6 !important;
     box-shadow: none !important;
     border: 0 !important;
-    width: 20px !important;
-    height: 20px !important;
+    width: 34px !important;
+    height: 34px !important;
 }
 
 
@@ -3088,9 +3088,9 @@ button.swiper-pagination-bullet {
 }
 
 .target{
-    position: absolute;
+    /* position: absolute;
     bottom: 0;
-    width: 100%;
+    width: 100%; */
     display: block;
     text-align: right;
 }
@@ -3156,12 +3156,22 @@ button.swiper-pagination-bullet {
 }
 .sliderBtn button.sliderMinus{
     font-weight: 700;
-    font-size: 30px;
+    font-size: 50px;
+    line-height: 27px;
+    border: 1px solid #c3c3c3;
+    border-radius: 50%;
+    padding: 0 9px 8px;
+    text-align: center;
 }
 
 .sliderBtn button.sliderAdd{
     font-weight: 900;
-    font-size: 20px;
+    font-size: 35px;
+    line-height: 35px;
+    border: 1px solid #c3c3c3;
+    border-radius: 50%;
+    padding: 0 6px;
+    text-align: center;
 }
 
 .sliderBtn button:hover{

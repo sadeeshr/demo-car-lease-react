@@ -298,9 +298,9 @@ class Members extends Component {
                 </div>
                 <div className="col-5">
                     <span title="Car Raised" className="carRaised tar fs-13">
-                        <strong>Target:</strong>
-                        <span className="">  {objectPrice} </span>
-                        EUR
+                        <strong className="fs-15">Target:</strong>
+                        <span className="">{formatNumber(objectPrice, { precision: 2, thousand: ".", decimal: ",", stripZeros: true })} </span>
+                        Euro
                     </span>
                 </div>
 
@@ -414,7 +414,7 @@ class Members extends Component {
             <div className="content-border mobile-margin">
                 <div className="border-bottom-1  fix-small-dev">
                     <div className="container">
-                        <span className="lh-40">MIJN SALDO: <strong className="fs-20">{formatNumber(parseInt(((this.props.euroTokenBalance || 0) + (this.props.unClaimedRedemption || 0)), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</strong> Euro</span>
+                        <span className="lh-40">MIJN SALDO: <strong className="fs-20">{formatNumber(parseInt(((this.props.euroTokenBalance || 0) + (this.props.unClaimedRedemption || 0)), 10), { precision: 2, thousand: ".", decimal: ",", stripZeros: true })}</strong> testEuro</span>
                         <span className="fr pt-8"><img className="infoImg" src={require('../assets/deal.png')} alt="deal" /></span>
                     </div>
                 </div>

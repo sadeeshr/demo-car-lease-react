@@ -130,7 +130,7 @@ class AddMember extends Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.usernames_new || nextProps.usernames_edit) {
             this.props._fetchUsers(nextProps, nextProps.account)
-            if (nextProps.usernames_new)
+            // if (nextProps.usernames_new)
                 this.props.history.push("/", { path: "members" })
         }
     }
