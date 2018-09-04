@@ -133,7 +133,7 @@ class AddNewLifeConfigurator extends Component {
         let newLifeObj = {
             member: member["_id"],
             objectName: this.state.coinName,
-            objectRest: this.state.rest,
+            objectRest: this.state.rest || (parseInt(price, 10) / 2),
             objectInterest: restWaarde ? restWaarde.toFixed(1) : 0,
             objectType: leaseobject["objecttype"],
             // leaseType: leasetype.type,
@@ -289,8 +289,8 @@ class AddNewLifeConfigurator extends Component {
         //                       /
         //              ((Total - Rest /2)/100)
 
-        cc.log(`(((${months} * (${this.state.monthlycapcost || parseInt(monthlycapcost, 10)})) - (${price} - (${this.state.rest || 0}))) / (${months} / 12)) / ((${price} - (${this.state.rest || 0}) / 2) / 100)`);
-        const restWaarde = (((months * (this.state.monthlycapcost || parseInt(monthlycapcost, 10))) - (price - (this.state.rest || 0))) / (months / 12)) / ((price - (this.state.rest || 0) / 2) / 100)
+        cc.log(`(((${months} * (${this.state.monthlycapcost || parseInt(monthlycapcost, 10)})) - (${price} - (${this.state.rest || (parseInt(price, 10) / 2)}))) / (${months} / 12)) / ((${price} - (${this.state.rest || (parseInt(price, 10) / 2)}) / 2) / 100)`);
+        const restWaarde = (((months * (this.state.monthlycapcost || parseInt(monthlycapcost, 10))) - (price - (this.state.rest || (parseInt(price, 10) / 2)))) / (months / 12)) / ((price - (this.state.rest || (parseInt(price, 10) / 2)) / 2) / 100)
 
         cc.log("LO: ", leaseobject, "LT: ", leasetype)
         cc.log("MON: ", months, "MCAP: ", monthlycapcost, "MOP: ", monthlyopcost.toString(), "RESTWARDEE: ", restWaarde);
