@@ -229,7 +229,7 @@ img.addBtn {
 
 .newlifeImage {
     text-align: center;
-    margin: 0 auto 10px;
+    margin: 0 auto 0;
     width: 240px;
     background-position: center center;
     background-repeat: no-repeat;
@@ -1799,12 +1799,21 @@ span.inLeft input {
     margin-bottom: 15px;
 }
 
+
+.mb-20{
+    margin-bottom: 20px;
+}
+
 .mb-10 {
     margin-bottom: 10px;
 }
 
 .mt-15 {
     margin-top: 15px;
+}
+
+.mt--5 {
+    margin-top: -5px;
 }
 
 .mt-30 {
@@ -3223,4 +3232,10 @@ button.swiper-pagination-bullet {
     border-radius: 50%;
     border: 2px solid #d2d2d2;
     background: #eaf0ff;
+}
+
+.rangeslider .rangeslider__handle-tooltip {
+    width: auto !important;
+    padding-left: 5px;
+    padding-right: 5px;
 }

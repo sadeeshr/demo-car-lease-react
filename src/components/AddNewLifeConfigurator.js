@@ -395,7 +395,7 @@ class AddNewLifeConfigurator extends Component {
                                                                 {/* <img src={lobject.image} alt={lobject.name} /> */}
                                                             </div>
                                                         </div>
-                                                        <div className="mb-5 d-ib fs-13">
+                                                        <div className="mb-20 d-ib fs-13 mt--5">
                                                             <div className="col-12">
                                                                 {/* <div className="nl-inp">
                                                                     {leasetype && <input value={price} onChange={(e) => this.setState({ lobjprice: e.target.value })} type="text" />}
