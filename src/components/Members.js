@@ -428,7 +428,7 @@ class Members extends Component {
                         <h1 id="header"><div className="fl"><i className="flaticon-back" onClick={() => this.props.history.push("/", { path: "main" })}></i></div>Members<div className="fr"><i onClick={() => this.fetchMembers()} className="flaticon-rotate marIcon"></i><i onClick={() => this.props.history.push("/")} className="flaticon-home"></i></div></h1>
                     </div>*/}
                     <div className="contentCon overflow bg-none contentCon-8 pt-8">
-                        <BlockUi tag="div" blocking={this.state.progress || investObjs.length === 0} renderChildren={false}>
+                        <BlockUi tag="div" blocking={this.state.progress } renderChildren={false}> {/*|| investObjs.length === 0*/}
                             <div className="membersCon pb-20 pt-5-mobile pv-5-mobile">
 
                                 <div >

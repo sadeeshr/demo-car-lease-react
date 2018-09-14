@@ -17,7 +17,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 var app = require('https').createServer(options);
 // var app = require('http').createServer();
 var io = require('socket.io').listen(app);
-app.listen(4567);
+app.listen(4567); // for release builds change this to 3456
 
 // console.log("Mongo", mongo.db);
 
