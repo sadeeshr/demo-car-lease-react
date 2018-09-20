@@ -27,7 +27,7 @@ class NewObject extends Component {
     componentWillMount() {
 
         let data = {
-            module: "crowdfundobj",
+            module: "crowdfundobj2",
             result: "member",
             findone: true,
             query: {

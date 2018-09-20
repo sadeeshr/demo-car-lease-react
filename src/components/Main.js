@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Home from '../containers/Home';
 import ObjectList from '../containers/ObjectList';
 import Members from '../containers/Members';
+import Objects from '../containers/Objects';
 import AddMember from '../containers/AddMember';
 import Invest from '../containers/Invest';
 import Invoices from '../containers/Invoices';
@@ -117,7 +118,7 @@ class Main extends Component {
                         } else {
 
                             let data = {
-                                module: "crowdfundobj",
+                                module: "crowdfundobj2",
                                 result: "member",
                                 findone: true,
                                 query: {
@@ -190,7 +191,7 @@ class Main extends Component {
 
 
                             let data = {
-                                module: "crowdfundobj",
+                                module: "crowdfundobj2",
                                 result: "members",
                                 data: newLifeObj
                             }
@@ -327,7 +328,7 @@ class Main extends Component {
 
     renderMain = () => {
         // console.log(this.props.usernames, this.props.registered, this.props.account);
-        const nextScreen = ((this.props.usernames && this.props.registered) || !this.props.account) ? "members" : "addmember"
+        const nextScreen = ((this.props.usernames && this.props.registered) || !this.props.account) ? "objects" : "addmember"
         const isReady = this.state.metamask && (this.props.networkVersion === "4") && this.props.account
 
         cc.log("MEMBER ID: ", this.props.registered)
@@ -422,6 +423,8 @@ class Main extends Component {
                     return <Home />
                 case "objectlist":
                     return <ObjectList />
+                case "objects":
+                    return <Objects />
                 case "members":
                     return <Members />
                 case "addmember":
@@ -460,19 +463,19 @@ class Main extends Component {
                 <div className="beforeNav container smallText">
                     <div className={this.state.searchbarCondition ? "mainBody search-is-open" : "mainBody search-is-close"}>
                         <div className="body1">
-                            {/*
+                            {
                                 registered && <button className="profileicon flatcon pull-left" onClick={() => this.props.history.push("/", { path: "profile" })}>
                                     <span className="flaticon-man-user flatcon "></span>
                                 </button>
-                            */}
+                            }
                             Duurzame Zaken . IO
                     {
-                                (path === "members") && <span className="flaticon-search flatcon pull-right" onClick={() => this.handleClick()}></span>
+                                (path === "members" || path === "objects") && <span className="flaticon-search flatcon pull-right" onClick={() => this.handleClick()}></span>
                             }
                         </div>
                         <div className="body2">
                             {
-                                (path === "members") && <div>
+                                (path === "members" || path === "objects") && <div>
                                     <input className="searchInput" type="text" name="filterMembers" value={this.props.filter || ""} placeholder="Search"
                                         onChange={(e) => {
                                             // let filterVal = this.props.filter ? (this.props.filter + e.target.value) : e.target.value
@@ -487,8 +490,9 @@ class Main extends Component {
                 <nav className="navCon" style={style.nav}>
                     <span onClick={() => this.props.history.push("/", { path: "main" })} style={{ cursor: "pointer", fontWeight: (["main", "home"].indexOf(path) !== -1) ? "800" : "100" }}>THUIS</span> {" "}
                     {isReady && <span onClick={() => this.props.history.push("/", { path: "addnewlife" })} style={{ cursor: "pointer", fontWeight: (path === "addnewlife") ? "800" : "100" }}>DUURZAAM</span>}{" "}
-                    {isReady && <span onClick={() => this.props.history.push("/", { path: "members" })} style={{ cursor: "pointer", fontWeight: (path === "members") ? "800" : "100" }}>ZAKEN</span>}{" "}
-                    {registered && <span onClick={() => this.props.history.push("/", { path: "profile" })} style={{ cursor: "pointer", fontWeight: (path === "profile") ? "800" : "100" }}>IK</span>}{" "}
+                    {isReady && <span onClick={() => this.props.history.push("/", { path: "objects" })} style={{ cursor: "pointer", fontWeight: (path === "objects") ? "800" : "100" }}>ZAKEN</span>}{" "}
+                    {isReady && <span onClick={() => this.props.history.push("/", { path: "members" })} style={{ cursor: "pointer", fontWeight: (path === "members") ? "800" : "100" }}>LEDEN</span>}{" "}
+                    {/* {registered && <span onClick={() => this.props.history.push("/", { path: "profile" })} style={{ cursor: "pointer", fontWeight: (path === "profile") ? "800" : "100" }}>IK</span>}{" "} */}
                     {/*<span onClick={() => this.props.towns && this.props.history.push("/", { path: "members" })} style={{ cursor: this.props.towns ? "pointer" : "not-allowed", fontWeight: (path === "members") ? "800" : "100" }}>LEDEN</span>{" "}*/}
                 </nav>
 

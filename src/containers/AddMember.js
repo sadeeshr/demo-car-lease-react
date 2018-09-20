@@ -25,6 +25,8 @@ const mapStateToProps = (state) => {
         newObject: state.newObject,
         progress: state.progress ? state.progress : false,
         usernames: state.usernames,
+        investallowance: state.investallowance,
+        invoiceallowance: state.invoiceallowance,
         [state.module]: state[state.module]
     }
 }

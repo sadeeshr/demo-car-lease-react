@@ -76,7 +76,7 @@ class AddNewLifeConfigurator extends Component {
             this.setState({ pending: false })
             setTimeout(() => {
                 // this.props._resetTxIds()
-                this.props.history.push("/", { path: "members" })
+                this.props.history.push("/", { path: "objects" })
             }, 5000);
         }
     }

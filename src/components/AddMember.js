@@ -2,12 +2,16 @@ import React, { Component } from 'react'
 // import md5 from 'md5';
 import BlockUi from 'react-block-ui';
 import cc from '../lib/utils';
+import Switch from "react-switch";
+import { Dropdown } from 'primereact/components/dropdown/Dropdown';
 
 class AddMember extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            progress: false
+            progress: false,
+            invest: false,
+            invoice: false
         }
         this.mandatory = [
             "username",
@@ -38,9 +42,9 @@ class AddMember extends Component {
         }
     }
     componentDidMount() {
-
+        this.props._euroAllowance(this.props.account, "invest")
+        this.props._euroAllowance(this.props.account, "invoice")
     }
-
 
     fileUploadHandler = (file, name) => {
         let reader = new FileReader();
@@ -80,7 +84,7 @@ class AddMember extends Component {
             }
 
             let data = {
-                module: "membersdev3",
+                module: "membersdev4",
                 result: "usernames",
                 query: {
                     "_id": this.state["_id"]
@@ -115,7 +119,7 @@ class AddMember extends Component {
             }
 
             let data = {
-                module: "membersdev3",
+                module: "membersdev4",
                 result: "usernames",
                 data: newMember
             }
@@ -128,14 +132,26 @@ class AddMember extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (nextProps.investallowance || nextProps.invoiceallowance) {
+            this.setState({
+                invest: (nextProps.investallowance && nextProps.investallowance > 0) ? true : false,
+                invoice: (nextProps.invoiceallowance && nextProps.invoiceallowance > 0) ? true : false
+            })
+        }
         if (nextProps.usernames_new || nextProps.usernames_edit) {
             this.props._fetchUsers(nextProps, nextProps.account)
             // if (nextProps.usernames_new)
-                this.props.history.push("/", { path: "members" })
+            this.props.history.push("/", { path: "members" })
         }
     }
 
     render() {
+        const currencies = [
+            { label: 'Euro', value: 'EUR' },
+            { label: 'Dollars', value: 'USD' },
+            { label: 'Rupees', value: 'INR' },
+            { label: 'Pesos', value: 'Peso' }
+        ];
         const img = { "maxHeight": "100px", "maxWidth": "118px", "display": "block", "marginLeft": "auto", "marginRight": "auto" }
         const cursor = { cursor: this.state.profile ? "not-allowed" : "pointer" }
         cc.log("Add Member State: ", this.state, this.props);
@@ -162,6 +178,9 @@ class AddMember extends Component {
                                 <span className="form-input-containers">
                                     <input style={cursor} readOnly={this.state.profile} className="membership-input" maxLength="20" value={this.state.username || ""} onChange={(e) => this.setState({ username: e.target.value })} type="text" id="username" name="username" placeholder="Coin Name *" />
                                 </span>
+                                <span className="form-input-containers">
+                                    <input pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" maxLength="30" className="membership-input mb-15" value={this.state.email || ""} onChange={(e) => this.setState({ email: e.target.value })} type="text" placeholder="Email" />
+                                </span>
                                 {/*{!this.state.profile && <span className="form-input-containers">
                                     <input style={cursor} readOnly={this.state.profile} className="membership-input" maxLength="20" value={this.state.fullname || ""} onChange={(e) => this.setState({ fullname: e.target.value })} type="text" id="fullname" name="fullname" placeholder="Full Name" />
                                 </span>}
@@ -177,12 +196,7 @@ class AddMember extends Component {
                                 {!this.state.profile && <span className="form-input-containers">
                                     <input style={cursor} readOnly={this.state.profile} pattern="\d*" maxLength="30" className="membership-input mb-15" value={this.state.iban || ""} onChange={(e) => this.setState({ iban: e.target.value })} type="text" placeholder="IBAN" />
                                 </span>}*/}
-                                <span className="form-input-containers">
-                                    <input style={cursor} readOnly={this.state.profile} pattern="\d*" maxLength="30" className="membership-input mb-15" value={this.state.account || this.props.account || ""} onChange={(e) => this.setState({ account: e.target.value || this.props.account })} type="text" placeholder="Ether address" />
-                                </span>
-                                <span className="form-input-containers">
-                                    <input pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" maxLength="30" className="membership-input mb-15" value={this.state.email || ""} onChange={(e) => this.setState({ email: e.target.value })} type="text" placeholder="Email" />
-                                </span>
+
                                 <span className="form-input-containers marginBttm inputAddbtn">
                                     <div className="upload-selfieCon">
                                         <div className="image-upload" htmlFor="imageUpload">
@@ -194,7 +208,37 @@ class AddMember extends Component {
                                         <label >Upload Selfie</label>
                                     </div>
                                 </span>
-                                {this.state.profilePic && <img style={img} className="inputImg" src={this.state.profilePic} alt="intI" />}
+
+                                <span className="form-input-containers">
+                                    <input style={cursor} readOnly={this.state.profile} pattern="\d*" maxLength="30" className="membership-input mb-15" value={this.state.account || this.props.account || ""} onChange={(e) => this.setState({ account: e.target.value || this.props.account })} type="text" placeholder="Ether address" />
+                                </span>
+
+                                <Dropdown className="form-input-containers" value={this.state.currency} options={currencies} onChange={(e) => { this.setState({ currency: e.value }) }} placeholder="Currency" />
+
+
+                                <span className="form-input-containers">
+                                    {this.state.profilePic && <img style={img} className="inputImg" src={this.state.profilePic} alt="intI" />}
+                                </span>
+                                <span className="form-input-containers">
+                                    <label htmlFor="invest">
+                                        <span>Investeren</span>
+                                        <Switch
+                                            onChange={() => this.setState({ invest: !this.state.invest }, () => this.props.account && this.props._euroApprove(this.state.invest ? 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF : 0, this.props.account, "invest"))}
+                                            checked={this.state.invest}
+                                            id="invest"
+                                        />
+                                    </label>
+                                </span>
+                                <span className="form-input-containers">
+                                    <label htmlFor="invoice">
+                                        <span>Betalen</span>
+                                        <Switch
+                                            onChange={() => this.setState({ invoice: !this.state.invoice }, () => this.props.account && this.props._euroApprove(this.state.invest ? 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF : 0, this.props.account, "invoice"))}
+                                            checked={this.state.invoice}
+                                            id="invoice"
+                                        />
+                                    </label>
+                                </span>
                                 {/*!this.state.profile && <span className="form-input-containers">
                                     <textarea className="membership-input" rows="5" value={this.state.message || ""} onChange={(e) => this.setState({ message: e.target.value })} name="message" placeholder="Your message"></textarea>
                             </span>*/}

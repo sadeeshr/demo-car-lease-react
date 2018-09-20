@@ -28,7 +28,7 @@ export const _sendUserEvent = (event) => {
 export const _fetchMembers = (props, municipalityID, account) => {
 
     let data = {
-        module: "crowdfundobj",
+        module: "crowdfundobj2",
         result: "members",
         query: {
             municipalityID: municipalityID
@@ -40,7 +40,7 @@ export const _fetchMembers = (props, municipalityID, account) => {
 export const _fetchUsers = (props, account) => {
 
     let data = {
-        module: "membersdev3",
+        module: "membersdev4",
         result: "usernames",
         query: {
         },
@@ -344,9 +344,9 @@ export const _euroBalanceOf = (account) => {
     }
 }
 
-export const _euroApprove = (value, account) => {
+export const _euroApprove = (value, account, type) => {
     return (dispatch) => {
-        return contract.euroApprove(value, account)
+        return contract.euroApprove(value, account, type)
             .then(result =>
                 dispatch(
                     {
@@ -358,9 +358,9 @@ export const _euroApprove = (value, account) => {
     }
 }
 
-export const _euroAllowance = (account) => {
+export const _euroAllowance = (account, type) => {
     return (dispatch) => {
-        return contract.euroAllowance(account)
+        return contract.euroAllowance(account, type)
             .then(result =>
                 dispatch(
                     {

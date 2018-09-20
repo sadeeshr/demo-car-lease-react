@@ -25,7 +25,7 @@ class ObjectList extends Component {
         // const town = this.props.towns[this.props.town];
 
         let data = {
-            module: "membersdev3",
+            module: "membersdev4",
             result: "usernames",
             query: {
             },
@@ -85,7 +85,7 @@ class ObjectList extends Component {
         let wind = town && town["inhabitants"]
         wind = formatNumber((parseInt(wind, 10) / 10000), { precision: 2, thousand: ".", decimal: ",", stripZeros: true });
 
-        const nextScreen = ((this.props.usernames && this.props.registered) || !this.props.account) ? "members" : "addmember"
+        const nextScreen = ((this.props.usernames && this.props.registered) || !this.props.account) ? "objects" : "addmember"
 
         cc.log("MEMBER ID: ", this.props.registered)
 
