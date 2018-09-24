@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import './assets/css/styles.css'
 import './assets/fonts/flaticon.css'
+import './assets/fonts/font-awesome/css/font-awesome.min.css'
 import registerServiceWorker from './registerServiceWorker';
 
 import 'primereact/resources/primereact.min.css';
