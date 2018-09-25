@@ -4,7 +4,7 @@ const db = mongojs("localhost:44444/carlease", []) // for development only
 // const db = mongojs("carlease", [])
 
 // create index for object ID in crowdfund objects table, like
-// db.getCollection("crowdfundobj").createIndex({ "objectID": -1 }, { "unique": true })
+// db.getCollection("crowdfundobj").createIndex({ "objectID": -1, "objectName": -1  }, { "unique": true })
 
 // to change string to int
 // db.crowdfundobj.find({}).forEach(function(doc) {
@@ -23,6 +23,6 @@ db.on('connect', function () {
 })
 
 module.exports = {
-	db : db,
-	obj : mongojs
+	db: db,
+	obj: mongojs
 }

@@ -7,7 +7,7 @@ import Members from '../components/Members';
  * map state, actions to props
  */
 const mapStateToProps = (state) => {
-    // console.log("Members Container State: ", state)
+    console.log("Members Container State: ", state)
     return {
         filter: state.filter,
         textStyle: state.textStyle,

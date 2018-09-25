@@ -7,7 +7,7 @@ import cc from '../lib/utils';
 
 const initialState = {}
 const rootReducer = (state = initialState, action) => {
-    // cc.log(action)
+    cc.log(action)
     switch (action.type) {
         // case '@@redux/INIT':
         //     return {
@@ -121,7 +121,6 @@ const rootReducer = (state = initialState, action) => {
 
         case 'SET_OBJECT':
         case 'SET_BASE_ACCOUNT':
-        case 'SET_ACCOUNT_BALANCE':
         case 'EV_BALANCE':
         case 'EURO_BALANCE':
         case 'ADD_NEW_OBJECT_RESULT':
@@ -228,11 +227,12 @@ const rootReducer = (state = initialState, action) => {
                 }
             }
 
-        case 'AUTHORIZATION':
+        // case 'AUTHORIZATION':
+        case 'SET_ACCOUNT_BALANCE':
             {
                 let members = state.usernames.map(member => {
                     if (member.account === action.payload.account)
-                        member["authorized"] = action.payload.result
+                        member["balance"] = action.payload.result
                     return member
                 })
 

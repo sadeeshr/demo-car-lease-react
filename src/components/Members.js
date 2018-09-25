@@ -210,7 +210,7 @@ class Members extends Component {
                 </div>
                 <div className="col-7">
                     <div className="mtableCar" style={{ backgroundImage: `url(${member.profilePic || require('../assets/anonymous.png')})` }}>
-                        <span className="fs-20 fw-700" style={{ fontWeight: "bold" }}>{"NEW"}</span>
+                        <span className="fs-20 fw-700" style={{ fontWeight: "bold" }}>{(member.balance > 0) ? "" : "NEW"}</span>
                     </div>
                     {(this.props.AddNewUser && this.props.AddNewUser["account"] === member["account"]) &&
                         (<Link target="_blank" to={this.rinkebyStatsURL + this.props.AddNewUser.txID}>{(this.props.event && (this.props.event.transactionHash === this.props.AddNewUser.txID)) ? <p className="p-euro" style={{ color: "green", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Confirmed</p> : <p className="p-euro" style={{ color: "#FF9800", marginLeft: "0px", marginTop: "15px", textAlign: 'center', fontWeight: "600" }}>Pending</p>}</Link>)}
@@ -265,7 +265,9 @@ class Members extends Component {
     }
 
     render() {
-        const members = this.props.usernames ? this.props.filter ? this.props.usernames.filter(user => ((user.username && user.username.toLowerCase().startsWith(this.props.filter && this.props.filter.toLowerCase())))) : this.props.usernames : []
+        let members = this.props.usernames ? this.props.filter ? this.props.usernames.filter(user => ((user.username && user.username.toLowerCase().startsWith(this.props.filter && this.props.filter.toLowerCase())))) : this.props.usernames : []
+        members = members && members.sort((a, b) => a["balance"] - b["balance"]) // sort by eth balance asc
+
         return (
             <div className="content-border mobile-margin">
                 <div className="border-bottom-1  fix-small-dev">

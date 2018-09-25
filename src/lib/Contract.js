@@ -35,7 +35,8 @@ class Contract {
                 address: this.afterCrowdFunding,
                 abi: [{ "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_owner", "type": "address" }], "name": "viewCapitalClaimPerObject", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function", "signature": "0x0cda7d0b" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_to", "type": "address" }, { "name": "_amount", "type": "uint256" }], "name": "transferCrowdfundToken", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function", "signature": "0x36302dc6" }, { "constant": false, "inputs": [{ "name": "_currencyId", "type": "uint256" }, { "name": "_idArray", "type": "uint256[]" }], "name": "claimMultipleOperation", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function", "signature": "0x58d6683c" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_remainingValue", "type": "uint256" }], "name": "sellObject", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function", "signature": "0x6848f86b" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "payCapitalAndOperation", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function", "signature": "0x6afc0841" }, { "constant": true, "inputs": [], "name": "d", "outputs": [{ "name": "", "type": "address", "value": "0xB304892e1B89D3325D9F00d15B5Beb912D6926eD" }], "payable": false, "stateMutability": "view", "type": "function", "signature": "0x8a054ac2" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [{ "name": "", "type": "address", "value": "0x60516AA74F455f642C66FA1eD1e77C553da4be17" }], "payable": false, "stateMutability": "view", "type": "function", "signature": "0x8da5cb5b" }, { "constant": true, "inputs": [{ "name": "_id", "type": "uint256" }], "name": "viewOperationClaimPerObject", "outputs": [{ "name": "", "type": "uint256", "value": "0" }], "payable": false, "stateMutability": "view", "type": "function", "signature": "0x97327b26" }, { "constant": false, "inputs": [{ "name": "_currencyId", "type": "uint256" }, { "name": "_idArray", "type": "uint256[]" }], "name": "claimMultipleCapital", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function", "signature": "0xcd17451b" }, { "constant": false, "inputs": [{ "name": "_id", "type": "uint256" }, { "name": "_capital", "type": "uint256" }, { "name": "_operation", "type": "uint256" }], "name": "payCapitalAndOperationFlex", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function", "signature": "0xe9cd1607" }, { "constant": false, "inputs": [{ "name": "newOwner", "type": "address" }], "name": "transferOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function", "signature": "0xf2fde38b" }, { "constant": true, "inputs": [], "name": "crowtok", "outputs": [{ "name": "", "type": "address", "value": "0xE1F7b46Cc7a228970d4024Ea8b4b6E3CEc848c97" }], "payable": false, "stateMutability": "view", "type": "function", "signature": "0xf312c30e" }, { "inputs": [{ "name": "_addressOfCrowdfundData", "type": "address", "index": 0, "typeShort": "address", "bits": "", "displayName": "&thinsp;<span class=\"punctuation\">_</span>&thinsp;address Of Crowdfund Data", "template": "elements_input_address", "value": "0xB304892e1B89D3325D9F00d15B5Beb912D6926eD" }, { "name": "_addressOfCrowdfundToken", "type": "address", "index": 1, "typeShort": "address", "bits": "", "displayName": "&thinsp;<span class=\"punctuation\">_</span>&thinsp;address Of Crowdfund Token", "template": "elements_input_address", "value": "0xE1F7b46Cc7a228970d4024Ea8b4b6E3CEc848c97" }], "payable": false, "stateMutability": "nonpayable", "type": "constructor", "signature": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "objectID", "type": "uint256" }, { "indexed": false, "name": "capital", "type": "uint256" }, { "indexed": false, "name": "operation", "type": "uint256" }], "name": "PayCapitalAndOperation", "type": "event", "signature": "0x51598632177e8c55da723d1e2eef974947d48f72152c1d5a8b96565b93d64c92" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "objectID", "type": "uint256" }, { "indexed": false, "name": "capital", "type": "uint256" }], "name": "SellObject", "type": "event", "signature": "0x8370fb8120d81e7d3e6b08142226e8765ec173f8eb4c09d3867fcf3d1f0913e5" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "claimed", "type": "bool" }], "name": "Claim", "type": "event", "signature": "0xe60b3625a76448ea27f8bda2221b3b6a1794d1a837045675386bcdd6e3a875a3" }]
             },
-            CrowdFundToken: {  //0xE1F7b46Cc7a228970d4024Ea8b4b6E3CEc848c97
+            CrowdFundToken: {
+                address: "0xE1F7b46Cc7a228970d4024Ea8b4b6E3CEc848c97",
                 abi: [{ "constant": false, "inputs": [{ "name": "_to", "type": "address" }, { "name": "_objectId", "type": "uint256" }, { "name": "_amount", "type": "uint256" }], "name": "mint", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function", "signature": "0x156e29f6" }, { "constant": false, "inputs": [{ "name": "newUser", "type": "address" }], "name": "addAuthorization", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function", "signature": "0x35b28153" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function", "signature": "0x8da5cb5b" }, { "constant": false, "inputs": [{ "name": "existingUser", "type": "address" }], "name": "removeAuthorization", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function", "signature": "0x94f3f81d" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }], "name": "authorization", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "view", "type": "function", "signature": "0xcbe12969" }, { "constant": true, "inputs": [{ "name": "_owner", "type": "address" }, { "name": "_objectId", "type": "uint256" }], "name": "objectBalanceOf", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function", "signature": "0xd614398d" }, { "constant": false, "inputs": [{ "name": "newOwner", "type": "address" }], "name": "transferOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function", "signature": "0xf2fde38b" }, { "constant": false, "inputs": [{ "name": "_from", "type": "address" }, { "name": "_to", "type": "address" }, { "name": "_objectId", "type": "uint256" }, { "name": "_value", "type": "uint256" }], "name": "transferFrom", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function", "signature": "0xfe99049a" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "from", "type": "address" }, { "indexed": true, "name": "to", "type": "address" }, { "indexed": false, "name": "objectId", "type": "uint256" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Transfer", "type": "event", "signature": "0x9ed053bb818ff08b8353cd46f78db1f0799f31c9e4458fdb425c10eccd2efc44" }]
             }
         }
@@ -119,7 +120,7 @@ class Contract {
             .then(balance => {
                 let ethBal = unit.fromWei(balance, 'ether')
                 cc.log({ [address]: ethBal });
-                this.props._setBalance({ [address]: ethBal })
+                this.props._setBalance({ account: address, result: parseFloat(ethBal) })
             })
     }
 
@@ -146,13 +147,14 @@ class Contract {
         this.euroToken = contract(this.contracts.euroToken.abi).at(this.contracts.euroToken.address)
         this.StartCrowdFunding = contract(this.contracts.StartCrowdFunding.abi).at(this.contracts.StartCrowdFunding.address)
         this.CrowdFundData = contract(this.contracts.CrowdFundData.abi).at(this.contracts.CrowdFundData.address)
-        this.CrowdFundTokenContract = contract(this.contracts.CrowdFundToken.abi);
+        this.CrowdFundTokenContract = contract(this.contracts.CrowdFundToken.abi).at(this.contracts.CrowdFundToken.address);
 
 
         cc.log("CrowdFundData: ", this.CrowdFundData);
-
+        cc.log("CrowdFund Token: ", this.CrowdFundTokenContract);
         cc.log("Euro Token: ", this.euroToken);
-        cc.log("Crowd Fund Contract: ", this.StartCrowdFunding);
+        cc.log("Start Crowd Fund Contract: ", this.StartCrowdFunding);
+
         // this.evEventTransfer()
 
         return {
@@ -790,7 +792,8 @@ class Contract {
     ltBalanceOf = (objectID, account, address) => {
         cc.log(`Fetching Lease Token Balance Of: ${objectID}, ${account}, ${address}`);
 
-        return this.CrowdFundTokenContract.at(address).objectBalanceOf(account, objectID)
+        // return this.CrowdFundTokenContract.at(address).objectBalanceOf(account, objectID)
+        return this.CrowdFundTokenContract.objectBalanceOf(account, objectID)
             .then(result => {
                 cc.log(`EV TOKENS: ${result[0].toString()}`);
                 // this.setState({ ["evToken_" + objectID]: result[0].toString() })
@@ -801,7 +804,8 @@ class Contract {
     ltTotalSupply = (objectID, address) => {
         cc.log(`Fetching Lease Token Total Supply: `);
 
-        return this.CrowdFundTokenContract.at(address).totalSupply()
+        // return this.CrowdFundTokenContract.at(address).totalSupply()
+        return this.CrowdFundTokenContract.totalSupply()
             .then(result => {
                 cc.log(`TOTAL SUPPLY: ${result[0].toString()}`);
                 return { id: objectID, result: result[0].toString() }
