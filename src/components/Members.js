@@ -220,30 +220,52 @@ class Members extends Component {
 
         // if (selected && this.props.account) {
         memberRows.push(
-            <div className="rowSelect mb-5" key={'invest-' + i}>
-                <div className="col-4">
-                    <span>{"Hand out ETH"}</span>
-                    <input maxLength="20" value={this.state.ethVal || ""} onChange={(e) => this.setState({ ethVal: e.target.value })} type="number" placeholder="ETH *" />
-                </div>
-                <div className="col-4">
-                    <span>{"Hand out Euro"}</span>
-                    <input maxLength="20" value={this.state.euroVal || ""} onChange={(e) => this.setState({ euroVal: e.target.value })} type="number" placeholder="Euro *" />
+            <div className="rowSelect d-ib mb-5" key={'invest-' + i}>
 
+                <div className="mb-10 d-flex">
+                    <div className="col-6 d-flex">
+                        <span className="lh-33">{"Hand out ETH"}</span>
+                    </div>
+                    <div className="col-6 d-flex">
+                        <input maxLength="20" value={this.state.ethVal || ""} onChange={(e) => this.setState({ ethVal: e.target.value })} type="number" placeholder="ETH *" />
+                    </div>
+                </div>
+
+                <div className="mb-10 d-flex">
+                    <div className="col-6 d-flex">
+                        <span className="lh-33">{"Hand out Euro"}</span>
+                    </div>
+                    <div className="col-6 d-flex">
+                        <input maxLength="20" value={this.state.euroVal || ""} onChange={(e) => this.setState({ euroVal: e.target.value })} type="number" placeholder="Euro *" />
+                    </div>
+                </div>
+
+                 <div className="mb-10 d-flex">
+                    <div className="col-6 d-flex">
+                        <span className="lh-33">{"Hand out Coins"}</span>
+                    </div>
+                    <div className="col-6 d-flex">
+                        <input maxLength="20" value={this.state.coinVal || ""} onChange={(e) => this.setState({ coinVal: e.target.value })} type="number" placeholder="Coins *" />
+                    </div>
+                </div>
+                <div className="col-4"></div>
+                <div className="col-4 arrowHover-s2">
+                    {/* <button className="arrowBtn" onClick={() => this.props.history.push("/", { path: "addnewlife" })}>
+                        <span className="flaticon-right-arrow"></span>
+                    </button> */}
+                    <div className="btnPadlock">
+                        <span className="flaticon-padlock unlock" onClick={() => this.props.history.push("/", { path: "addnewlife" })}></span>
+                    </div>
                 </div>
                 <div className="col-4">
-                    <span>{"Hand out Coins"}</span>
-                    <input maxLength="20" value={this.state.coinVal || ""} onChange={(e) => this.setState({ coinVal: e.target.value })} type="number" placeholder="Coins *" />
-                </div>
-                <div className="col-4 arrowHover-s2">
-                    <button className="arrowBtn" onClick={() => this.props.history.push("/", { path: "addnewlife" })}>
-                        <span className="flaticon-right-arrow"></span>
-                    </button>
+                    <p className="lh-75"style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", width: "100%" }}>Pending</p>
+                    {/* <p className="lh-75" style={{ color: "green", fontSize: "18px", fontWeight: "600", width: "100%" }}>Confirmed</p> */}
                 </div>
             </div>
         )
         // }
 
-        return <div key={i} className={this.state.activeIndex === i ? 'leaseCarCon ph-5 active' : 'leaseCarCon ph-5'} onClick={() => { }}>{memberRows}</div>
+        return <div key={i} className={this.state.activeIndex === i ? 'leaseCarCon leden active' : 'leaseCarCon leden '} onClick={() => { }}>{memberRows}</div>
     }
 
     sortMembers = () => {

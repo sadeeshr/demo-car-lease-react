@@ -431,7 +431,7 @@ img.addBtn {
     color: #000000;
     font-size: 16px;
     margin: 0 auto;
-    padding: 4px 15px !important;
+    padding: 8px 15px !important;
     border-radius: 5px !important;
     background: rgba(255, 255, 255, 1) !important;
     border: 1px solid #333333 !important;
@@ -1703,6 +1703,10 @@ span.inLeft input {
     float: left;
 }
 
+.lh-75 {
+    line-height: 75px;
+}
+
 .lh-54 {
     line-height: 54px;
 }
@@ -1713,6 +1717,10 @@ span.inLeft input {
 
 .lh-35 {
     line-height: 35px;
+}
+
+.lh-33 {
+    line-height: 33px;
 }
 
 .lh-28 {
@@ -2134,6 +2142,11 @@ width: 106px;
 
 .d-ib {
     display: inline-block;
+    width: 100%;
+}
+
+.d-flex {
+    display: flex;
     width: 100%;
 }
 
@@ -3248,3 +3261,88 @@ button.swiper-pagination-bullet {
     ::selection {
     background-color:Transparent;
     }
+
+
+.react-switch-handle{
+    border: 4px solid #ccc !important;
+    height: 22px !important;
+    width: 22px !important;
+
+}
+
+.react-switch-bg
+{
+    border-radius: 40px  !important;
+}
+
+.switchLabel{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-size: 15px;
+    color: #ffffff;
+    padding-right: 2px;
+    line-height: 14px;
+  }
+
+  .switch-container{
+      width: 252px;
+      margin: 0 auto;
+  }
+
+  .switch-name{
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 32px;
+  }
+
+.ui-dropdown.form-input-containers{
+    width: 252px !important;
+    margin: 0 auto;
+}
+
+.ui-dropdown.form-input-containers label.ui-dropdown-label{
+    margin-bottom: 0 !important;
+    border: 1px solid #333333 !important;
+    box-shadow: none !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+}
+
+.ui-dropdown.form-input-containers .ui-dropdown-trigger{
+    border: 1px solid #333333 !important;
+}
+
+.bmemberCon{
+    padding-top: 40px;
+}
+
+.leaseCarCon.leden .mtableCar{
+    height: 50px;
+}
+
+.leaseCarCon.leden input{
+    width: 100%;
+    border: 2px solid #5d5d5d;
+    padding: 6px;
+    text-align: center;
+} 
+
+.leaseCarCon.leden span{
+    width: 100%;
+    color: #222;
+}
+
+.leaseCarCon.leden.active .rowSelect{
+    width: 100%;
+    display: table-cell;
+    padding: 5px 24px;
+}
+.leaseCarCon.leden .rowSelect{
+    padding: 0;
+    margin: 0;
+}
+
+
+

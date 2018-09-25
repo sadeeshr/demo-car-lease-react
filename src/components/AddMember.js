@@ -209,35 +209,85 @@ class AddMember extends Component {
                                     </div>
                                 </span>
 
-                                <span className="form-input-containers">
+                                <span className="form-input-containers ">
                                     <input style={cursor} readOnly={this.state.profile} pattern="\d*" maxLength="30" className="membership-input mb-15" value={this.state.account || this.props.account || ""} onChange={(e) => this.setState({ account: e.target.value || this.props.account })} type="text" placeholder="Ether address" />
                                 </span>
 
                                 <Dropdown className="form-input-containers" value={this.state.currency} options={currencies} onChange={(e) => { this.setState({ currency: e.value }) }} placeholder="Currency" />
 
 
-                                <span className="form-input-containers">
+                                <span className="form-input-containers ">
                                     {this.state.profilePic && <img style={img} className="inputImg" src={this.state.profilePic} alt="intI" />}
                                 </span>
+
+                                <span className="form-input-containers text-center">
+                                    <p style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", width: "100%" }}>Pending</p>
+                                    {/* <p style={{ color: "green", fontSize: "18px", fontWeight: "600", width: "100%" }}>Confirmed</p> */}
+                                </span>
+
                                 <span className="form-input-containers">
-                                    <label htmlFor="invest">
-                                        <span>Investeren</span>
-                                        <Switch
-                                            onChange={() => this.setState({ invest: !this.state.invest }, () => this.props.account && this.props._euroApprove(this.state.invest ? 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF : 0, this.props.account, "invest"))}
-                                            checked={this.state.invest}
-                                            id="invest"
-                                        />
-                                    </label>
+                                    <div className="switch-container">
+                                        <div className="col-6">
+                                            <span className="switch-name">Investeren</span>
+                                        </div>
+                                        <div className="col-6">
+                                            <label htmlFor="invest">
+                                                <Switch
+                                                    onChange={() => this.setState({ invest: !this.state.invest }, () => this.props.account && this.props._euroApprove(this.state.invest ? 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF : 0, this.props.account, "invest"))}
+                                                    checked={this.state.invest}
+                                                    id="invest"
+                                                    onColor="#119f13"
+                                                    offColor="#ff8000"
+                                                    offHandleColor="#fff"
+                                                    onHandleColor="#fff"
+                                                    height={32}
+                                                    width={90}
+                                                    checkedIcon={
+                                                        <div className="switchLabel">
+                                                        aan
+                                                    </div>
+                                                    }
+                                                    uncheckedIcon={
+                                                        <div className="switchLabel">
+                                                        uit
+                                                        </div>
+                                                    }
+                                                />
+                                            </label>
+                                        </div>
+                                    </div>
                                 </span>
                                 <span className="form-input-containers">
-                                    <label htmlFor="invoice">
-                                        <span>Betalen</span>
-                                        <Switch
-                                            onChange={() => this.setState({ invoice: !this.state.invoice }, () => this.props.account && this.props._euroApprove(this.state.invest ? 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF : 0, this.props.account, "invoice"))}
-                                            checked={this.state.invoice}
-                                            id="invoice"
-                                        />
-                                    </label>
+                                    <div className="switch-container">
+                                        <div className="col-6">
+                                            <span className="switch-name">Betalen</span>
+                                        </div>
+                                        <div className="col-6">
+                                            <label htmlFor="invoice">
+                                                <Switch
+                                                    onChange={() => this.setState({ invoice: !this.state.invoice }, () => this.props.account && this.props._euroApprove(this.state.invest ? 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF : 0, this.props.account, "invoice"))}
+                                                    checked={this.state.invoice}
+                                                    id="invoice"
+                                                    onColor="#119f13"
+                                                    offColor="#ff8000"
+                                                    offHandleColor="#fff"
+                                                    onHandleColor="#fff"
+                                                    height={32}
+                                                    width={90}
+                                                    checkedIcon={
+                                                        <div className="switchLabel">
+                                                        aan
+                                                    </div>
+                                                    }
+                                                    uncheckedIcon={
+                                                        <div className="switchLabel">
+                                                        uit
+                                                        </div>
+                                                    }
+                                                />
+                                            </label>
+                                        </div>
+                                    </div>
                                 </span>
                                 {/*!this.state.profile && <span className="form-input-containers">
                                     <textarea className="membership-input" rows="5" value={this.state.message || ""} onChange={(e) => this.setState({ message: e.target.value })} name="message" placeholder="Your message"></textarea>
