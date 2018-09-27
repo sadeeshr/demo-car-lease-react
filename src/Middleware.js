@@ -4,10 +4,8 @@ const fs = require('fs')
 const web3 = require('./lib/Web3')
 
 var options = {
-    // key: fs.readFileSync('./certs/blockchain.techiearea.com/key.pem'),   //relative path to package json run script
-    // cert: fs.readFileSync('./certs/blockchain.techiearea.com/cert.pem'),
-    key: fs.readFileSync('./certs/smartjuice.apayaa.com/key.pem'),
-    cert: fs.readFileSync('./certs/smartjuice.apayaa.com/cert.pem'),
+    key: fs.readFileSync('./certs/duurzamezaken.io/key.pem'),
+    cert: fs.readFileSync('./certs/duurzamezaken.io/cert.pem'),
     requestCert: false,
     rejectUnauthorized: false
 };
