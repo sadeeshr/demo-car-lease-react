@@ -124,6 +124,40 @@ class Contract {
             })
     }
 
+    onHandOut = (stateObj, memberObj, account) => {
+        switch (stateObj.active) {
+            case 0:
+                {
+                    this.eth.sendTransaction({
+                        from: account,
+                        to: memberObj.account,
+                        value: stateObj.ethVal,
+                        gas: 3000000,
+                        data: '0x',
+                    }).then().catch();
+                    break;
+                }
+            case 1:
+                {
+                    this.euroToken.transfer(memberObj.account, stateObj.euroVal, { from: account })
+                        .then(result => {
+                            cc.log(`Transfer Result: ${result}`);
+                            // this.euroEventApprovalSubscribe()
+                            // this.approveTxID = result
+                            // return { approveTxID: result }
+                        })
+                    break;
+                }
+            case 2:
+                {
+                    break;
+                }
+
+            default:
+                break;
+        }
+    }
+
     initContract = (props, web3) => {
         // cc.log("WEB3: ", web3);
         this.props = props

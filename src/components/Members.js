@@ -6,6 +6,7 @@ import cc from '../lib/utils';
 import formatNumber from 'accounting-js/lib/formatNumber.js'
 import Invest from '../containers/Invest';
 import Invoices from '../containers/Invoices';
+import { Dropdown } from 'primereact/components/dropdown/Dropdown';
 
 // import { pseudoRandomBytes } from 'crypto';
 
@@ -18,6 +19,9 @@ class Members extends Component {
             progress: true,
             modalCondition: false,
             activeIndex: null,
+            ethVal: '',
+            euroVal: '',
+            coinVal: ''
         }
         this.rinkebyStatsURL = "https://rinkeby.etherscan.io/tx/"
     }
@@ -57,6 +61,19 @@ class Members extends Component {
     componentDidMount() {
         // if (!this.props.members) {
         // console.log("Y u call me !!!")
+        if (!this.props.members && !this.props.coinNames)
+            this.props._fetchContractData(this.props,
+                {
+                    module: "crowdfundobj2",
+                    result: "coinNames",
+                    query: {
+                    },
+                    filter: {
+                        _id: 0,
+                        objectName: 1,
+                        objectID: 1
+                    }
+                }, this.props.account)
         this.setState({ progress: true })
         // this.fetchMembers()
         // }
@@ -197,9 +214,13 @@ class Members extends Component {
         }
     }
 
+    onHandOut = () => {
+
+    }
+
     renderMember = (member, i) => {
 
-        cc.log("member object: ", member)
+        // cc.log("member object: ", member)
         let memberRows = [
             <div className="mtableLink" key={i} onClick={() => this.setState({ activeIndex: this.state.activeIndex === i ? null : i })}>
                 <div className="col-5">
@@ -218,34 +239,44 @@ class Members extends Component {
             </div>
         ]
 
+        // let coins = this.props.coinNames ? this.props.coinNames: []
+        let textStyle = {
+            color: "red",
+            fontSize: "10px"
+        }
         // if (selected && this.props.account) {
         memberRows.push(
             <div className="rowSelect d-ib mb-5" key={'invest-' + i}>
 
                 <div className="mb-10 d-flex">
                     <div className="col-6 d-flex">
-                        <span className="lh-33">{"Hand out ETH"}</span>
+                        <span className="lh-33">{"Hand out ETH "}<span style={textStyle}>{this.state.ethVal ? (member.balance - this.state.ethVal).toFixed(2) : member.balance.toFixed(2)}</span></span>
                     </div>
                     <div className="col-6 d-flex">
-                        <input maxLength="20" value={this.state.ethVal || member.balance.toFixed(2) || ""} onChange={(e) => this.setState({ ethVal: e.target.value > 0 && e.target.value < member.balance && e.target.value })} type="number" step="0.01" placeholder="ETH *" />
-                    </div>
-                </div>
-
-                <div className="mb-10 d-flex">
-                    <div className="col-6 d-flex">
-                        <span className="lh-33">{"Hand out Euro"}</span>
-                    </div>
-                    <div className="col-6 d-flex">
-                        <input maxLength="20" value={this.state.euroVal || parseInt(this.props.euroTokenBalance, 10) || ""} onChange={(e) => this.setState({ euroVal: e.target.value > 0 && e.target.value < parseInt(this.props.euroTokenBalance, 10) && e.target.value })} type="number" step="1" placeholder="Euro *" />
+                        <input maxLength="20" onFocus={() => this.setState({ active: 0, euroVal: 0, coinVal: 0, coin: null })} value={this.state.ethVal} onChange={(e) => this.setState({ ethVal: e.target.value > 0 && e.target.value < member.balance && e.target.value })} type="number" step="0.01" placeholder="ETH *" />
                     </div>
                 </div>
 
                 <div className="mb-10 d-flex">
                     <div className="col-6 d-flex">
-                        <span className="lh-33">{"Hand out Coins"}</span>
+                        <span className="lh-33">{"Hand out Euro "}<span style={textStyle}>{this.state.euroVal ? (parseInt((this.props.euroTokenBalance || 0), 10) - this.state.euroVal) : parseInt((this.props.euroTokenBalance || 0), 10)}</span></span>
                     </div>
                     <div className="col-6 d-flex">
-                        <input maxLength="20" value={this.state.coinVal || ""} onChange={(e) => this.setState({ coinVal: e.target.value })} type="number" placeholder="Coins *" />
+                        <input maxLength="20" onFocus={() => this.setState({ active: 1, ethVal: 0, coinVal: 0, coin: null })} value={this.state.euroVal} onChange={(e) => this.setState({ euroVal: e.target.value > 0 && e.target.value < parseInt(this.props.euroTokenBalance, 10) && e.target.value })} type="number" step="1" placeholder="Euro *" />
+                    </div>
+                </div>
+
+                <div className="mb-10 d-flex">
+                    <div className="col-6 d-flex">
+                        <span className="lh-33">{"Hand out Coins "}<span style={textStyle}></span></span>
+                    </div>
+                    <div className="col-6 d-flex">
+                        <input maxLength="20" onFocus={() => this.setState({ active: 2, euroVal: 0, ethVal: 0 })} value={this.state.coinVal} onChange={(e) => this.setState({ coinVal: e.target.value })} type="number" placeholder="Coins *" />
+                    </div>
+                </div>
+                <div className="mb-10 d-flex">
+                    <div className="col-6 d-flex">
+                        <Dropdown optionLabel="objectName" style={{ width: '150px' }} value={this.state.coin} options={this.props.coinNames} onChange={(e) => { this.setState({ coin: e.value }) }} placeholder="Select Coin" />
                     </div>
                 </div>
                 <div className="col-4"></div>
@@ -254,10 +285,10 @@ class Members extends Component {
                         <span className="flaticon-right-arrow"></span>
                     </button> */}
                     <div className="btnPadlock">
-                        <span className="flaticon-padlock unlock" onClick={() => this.props.history.push("/", { path: "addnewlife" })}></span>
+                        <span className="flaticon-padlock unlock" onClick={() => this.props._handOutUser(this.state, member, this.props.account)}></span>
                     </div>
                 </div>
-                <div className="col-4">
+                <div hidden className="col-4">
                     <p className="lh-75" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", width: "100%" }}>Pending</p>
                     {/* <p className="lh-75" style={{ color: "green", fontSize: "18px", fontWeight: "600", width: "100%" }}>Confirmed</p> */}
                 </div>
@@ -287,6 +318,7 @@ class Members extends Component {
     }
 
     render() {
+        cc.log(this.state);
         let members = this.props.usernames ? this.props.filter ? this.props.usernames.filter(user => ((user.username && user.username.toLowerCase().startsWith(this.props.filter && this.props.filter.toLowerCase())))) : this.props.usernames : []
         members = members && members.sort((a, b) => a["balance"] - b["balance"]) // sort by eth balance asc
 

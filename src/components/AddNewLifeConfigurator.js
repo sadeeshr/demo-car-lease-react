@@ -62,7 +62,8 @@ class AddNewLifeConfigurator extends Component {
                     },
                     filter: {
                         _id: 0,
-                        objectName: 1
+                        objectName: 1,
+                        objectID: 1
                     }
                 }, this.props.account)
         setTimeout(() => {

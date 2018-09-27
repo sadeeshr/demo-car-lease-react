@@ -296,6 +296,15 @@ export const _setEventStatus = (data) => {
     }
 }
 
+export const _handOutUser = (stateObj, memberObj, account) => {
+    return (dispatch) => {
+        dispatch({
+            type: "HAND_OUT",
+            payload: contract.onHandOut(stateObj, memberObj, account)
+        })
+    }
+}
+
 /**
  * EV Token Actions
  */
