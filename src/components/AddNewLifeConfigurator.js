@@ -10,6 +10,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { Link } from 'react-router-dom'
 
 // import Slider from "react-slick";
+import { Message } from 'primereact/components/message/Message';
 
 import Slider from 'react-rangeslider'
 import 'react-rangeslider/lib/index.css'
@@ -52,6 +53,18 @@ class AddNewLifeConfigurator extends Component {
     }
 
     componentDidMount() {
+        if (!this.props.members && !this.props.coinNames && this.props.socket)
+            this.props._fetchContractData(this.props,
+                {
+                    module: "crowdfundobj2",
+                    result: "coinNames",
+                    query: {
+                    },
+                    filter: {
+                        _id: 0,
+                        objectName: 1
+                    }
+                }, this.props.account)
         setTimeout(() => {
             this.setState({ active: 0 })
         }, 1500);
@@ -183,6 +196,9 @@ class AddNewLifeConfigurator extends Component {
         let price = this.state.lobjprice || (leasetype && leasetype.price) || 0
         let monthlycapcost = ""
         let monthlyopcost = parseFloat("0.00")
+
+        let coinNames = this.props.members ? this.props.members.map(mem => mem.objectName).filter(mem => mem) : this.props.coinNames ? this.props.coinNames.map(mem => mem.objectName).filter(mem => mem) : []
+        let duplicateName = (coinNames.indexOf(this.state.coinName) !== -1)
 
         const { valKm, valEuroPer, valMaanden, valCar, valEuro } = this.state
 
@@ -621,22 +637,21 @@ class AddNewLifeConfigurator extends Component {
                                                                     <img style={img} src={(this.props.duurzamobjects && this.props.duurzamobjects[this.state.active || "0"]["image"])} alt="objectImage" />
                                                                 </div> */}
                                                             <div className="container text-center">
+                                                                {duplicateName && <Message severity="error" text="CoinName Already Exists!" />}
                                                                 <div className="beforeFooter">
                                                                     {/* <div className="col-12 text-right">  <img style={img} src={(this.props.duurzamobjects && this.props.duurzamobjects[this.state.active || "0"]["image"])} alt="objectImage" /></div> */}
                                                                     <div className="col-4">
                                                                     </div>
                                                                     <div className="col-4 arrowHover-s2">
-                                                                        <button className="arrowBtn" title={!this.state.lobjectSelected ? "Select an Object" : "Confirm"} disabled={!this.state.lobjectSelected || this.state.pending} onClick={() => this.createAccount(leasetype, price, months, (this.state.monthlycapcost || monthlycapcost), monthlyopcost, restWaarde)}>
+                                                                        <button className="arrowBtn" title={!this.state.lobjectSelected ? "Select an Object" : duplicateName ? "CoinName Already Exists!" : "Confirm"} disabled={!this.state.lobjectSelected || this.state.pending || duplicateName} onClick={() => this.createAccount(leasetype, price, months, (this.state.monthlycapcost || monthlycapcost), monthlyopcost, restWaarde)}>
                                                                             <span className="flaticon-euro white-arrowBtn"></span>
                                                                         </button>
                                                                     </div>
 
                                                                     {this.props.newObject && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.newObject.txID}>{this.state.pending ? <p style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600" }}>Pending</p> : <p style={{ color: "green", fontSize: "18px", fontWeight: "600" }}>Confirmed</p>}</Link>)}
-
                                                                     <div className="col-4 text-left pv-5-18 cname-input">
 
-                                                                        <input disabled={this.state.pending} className="ml-5 nl-inp" placeholder="Coin Naam" value={this.state.coinName} onChange={(e) => this.setState({ coinName: e.target.value })} type="text" />
-
+                                                                        {coinNames && <input disabled={this.state.pending} className="ml-5 nl-inp" placeholder="Coin Naam" value={this.state.coinName} onChange={(e) => this.setState({ coinName: e.target.value })} type="text" />}
                                                                         {/*<span>Start Crowdfunding en verkoop je eigen coin</span>*/}  {/* Change this text and edit css style to display entire line*/}
                                                                     </div>
 

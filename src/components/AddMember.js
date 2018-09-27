@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 // import md5 from 'md5';
+import { Link } from 'react-router-dom'
 import BlockUi from 'react-block-ui';
 import cc from '../lib/utils';
 import Switch from "react-switch";
@@ -17,6 +18,7 @@ class AddMember extends Component {
             "username",
             "town"
         ]
+        this.rinkebyStatsURL = "https://rinkeby.etherscan.io/tx/"
         // this.carType = 1
     }
 
@@ -109,6 +111,7 @@ class AddMember extends Component {
                 iban: self.iban || '',
                 email: self.email || '',
                 message: self.message || '',
+                currency: self.currency || '',
                 // objectPic: self.objectPic || '',
                 // objectPrice: self.objectPrice || '',
                 account: self.account || this.props.account,
@@ -132,12 +135,23 @@ class AddMember extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.investallowance || nextProps.invoiceallowance) {
+        if ((nextProps.investallowance && (nextProps.investallowance !== this.props.investallowance)) || (nextProps.invoiceallowance && (nextProps.invoiceallowance !== this.props.invoiceallowance))) {
             this.setState({
                 invest: (nextProps.investallowance && nextProps.investallowance > 0) ? true : false,
                 invoice: (nextProps.invoiceallowance && nextProps.invoiceallowance > 0) ? true : false
             })
         }
+        if (nextProps.approveTxID && (nextProps.approveTxID !== this.props.approveTxID)) {
+            // console.log("### PENDING ###");
+            this.setState({ pending: true })
+        }
+        if (nextProps.event && (nextProps.event !== this.props.event) && (nextProps.event.event === "Approve") && (nextProps.event.transactionHash === nextProps.approveTxID))
+            this.setState({ pending: false },
+                () =>
+                    setTimeout(() => {
+                        this.props._resetTxIds()
+                    }, 5000))
+
         if (nextProps.usernames_new || nextProps.usernames_edit) {
             this.props._fetchUsers(nextProps, nextProps.account)
             // if (nextProps.usernames_new)
@@ -213,7 +227,7 @@ class AddMember extends Component {
                                     <input style={cursor} readOnly={this.state.profile} pattern="\d*" maxLength="30" className="membership-input mb-15" value={this.state.account || this.props.account || ""} onChange={(e) => this.setState({ account: e.target.value || this.props.account })} type="text" placeholder="Ether address" />
                                 </span>
 
-                                <Dropdown className="form-input-containers" value={this.state.currency} options={currencies} onChange={(e) => { this.setState({ currency: e.value }) }} placeholder="Currency" />
+                                <Dropdown disabled={this.state.profile} className="form-input-containers" value={this.state.currency} options={currencies} onChange={(e) => { this.setState({ currency: e.value }) }} placeholder="Currency" />
 
 
                                 <span className="form-input-containers ">
@@ -221,7 +235,8 @@ class AddMember extends Component {
                                 </span>
 
                                 <span className="form-input-containers text-center">
-                                    <p style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", width: "100%" }}>Pending</p>
+                                    {this.props.approveTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.approveTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.approveTxID)) ? <p style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)}
+                                    {/* <p style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", width: "100%" }}>Pending</p> */}
                                     {/* <p style={{ color: "green", fontSize: "18px", fontWeight: "600", width: "100%" }}>Confirmed</p> */}
                                 </span>
 
@@ -233,6 +248,7 @@ class AddMember extends Component {
                                         <div className="col-6">
                                             <label htmlFor="invest">
                                                 <Switch
+                                                    disabled={this.state.pending}
                                                     onChange={() => this.setState({ invest: !this.state.invest }, () => this.props.account && this.props._euroApprove(this.state.invest ? 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF : 0, this.props.account, "invest"))}
                                                     checked={this.state.invest}
                                                     id="invest"
@@ -244,12 +260,12 @@ class AddMember extends Component {
                                                     width={90}
                                                     checkedIcon={
                                                         <div className="switchLabel">
-                                                        aan
+                                                            aan
                                                     </div>
                                                     }
                                                     uncheckedIcon={
                                                         <div className="switchLabel">
-                                                        uit
+                                                            uit
                                                         </div>
                                                     }
                                                 />
@@ -265,6 +281,7 @@ class AddMember extends Component {
                                         <div className="col-6">
                                             <label htmlFor="invoice">
                                                 <Switch
+                                                    disabled={this.state.pending}
                                                     onChange={() => this.setState({ invoice: !this.state.invoice }, () => this.props.account && this.props._euroApprove(this.state.invest ? 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF : 0, this.props.account, "invoice"))}
                                                     checked={this.state.invoice}
                                                     id="invoice"
@@ -276,12 +293,12 @@ class AddMember extends Component {
                                                     width={90}
                                                     checkedIcon={
                                                         <div className="switchLabel">
-                                                        aan
+                                                            aan
                                                     </div>
                                                     }
                                                     uncheckedIcon={
                                                         <div className="switchLabel">
-                                                        uit
+                                                            uit
                                                         </div>
                                                     }
                                                 />

@@ -16,6 +16,8 @@ const mapStateToProps = (state) => {
         account: state.account,
         registered: state.registered,
         module: state.module,
+        coinNames: state.coinNames,
+        duurzamobjects: state.duurzamobjects,
         // cars: state.cars,
         member: state.member,
         members: state.members,

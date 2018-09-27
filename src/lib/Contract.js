@@ -245,8 +245,8 @@ class Contract {
         this.filters.EeuroApproval = this.euroToken.Approval()
         this.filters.EeuroApproval.new()
         this.filters.EeuroApproval.watch((err, result) => {
-            cc.log("EuroToken Event Approval() Result: ", err, result);
-            if (err || result.length > 0) { this.props._setEventStatus({ eventApprove: true }); setTimeout(() => { this.euroEventApprovalUnsubscribe(); }, 1000) };
+            // cc.log("EuroToken Event Approval() Result: ", err, result);
+            if (err || result.length > 0) { this.props._setEventStatus({ eventApprove: true, event: { event: "Approve", transactionHash: this.approveTxID } }); setTimeout(() => { this.euroEventApprovalUnsubscribe(); }, 1000) };
 
             // if (err || result.length > 0) {
             //     if (!err)
@@ -290,7 +290,7 @@ class Contract {
         return this.euroToken.approve(spender, value, { from: account })
             .then(result => {
                 cc.log(`Approval Result: ${result}`);
-                // this.euroEventApprovalSubscribe()
+                this.euroEventApprovalSubscribe()
                 this.approveTxID = result
                 return { approveTxID: result }
             })

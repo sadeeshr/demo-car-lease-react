@@ -32,7 +32,6 @@ const mapStateToProps = (state) => {
         BuyAndActivateTxID: state.BuyAndActivateTxID,
         eventTransfer: state.eventTransfer,
         claimDividendTxID: state.claimDividendTxID,
-        approveTxID: state.approveTxID,
         eventApprove: state.eventApprove,
         eventClaim: state.eventClaim,
         allowance: state.allowance,

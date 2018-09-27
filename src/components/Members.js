@@ -227,7 +227,7 @@ class Members extends Component {
                         <span className="lh-33">{"Hand out ETH"}</span>
                     </div>
                     <div className="col-6 d-flex">
-                        <input maxLength="20" value={this.state.ethVal || ""} onChange={(e) => this.setState({ ethVal: e.target.value })} type="number" placeholder="ETH *" />
+                        <input maxLength="20" value={this.state.ethVal || member.balance.toFixed(2) || ""} onChange={(e) => this.setState({ ethVal: e.target.value > 0 && e.target.value < member.balance && e.target.value })} type="number" step="0.01" placeholder="ETH *" />
                     </div>
                 </div>
 
@@ -236,11 +236,11 @@ class Members extends Component {
                         <span className="lh-33">{"Hand out Euro"}</span>
                     </div>
                     <div className="col-6 d-flex">
-                        <input maxLength="20" value={this.state.euroVal || ""} onChange={(e) => this.setState({ euroVal: e.target.value })} type="number" placeholder="Euro *" />
+                        <input maxLength="20" value={this.state.euroVal || parseInt(this.props.euroTokenBalance, 10) || ""} onChange={(e) => this.setState({ euroVal: e.target.value > 0 && e.target.value < parseInt(this.props.euroTokenBalance, 10) && e.target.value })} type="number" step="1" placeholder="Euro *" />
                     </div>
                 </div>
 
-                 <div className="mb-10 d-flex">
+                <div className="mb-10 d-flex">
                     <div className="col-6 d-flex">
                         <span className="lh-33">{"Hand out Coins"}</span>
                     </div>
@@ -258,7 +258,7 @@ class Members extends Component {
                     </div>
                 </div>
                 <div className="col-4">
-                    <p className="lh-75"style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", width: "100%" }}>Pending</p>
+                    <p className="lh-75" style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", width: "100%" }}>Pending</p>
                     {/* <p className="lh-75" style={{ color: "green", fontSize: "18px", fontWeight: "600", width: "100%" }}>Confirmed</p> */}
                 </div>
             </div>
