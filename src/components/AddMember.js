@@ -111,11 +111,12 @@ class AddMember extends Component {
                 iban: self.iban || '',
                 email: self.email || '',
                 message: self.message || '',
-                currency: self.currency || '',
+                currency: self.currency || 'EUR',
                 // objectPic: self.objectPic || '',
                 // objectPrice: self.objectPrice || '',
                 account: self.account || this.props.account,
                 profilePic: self.profilePic || '',
+                coins: []
                 // carMonRedemption: self.carMonRedemption || '',
                 // carMonths: self.carMonths || '',
                 // municipalityID: townSelected ? townSelected["municipalityID"] : ""
@@ -162,9 +163,9 @@ class AddMember extends Component {
     render() {
         const currencies = [
             { label: 'Euro', value: 'EUR' },
-            { label: 'Dollars', value: 'USD' },
-            { label: 'Rupees', value: 'INR' },
-            { label: 'Pesos', value: 'Peso' }
+            // { label: 'Dollars', value: 'USD' },
+            // { label: 'Rupees', value: 'INR' },
+            // { label: 'Pesos', value: 'Peso' }
         ];
         const img = { "maxHeight": "100px", "maxWidth": "118px", "display": "block", "marginLeft": "auto", "marginRight": "auto" }
         const cursor = { cursor: this.state.profile ? "not-allowed" : "pointer" }
@@ -190,7 +191,7 @@ class AddMember extends Component {
                         <BlockUi tag="div" blocking={this.props.progress}>
                             <div className="form-row-container bmemberCon">
                                 <span className="form-input-containers">
-                                    <input style={cursor} readOnly={this.state.profile} className="membership-input" maxLength="20" value={this.state.username || ""} onChange={(e) => this.setState({ username: e.target.value })} type="text" id="username" name="username" placeholder="Coin Name *" />
+                                    <input style={cursor} readOnly={this.state.profile} className="membership-input" maxLength="20" value={this.state.username || ""} onChange={(e) => this.setState({ username: e.target.value })} type="text" id="username" name="username" placeholder="User Name *" />
                                 </span>
                                 <span className="form-input-containers">
                                     <input pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" maxLength="30" className="membership-input mb-15" value={this.state.email || ""} onChange={(e) => this.setState({ email: e.target.value })} type="text" placeholder="Email" />
@@ -227,7 +228,7 @@ class AddMember extends Component {
                                     <input style={cursor} readOnly={this.state.profile} pattern="\d*" maxLength="30" className="membership-input mb-15" value={this.state.account || this.props.account || ""} onChange={(e) => this.setState({ account: e.target.value || this.props.account })} type="text" placeholder="Ether address" />
                                 </span>
 
-                                <Dropdown disabled={this.state.profile} className="form-input-containers" value={this.state.currency} options={currencies} onChange={(e) => { this.setState({ currency: e.value }) }} placeholder="Currency" />
+                                <Dropdown className="form-input-containers" value={this.state.currency} options={currencies} onChange={(e) => { this.setState({ currency: e.value }) }} placeholder="Currency" />
 
 
                                 <span className="form-input-containers ">

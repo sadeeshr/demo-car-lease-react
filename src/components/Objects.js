@@ -261,11 +261,12 @@ class Objects extends Component {
         // console.log("UO", userObject, userObject.objectPrice);
         // const objectPrice = userObject.obj ? userObject.obj.objectPrice.toNumber() : "0"
         const objectPrice = parseInt(userObject.objectPrice, 10) || 0
+        const myEuroBal = this.props.euroTokenBalance ? parseInt(this.props.euroTokenBalance,10) :0
         const img = userObject.objectPic ? { "display": "block" } : { "maxHeight": "50px", "maxWidth": "118px", height: "auto", width: "auto" }
         const selected = this.props.member && (this.props.member["_id"] === userObject["_id"]) ? true : false
         // const selected = true
         let memberRows = [
-            <div className="mtableLink" key={i} onClick={() => this.setState({ activeIndex: this.state.activeIndex === i ? null : i }, () => { (this.props.newObject && (this.props.addNewObjectTxID === this.props.newObject.txID) && this.props._resetTxIds()); return member.authorized ? this.props._objectSelected(userObject, this.props.account) : cc.log("MEMBER NOT AUTHORIZED") })}>
+            <div className="mtableLink" key={i} onClick={() => this.setState({ activeIndex: this.state.activeIndex === i ? null : i }, () => { (this.props.newObject && (this.props.addNewObjectTxID === this.props.newObject.txID) && this.props._resetTxIds()); return (myEuroBal > 0) ? this.props._objectSelected(userObject, this.props.account) : cc.log("NOT ENOUGH EURO BALANCE") })}>
                 <div className="col-5">
                     <div className="mtableUser">
                         <span className="fs-20" style={member.account === this.props.account ? { fontWeight: "bold" } : {}}>{userObject.objectName || ""}</span>
@@ -335,10 +336,10 @@ class Objects extends Component {
                                         <Invest />
                                         : cc.log("MEMBER CAN ONLY BUY AND ACTIVATE HIS OBJECT")
                                 :
-                                (member.authorized) ?
+                                // (member.authorized) ?
                                     <Invest />
-                                    :
-                                    cc.log("NO OBJECT CONFIGURED")
+                                    // :
+                                    // cc.log("NO OBJECT CONFIGURED")
                         }
                     </div>}
                 </div>

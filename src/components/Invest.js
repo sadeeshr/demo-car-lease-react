@@ -175,6 +175,27 @@ class Invest extends Component {
 
     }
 
+    doInvest = (objectID) => {
+        const member = this.props.usernames.find(user => user["account"] === this.props.account)
+        if (member.coins.indexOf(parseInt(objectID)) === -1) {
+            let coins = member.coins
+            coins.push(parseInt(objectID))
+            let coinsData = {
+                module: "membersdev4",
+                result: "usernames",
+                query: {
+                    "_id": member["_id"]
+                },
+                data: { coins }
+            }
+            cc.log(coinsData)
+
+            this.props._updateContractData(this.props, coinsData)
+        }
+
+        this.props._lcInvestInObject(objectID, this.state.ethInvest || "0", this.props.account)
+    }
+
     render() {
         cc.log("Invest State Props", this.state, this.props);
         // if (this.props.account && !this.props[this.props.account]) this.props._getBalance(this.props.account);
@@ -274,7 +295,7 @@ class Invest extends Component {
                             onClick={() => {
                                 buyAndActivate ?
                                     !this.state.pending && this.state.activedate && this.props._lcBuyAndActivate(member.objectID, this.state.activedate, this.props.account)
-                                    : !this.state.pending && this.props.account && !member.crowdsaleclosed && enableInvest && this.props._lcInvestInObject(member.objectID || (this.props.event && this.props.event.returnValues && this.props.event.returnValues.objectID), this.state.ethInvest || "0", this.props.account)
+                                    : !this.state.pending && this.props.account && !member.crowdsaleclosed && enableInvest && this.doInvest(member.objectID || (this.props.event && this.props.event.returnValues && this.props.event.returnValues.objectID))
                             }} >
                         </span>
                     </div>

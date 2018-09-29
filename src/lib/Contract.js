@@ -120,6 +120,7 @@ class Contract {
             .then(balance => {
                 let ethBal = unit.fromWei(balance, 'ether')
                 cc.log({ [address]: ethBal });
+                if (address === this.account) this.props._setObject({ ethBal })
                 this.props._setBalance({ account: address, result: parseFloat(ethBal) })
             })
     }
@@ -150,7 +151,23 @@ class Contract {
                 }
             case 2:
                 {
-                    break;
+                    // const member = this.props.usernames.map(user => user["account"] === this.props.account)
+                    // if (member.coins.indexOf(parseInt(memberObj.objectID)) === -1) {
+                    //     let coins = member.coins
+                    //     coins.push(parseInt(objectID))
+                    //     let coinsData = {
+                    //         module: "membersdev4",
+                    //         result: "usernames",
+                    //         query: {
+                    //             "_id": member["_id"]
+                    //         },
+                    //         data: { coins }
+                    //     }
+                    //     cc.log(coinsData)
+
+                    //     this.props._updateContractData(this.props, coinsData)
+                    // }
+                    // break;
                 }
 
             default:

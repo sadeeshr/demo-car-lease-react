@@ -10,6 +10,7 @@ const mapStateToProps = (state) => {
     console.log("Members Container State: ", state)
     return {
         filter: state.filter,
+        ethBal: state.ethBal,
         textStyle: state.textStyle,
         towns: state.towns,
         town: state.town,

@@ -218,9 +218,10 @@ class Members extends Component {
 
     }
 
-    renderMember = (member, i) => {
+    renderMember = (coins, member, i) => {
 
-        // cc.log("member object: ", member)
+        const ethBal = this.props.ethBal ? parseFloat(this.props.ethBal).toFixed(2) : 0
+        cc.log("coins: ", coins)
         let memberRows = [
             <div className="mtableLink" key={i} onClick={() => this.setState({ activeIndex: this.state.activeIndex === i ? null : i })}>
                 <div className="col-5">
@@ -250,10 +251,10 @@ class Members extends Component {
 
                 <div className="mb-10 d-flex">
                     <div className="col-6 d-flex">
-                        <span className="lh-33">{"Hand out ETH "}<span style={textStyle}>{this.state.ethVal ? (member.balance - this.state.ethVal).toFixed(2) : member.balance.toFixed(2)}</span></span>
+                        <span className="lh-33">{"Hand out ETH "}<span style={textStyle}>{this.state.ethVal ? (ethBal - this.state.ethVal).toFixed(2) : ethBal}</span></span>
                     </div>
                     <div className="col-6 d-flex">
-                        <input maxLength="20" onFocus={() => this.setState({ active: 0, euroVal: 0, coinVal: 0, coin: null })} value={this.state.ethVal} onChange={(e) => this.setState({ ethVal: e.target.value > 0 && e.target.value < member.balance && e.target.value })} type="number" step="0.01" placeholder="ETH *" />
+                        <input maxLength="20" onFocus={() => this.setState({ active: 0, euroVal: 0, coinVal: 0, coin: null })} value={this.state.ethVal} onChange={(e) => this.setState({ ethVal: e.target.value > 0 && (e.target.value < ethBal) && e.target.value })} type="number" step="0.01" placeholder="ETH *" />
                     </div>
                 </div>
 
@@ -276,7 +277,7 @@ class Members extends Component {
                 </div>
                 <div className="mb-10 d-flex">
                     <div className="col-6 d-flex">
-                        <Dropdown optionLabel="objectName" style={{ width: '150px' }} value={this.state.coin} options={this.props.coinNames} onChange={(e) => { this.setState({ coin: e.value }) }} placeholder="Select Coin" />
+                        <Dropdown optionLabel="objectName" style={{ width: '150px' }} value={this.state.coin} options={coins} onChange={(e) => { this.setState({ coin: e.value }) }} placeholder="Select Coin" />
                     </div>
                 </div>
                 <div className="col-4"></div>
@@ -318,9 +319,13 @@ class Members extends Component {
     }
 
     render() {
-        cc.log(this.state);
+        // cc.log(this.state);
         let members = this.props.usernames ? this.props.filter ? this.props.usernames.filter(user => ((user.username && user.username.toLowerCase().startsWith(this.props.filter && this.props.filter.toLowerCase())))) : this.props.usernames : []
         members = members && members.sort((a, b) => a["balance"] - b["balance"]) // sort by eth balance asc
+
+        let user = this.props.usernames ? this.props.usernames.find(us => us["account"] === this.props.account) : {}
+
+        const coins = (this.props.coinNames && user) ? this.props.coinNames.filter(coin => user.coins.includes(coin.objectID)) : []
 
         return (
             <div className="content-border mobile-margin">
@@ -340,7 +345,7 @@ class Members extends Component {
                                         members && members.reverse().map((member, i) => {
                                             // return <div className="leaseCarCon" key={i}>
                                             // </div>
-                                            return this.renderMember(member, i)
+                                            return this.renderMember(coins, member, i)
                                         })
                                     }
                                 </div>

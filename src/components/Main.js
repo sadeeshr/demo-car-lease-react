@@ -171,23 +171,22 @@ class Main extends Component {
                             // let newObjData = newObject.data
                             newLifeObj["objectID"] = parseInt(objectID)
 
-                            // let data = {
-                            //     module: "crowdfundobj",
-                            //     result: "members",
-                            //     query: {
-                            //         "_id": newObject["id"]
-                            //     },
-                            //     data: { objectID: objectID }
-                            // }
-                            // cc.log(data)
+                            const member = this.props.usernames.find(user => user["account"] === this.props.account)
+                            if (member.coins.indexOf(parseInt(objectID)) === -1) {
+                                let coins = member.coins
+                                coins.push(parseInt(objectID))
+                                let coinsData = {
+                                    module: "membersdev4",
+                                    result: "usernames",
+                                    query: {
+                                        "_id": member["_id"]
+                                    },
+                                    data: { coins }
+                                }
+                                cc.log(coinsData)
 
-                            // const member = this.props.member
-                            // if (!member["objectID"]) {
-                            //     member["objectID"] = objectID
-                            //     this.props._setObject(member)
-                            // }
-
-                            // this.props._updateContractData(this.props, data)
+                                this.props._updateContractData(this.props, coinsData)
+                            }
 
 
                             let data = {
