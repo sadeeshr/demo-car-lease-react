@@ -187,7 +187,8 @@ export const _contractDataResponse = (account, response) => {
                 // return 1
             })
         if (response.usernames)
-            response.usernames.map(user => {
+            // response.usernames = 
+            response.usernames.reverse() && response.usernames.map(user => {
                 // if (user.account) dispatch(_lcAuthorization(user.account))
                 if (user.account) dispatch(_getBalance(user.account))
             })

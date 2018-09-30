@@ -19,6 +19,7 @@ const mapStateToProps = (state) => {
         event: state.event,
         // cars: state.cars,
         members: state.members,
+        ethBal: state.ethBal,
         approveTxID: state.approveTxID,
         usernames_new: state.usernames_new,
         usernames_edit: state.usernames_edit,
