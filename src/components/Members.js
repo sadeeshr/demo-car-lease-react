@@ -298,6 +298,7 @@ class Members extends Component {
                         <input maxLength="20" onFocus={() => this.setState({ active: 2, euroVal: 0, ethVal: 0 })} value={this.state.coinVal} onChange={(e) => this.setState({ coinVal: (e.target.value > 0 && e.target.value < (coinBal - this.state.coinVal)) ? e.target.value : 0 })} type="number" placeholder="Coins *" />
                     </div>
                 </div>
+                <div className="col-4"></div>
                 <div className="col-4 arrowHover-s2">
                     {/* <button className="arrowBtn" onClick={() => this.props.history.push("/", { path: "addnewlife" })}>
                         <span className="flaticon-right-arrow"></span>
