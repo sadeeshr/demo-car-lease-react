@@ -148,18 +148,18 @@ class Main extends Component {
                     break;
 
                 case "CreateNewUser":
-                case "Approval":
-                    {
-                        let alert = {
-                            title: "New Member is Authorized !",
-                            message: "",
-                            level: "info",
-                            position: "tr",
-                            autoDismiss: 0
-                        }
-                        this.props._setEventAlert(alert)
-                        break;
-                    }
+                // case "Approval":
+                //     {
+                //         let alert = {
+                //             title: "New Member is Authorized !",
+                //             message: "",
+                //             level: "info",
+                //             position: "tr",
+                //             autoDismiss: 0
+                //         }
+                //         this.props._setEventAlert(alert)
+                //         break;
+                //     }
                 case "AddNewObject":
                     {
                         const event = nextProps.event

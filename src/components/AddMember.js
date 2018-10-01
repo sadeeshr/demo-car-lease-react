@@ -151,7 +151,7 @@ class AddMember extends Component {
             // console.log("### PENDING ###");
             this.setState({ pending: true })
         }
-        if (nextProps.event && (nextProps.event !== this.props.event) && (nextProps.event.event === "Approve") && (nextProps.event.transactionHash === nextProps.approveTxID))
+        if (nextProps.event && (nextProps.event !== this.props.event) && (nextProps.event.event === "Approval") && (nextProps.event.transactionHash === nextProps.approveTxID))
             this.setState({ pending: false, invest: this.state.approve === "invest" ? !this.state.invest : this.state.invest, invoice: this.state.approve === "invoice" ? !this.state.invoice : this.state.invoice },
                 () =>
                     setTimeout(() => {
@@ -257,7 +257,7 @@ class AddMember extends Component {
                                             <label htmlFor="invest">
                                                 <Switch
                                                     disabled={this.state.pending || (ethBal <= 0)}
-                                                    onChange={() => this.setState({ approve: "invest" }, () => this.props.account && this.props._euroApprove(this.state.invest ? this.maxApprove : 0, this.props.account, "invest"))}
+                                                    onChange={() => this.setState({ approve: "invest" }, () => this.props.account && this.props._euroApprove(this.state.invest ? 0 : this.maxApprove, this.props.account, "invest"))}
                                                     checked={this.state.invest}
                                                     id="invest"
                                                     onColor="#119f13"
@@ -290,7 +290,7 @@ class AddMember extends Component {
                                             <label htmlFor="invoice">
                                                 <Switch
                                                     disabled={this.state.pending || (ethBal <= 0)}
-                                                    onChange={() => this.setState({ approve: "invoice" }, () => this.props.account && this.props._euroApprove(this.state.invest ? this.maxApprove : 0, this.props.account, "invoice"))}
+                                                    onChange={() => this.setState({ approve: "invoice" }, () => this.props.account && this.props._euroApprove(this.state.invest ? 0 : this.maxApprove, this.props.account, "invoice"))}
                                                     checked={this.state.invoice}
                                                     id="invoice"
                                                     onColor="#119f13"

@@ -221,7 +221,7 @@ class Members extends Component {
     renderMember = (coins, member, i) => {
 
         const ethBal = this.props.ethBal ? parseFloat(this.props.ethBal).toFixed(2) : 0
-        cc.log("coins: ", coins)
+        cc.log("coins: ", coins, this.state)
         let memberRows = [
             <div className="mtableLink" key={i} onClick={() => this.setState({ activeIndex: this.state.activeIndex === i ? null : i })}>
                 <div className="col-5">

@@ -9,7 +9,7 @@ import EthJs from 'ethjs-query';
 import EthJsContract from 'ethjs-contract';
 import unit from 'ethjs-unit';
 import cc from './utils';
-
+import BN from 'bn.js';
 // import EthFilter from 'ethjs-filter';
 // old euro: 0xa7aa26880AE3F2201779953f2d92e5ebA78C86Dd
 
@@ -132,10 +132,21 @@ class Contract {
                     this.eth.sendTransaction({
                         from: account,
                         to: memberObj.account,
-                        value: stateObj.ethVal,
+                        value: unit.toWei(stateObj.ethVal, 'ether'),
                         gas: 3000000,
                         data: '0x',
-                    }).then().catch();
+                    }).then(
+                        result => {
+                            cc.log(`ETH Handout Transfer Result: ${result}`);
+                            let event = {
+                                event: "HandoutETH",
+                                transactionHash: result
+                            }
+                            this.props._getConfirmationsHash(event)
+                        }
+                    ).catch(
+                        err => cc.log(`ERROR: ${err}`)
+                    );
                     break;
                 }
             case 1:
@@ -342,12 +353,12 @@ class Contract {
         return this.euroToken.approve(spender, value, { from: account })
             .then(result => {
                 cc.log(`Approval Result: ${result}`);
-                this.euroEventApprovalSubscribe()
-                let event = {
-                    event: type === "invest" ? "ApproveInvest" : "ApproveInvoice",
-                    transactionHash: result
-                }
-                this.props._getConfirmationsHash(event)
+                // this.euroEventApprovalSubscribe()
+                // let event = {
+                //     event: type === "invest" ? "ApproveInvest" : "ApproveInvoice",
+                //     transactionHash: result
+                // }
+                // this.props._getConfirmationsHash(event)
                 this.approveTxID = result
                 return { approveTxID: result }
             })
