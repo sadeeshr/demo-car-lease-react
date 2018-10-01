@@ -218,12 +218,26 @@ class Members extends Component {
 
     }
 
+    topFunction = (k) => {
+        // window.scrollTo({
+        //     top: 20,
+        //     behavior: "smooth"
+        // });
+        let el = "action" + k
+        var elmnt = document.getElementById(el);
+        elmnt.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+            inline: "center"
+        });
+    }
+
     renderMember = (coins, member, i) => {
 
         const ethBal = this.props.ethBal ? parseFloat(this.props.ethBal).toFixed(2) : 0
         cc.log("coins: ", coins, this.state)
         let memberRows = [
-            <div className="mtableLink" key={i} onClick={() => this.setState({ activeIndex: this.state.activeIndex === i ? null : i })}>
+            <div key={i} className="mtableLink" onClick={() => this.setState({ activeIndex: this.state.activeIndex === i ? null : i })}>
                 <div className="col-5">
                     <div className="mtableUser">
                         <span className="fs-20 fw-700" style={member.account === this.props.account ? { fontWeight: "bold" } : {}}>{member.username || ""}</span>
@@ -250,34 +264,38 @@ class Members extends Component {
             <div className="rowSelect d-ib mb-5" key={'invest-' + i}>
 
                 <div className="mb-10 d-flex">
-                    <div className="col-6 d-flex">
-                        <span className="lh-33">{"Hand out ETH "}<span style={textStyle}>{this.state.ethVal ? (ethBal - this.state.ethVal).toFixed(2) : ethBal}</span></span>
+                    <div className="col-4 d-flex">
+                        <span className="lh-33 fs-14 ">{"Hand out ETH "}</span>
                     </div>
-                    <div className="col-6 d-flex">
+                    <div className="col-4 d-flex">
+                        <span className="lh-33" style={textStyle}>{this.state.ethVal ? (ethBal - this.state.ethVal).toFixed(2) : ethBal}</span>
+                    </div>
+                    <div className="col-4 d-flex ml-10">
                         <input maxLength="20" onFocus={() => this.setState({ active: 0, euroVal: 0, coinVal: 0, coin: null })} value={this.state.ethVal} onChange={(e) => this.setState({ ethVal: e.target.value > 0 && (e.target.value < ethBal) && e.target.value })} type="number" step="0.01" placeholder="ETH *" />
                     </div>
                 </div>
 
                 <div className="mb-10 d-flex">
-                    <div className="col-6 d-flex">
-                        <span className="lh-33">{"Hand out Euro "}<span style={textStyle}>{this.state.euroVal ? (parseInt((this.props.euroTokenBalance || 0), 10) - this.state.euroVal) : parseInt((this.props.euroTokenBalance || 0), 10)}</span></span>
+                    <div className="col-4 d-flex">
+                        <span className="lh-33 fs-14 ">{"Hand out Euro "}</span>
                     </div>
-                    <div className="col-6 d-flex">
+                    <div className="col-4 d-flex">
+                        <span className="lh-33" style={textStyle}>{this.state.euroVal ? (parseInt((this.props.euroTokenBalance || 0), 10) - this.state.euroVal) : parseInt((this.props.euroTokenBalance || 0), 10)}</span>
+                    </div>
+                    <div className="col-4 d-flex ml-10">
                         <input maxLength="20" onFocus={() => this.setState({ active: 1, ethVal: 0, coinVal: 0, coin: null })} value={this.state.euroVal} onChange={(e) => this.setState({ euroVal: e.target.value > 0 && e.target.value < parseInt(this.props.euroTokenBalance, 10) && e.target.value })} type="number" step="1" placeholder="Euro *" />
                     </div>
                 </div>
 
                 <div className="mb-10 d-flex">
-                    <div className="col-6 d-flex">
+                    <div className="col-4 d-flex fs-14">
                         <span className="lh-33">{"Hand out Coins "}<span style={textStyle}></span></span>
                     </div>
-                    <div className="col-6 d-flex">
-                        <input maxLength="20" onFocus={() => this.setState({ active: 2, euroVal: 0, ethVal: 0 })} value={this.state.coinVal} onChange={(e) => this.setState({ coinVal: e.target.value })} type="number" placeholder="Coins *" />
+                    <div className="col-4 d-flex dropDown1">
+                        <Dropdown optionLabel="objectName" style={{ width: '100%' }} value={this.state.coin} options={coins} onChange={(e) => { this.setState({ coin: e.value }) }} placeholder="Select Coin" />
                     </div>
-                </div>
-                <div className="mb-10 d-flex">
-                    <div className="col-6 d-flex">
-                        <Dropdown optionLabel="objectName" style={{ width: '150px' }} value={this.state.coin} options={coins} onChange={(e) => { this.setState({ coin: e.value }) }} placeholder="Select Coin" />
+                    <div className="col-4 d-flex ml-10">
+                        <input maxLength="20" onFocus={() => this.setState({ active: 2, euroVal: 0, ethVal: 0 })} value={this.state.coinVal} onChange={(e) => this.setState({ coinVal: e.target.value })} type="number" placeholder="Coins *" />
                     </div>
                 </div>
                 <div className="col-4"></div>
@@ -297,7 +315,7 @@ class Members extends Component {
         )
         // }
 
-        return <div key={i} className={this.state.activeIndex === i ? 'leaseCarCon leden active' : 'leaseCarCon leden '} onClick={() => { }}>{memberRows}</div>
+        return <div key={i} id={"action" + i} className={this.state.activeIndex === i ? 'leaseCarCon leden active' : 'leaseCarCon leden '} onClick={() => {this.topFunction(i)}}>{memberRows}</div>
     }
 
     sortMembers = () => {
@@ -343,8 +361,8 @@ class Members extends Component {
                         <span className="fr pt-8"><img className="infoImg" src={require('../assets/deal.png')} alt="deal" /></span>
                     </div>
                 </div>
-                <div className="mainContentCon mainContentCon-43">
-                    <div className="contentCon overflow bg-none contentCon-8 pt-8">
+                <div className="mainContentCon foot">
+                    <div className="contentCon overflow bg-none contentCon-8 pt-8" style={{height:"587px"}}>
                         {/* <BlockUi tag="div" blocking={this.state.progress} renderChildren={false}> || investObjs.length === 0 */}
                         <div className="membersCon pb-20 pt-5-mobile pv-5-mobile">
                             <div>
