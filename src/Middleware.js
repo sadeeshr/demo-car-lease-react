@@ -47,6 +47,7 @@ io.on('connection', (socket) => {
     socket.on('fetch', data => handleFetch(socket, data));
     socket.on('update', data => handleUpdate(socket, data));
     socket.on('userEvent', data => io.sockets.emit('event', data));
+    socket.on('confirmHash', data => web3.getConfirmationsHash(data, event => io.sockets.emit('event', event)));
 
     socket.on('disconnect', () => {
         online--;

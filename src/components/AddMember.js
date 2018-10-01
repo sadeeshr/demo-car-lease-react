@@ -12,7 +12,8 @@ class AddMember extends Component {
         this.state = {
             progress: false,
             invest: false,
-            invoice: false
+            invoice: false,
+            approve: null
         }
         this.mandatory = [
             "username",
@@ -21,6 +22,7 @@ class AddMember extends Component {
         this.rinkebyStatsURL = "https://rinkeby.etherscan.io/tx/"
         // this.maxApprove = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         this.maxApprove = 115792089237316195423570985008687907853269984665640564039457584007913129639936
+        // this.maxApprove = 10000000000000000000000000
         //10000000000000000000000000 value error
         // this.carType = 1
     }
@@ -150,7 +152,7 @@ class AddMember extends Component {
             this.setState({ pending: true })
         }
         if (nextProps.event && (nextProps.event !== this.props.event) && (nextProps.event.event === "Approve") && (nextProps.event.transactionHash === nextProps.approveTxID))
-            this.setState({ pending: false },
+            this.setState({ pending: false, invest: this.state.approve === "invest" ? !this.state.invest : this.state.invest, invoice: this.state.approve === "invoice" ? !this.state.invoice : this.state.invoice },
                 () =>
                     setTimeout(() => {
                         this.props._resetTxIds()
@@ -255,7 +257,7 @@ class AddMember extends Component {
                                             <label htmlFor="invest">
                                                 <Switch
                                                     disabled={this.state.pending || (ethBal <= 0)}
-                                                    onChange={() => this.setState({ invest: !this.state.invest }, () => this.props.account && this.props._euroApprove(this.state.invest ? this.maxApprove : 0, this.props.account, "invest"))}
+                                                    onChange={() => this.setState({ approve: "invest" }, () => this.props.account && this.props._euroApprove(this.state.invest ? this.maxApprove : 0, this.props.account, "invest"))}
                                                     checked={this.state.invest}
                                                     id="invest"
                                                     onColor="#119f13"
@@ -288,7 +290,7 @@ class AddMember extends Component {
                                             <label htmlFor="invoice">
                                                 <Switch
                                                     disabled={this.state.pending || (ethBal <= 0)}
-                                                    onChange={() => this.setState({ invoice: !this.state.invoice }, () => this.props.account && this.props._euroApprove(this.state.invest ? this.maxApprove : 0, this.props.account, "invoice"))}
+                                                    onChange={() => this.setState({ approve: "invoice" }, () => this.props.account && this.props._euroApprove(this.state.invest ? this.maxApprove : 0, this.props.account, "invoice"))}
                                                     checked={this.state.invoice}
                                                     id="invoice"
                                                     onColor="#119f13"
