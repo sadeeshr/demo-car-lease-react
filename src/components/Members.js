@@ -219,10 +219,6 @@ class Members extends Component {
     }
 
     topFunction = (k) => {
-        // window.scrollTo({
-        //     top: 20,
-        //     behavior: "smooth"
-        // });
         let el = "action" + k
         var elmnt = document.getElementById(el);
         elmnt.scrollIntoView({

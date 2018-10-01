@@ -536,6 +536,10 @@ textarea.membership-input {
     width: -moz-available;
     width: -webkit-stretch;
 }
+.form-input-containers a{
+    width: 100%;
+    line-height: 21px;
+}
 
 .form-row-container {
     display: block;
