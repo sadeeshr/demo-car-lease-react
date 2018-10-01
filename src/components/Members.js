@@ -231,6 +231,8 @@ class Members extends Component {
     renderMember = (coins, member, i) => {
 
         const ethBal = this.props.ethBal ? parseFloat(this.props.ethBal).toFixed(2) : 0
+        const coinBal = this.state.coin ? parseInt(this.state.coin.tokens, 10) : null
+
         cc.log("coins: ", coins, this.state)
         let memberRows = [
             <div key={i} className="mtableLink" onClick={() => this.setState({ activeIndex: this.state.activeIndex === i ? null : i })}>
@@ -285,16 +287,17 @@ class Members extends Component {
 
                 <div className="mb-10 d-flex">
                     <div className="col-4 d-flex fs-14">
-                        <span className="lh-33">{"Hand out Coins "}<span style={textStyle}></span></span>
+                        <span className="lh-33">{"Hand out Coins "}</span>
                     </div>
+                    {/*  */}
                     <div className="col-4 d-flex dropDown1">
                         <Dropdown optionLabel="objectName" style={{ width: '100%' }} value={this.state.coin} options={coins} onChange={(e) => { this.setState({ coin: e.value }) }} placeholder="Select Coin" />
                     </div>
                     <div className="col-4 d-flex ml-10">
-                        <input maxLength="20" onFocus={() => this.setState({ active: 2, euroVal: 0, ethVal: 0 })} value={this.state.coinVal} onChange={(e) => this.setState({ coinVal: e.target.value })} type="number" placeholder="Coins *" />
+                        <input maxLength="20" onFocus={() => this.setState({ active: 2, euroVal: 0, ethVal: 0 })} value={this.state.coinVal} onChange={(e) => this.setState({ coinVal: (e.target.value > 0 && e.target.value < (coinBal - this.state.coinVal)) ? e.target.value : 0 })} type="number" placeholder="Coins *" />
                     </div>
                 </div>
-                <div className="col-4"></div>
+                <div className="col-4"><span style={textStyle}>{this.state.coinVal ? (coinBal - this.state.coinVal) : coinBal}</span></div>
                 <div className="col-4 arrowHover-s2">
                     {/* <button className="arrowBtn" onClick={() => this.props.history.push("/", { path: "addnewlife" })}>
                         <span className="flaticon-right-arrow"></span>
@@ -311,7 +314,7 @@ class Members extends Component {
         )
         // }
 
-        return <div key={i} id={"action" + i} className={this.state.activeIndex === i ? 'leaseCarCon leden active' : 'leaseCarCon leden '} onClick={() => {this.topFunction(i)}}>{memberRows}</div>
+        return <div key={i} id={"action" + i} className={this.state.activeIndex === i ? 'leaseCarCon leden active' : 'leaseCarCon leden '} onClick={() => { this.topFunction(i) }}>{memberRows}</div>
     }
 
     sortMembers = () => {
@@ -338,7 +341,7 @@ class Members extends Component {
         // members = members && members.sort((a, b) => a["balance"] - b["balance"]) // sort by eth balance asc
         // members = members && members.sort((a, b) => ((a["account"] === this.props.account) ? 0 : (b["account"] === this.props.account) ? -1 : 0))
         // console.log(members);
-        
+
         // let userIndex = this.props.usernames && this.props.usernames.findIndex(us => us["account"] === this.props.account)
         // if (userIndex && userIndex !== -1) {
         //     members.splice(userIndex, 1);
@@ -347,7 +350,7 @@ class Members extends Component {
         // let user = {}
         let user = this.props.usernames ? this.props.usernames.find(us => us["account"] === this.props.account) : {}
         const coins = (this.props.coinNames && user) ? this.props.coinNames.filter(coin => user.coins.includes(coin.objectID)) : []
-        
+
         return (
             <div className="content-border mobile-margin">
                 <div className="border-bottom-1  fix-small-dev">
@@ -358,7 +361,7 @@ class Members extends Component {
                     </div>
                 </div>
                 <div className="mainContentCon foot">
-                    <div className="contentCon overflow bg-none contentCon-8 pt-8" style={{height:"587px"}}>
+                    <div className="contentCon overflow bg-none contentCon-8 pt-8" style={{ height: "587px" }}>
                         {/* <BlockUi tag="div" blocking={this.state.progress} renderChildren={false}> || investObjs.length === 0 */}
                         <div className="membersCon pb-20 pt-5-mobile pv-5-mobile">
                             <div>

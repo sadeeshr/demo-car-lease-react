@@ -175,10 +175,16 @@ const rootReducer = (state = initialState, action) => {
 
         case 'EV_MYTOKENS':
             {
-                let members = state.members.map(member => {
+                let members = state.members && state.members.map(member => {
                     if (member.objectID === action.payload.id)
                         member["evTokens"] = action.payload.result
                     return member
+                })
+
+                let coins = state.coinNames && state.coinNames.map(coin => {
+                    if (coin.objectID === action.payload.id)
+                        coin["tokens"] = action.payload.result
+                    return coin
                 })
 
                 if (state.member && (state.member.objectID === action.payload.id))
@@ -186,7 +192,8 @@ const rootReducer = (state = initialState, action) => {
 
                 return {
                     ...state,
-                    members: members
+                    members: members,
+                    coinNames: coins
                 }
             }
 

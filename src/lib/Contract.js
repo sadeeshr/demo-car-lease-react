@@ -370,8 +370,8 @@ class Contract {
         cc.log(`Setting Allowance for: ${account} - ${type} - ${spender}`);
         return this.euroToken.allowance(account, spender)
             .then(result => {
-                cc.log(`Allowance Result: ${result[0].toNumber()}`);
-                return { [type + "allowance"]: (result[0].toNumber()) }
+                cc.log(`Allowance Result: ${unit.fromWei(result[0], 'ether')}`);
+                return { [type + "allowance"]: parseFloat(unit.fromWei(result[0], 'ether')) }
             })
     }
 

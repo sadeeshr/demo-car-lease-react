@@ -161,7 +161,7 @@ export const _contractDataResponse = (account, response) => {
         if (response.members)
             response.members.map(member => {
                 // console.log("MEMBERS: ", member);
-                if (member.account) dispatch(_lcAuthorization(member.account))
+                // if (member.account) dispatch(_lcAuthorization(member.account))
                 if (member.objectID) {
                     // dispatch(_lcLeaseObject(account, member.objectID)) //change
                     // dispatch(_lcLeaseObjectCycle(member.objectID)) //change
@@ -191,6 +191,11 @@ export const _contractDataResponse = (account, response) => {
             response.usernames.reverse() && response.usernames.map(user => {
                 // if (user.account) dispatch(_lcAuthorization(user.account))
                 if (user.account) dispatch(_getBalance(user.account))
+            })
+
+        if (response.coinNames)
+            response.coinNames.map(coin => {
+                dispatch(_ltBalanceOf(coin.objectID, account))
             })
 
         if (response.member) {
@@ -679,9 +684,9 @@ export const _resetEvent = () => ({
 // }
 
 // Lease token Object methods
-export const _ltBalanceOf = (objectID, account, address) => {
+export const _ltBalanceOf = (objectID, account) => {
     return (dispatch) => {
-        return contract.ltBalanceOf(objectID, account, address)
+        return contract.ltBalanceOf(objectID, account)
             .then(result =>
                 dispatch(
                     {
