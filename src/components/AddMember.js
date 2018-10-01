@@ -21,9 +21,8 @@ class AddMember extends Component {
         ]
         this.rinkebyStatsURL = "https://rinkeby.etherscan.io/tx/"
         // this.maxApprove = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        this.maxApprove = 115792089237316195423570985008687907853269984665640564039457584007913129639936
-        // this.maxApprove = 10000000000000000000000000
-        //10000000000000000000000000 value error
+        // this.maxApprove = 115792089237316195423570985008687907853269984665640564039457584007913129639936
+        this.maxApprove = 10000000 //ETH
         // this.carType = 1
     }
 

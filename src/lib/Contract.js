@@ -348,6 +348,7 @@ class Contract {
     }
 
     euroApprove = (value, account, type) => {
+        value = unit.toWei(value, 'ether')
         let spender = type === "invest" ? this.startCrowdFunding : this.afterCrowdFunding
         cc.log(`Approve value: ${value} to spend by: ${spender} from: ${account}`);
         return this.euroToken.approve(spender, value, { from: account })

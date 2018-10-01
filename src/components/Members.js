@@ -342,16 +342,16 @@ class Members extends Component {
         // members = members && members.sort((a, b) => a["balance"] - b["balance"]) // sort by eth balance asc
         // members = members && members.sort((a, b) => ((a["account"] === this.props.account) ? 0 : (b["account"] === this.props.account) ? -1 : 0))
         // console.log(members);
-        // let user = this.props.usernames ? this.props.usernames.find(us => us["account"] === this.props.account) : {}
-        let userIndex = this.props.usernames && this.props.usernames.findIndex(us => us["account"] === this.props.account)
+        
+        // let userIndex = this.props.usernames && this.props.usernames.findIndex(us => us["account"] === this.props.account)
         // if (userIndex && userIndex !== -1) {
         //     members.splice(userIndex, 1);
         // }
         members.sort((x, y) => (x["account"] === this.props.account ? -1 : y["account"] === this.props.account ? 1 : 0))
         // let user = {}
-        // const coins = (this.props.coinNames && user) ? this.props.coinNames.filter(coin => user.coins.includes(coin.objectID)) : []
-        let coins = []
-
+        let user = this.props.usernames ? this.props.usernames.find(us => us["account"] === this.props.account) : {}
+        const coins = (this.props.coinNames && user) ? this.props.coinNames.filter(coin => user.coins.includes(coin.objectID)) : []
+        
         return (
             <div className="content-border mobile-margin">
                 <div className="border-bottom-1  fix-small-dev">

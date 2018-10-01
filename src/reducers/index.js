@@ -73,7 +73,7 @@ const rootReducer = (state = initialState, action) => {
         case 'SET_EVENT':
             return {
                 ...state,
-                event: action.payload
+                event: (state.event && state.event.event === action.payload.event && state.event.transactionHash === action.payload.transactionHash) ? state.event : action.payload
             }
 
         case 'SET_EVENT_ALERT':
