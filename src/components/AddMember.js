@@ -242,7 +242,7 @@ class AddMember extends Component {
                                     {this.state.profilePic && <img style={img} className="inputImg" src={this.state.profilePic} alt="intI" />}
                                 </span>
 
-                                <span className="form-input-containers text-center">
+                                <span className="form-input-containers text-center" style={{height:"21px"}}>
                                     {this.props.approveTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.approveTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.approveTxID)) ? <p style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0", width: "100%" }}>Confirmed</p> : <p style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0", width: "100%" }}>Pending</p>}</Link>)}
                                     {/* <p style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", width: "100%" }}>Pending</p> */}
                                     {/* <p style={{ color: "green", fontSize: "18px", fontWeight: "600", width: "100%" }}>Confirmed</p> */}
