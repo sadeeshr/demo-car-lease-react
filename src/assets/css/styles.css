@@ -52,6 +52,7 @@ p {
     height: 487px;
 }
 
+
 .mainContentCon-40 {
     height: 490px;
 }
@@ -1841,6 +1842,10 @@ span.inLeft input {
     margin-left: 5px;
 }
 
+.ml-10 {
+    margin-left: 10px;
+}
+
 .no-padding {
     padding: 0;
 }
@@ -2147,7 +2152,7 @@ width: 106px;
 
 .d-flex {
     display: flex;
-    width: 100%;
+    /* width: 100%; */
 }
 
 .opacity03 {
@@ -3314,6 +3319,10 @@ button.swiper-pagination-bullet {
     border: 1px solid #333333 !important;
 }
 
+.form-input-containers p{
+    width: 100%;
+}
+
 .bmemberCon{
     padding-top: 40px;
 }
@@ -3337,7 +3346,7 @@ button.swiper-pagination-bullet {
 .leaseCarCon.leden.active .rowSelect{
     width: 100%;
     display: table-cell;
-    padding: 5px 24px;
+    padding: 5px 10px;
 }
 .leaseCarCon.leden .rowSelect{
     padding: 0;
@@ -3346,3 +3355,24 @@ button.swiper-pagination-bullet {
 
 
 
+
+
+.dropDown1 .ui-dropdown-trigger{
+    display: none;
+}
+
+.dropDown1 .ui-dropdown{
+    font-size: 14px;
+    box-shadow: none !important;
+    outline: none !important;
+    background: none;
+    border: 0;
+}
+
+.dropDown1  .ui-dropdown .ui-dropdown-label{
+    line-height: 30px;
+    padding: 0 5px;
+    border: 2px solid #5d5d5d;
+    text-align: center;
+    border-radius: 0;
+}

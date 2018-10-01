@@ -241,7 +241,7 @@ class AddMember extends Component {
                                 </span>
 
                                 <span className="form-input-containers text-center">
-                                    {this.props.approveTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.approveTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.approveTxID)) ? <p style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Confirmed</p> : <p style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0" }}>Pending</p>}</Link>)}
+                                    {this.props.approveTxID && (<Link target="_blank" to={this.rinkebyStatsURL + this.props.approveTxID}>{(this.props.event && (this.props.event.transactionHash === this.props.approveTxID)) ? <p style={{ color: "green", fontSize: "18px", fontWeight: "600", marginLeft: "0", marginTop: "0", width: "100%" }}>Confirmed</p> : <p style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", marginLeft: "0", marginTop: "0", width: "100%" }}>Pending</p>}</Link>)}
                                     {/* <p style={{ fontSize: "18px", color: "#FF9800", fontWeight: "600", width: "100%" }}>Pending</p> */}
                                     {/* <p style={{ color: "green", fontSize: "18px", fontWeight: "600", width: "100%" }}>Confirmed</p> */}
                                 </span>
