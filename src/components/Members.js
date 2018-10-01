@@ -265,10 +265,10 @@ class Members extends Component {
                     <div className="col-4 d-flex">
                         <span className="lh-33 fs-14 ">{"Hand out ETH "}</span>
                     </div>
-                    <div className="col-4 d-flex">
-                        <span className="lh-33" style={textStyle}>{this.state.ethVal ? (ethBal - this.state.ethVal).toFixed(2) : ethBal}</span>
+                    <div className="col-2 d-flex"> <span className="lh-33" style={textStyle}>{this.state.ethVal ? (ethBal - this.state.ethVal).toFixed(2) : ethBal}</span></div>
+                    <div className="col-3 d-flex">
                     </div>
-                    <div className="col-4 d-flex ml-10">
+                    <div className="col-3 d-flex ml-10">
                         <input maxLength="20" onFocus={() => this.setState({ active: 0, euroVal: 0, coinVal: 0, coin: null })} value={this.state.ethVal} onChange={(e) => this.setState({ ethVal: e.target.value > 0 && (e.target.value < ethBal) && e.target.value })} type="number" step="0.01" placeholder="ETH *" />
                     </div>
                 </div>
@@ -277,10 +277,10 @@ class Members extends Component {
                     <div className="col-4 d-flex">
                         <span className="lh-33 fs-14 ">{"Hand out Euro "}</span>
                     </div>
-                    <div className="col-4 d-flex">
-                        <span className="lh-33" style={textStyle}>{this.state.euroVal ? (parseInt((this.props.euroTokenBalance || 0), 10) - this.state.euroVal) : parseInt((this.props.euroTokenBalance || 0), 10)}</span>
+                    <div className="col-2 d-flex"> <span className="lh-33" style={textStyle}>{this.state.euroVal ? (parseInt((this.props.euroTokenBalance || 0), 10) - this.state.euroVal) : parseInt((this.props.euroTokenBalance || 0), 10)}</span></div>
+                    <div className="col-3 d-flex">
                     </div>
-                    <div className="col-4 d-flex ml-10">
+                    <div className="col-3 d-flex ml-10">
                         <input maxLength="20" onFocus={() => this.setState({ active: 1, ethVal: 0, coinVal: 0, coin: null })} value={this.state.euroVal} onChange={(e) => this.setState({ euroVal: e.target.value > 0 && e.target.value < parseInt(this.props.euroTokenBalance, 10) && e.target.value })} type="number" step="1" placeholder="Euro *" />
                     </div>
                 </div>
@@ -290,14 +290,14 @@ class Members extends Component {
                         <span className="lh-33">{"Hand out Coins "}</span>
                     </div>
                     {/*  */}
-                    <div className="col-4 d-flex dropDown1">
+                    <div className="col-2 d-flex"><span className="lh-33" style={textStyle}>{this.state.coinVal ? (coinBal - this.state.coinVal) : coinBal}</span></div>
+                    <div className="col-3 d-flex dropDown1">
                         <Dropdown optionLabel="objectName" style={{ width: '100%' }} value={this.state.coin} options={coins} onChange={(e) => { this.setState({ coin: e.value }) }} placeholder="Select Coin" />
                     </div>
-                    <div className="col-4 d-flex ml-10">
+                    <div className="col-3 d-flex ml-10">
                         <input maxLength="20" onFocus={() => this.setState({ active: 2, euroVal: 0, ethVal: 0 })} value={this.state.coinVal} onChange={(e) => this.setState({ coinVal: (e.target.value > 0 && e.target.value < (coinBal - this.state.coinVal)) ? e.target.value : 0 })} type="number" placeholder="Coins *" />
                     </div>
                 </div>
-                <div className="col-4"><span style={textStyle}>{this.state.coinVal ? (coinBal - this.state.coinVal) : coinBal}</span></div>
                 <div className="col-4 arrowHover-s2">
                     {/* <button className="arrowBtn" onClick={() => this.props.history.push("/", { path: "addnewlife" })}>
                         <span className="flaticon-right-arrow"></span>
