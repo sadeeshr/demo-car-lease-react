@@ -73,7 +73,7 @@ class Socket {
             cc.log("EVENT: ", data, this.account)
             if (this.props && data) {
                 // if (data.event === "Transfer" || data.event === "Claim" || data.event) 
-                if (data.event === "CreateNewUser" || data.event === "Approval" || data.event === "NewMember") {
+                if (data.event === "CreateNewUser" || data.event === "NewMember") {
                     this.props._fetchUsers(this.props, this.account)
                 }
 

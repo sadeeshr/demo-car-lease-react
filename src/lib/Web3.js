@@ -141,35 +141,35 @@ getConfirmationsHash = (event, cb) => {
     // if (txHash !== hash) {
     //     txHash = hash
     //     eventToSend = event
-    if (event.event !== "Transfer") {
-        let blockStart, blockEnd;
-        let timer = setInterval(() => {
-            console.log("CHECKING HASH CONFIRMATIONS:");
+    // if (event.event !== "Transfer") {
+    let blockStart, blockEnd;
+    let timer = setInterval(() => {
+        console.log("CHECKING HASH CONFIRMATIONS:");
 
-            web3.eth.getTransactionReceipt(hash)
-                .then(res => {
-                    if (res && res.blockNumber) {
-                        console.log("START BLOCK: ", res.blockNumber)
-                        blockStart = res.blockNumber
-                    }
-                })
-                .then(
-                    blockStart && web3.eth.getBlockNumber()
-                        .then(res => {
-                            blockEnd = res
-                            let confirmations = (blockEnd - blockStart)
-                            console.log("CURRENT BLOCK: ", res)
-                            console.log("No. CONFs: ", confirmations, (confirmations > 0))
+        web3.eth.getTransactionReceipt(hash)
+            .then(res => {
+                if (res && res.blockNumber) {
+                    console.log("START BLOCK: ", res.blockNumber)
+                    blockStart = res.blockNumber
+                }
+            })
+            .then(
+                blockStart && web3.eth.getBlockNumber()
+                    .then(res => {
+                        blockEnd = res
+                        let confirmations = (blockEnd - blockStart)
+                        console.log("CURRENT BLOCK: ", res)
+                        console.log("No. CONFs: ", confirmations, (confirmations > 0))
 
-                            if (confirmations > 0) {
-                                // this.props._hashConfirmations({ hashConfirmations: confirmations })
-                                clearInterval(timer)
-                                cb(event)
-                            }
-                        })
-                )
-        }, 5000)
-    }
+                        if (confirmations > 0) {
+                            // this.props._hashConfirmations({ hashConfirmations: confirmations })
+                            clearInterval(timer)
+                            cb(event)
+                        }
+                    })
+            )
+    }, 5000)
+    // }
 
     // } else {
     //     if (eventToSend && (eventToSend.event === "Transfer") && (eventToSend.event !== event.event))
