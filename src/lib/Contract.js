@@ -140,7 +140,8 @@ class Contract {
                 }
             case 1:
                 {
-                    this.euroToken.transfer(memberObj.account, stateObj.euroVal, { from: account })
+                    let euroVal = unit.toWei(stateObj.euroVal, 'ether')
+                    this.euroToken.transfer(memberObj.account, euroVal, { from: account })
                         .then(result => {
                             cc.log(`Transfer Result: ${result}`);
                             // this.euroEventApprovalSubscribe()
@@ -342,6 +343,11 @@ class Contract {
             .then(result => {
                 cc.log(`Approval Result: ${result}`);
                 this.euroEventApprovalSubscribe()
+                let event = {
+                    event: type === "invest" ? "ApproveInvest" : "ApproveInvoice",
+                    transactionHash: result
+                }
+                this.props._getConfirmationsHash(event)
                 this.approveTxID = result
                 return { approveTxID: result }
             })

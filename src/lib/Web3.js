@@ -182,5 +182,6 @@ getConfirmationsHash = (event, cb) => {
 
 module.exports = {
     subscribeEvents: subscribeEvents,
+    getConfirmationsHash: getConfirmationsHash
     // createNewCrowdFundToken: createNewCrowdFundToken
 }

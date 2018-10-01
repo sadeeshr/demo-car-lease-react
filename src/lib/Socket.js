@@ -49,6 +49,8 @@ class Socket {
 
     sendUserEvent = (event) => this.socket.emit("userEvent", event)
 
+    getConfirmationsHash = (data) => this.socket.emit("confirmHash", data)
+
     updateProps = (props) => this.props = props
 
     updateData = (props, data) => {

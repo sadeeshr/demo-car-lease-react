@@ -234,11 +234,11 @@ export const _resetMemberSelection = () => {
     }
 }
 
-export const _getConfirmationsHash = (hash) => {
+export const _getConfirmationsHash = (data) => {
     return (dispatch) => {
         dispatch({
             type: "HASH_CONFIRMATIONS",
-            payload: contract.getConfirmationsHash(hash)
+            payload: socApi.getConfirmationsHash(data)
         })
     }
 }
